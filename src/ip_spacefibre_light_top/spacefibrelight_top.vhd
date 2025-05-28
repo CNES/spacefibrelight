@@ -10,7 +10,7 @@ use data_link_lib.data_link_lib.all;
 library interlayer_lib;
 use interlayer_lib.all;
 
-entity spacefibre_light_top_ip is
+entity spacefibrelight_top is
    port (
           RST_N                            : in  std_logic;                            --! global reset
       CLK                              : in  std_logic;                            --! Main clock
@@ -241,10 +241,10 @@ entity spacefibre_light_top_ip is
       FAR_END_CAPA                     : out std_logic_vector(07 downto 00);        --! RX Capabilities field (INT3 flags)
       RX_POLARITY                      : out std_logic                              --! Set when the receiver polarity is inverted
    );
-end entity spacefibre_light_top_ip;
+end entity spacefibrelight_top;
 
 
-architecture rtl of spacefibre_light_top_ip is
+architecture rtl of spacefibrelight_top is
  constant G_VC_NUM                         : integer := 8 ;
  
         -- Component declaration for spacefibre_light_top
