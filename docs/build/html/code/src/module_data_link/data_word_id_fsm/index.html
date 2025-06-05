@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_word_id_fsm/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_word_id_fsm.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-24-02-2025">
+<h1>– Creation date : 24/02/2025<a class="headerlink" href="#creation-date-24-02-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-describe-the-data-word-id-fsm-function">
+<h1>– Description : This module describe the Data_word_id_fsm function<a class="headerlink" href="#description-this-module-describe-the-data-word-id-fsm-function" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_word_id_fsm is
+port (
+CLK                     : in  std_logic;                                           –! Global clock
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE         : in  std_logic;                                           –! Link Reset command
+– PHY PLUS LANE layer interface
+FIFO_RX_DATA_VALID_PPL  : in  std_logic;                                           –! Flag DATA_VALID of the FIFO RX from Lane layer
+FIFO_RX_RD_EN_DL       : out std_logic;                                            –! Flag to read data in FIFO RX
+DATA_RX_PPL             : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          –! Data parallel from Lane Layer
+VALID_K_CHARAC_PPL      : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  –! K character valid in the 32-bit DATA_RX_PPL vector
+– data_crc_check (DCCHECK) interface
+TYPE_FRAME_DWI          : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);     –! Current frame/control word type
+NEW_WORD_DWI            : out std_logic;                                            –! New word flag associated to DATA_DWI
+END_FRAME_DWI           : out std_logic;                                            –! End frame/control word flag
+DATA_DWI                : out std_logic_vector(C_DATA_LENGTH-1 downto 0);           –! Data parallel to data_crc_check
+VALID_K_CHARAC_DWI      : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  –! K character valid in the 32-bit DATA_DWI vector
+SEQ_NUM_DWI             : out std_logic_vector(7 downto 0);                 				–! SEQ_NUM of the current control word
+CRC_16B_DWI             : out std_logic_vector(15 downto 0);                				–! 16-bit CRC (data frame)  of the current control word
+CRC_8B_DWI              : out std_logic_vector(7 downto 0);                 				–! 8-bit CRC of the current control word
+MULTIPLIER_DWI          : out std_logic_vector(C_MULT_SIZE-1 downto 0);     				–! Multiplier value of the current FCT word
+VC_DWI                  : out std_logic_vector(C_CHANNEL_SIZE-1 downto 0);  				–! Virtual Channel of the current FCT word
+RXNOTHING_ACTIVE_DWI    : out std_logic;                                  					–! RXNOTHING state of the data_word_id_fsm flag
+RXERR_DWI               : out std_logic; 																						–! RXERR flag detection
+RXERR_ALL_DWI           : out std_logic; 																						–! RXERR flag detection during broadcast and data frame status
+– Error interface
+CRC_ERR_DCCHECK         : in  std_logic;                                            –! CRC error flag from data_crc_check
+SEQ_ERR_DSCHECK         : in  std_logic;                                            –! SEQ_NUM error flag from data_seq_check
+FRAME_ERR_DWI           : out std_logic;                                            –! Frame error flag
+– MIB
+DATA_COUNTER_RX_DWI     : out  std_logic_vector(6 downto 0);                        –! Data counter RX
+RETRY_COUNTER_RX_DWI    : out  std_logic_vector(1 downto 0);                        –! RETRY counter RX
+DATA_PULSE_RX_DWI       : out std_logic;                                            –! New data received flag
+RETRY_PULSE_RX_DWI      : out std_logic                                             –! New RETRY received flag
+);
+end data_word_id_fsm;</p>
+<p>architecture rtl of data_word_id_fsm is</p>
+<hr class="docutils" />
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>– Lane Initialisation FSM transition conditions process
+– Type
+type data_word_id_fsm_type is (
+RX_NOTHING_ST,                                                                –! Reset state
+RX_BROADCAST_FRAME_ST,                                                        –! BROADCAST frame State
+RX_IDLE_FRAME_ST,                                                             –! IDLE frame State
+RX_DATA_FRAME_ST,                                                             –! DATA frame State
+RX_BROADCAST_AND_DATA_FRAME_ST                                                –! BROADCAST and DATA frame State
+);
+– Signals
+signal current_state      : data_word_id_fsm_type;
+signal current_state_r    : data_word_id_fsm_type;
+signal receiving_frame    : std_logic;
+signal type_incom_frame   : std_logic_vector(1 downto 0);
+signal data_word_cnt      : unsigned(6 downto 0);
+signal bc_word_cnt        : unsigned(1 downto 0);
+signal retry_counter      : unsigned(1 downto 0);
+– detected signals
+signal detected_sdf     : std_logic;
+signal detected_edf     : std_logic;
+signal detected_sbf     : std_logic;
+signal detected_ebf     : std_logic;
+signal detected_sif     : std_logic;
+signal detected_fct     : std_logic;
+signal detected_ack     : std_logic;
+signal detected_nack    : std_logic;
+signal detected_full    : std_logic;
+signal detected_retry   : std_logic;
+signal detected_rxerr_i : std_logic;</p>
+<p>begin
+——————————————————–
+–                  Assignement                       –
+——————————————————–
+DATA_COUNTER_RX_DWI  &lt;= std_logic_vector(data_word_cnt);
+RETRY_COUNTER_RX_DWI &lt;= std_logic_vector(retry_counter);</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>detected_sdf         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_SDF_WORD   and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- SDF control word detected
+detected_edf         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(7 downto 0)  = C_K28_0_SYMB and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- EDF control word detected
+detected_sbf         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_SBF_WORD   and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- SBF control word detected
+detected_ebf         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(7 downto 0)  = C_K28_2_SYMB and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- EBF control word detected
+detected_sif         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_SIF_WORD   and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- SIF control word detected
+detected_fct         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(7 downto 0)  = C_K28_3_SYMB and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- FCT control word detected
+detected_ack         &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_ACK_WORD   and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- ACK control word detected
+detected_nack        &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_NACK_WORD  and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- NACK control word detected
+detected_full        &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL(15 downto 0) = C_FULL_WORD  and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- FULL control word detected
+detected_retry       &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL = C_RETRY_WORD              and VALID_K_CHARAC_PPL = &quot;0001&quot;)  else &#39;0&#39;;                                   -- RETRY control word detected
+detected_rxerr_i     &lt;= &#39;1&#39; when (FIFO_RX_DATA_VALID_PPL =&#39;1&#39; and DATA_RX_PPL = C_RXERR_WORD              and VALID_K_CHARAC_PPL = &quot;0001&quot; and current_state /= RX_NOTHING_ST) else &#39;0&#39;; -- RXERR control word detected
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-fsm-data-word-id-transition-description-data-word-identification-fsm-transition-conditions-process">
+<h1>– Process: p_fsm_data_word_id_transition
+– Description: Data Word Identification FSM transition
+–              conditions process<a class="headerlink" href="#process-p-fsm-data-word-id-transition-description-data-word-identification-fsm-transition-conditions-process" title="Link to this heading"></a></h1>
+<p>p_fsm_data_word_id_transition : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+current_state          &lt;= RX_NOTHING_ST;
+current_state_r        &lt;= RX_NOTHING_ST;
+FRAME_ERR_DWI          &lt;= ‘0’;
+RXNOTHING_ACTIVE_DWI   &lt;= ‘0’;
+RXERR_DWI              &lt;= ‘0’;
+RXERR_ALL_DWI          &lt;= ‘0’;
+else
+FRAME_ERR_DWI         &lt;= ‘0’;
+current_state_r       &lt;= current_state;
+RXNOTHING_ACTIVE_DWI  &lt;= ‘0’;
+RXERR_DWI             &lt;= ‘0’;
+RXERR_ALL_DWI         &lt;= ‘0’;
+case current_state is
+when RX_NOTHING_ST                  =&gt; if LINK_RESET_DLRE = ‘1’ then
+current_state  &lt;= RX_NOTHING_ST;
+elsif detected_sbf =’1’ then
+current_state  &lt;= RX_BROADCAST_FRAME_ST;
+elsif detected_sdf =’1’ then
+current_state  &lt;= RX_DATA_FRAME_ST;
+elsif detected_sif =’1’ then
+current_state  &lt;= RX_IDLE_FRAME_ST;
+end if;
+when RX_DATA_FRAME_ST               =&gt; if LINK_RESET_DLRE = ‘1’ or detected_edf = ‘1’ or detected_retry = ‘1’ or CRC_ERR_DCCHECK = ‘1’ or SEQ_ERR_DSCHECK = ‘1’ then
+current_state  &lt;= RX_NOTHING_ST;
+elsif detected_rxerr_i = ‘1’ then
+RXNOTHING_ACTIVE_DWI &lt;= ‘1’;
+RXERR_DWI            &lt;= ‘1’;
+current_state        &lt;= RX_NOTHING_ST;
+elsif detected_sdf = ‘1’ or detected_sif = ‘1’ or detected_ebf = ‘1’ or data_word_cnt &gt;= C_MAX_DATA_FRAME then
+RXNOTHING_ACTIVE_DWI   &lt;= ‘1’;
+FRAME_ERR_DWI          &lt;= ‘1’;
+current_state          &lt;= RX_NOTHING_ST;
+elsif detected_sbf =’1’ then
+current_state  &lt;= RX_BROADCAST_AND_DATA_FRAME_ST;
+end if;
+when RX_BROADCAST_FRAME_ST          =&gt; if LINK_RESET_DLRE = ‘1’ or (detected_ebf = ‘1’ and bc_word_cnt = C_WORD_BC_FRAME) or detected_retry = ‘1’ or CRC_ERR_DCCHECK = ‘1’ or SEQ_ERR_DSCHECK = ‘1’ then
+current_state  &lt;= RX_NOTHING_ST;
+elsif detected_rxerr_i = ‘1’ then
+RXNOTHING_ACTIVE_DWI  &lt;= ‘1’;
+RXERR_DWI             &lt;= ‘1’;
+current_state         &lt;= RX_NOTHING_ST;
+elsif detected_sdf = ‘1’ or detected_sbf = ‘1’ or detected_sif = ‘1’ or detected_edf = ‘1’ or (detected_ebf = ‘1’ and bc_word_cnt /= C_WORD_BC_FRAME) or bc_word_cnt &gt;= C_WORD_BC_FRAME then
+RXNOTHING_ACTIVE_DWI  &lt;= ‘1’;
+FRAME_ERR_DWI         &lt;= ‘1’;
+current_state         &lt;= RX_NOTHING_ST;
+end if;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     when RX_BROADCAST_AND_DATA_FRAME_ST =&gt; if LINK_RESET_DLRE = &#39;1&#39; or detected_retry = &#39;1&#39; or CRC_ERR_DCCHECK = &#39;1&#39; or SEQ_ERR_DSCHECK = &#39;1&#39; then
+                                              current_state  &lt;= RX_NOTHING_ST;
+			                                        elsif detected_rxerr_i = &#39;1&#39; then
+																								RXNOTHING_ACTIVE_DWI  &lt;= &#39;1&#39;;
+																								RXERR_ALL_DWI         &lt;= &#39;1&#39;;
+																								RXERR_DWI             &lt;= &#39;1&#39;;
+																								current_state         &lt;= RX_NOTHING_ST;
+                                            elsif (detected_ebf = &#39;1&#39; and bc_word_cnt = C_WORD_BC_FRAME) then
+                                               current_state  &lt;= RX_DATA_FRAME_ST;
+                                            elsif detected_sdf = &#39;1&#39; or detected_sbf = &#39;1&#39; or detected_sif = &#39;1&#39; or detected_edf = &#39;1&#39; or (detected_ebf = &#39;1&#39; and bc_word_cnt /= C_WORD_BC_FRAME) or bc_word_cnt &gt; C_WORD_BC_FRAME then
+                                              RXNOTHING_ACTIVE_DWI &lt;= &#39;1&#39;;
+																								FRAME_ERR_DWI        &lt;= &#39;1&#39;;
+                                               current_state       &lt;= RX_NOTHING_ST;
+                                            end if;
+
+     when RX_IDLE_FRAME_ST               =&gt; if LINK_RESET_DLRE = &#39;1&#39; or detected_rxerr_i = &#39;1&#39; or detected_retry = &#39;1&#39; or CRC_ERR_DCCHECK = &#39;1&#39; or SEQ_ERR_DSCHECK = &#39;1&#39; then
+                                              current_state   &lt;= RX_NOTHING_ST;
+                                            elsif detected_sbf =&#39;1&#39; then
+                                               current_state  &lt;= RX_BROADCAST_FRAME_ST;
+                                            elsif detected_sdf =&#39;1&#39; then
+                                               current_state  &lt;= RX_DATA_FRAME_ST;
+                                            elsif detected_edf = &#39;1&#39; or detected_ebf = &#39;1&#39; or data_word_cnt &gt; C_MAX_IDLE_FRAME then
+                                               FRAME_ERR_DWI  &lt;= &#39;1&#39;;
+                                               current_state  &lt;= RX_NOTHING_ST;
+                                            end if;
+     when others                          =&gt; current_state  &lt;= RX_NOTHING_ST;
+  end case;
+	end if;
+</pre></div>
+</div>
+</section>
+<section id="end-if-end-process-p-fsm-data-word-id-transition">
+<h1>end if;
+end process p_fsm_data_word_id_transition;<a class="headerlink" href="#end-if-end-process-p-fsm-data-word-id-transition" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-comb-state-description-data-word-identification-fsm-action-on-state-process">
+<h1>– Process: p_comb_state
+– Description: Data Word Identification FSM action on
+–              state process<a class="headerlink" href="#process-p-comb-state-description-data-word-identification-fsm-action-on-state-process" title="Link to this heading"></a></h1>
+</section>
+<section id="p-comb-state-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-receiving-frame-0-type-incom-frame-others-0-data-word-cnt-others-0-bc-word-cnt-others-0-else-if-current-state-rx-nothing-st-then-receiving-frame-0-data-word-cnt-others-0-bc-word-cnt-others-0-elsif-current-state-rx-data-frame-st-then-receiving-frame-1-type-incom-frame-01-receiving-data-frame-if-current-state-r-rx-idle-frame-st-then-data-word-cnt-to-unsigned-1-data-word-cnt-length-else-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-data-word-cnt-data-word-cnt-1-end-if-end-if-bc-word-cnt-others-0-elsif-current-state-rx-broadcast-frame-st-then-receiving-frame-1-type-incom-frame-10-receiving-broadcast-frame-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-bc-word-cnt-bc-word-cnt-1-end-if-data-word-cnt-others-0-elsif-current-state-rx-broadcast-and-data-frame-st-then-receiving-frame-1-type-incom-frame-10-receiving-broadcast-frame-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-bc-word-cnt-bc-word-cnt-1-end-if-elsif-current-state-rx-idle-frame-st-then-receiving-frame-1-type-incom-frame-11-receiving-idle-frame-if-fifo-rx-data-valid-ppl-1-and-data-rx-ppl-15-downto-0-c-sif-word-and-valid-k-charac-ppl-0001-then-data-word-cnt-others-0-elsif-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-data-word-cnt-data-word-cnt-1-end-if-end-if-end-if-end-if-end-process-p-comb-state">
+<h1>p_comb_state : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+receiving_frame    &lt;= ‘0’;
+type_incom_frame   &lt;= (others =&gt;’0’);
+data_word_cnt      &lt;= (others =&gt;’0’);
+bc_word_cnt        &lt;= (others =&gt;’0’);
+else
+if current_state = RX_NOTHING_ST then
+receiving_frame      &lt;= ‘0’;
+data_word_cnt        &lt;= (others =&gt;’0’);
+bc_word_cnt          &lt;= (others =&gt;’0’);
+elsif current_state = RX_DATA_FRAME_ST then
+receiving_frame      &lt;= ‘1’;
+type_incom_frame     &lt;= “01”; – receiving data frame
+if (current_state_r = RX_IDLE_FRAME_ST) then
+data_word_cnt      &lt;= to_unsigned(1,data_word_cnt’length);
+else
+if (FIFO_RX_DATA_VALID_PPL =’1’ and detected_fct =’0’ and detected_ack =’0’ and detected_nack =’0’ and detected_full =’0’) then
+data_word_cnt    &lt;= data_word_cnt + 1;
+end if;
+end if;
+bc_word_cnt          &lt;= (others =&gt;’0’);
+elsif current_state = RX_BROADCAST_FRAME_ST then
+receiving_frame      &lt;= ‘1’;
+type_incom_frame     &lt;= “10”; – receiving broadcast frame
+if (FIFO_RX_DATA_VALID_PPL =’1’ and detected_fct =’0’ and detected_ack =’0’ and detected_nack =’0’ and detected_full =’0’) then
+bc_word_cnt          &lt;= bc_word_cnt + 1;
+end if;
+data_word_cnt        &lt;= (others =&gt;’0’);
+elsif current_state = RX_BROADCAST_AND_DATA_FRAME_ST then
+receiving_frame      &lt;= ‘1’;
+type_incom_frame     &lt;= “10”; – receiving broadcast frame
+if (FIFO_RX_DATA_VALID_PPL =’1’ and detected_fct =’0’ and detected_ack =’0’ and detected_nack =’0’ and detected_full =’0’) then
+bc_word_cnt          &lt;= bc_word_cnt + 1;
+end if;
+elsif current_state = RX_IDLE_FRAME_ST then
+receiving_frame      &lt;= ‘1’;
+type_incom_frame     &lt;= “11”; – receiving idle frame
+if (FIFO_RX_DATA_VALID_PPL =’1’) and DATA_RX_PPL(15 downto 0) = C_SIF_WORD and VALID_K_CHARAC_PPL = “0001” then
+data_word_cnt        &lt;= (others =&gt; ‘0’);
+elsif (FIFO_RX_DATA_VALID_PPL =’1’ and detected_fct =’0’ and detected_ack =’0’ and detected_nack =’0’ and detected_full =’0’) then
+data_word_cnt        &lt;= data_word_cnt + 1;
+end if;
+end if;
+end if;
+end if;
+end process p_comb_state;<a class="headerlink" href="#p-comb-state-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-receiving-frame-0-type-incom-frame-others-0-data-word-cnt-others-0-bc-word-cnt-others-0-else-if-current-state-rx-nothing-st-then-receiving-frame-0-data-word-cnt-others-0-bc-word-cnt-others-0-elsif-current-state-rx-data-frame-st-then-receiving-frame-1-type-incom-frame-01-receiving-data-frame-if-current-state-r-rx-idle-frame-st-then-data-word-cnt-to-unsigned-1-data-word-cnt-length-else-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-data-word-cnt-data-word-cnt-1-end-if-end-if-bc-word-cnt-others-0-elsif-current-state-rx-broadcast-frame-st-then-receiving-frame-1-type-incom-frame-10-receiving-broadcast-frame-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-bc-word-cnt-bc-word-cnt-1-end-if-data-word-cnt-others-0-elsif-current-state-rx-broadcast-and-data-frame-st-then-receiving-frame-1-type-incom-frame-10-receiving-broadcast-frame-if-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-bc-word-cnt-bc-word-cnt-1-end-if-elsif-current-state-rx-idle-frame-st-then-receiving-frame-1-type-incom-frame-11-receiving-idle-frame-if-fifo-rx-data-valid-ppl-1-and-data-rx-ppl-15-downto-0-c-sif-word-and-valid-k-charac-ppl-0001-then-data-word-cnt-others-0-elsif-fifo-rx-data-valid-ppl-1-and-detected-fct-0-and-detected-ack-0-and-detected-nack-0-and-detected-full-0-then-data-word-cnt-data-word-cnt-1-end-if-end-if-end-if-end-if-end-process-p-comb-state" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-data-word-detection-description-words-detection-and-output-assignement">
+<h1>– Process: p_data_word_detection
+– Description: Words detection and output assignement<a class="headerlink" href="#process-p-data-word-detection-description-words-detection-and-output-assignement" title="Link to this heading"></a></h1>
+<p>p_data_word_detection : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+NEW_WORD_DWI       &lt;= ‘0’;
+SEQ_NUM_DWI        &lt;= (others=&gt; ‘0’);
+CRC_16B_DWI        &lt;= (others=&gt; ‘0’);
+CRC_8B_DWI         &lt;= (others=&gt; ‘0’);
+TYPE_FRAME_DWI     &lt;= (others=&gt; ‘0’);
+DATA_DWI           &lt;= (others=&gt; ‘0’);
+VALID_K_CHARAC_DWI &lt;= (others=&gt; ‘0’);
+END_FRAME_DWI      &lt;= ‘0’;
+MULTIPLIER_DWI     &lt;= (others=&gt; ‘0’);
+VC_DWI             &lt;= (others=&gt; ‘0’);
+retry_counter      &lt;= (others =&gt;’0’);
+DATA_PULSE_RX_DWI  &lt;=’0’;
+RETRY_PULSE_RX_DWI &lt;=’0’;
+else
+END_FRAME_DWI      &lt;= ‘0’;
+DATA_PULSE_RX_DWI  &lt;=’0’;
+RETRY_PULSE_RX_DWI &lt;=’0’;
+– Frame treatment
+if (FIFO_RX_DATA_VALID_PPL =’1’) then
+if DATA_RX_PPL(15 downto 0) = C_SDF_WORD and VALID_K_CHARAC_PPL = “0001” then – SDF control word detected
+TYPE_FRAME_DWI     &lt;= C_DATA_FRM;
+NEW_WORD_DWI       &lt;= ‘1’;
+DATA_DWI           &lt;= DATA_RX_PPL;
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+elsif DATA_RX_PPL(7 downto 0) = C_K28_0_SYMB and VALID_K_CHARAC_PPL = “0001” and current_state /= RX_NOTHING_ST then – EDF control word detected
+TYPE_FRAME_DWI 		 &lt;= C_DATA_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+END_FRAME_DWI  		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(15 downto 8);
+CRC_16B_DWI    		 &lt;= DATA_RX_PPL(31 downto 16);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+elsif DATA_RX_PPL(15 downto 0) = C_SBF_WORD and VALID_K_CHARAC_PPL = “0001” then – SBF control word detected
+TYPE_FRAME_DWI 		 &lt;= C_BC_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+elsif DATA_RX_PPL(7 downto 0) = C_K28_2_SYMB and VALID_K_CHARAC_PPL = “0001” and current_state /= RX_NOTHING_ST then – EBF control word detected
+TYPE_FRAME_DWI		 &lt;= C_BC_FRM;
+NEW_WORD_DWI  		 &lt;= ‘1’;
+END_FRAME_DWI 		 &lt;= ‘1’;
+DATA_DWI      		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI   		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI    		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+elsif DATA_RX_PPL(15 downto 0) = C_SIF_WORD and VALID_K_CHARAC_PPL = “0001” then – SIF control word detected
+TYPE_FRAME_DWI 		 &lt;= C_IDLE_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+END_FRAME_DWI  		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI     		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+elsif DATA_RX_PPL(7 downto 0) = C_K28_3_SYMB and VALID_K_CHARAC_PPL = “0001” then – FCT control word detected
+TYPE_FRAME_DWI 		 &lt;= C_FCT_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+END_FRAME_DWI  		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI     		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+MULTIPLIER_DWI     &lt;= DATA_RX_PPL(15 downto 13);
+VC_DWI             &lt;= DATA_RX_PPL(12 downto 8);
+elsif DATA_RX_PPL(15 downto 0) = C_ACK_WORD and VALID_K_CHARAC_PPL = “0001” then – ACK control word detected
+TYPE_FRAME_DWI 		 &lt;= C_ACK_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+END_FRAME_DWI  		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI     		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+elsif DATA_RX_PPL(15 downto 0) = C_NACK_WORD and VALID_K_CHARAC_PPL = “0001” then – NACK control word detected
+TYPE_FRAME_DWI 		 &lt;= C_NACK_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+END_FRAME_DWI  		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI     		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+elsif DATA_RX_PPL(15 downto 0) = C_FULL_WORD and VALID_K_CHARAC_PPL = “0001” then – FULL control word detected
+TYPE_FRAME_DWI     &lt;= C_FULL_FRM;
+NEW_WORD_DWI       &lt;= ‘1’;
+END_FRAME_DWI      &lt;= ‘1’;
+DATA_DWI           &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI        &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI         &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+elsif DATA_RX_PPL = C_RETRY_WORD and VALID_K_CHARAC_PPL = “0001” then – RETRY control word detected
+TYPE_FRAME_DWI 		 &lt;= C_RETRY_FRM;
+NEW_WORD_DWI   		 &lt;= ‘1’;
+DATA_DWI       		 &lt;= DATA_RX_PPL;
+SEQ_NUM_DWI    		 &lt;= DATA_RX_PPL(23 downto 16);
+CRC_8B_DWI     		 &lt;= DATA_RX_PPL(31 downto 24);
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+retry_counter      &lt;= retry_counter + 1;
+RETRY_PULSE_RX_DWI &lt;=’1’;
+elsif DATA_RX_PPL = C_RXERR_WORD and VALID_K_CHARAC_PPL = “0001” and current_state /= RX_IDLE_FRAME_ST and current_state /= RX_NOTHING_ST then – RXERR control word detected
+NEW_WORD_DWI   &lt;= ‘1’;
+elsif DATA_RX_PPL = C_RXERR_WORD and VALID_K_CHARAC_PPL = “0001” then – RXERR control word detected
+NEW_WORD_DWI   &lt;= ‘0’;
+elsif current_state = RX_IDLE_FRAME_ST or current_state= RX_NOTHING_ST then
+DATA_DWI           &lt;= (others=&gt; ‘0’);
+VALID_K_CHARAC_DWI &lt;= (others=&gt; ‘0’);
+NEW_WORD_DWI       &lt;= ‘0’;
+elsif current_state = RX_DATA_FRAME_ST then
+TYPE_FRAME_DWI 		 &lt;= C_DATA_FRM;
+DATA_DWI           &lt;= DATA_RX_PPL;
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+NEW_WORD_DWI       &lt;= ‘1’;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+elsif current_state = RX_BROADCAST_AND_DATA_FRAME_ST or current_state = RX_BROADCAST_FRAME_ST then
+TYPE_FRAME_DWI 		 &lt;= C_BC_FRM;
+DATA_DWI           &lt;= DATA_RX_PPL;
+VALID_K_CHARAC_DWI &lt;= VALID_K_CHARAC_PPL;
+NEW_WORD_DWI       &lt;= ‘1’;
+DATA_PULSE_RX_DWI  &lt;=’1’;
+else
+DATA_DWI           &lt;= (others=&gt; ‘0’);
+VALID_K_CHARAC_DWI &lt;= (others=&gt; ‘0’);
+NEW_WORD_DWI       &lt;= ‘0’;
+end if;
+else
+NEW_WORD_DWI     &lt;= ‘0’;
+end if;
+end if;
+end if;
+end process p_data_word_detection;</p>
+<hr class="docutils" />
+</section>
+<section id="process-p-fifo-rd-ppl-description-read-frames-from-the-fifo">
+<h1>– Process: p_fifo_rd_ppl
+– Description: Read frames from the fifo<a class="headerlink" href="#process-p-fifo-rd-ppl-description-read-frames-from-the-fifo" title="Link to this heading"></a></h1>
+<p>p_fifo_rd_ppl: process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+FIFO_RX_RD_EN_DL &lt;= ‘0’;
+else
+FIFO_RX_RD_EN_DL &lt;= ‘1’;
+end if;
+end if;
+end process p_fifo_rd_ppl;</p>
+<p>end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

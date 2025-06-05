@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : J.PIQUEMAL &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_phy_plus_lane/parallel_loopback/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : J.PIQUEMAL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_phy_plus_lane/parallel_loopback.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-j-piquemal">
+<h1>– Author(s) : J.PIQUEMAL<a class="headerlink" href="#author-s-j-piquemal" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-03-09-2024">
+<h1>– Creation date : 03/09/2024<a class="headerlink" href="#creation-date-03-09-2024" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-implement-the-parallel-loopback-function">
+<h1>– Description : This module implement the parallel loopback function<a class="headerlink" href="#description-this-module-implement-the-parallel-loopback-function" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library phy_plus_lane_lib;
+use phy_plus_lane_lib.all;</p>
+<p>entity parallel_loopback is
+port (
+CLK                              : in  std_logic;                          –! Clock generated by GTY IP
+RST_N                            : in  std_logic;                          –! Global reset
+– FROM lane_ctrl_word_insert
+DATA_TX_FROM_LCWI                : in  std_logic_vector(31 downto 00);     –! 32-bit Data
+VALID_K_CARAC_FROM_LCWI          : in  std_logic_vector(03 downto 00);     –! 4-bit Valid K character
+DATA_RDY_FROM_LCWI               : in  std_logic;                          –! Data ready flag
+– FROM rx_sync_fsm
+DATA_TX_FROM_RSF                 : in  std_logic_vector(31 downto 00);     –! 32-bit Data
+VALID_K_CARAC_FROM_RSF           : in  std_logic_vector(03 downto 00);     –! 4-bit Valid K character
+DATA_RDY_FROM_RSF                : in  std_logic;                          –! Data ready flag
+–FROM skip_insertion
+WAIT_SKIP_DATA                   : in  std_logic;                          –! Wait for data to be skip
+–TO lane_ctrl_word_detection
+DATA_TX_TO_LCWD                  : out std_logic_vector(31 downto 00);     –! 32-bit Data
+VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);     –! 4-bit Valid K character
+DATA_RDY_TO_LCWD                 : out std_logic;                          –! Data ready flag
+– Parameter
+PARALLEL_LOOPBACK_EN             : in  std_logic                           –! Enable or disable the parallel loopback for the lane
+);
+end parallel_loopback;</p>
+<p>architecture rtl of parallel_loopback is
+—————————– Declaration signals —————————–
+signal wait_skip_data_r                : std_logic;                              –!
+signal wait_skip_data_rr               : std_logic;
+signal wait_skip_data_rrr              : std_logic;</p>
+<p>begin
+p_delay_wait_skip : process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+wait_skip_data_r   &lt;= ‘0’;
+wait_skip_data_rr  &lt;= ‘0’;
+wait_skip_data_rrr &lt;= ‘0’;
+elsif rising_edge(CLK) then
+wait_skip_data_r      &lt;= WAIT_SKIP_DATA;
+wait_skip_data_rr     &lt;= wait_skip_data_r;
+wait_skip_data_rrr    &lt;= wait_skip_data_rr;
+end if;
+end process p_delay_wait_skip;</p>
+<p>– Allows to make a parallele loopback into the LANE layer
+DATA_TX_TO_LCWD       &lt;= DATA_TX_FROM_LCWI       when PARALLEL_LOOPBACK_EN = ‘1’ else DATA_TX_FROM_RSF;
+VALID_K_CARAC_TO_LCWD &lt;= VALID_K_CARAC_FROM_LCWI when PARALLEL_LOOPBACK_EN = ‘1’ else VALID_K_CARAC_FROM_RSF;
+DATA_RDY_TO_LCWD      &lt;= (DATA_RDY_FROM_LCWI and not(wait_skip_data_rrr) )    when PARALLEL_LOOPBACK_EN = ‘1’ else DATA_RDY_FROM_RSF;</p>
+<p>end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

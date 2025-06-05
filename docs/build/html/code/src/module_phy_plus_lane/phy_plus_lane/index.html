@@ -1,0 +1,1297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : J.PIQUEMAL &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_phy_plus_lane/phy_plus_lane/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : J.PIQUEMAL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_phy_plus_lane/phy_plus_lane.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-j-piquemal">
+<h1>– Author(s) : J.PIQUEMAL<a class="headerlink" href="#author-s-j-piquemal" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibre-light-versal-target">
+<h1>– Project : IP SpaceFibre_Light Versal target<a class="headerlink" href="#project-ip-spacefibre-light-versal-target" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-03-09-2024">
+<h1>– Creation date : 03/09/2024<a class="headerlink" href="#creation-date-03-09-2024" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-implement-the-physical-and-lane-layer-of-an-ip-spacefibre-light-the-physical-layer-is-carried-by-an-xilinx-ip-the-lane-layer-is-carried-by-owner-s-code-and-an-xilinx-ip">
+<h1>– Description : This module implement the Physical and Lane layer of an IP
+– SpaceFibre Light.
+– The Physical layer is carried by an Xilinx IP
+– The Lane layer is carried by owner’s code and an Xilinx IP<a class="headerlink" href="#description-this-module-implement-the-physical-and-lane-layer-of-an-ip-spacefibre-light-the-physical-layer-is-carried-by-an-xilinx-ip-the-lane-layer-is-carried-by-owner-s-code-and-an-xilinx-ip" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library phy_plus_lane_lib;
+use phy_plus_lane_lib.pkg_phy_plus_lane.all;</p>
+<p>library unisim;
+use unisim.vcomponents.all;</p>
+<p>library commun;
+use commun.all;</p>
+<p>entity phy_plus_lane is
+port(
+RST_N                            : in  std_logic;                       –! global reset
+CLK                              : in  std_logic;                       –! Main clock
+– Reset_gen interface
+LANE_RESET_PPL_OUT               : out std_logic;
+RST_TXCLK_N                      : in  std_logic;                       –! Synchronous reset on clock generated by GTY PLL
+CLK_TX_OUT                       : out std_logic;                       –! Clock generated by manufacturer IP
+RST_TX_DONE                      : out std_logic;                       –! Up when internal rx reset done
+– CLK GTY signals
+CLK_GTY                          : in std_logic;                        –! Clock for the extended phy layer IP
+– FROM Data-link layer
+DATA_TX                          : in  std_logic_vector(31 downto 00);  –! 32-bit Data parallel to be send from Data-Link Layer
+LANE_RESET_DL                    : in  std_logic;                       –! Lane reset command from Data-Link Layer
+CAPABILITY_TX                    : in  std_logic_vector(07 downto 00);  –! Capability field send in INIT3 control word
+NEW_DATA_TX                      : in  std_logic;                       –! Flag new data
+VALID_K_CHARAC_TX                : in  std_logic_vector(03 downto 00);  –! 4-bit valid K character flags from Data-link layer
+FIFO_TX_FULL                     : out std_logic;                       –! FiFo TX full flag</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  -- TO Data-link layer
+  FIFO_RX_RD_EN                    : in  std_logic;                       --! FiFo RX read enable flag
+  DATA_RX                          : out std_logic_vector(31 downto 00);  --! 32-bit Data parallel to be received to Data-Link Layer
+  FIFO_RX_EMPTY                    : out std_logic;                       --! FiFo RX empty flag
+  FIFO_RX_DATA_VALID               : out std_logic;                       --! FiFo RX data valid flag
+  VALID_K_CHARAC_RX                : out std_logic_vector(03 downto 00);  --! 4-bit valid K character flags to Data-link layer
+  FAR_END_CAPA_DL                  : out std_logic_vector(07 downto 00);  --! Capability field receive in INIT3 control word
+  LANE_ACTIVE_DL                   : out std_logic;                       --! Lane Active flag for the DATA Link Layer
+
+  -- FROM/TO Outside
+  TX_POS                           : out std_logic;                       --! Positive LVDS serial data send
+  TX_NEG                           : out std_logic;                       --! Negative LVDS serial data send
+  RX_POS                           : in  std_logic;                       --! Positive LVDS serial data received
+  RX_NEG                           : in  std_logic;                       --! Negative LVDS serial data received
+
+  -- PARAMETERS and STATUS
+  LANE_START                       : in  std_logic;                       --! Asserts or de-asserts LaneStart for the lane
+  AUTOSTART                        : in  std_logic;                       --! Asserts or de-asserts AutoStart for the lane
+  LANE_RESET                       : in  std_logic;                       --! Asserts or de-asserts LaneReset for the lane
+  PARALLEL_LOOPBACK_EN             : in  std_logic;                       --! Enables or disables the parallel loopback for the lane
+  STANDBY_REASON                   : in  std_logic_vector(07 downto 00);  --! In case of error, pauses communication
+  NEAR_END_SERIAL_LB_EN            : in  std_logic;                       --! Enables or disables the near-end serial loopback for the lane
+  FAR_END_SERIAL_LB_EN             : in  std_logic;                       --! Enables or disables the far-end serial loopback for the lane
+
+  LANE_STATE                       : out std_logic_vector(03 downto 00);  --! Indicates the current state of the Lane Initialization state machine in a lane
+  RX_ERROR_CNT                     : out std_logic_vector(07 downto 00);  --! Counter of error detected on the RX link
+  RX_ERROR_OVF                     : out std_logic;                       --! Overflow flag of the RX_ERROR_CNT
+  LOSS_SIGNAL                      : out std_logic;                       --! Set when no signal is received on RX link
+  FAR_END_CAPA                     : out std_logic_vector(07 downto 00);  --! Capabilities field (INT3 flags)
+  RX_POLARITY                      : out std_logic                        --! Set when the receiver polarity is inverted
+</pre></div>
+</div>
+<p>);
+end phy_plus_lane;</p>
+</section>
+<section id="architecture-rtl-of-phy-plus-lane-is">
+<h1>architecture rtl of phy_plus_lane is<a class="headerlink" href="#architecture-rtl-of-phy-plus-lane-is" title="Link to this heading"></a></h1>
+</section>
+<section id="modules-declaration">
+<h1>——————————————————– Modules Declaration ———————————————————–<a class="headerlink" href="#modules-declaration" title="Link to this heading"></a></h1>
+<p>component extended_phy_layer_gtwiz_versal_0_0 is
+port (
+gtpowergood : out STD_LOGIC;
+gtwiz_freerun_clk : in STD_LOGIC;
+QUAD0_GTREFCLK0 : in STD_LOGIC;
+QUAD0_TX0_outclk : out STD_LOGIC;
+QUAD0_RX0_outclk : out STD_LOGIC;
+QUAD0_rxp : in STD_LOGIC_VECTOR ( 3 downto 0 );
+QUAD0_rxn : in STD_LOGIC_VECTOR ( 3 downto 0 );
+QUAD0_txp : out STD_LOGIC_VECTOR ( 3 downto 0 );
+QUAD0_txn : out STD_LOGIC_VECTOR ( 3 downto 0 );
+QUAD0_gpi : in STD_LOGIC_VECTOR ( 31 downto 0 );
+QUAD0_gpo : out STD_LOGIC_VECTOR ( 31 downto 0 );
+QUAD0_TX0_usrclk : in STD_LOGIC;
+QUAD0_RX0_usrclk : in STD_LOGIC;
+INTF0_TX0_ch_txdata : in STD_LOGIC_VECTOR ( 127 downto 0 );
+INTF0_TX0_ch_txbufstatus : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txdccdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_gttxreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdebugpcsout : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txprogdivresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txinhibit : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txlatclk : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txmaincursor : in STD_LOGIC_VECTOR ( 6 downto 0 );
+INTF0_TX0_ch_txpcsresetmask : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpd : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txpisopd : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpmaresetmask : in STD_LOGIC_VECTOR ( 2 downto 0 );
+INTF0_TX0_ch_txpolarity : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpostcursor : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_TX0_ch_txprbsforceerr : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txprbssel : in STD_LOGIC_VECTOR ( 3 downto 0 );
+INTF0_TX0_ch_txprecursor : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_TX0_ch_txprogdivreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txrate : in STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_TX0_ch_txresetmode : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txheader : in STD_LOGIC_VECTOR ( 5 downto 0 );
+INTF0_TX0_ch_txsequence : in STD_LOGIC_VECTOR ( 6 downto 0 );
+INTF0_TX0_ch_txphalignresetmask : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txcominit : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txcomsas : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txcomwake : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdapicodeovrden : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdapicodereset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdetectrx : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphdlytstclk : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdlyalignreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txelecidle : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txmldchaindone : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txmldchainreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txoneszeros : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpausedelayalign : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphalignreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphdlypd : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphdlyreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphsetinitreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphshift180 : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpicodeovrden : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpicodereset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txpippmen : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txswing : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txsyncallin : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_tx10gstat : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txcomfinish : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdlyalignerr : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdlyalignprog : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphaligndone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphalignerr : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphalignoutrsvd : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphdlyresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphsetinitdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txphshift180done : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txsyncdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txctrl0 : in STD_LOGIC_VECTOR ( 15 downto 0 );
+INTF0_TX0_ch_txctrl1 : in STD_LOGIC_VECTOR ( 15 downto 0 );
+INTF0_TX0_ch_txctrl2 : in STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_TX0_ch_txdeemph : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txmargin : in STD_LOGIC_VECTOR ( 2 downto 0 );
+INTF0_TX0_ch_txdiffctrl : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_TX0_ch_txpippmstepsize : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_TX0_ch_txdapiresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txqpisenn : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txqpisenp : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txswingouthigh : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txswingoutlow : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdapireset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txdapiresetmask : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_TX0_ch_txqpibiasen : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX0_ch_txqpiweakpu : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxbufstatus : out STD_LOGIC_VECTOR ( 2 downto 0 );
+INTF0_RX0_ch_rxcdrlock : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdebugpcsout : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxprbserr : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxprbslocked : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcdrhold : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcdrovrden : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxlatclk : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxpcsresetmask : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_RX0_ch_rxpd : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxpmaresetmask : in STD_LOGIC_VECTOR ( 6 downto 0 );
+INTF0_RX0_ch_rxpolarity : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxprbscntreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxrate : in STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_RX0_ch_rxresetmode : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxdata : out STD_LOGIC_VECTOR ( 127 downto 0 );
+INTF0_RX0_ch_rx10gstat : out STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_RX0_ch_rxdatavalid : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxheader : out STD_LOGIC_VECTOR ( 5 downto 0 );
+INTF0_RX0_ch_rxchanisaligned : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanrealign : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchbondi : in STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_RX0_ch_rxchbondo : out STD_LOGIC_VECTOR ( 4 downto 0 );
+INTF0_RX0_ch_rxclkcorcnt : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxcominitdet : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcommadet : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxbyteisaligned : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxbyterealign : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcomsasdet : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcomwakedet : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxctrl0 : out STD_LOGIC_VECTOR ( 15 downto 0 );
+INTF0_RX0_ch_rxctrl1 : out STD_LOGIC_VECTOR ( 15 downto 0 );
+INTF0_RX0_ch_rxctrl2 : out STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_RX0_ch_rxctrl3 : out STD_LOGIC_VECTOR ( 7 downto 0 );
+INTF0_RX0_ch_rxdapicodeovrden : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdapicodereset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdlyalignerr : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdlyalignprog : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdlyalignreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxelecidle : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxeqtraining : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxfinealigndone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxgearboxslip : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxheadervalid : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxlpmen : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxmldchaindone : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxmldchainreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxmlfinealignreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxoobreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxosintdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphaligndone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphalignerr : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphalignreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphalignresetmask : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxphdlypd : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphdlyreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphdlyresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphsetinitreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphshift180 : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphshift180done : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxphsetinitdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxslide : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxsliderdy : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxstartofseq : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxstatus : out STD_LOGIC_VECTOR ( 2 downto 0 );
+INTF0_RX0_ch_rxsyncallin : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxsyncdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxtermination : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxvalid : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbondseq : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbond_busy : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbond_en : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbond_master : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbond_slave : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxchanbond_level : in STD_LOGIC_VECTOR ( 2 downto 0 );
+INTF0_RX0_ch_cdrbmcdrreq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_cdrfreqos : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_cdrincpctrl : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_cdrstepdir : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_cdrstepsq : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_cdrstepsx : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_eyescanreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_eyescantrigger : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_eyescandataerror : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_refdebugout : out STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxdapiresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxpkdet : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxqpisenn : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxqpisenp : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxsimplexphystatus : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxslipdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_dfehold : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_dfeovrd : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdapireset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxdapiresetmask : in STD_LOGIC_VECTOR ( 1 downto 0 );
+INTF0_RX0_ch_rxqpien : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcdrphdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_gtrxreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxprogdivresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxresetdone : out STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxcdrreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_RX0_ch_rxprbssel : in STD_LOGIC_VECTOR ( 3 downto 0 );
+INTF0_RX0_ch_rxprogdivreset : in STD_LOGIC_VECTOR ( 0 to 0 );
+INTF0_TX_clr_out : out STD_LOGIC;
+INTF0_TX_clrb_leaf_out : out STD_LOGIC;
+INTF0_RX_clr_out : out STD_LOGIC;
+INTF0_RX_clrb_leaf_out : out STD_LOGIC;
+INTF0_rst_all_in : in STD_LOGIC;
+INTF0_rst_tx_pll_and_datapath_in : in STD_LOGIC;
+INTF0_rst_tx_datapath_in : in STD_LOGIC;
+INTF0_rst_tx_done_out : out STD_LOGIC;
+INTF0_rst_rx_pll_and_datapath_in : in STD_LOGIC;
+INTF0_rst_rx_datapath_in : in STD_LOGIC;
+INTF0_rst_rx_done_out : out STD_LOGIC;
+QUAD0_ch0_loopback : in STD_LOGIC_VECTOR ( 2 downto 0 );
+QUAD0_hsclk0_lcplllock : out STD_LOGIC
+);
+end component extended_phy_layer_gtwiz_versal_0_0;</p>
+<p>component FIFO_DC is
+generic (
+G_DWIDTH                : integer := 8;                                 – Data bus fifo length
+G_AWIDTH                : integer := 8;                                 – Address bus fifo length
+G_THRESHOLD_HIGH        : integer := 2**8;                              – high threshold
+G_THRESHOLD_LOW         : integer := 0                                  – low threshold
+);
+port (
+RST_N                   : in  std_logic;
+– Writing port
+WR_CLK                  : in  std_logic;                                – Clock
+WR_DATA                 : in  std_logic_vector(G_DWIDTH-1 downto 0);    – Data write bus
+WR_DATA_EN              : in  std_logic;                                – Write command</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>      -- Reading port
+      RD_CLK                  : in  std_logic;                                -- Clock
+      RD_DATA                 : out std_logic_vector(G_DWIDTH-1 downto 0);    -- Data read bus
+      RD_DATA_EN              : in  std_logic;                                -- Read command
+      RD_DATA_VLD             : out std_logic;                                -- Data valid
+
+      -- Command port
+      CMD_FLUSH               : in  std_logic;                                -- fifo flush
+      STATUS_BUSY_FLUSH       : out std_logic;                                -- fifo is flushing
+
+      -- Status port
+      STATUS_THRESHOLD_HIGH   : out std_logic;                                -- threshold high reached flag (sur WR_CLK)
+      STATUS_THRESHOLD_LOW    : out std_logic;                                -- threshold low reached flag (sur RD_CLK)
+      STATUS_FULL             : out std_logic;                                -- full fifo flag (sur WR_CLK)
+      STATUS_EMPTY            : out std_logic;                                -- empty fifo flag (sur RD_CLK)
+      STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    -- Niveau de remplissage de la FIFO (sur WR_CLK)
+      STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0)     -- Niveau de remplissage de la FIFO (sur RD_CLK)
+  );
+</pre></div>
+</div>
+<p>end component;</p>
+<p>component lane_init_fsm is
+port (
+RST_N                            : in  std_logic;                       – global reset
+CLK                              : in  std_logic;                       – Clock generated by GTY IP
+– FROM/TO Data-link layer
+LANE_RESET_DL                    : in  std_logic;                       – Lane reset command from Data-Link Layer.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     -- RX signals
+     NO_SIGNAL                        : in  std_logic;                       -- Flag no signal are received
+     RX_NEW_WORD                      : in  std_logic;                       -- Flag new word has been received
+     DETECTED_INIT1                   : in  std_logic;                       -- Flag INIT1 control word rxed
+     DETECTED_INIT2                   : in  std_logic;                       -- Flag INIT2 control word rxed
+     DETECTED_INIT3                   : in  std_logic;                       -- Flag INIT3 control word rxed
+     DETECTED_INV_INIT1               : in  std_logic;                       -- Flag INV_INIT1 control word rxed
+     DETECTED_INV_INIT2               : in  std_logic;                       -- Flag INV_INIT2 control word rxed
+     DETECTED_RXERR_WORD              : in  std_logic;                       -- Flag RXERR detected
+     DETECTED_LOSS_SIGNAL             : in  std_logic;                       -- Flag LOSS_SINGAL control word detected
+     DETECTED_STANDBY                 : in  std_logic;                       -- Flag STANDBY control word detected
+     COMMA_K287_RXED                  : in  std_logic;                       -- Flag Comma K28.7 has been received
+     RECEIVER_DISABLED                : out std_logic;                       -- flag to enabled RX function of HSSL IP
+     CDR                              : out std_logic;                       -- Flag to enabled CDR function of HSSL IP
+     SEND_RXERR                       : out std_logic;                       -- Flag send RXERR control word to Data-Link layer when FSM leave ACTIVE_ST
+     INVERT_RX_BITS                   : out std_logic;                       -- Flag to Invert rx bit received
+     NO_SIGNAL_DETECTION_ENABLED      : out std_logic;                       -- Flag to enable the no signal function
+
+     -- TX signals
+     STANDBY_SIGNAL_X32               : in  std_logic;                       -- Flag STANDBY control word has been send x32
+     LOST_SIGNAL_X32                  : in  std_logic;                       -- Flag LOST_SIGNAL control word has been send x32
+     TRANSMITTER_DISABLED             : out std_logic;                       -- flag to enabled TX fonction of HSSL IP
+     SEND_INIT1_CTRL_WORD             : out std_logic;                       -- Flag to send INIT1 control word following by 64 pseudo-random data words
+     SEND_INIT2_CTRL_WORD             : out std_logic;                       -- Flag to send control word following by 64 pseudo-random data words
+     SEND_INIT3_CTRL_WORD             : out std_logic;                       -- Flag to send control word following by 64 pseudo-random data words
+     ENABLE_TRANSM_DATA               : out std_logic;                       -- Flag to enable to send data
+     SEND_32_STANDBY_CTRL_WORDS       : out std_logic;                       -- Flag to send STANDBY control word x32
+     SEND_32_LOSS_SIGNAL_CTRL_WORDS   : out std_logic;                       -- Flag to send LOSS_SIGNAL control word x32
+     LOST_CAUSE                       : out std_logic_vector(01 downto 00);  -- Flag to indicate the reason of the LOST_SIGNAL
+
+     -- PARAMETERS and STATUS
+     LANE_START                       : in  std_logic;                       -- Asserts or de-asserts LaneStart for the lane
+     AUTOSTART                        : in  std_logic;                       -- Asserts or de-asserts AutoStart for the lane
+     LANE_RESET                       : in  std_logic;                       -- Asserts or de-asserts LaneReset for the lane
+     LANE_STATE                       : out std_logic_vector(03 downto 00);  -- Indicates the current state of the Lane Initialization state machine in a lane
+     RX_ERROR_CNT                     : out std_logic_vector(07 downto 00);  -- Counter of error detected on the RX link
+     RX_ERROR_OVF                     : out std_logic                        -- Overflow flag of the RX_ERROR_CNT
+  );
+</pre></div>
+</div>
+<p>end component;</p>
+<p>component lane_ctrl_word_insert is
+port (
+RST_N                            : in  std_logic;                       – global reset
+CLK                              : in  std_logic;                       – Clock generated by GTY IP</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     -- From DATA-LINK/TOP
+     RD_DATA_FROM_DL                  : out std_logic;                       -- Read command to receive data from Data-link layer
+     RD_DATA_VALID_FROM_DL            : in  std_logic;                       --! Data valid flag from Data-link layer
+     CAPABILITY_FROM_DL               : in  std_logic_vector(07 downto 00);  -- Capability field from DATA-LINK layer
+     DATA_TX_FROM_DL                  : in  std_logic_vector(31 downto 00);  -- Data 32-bit receive from DATA_LINK layer
+     VALID_K_CHARAC_FROM_DL           : in  std_logic_vector(03 downto 00);  -- Flags indicates which byte is a K character from DATA-LINK layer
+     NO_DATA_FROM_DL                  : in  std_logic;                       -- Flag to enable the send of IDLE words when no data should be available from Data-Link
+     -- From/To skip_insertion
+     WAIT_SEND_DATA_FROM_SKIP         : in  std_logic;                       -- Flag to indicates that the skip_insertion send a SKIP control word
+     NEW_DATA_TO_SKIP                 : out std_logic;                       -- New data send to skip_insertion
+     DATA_TX_TO_SKIP                  : out std_logic_vector(31 downto 00);  -- Data 32-bit send to manufacturer IP
+     VALID_K_CHARAC_TO_SKIP           : out std_logic_vector(03 downto 00);  -- Flags indicates which byte is a K character
+
+     -- TX signals command from/to lane_init_fsm
+     SEND_INIT1_CTRL_WORD             : in  std_logic;                       -- Flag to send INIT1 control word following by 64 pseudo-random data words
+     SEND_INIT2_CTRL_WORD             : in  std_logic;                       -- Flag to send INIT2 control word following by 64 pseudo-random data words
+     SEND_INIT3_CTRL_WORD             : in  std_logic;                       -- Flag to send INIT3 control word following by 64 pseudo-random data words
+     ENABLE_TRANSM_DATA               : in  std_logic;                       -- Flag to enable to send data
+     SEND_32_STANDBY_CTRL_WORDS       : in  std_logic;                       -- Flag to send STANDBY control word x32
+     STANDBY_REASON                   : in  std_logic_vector(07 downto 00);  -- Standby reason from MIB
+     SEND_32_LOSS_SIGNAL_CTRL_WORDS   : in  std_logic;                       -- Flag to send LOSS_SIGNAL control word x32
+     LOST_CAUSE                       : in  std_logic_vector(01 downto 00);  -- Flag to indicate the reason of the LOST_SIGNAL
+     STANDBY_SIGNAL_X32               : out std_logic;                       -- Flag STANDBY control word has been send x32
+     LOST_SIGNAL_X32                  : out std_logic                        -- Flag LOST_SIGNAL control word has been send x32
+  );
+</pre></div>
+</div>
+<p>end component;</p>
+<p>component skip_insertion is
+port (
+RST_N                            : in  std_logic;                       – global reset
+CLK                              : in  std_logic;                       – Clock generated by GTY IP</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     -- From/to lane_ctrl_word_insert
+     NEW_DATA_FROM_LCWI               : in  std_logic;                       -- New data Flag
+     DATA_TX_FROM_LCWI                : in  std_logic_vector(31 downto 00);  -- Data 64-bit receive from DATA_LINK layer
+     VALID_K_CHARAC_FROM_LCWI         : in  std_logic_vector(03 downto 00);  -- Flags indicates which byte is a K character from DATA-LINK layer
+     WAIT_SEND_DATA                   : out std_logic;                       -- Flag to indicates that the lane_ctrl_word_insert send a SKIP control word
+
+     -- To manufacturer IP
+     DATA_TX_TO_IP                    : out std_logic_vector(31 downto 00);  -- Data 64-bit send to manufacturer IP
+     VALID_K_CHARAC_TO_IP             : out std_logic_vector(03 downto 00);  -- Flags indicates which byte is a K character
+
+     -- TX signals command from/to lane_init_fsm
+     ENABLE_TRANSM_DATA               : in  std_logic                        -- Flag to enable to send data
+  );
+</pre></div>
+</div>
+<p>end component;</p>
+<p>component parallel_loopback is
+port (
+CLK                              : in  std_logic;                       – Clock generated by GTY IP
+RST_N                            : in  std_logic;                       – Global reset
+– FROM lane_ctrl_word_insert
+DATA_TX_FROM_LCWI                : in  std_logic_vector(31 downto 00);  – 32-bit Data
+VALID_K_CARAC_FROM_LCWI          : in  std_logic_vector(03 downto 00);  – 4-bit Valid K character
+DATA_RDY_FROM_LCWI               : in  std_logic;                       – Data ready flag
+– FROM rx_sync_fsm
+DATA_TX_FROM_RSF                 : in  std_logic_vector(31 downto 00);  – 32-bit Data
+VALID_K_CARAC_FROM_RSF           : in  std_logic_vector(03 downto 00);  – 4-bit Valid K character
+DATA_RDY_FROM_RSF                : in  std_logic;                       – Data ready flag
+–FROM skip_insertion
+WAIT_SKIP_DATA                   : in  std_logic;                       – Wait for data to be skip
+–TO lane_ctrl_word_detection
+DATA_TX_TO_LCWD                  : out std_logic_vector(31 downto 00);  – 32-bit Data
+VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  – 4-bit Valid K character
+DATA_RDY_TO_LCWD                 : out std_logic;                       – Data ready flag
+– Parameter
+PARALLEL_LOOPBACK_EN             : in  std_logic                        – Enable or disable the parallel loopback for the lane
+);
+end component;</p>
+<p>component rx_sync_fsm is
+port(
+CLK_SYS                              : in  std_logic;                       –! MAIN CLOCK
+RST_N                            : in  std_logic;                       – global reset
+CLK                              : in  std_logic;                       – Clock generated by GTY IP
+– FROM Data-link layer
+LANE_RESET_DL                    : in  std_logic;                       – Lane reset command from Data-Link Layer.
+– TO lane_ctrl_word_detection
+DATA_RX_TO_LCWD                  : out std_logic_vector(31 downto 00);  – 32-bit data to lane_ctrl_word_detect
+VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  – 4-bit valid K character flags to lane_ctrl_word_detect
+DATA_RDY_TO_LCWD                 : out std_logic;                       – Data valid flag to lane_ctrl_word_detect
+– FROM MANUFACTURER IP
+DATA_RX_FROM_IP                  : in  std_logic_vector(31 downto 00);  – 32-bit data from GTY IP
+VALID_K_CARAC_FROM_IP            : in  std_logic_vector(03 downto 00);  – 4-bit valid K character flags from GTY IP
+DATA_RDY_FROM_IP                 : in  std_logic;                       – Data valid flag from GTY IP
+INVALID_CHAR_FROM_IP             : in  std_logic_vector(03 downto 00);  – Invalid character flags from GTY IP
+DISPARITY_ERR_FROM_IP            : in  std_logic_vector(03 downto 00);  – Disparity error flags from GTY IP
+RX_WORD_REALIGN_FROM_IP          : in  std_logic;                       – RX word realign from GTY IP
+COMMA_DET_FROM_IP                : in  std_logic;                       – Flag indicates that a comma is detected on the word receive
+– PARAMETERS
+LANE_RESET                       : in  std_logic                        – Asserts or de-asserts LaneReset for the lane
+);
+end component;</p>
+<p>component lane_ctrl_word_detect is
+port (
+RST_N                            : in  std_logic;                       – global reset
+CLK                              : in  std_logic;                       – Clock generated by GTY IP</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     -- RX control flag signals to from lane_init fsm
+     NO_SIGNAL                        : out std_logic;                       -- Flag no signal are received
+     RX_NEW_WORD                      : out std_logic;                       -- Flag new word has been received
+     DETECTED_INIT1                   : out std_logic;                       -- Flag INIT1 control word rxed
+     DETECTED_INIT2                   : out std_logic;                       -- Flag INIT2 control word rxed
+     DETECTED_INIT3                   : out std_logic;                       -- Flag INIT3 control word rxed
+     DETECTED_INV_INIT1               : out std_logic;                       -- Flag INV_INIT1 control word rxed
+     DETECTED_INV_INIT2               : out std_logic;                       -- Flag INV_INIT2 control word rxed
+     DETECTED_RXERR_WORD              : out std_logic;                       -- Flag RXERR detected
+     DETECTED_LOSS_SIGNAL             : out std_logic;                       -- Flag LOSS_SIGNAL detected
+     DETECTED_STANDBY                 : out std_logic;                       -- Flag STANDBY detected
+     COMMA_K287_RXED                  : out std_logic;                       -- Flag Comma K28.7 has been received
+     CAPABILITY                       : out std_logic_vector(07 downto 00);  -- Capability from INIT3 control word (31 downto 24)
+     SEND_RXERR                       : in  std_logic;                       -- Flag send RXERR control word to Data-Link layer when FSM leave ACTIVE_ST
+     NO_SIGNAL_DETECTION_ENABLED      : in  std_logic;                       -- Flag to enable the no signal function
+     ENABLE_TRANSM_DATA               : in  std_logic;                       -- Flag to enable the transmision of data
+
+     -- RX signal from rx_sync_fsm/parallel_loopback
+     DATA_RX_FROM_RSF                 : in  std_logic_vector(31 downto 00);  -- 32-bit data from rx_sync_fsm
+     VALID_K_CARAC_FROM_RSF           : in  std_logic_vector(03 downto 00);  -- 4-bit valid K character flags from rx_sync_fsm
+     DATA_RDY_FROM_RSF                : in  std_logic;                       -- Data valid flag from rx_sync_fsm
+
+     -- RX signals to DATA-LINK
+     DATA_RX_TO_DL                    : out std_logic_vector(31 downto 00);  -- 32-bit data to Data-link layer
+     VALID_K_CARAC_TO_DL              : out std_logic_vector(03 downto 00);  -- 4-bit valid K character flags to Data-link layer
+     DATA_RDY_TO_DL                   : out std_logic                        -- Data valid flag to Data-link layer
+  );
+</pre></div>
+</div>
+<p>end component;</p>
+<hr class="docutils" />
+</section>
+<section id="internal-signals-declaration">
+<h1>——————————————————– Internal signals declaration ————————————————–<a class="headerlink" href="#internal-signals-declaration" title="Link to this heading"></a></h1>
+<p>– Internal signals from lane_init_fsm
+signal transmitter_dis_from_lif                 : std_logic;                        –! Transmitter disable flag from Lane_init_fsm
+signal send_init1_ctrl_word_from_lif            : std_logic;                        –! Send INIT1 control word flag from Lane_init_fsm
+signal send_init2_ctrl_word_from_lif            : std_logic;                        –! Send INIT2 control word flag from Lane_init_fsm
+signal send_init3_ctrl_word_from_lif            : std_logic;                        –! Send INIT3 control word flag from Lane_init_fsm
+signal enable_transm_data_from_lif              : std_logic;                        –! Enable transmit data flag from Lane_init_fsm
+signal send_32_standby_ctrl_words_from_lif      : std_logic;                        –! Send x32 STANDBY control word flag from Lane_init_fsm
+signal send_32_loss_signal_ctrl_word_from_lif   : std_logic;                        –! Send x32 LOSS_SIGNAL control word flag from Lane_init_fsm
+signal lost_cause_from_lif                      : std_logic_vector(01 downto 00);   –! LOST cause from Lane_init_fsm
+signal lane_state_from_lif                      : std_logic_vector(03 downto 00);   –! Lane state from Lane_init_fsm
+signal rx_error_cnt_from_lif                    : std_logic_vector(07 downto 00);   –! RXERR counter from Lane_init_fsm
+signal rx_error_ovf_from_lif                    : std_logic;                        –! RXERR counter overflow from Lane_init_fsm
+signal receiver_dis_from_lif                    : std_logic;                        –! Receiver disable flag from Lane_init_fsm
+signal cdr_from_lif                             : std_logic;                        –! CDR enable from Lane_init_fsm
+signal send_rxerr_from_lif                      : std_logic;                        –! Send RXERR control word flag from Lane_init_fsm
+signal invert_rx_bits_from_lif                  : std_logic;                        –! RX data invertion flag from Lane_init_fsm
+signal no_signal_detection_enabled_from_lif     : std_logic;                        –! No_signal detection enable flag from Lane_init_fsm</p>
+<p>– Internal signals from FiFos TX
+signal data_plus_k_char_from_dl                 : std_logic_vector(35 downto 00);   –! 32-bit Data and 4-bit valid K character from Data_link
+signal data_tx_from_fifo                        : std_logic_vector(35 downto 00);   –! 32-bit Data and 4-bit valid K character from TX FiFo
+signal fifo_tx_empty                            : std_logic;                        –! TX FiFo empty flag
+signal fifo_tx_data_valid                       : std_logic;                        –! TX FiFo data valid flag</p>
+<p>– Internal signals from lane_ctrl_word_insert
+signal rd_data_en_from_lcwi                     : std_logic;                        –! Read data enable flag from Lane_ctrl_word_insert
+signal standby_signal_x32_from_lcwi             : std_logic;                        –! x32 STANDBY control words flag (x32 STANDBY has been send) from Lane_ctrl_word_insert
+signal lost_signal_x32_from_lcwi                : std_logic;                        –! x32 LOSS_SIGNAL control words flag (x32 LOSS_SIGNAL has been send) from Lane_ctrl_word_insert
+signal new_data_from_lcwi                       : std_logic;                        –! New data flag from Lane_ctrl_word_insert
+signal data_tx_from_lcwi                        : std_logic_vector(31 downto 00);   –! 32-bit data tx from Lane_ctrl_word_insert
+signal valid_k_charac_from_lcwi                 : std_logic_vector(03 downto 00);   –! 4-bit valid K character flags from Lane_ctrl_word_insert</p>
+<p>– Internal signals from skip_insertion
+signal wait_send_data_from_si                   : std_logic;                        –! Wait send data flag from skip_insertion
+signal data_tx_from_si                          : std_logic_vector(127 downto 00);  –! 32-bit data from skip_insertion
+signal valid_k_charac_from_si                   : std_logic_vector(07 downto 00);   –! 4-bit valid K character flags from skip_insertion</p>
+<p>– Internal signals from parallel_loopback
+signal data_tx_from_plb                         : std_logic_vector(31 downto 00);   –! 32-bit data from parallel_loopback
+signal valid_k_charac_from_plb                  : std_logic_vector(03 downto 00);   –! 4-bit valid K character flags from parallel_loopback
+signal data_rdy_from_plb                        : std_logic;                        –! Data ready flag from parallel_loopback</p>
+<p>– Internal signals from rx_sync_fsm
+signal data_rx_from_rsf                         : std_logic_vector(31 downto 00);   –! 32-bit data from rx_sync_fsm
+signal valid_k_charac_from_rsf                  : std_logic_vector(03 downto 00);   –! 4-bit valid K character flags from rx_sync_fsm
+signal data_rdy_from_rsf                        : std_logic;                        –! Data ready flag from rx_sync_fsm</p>
+<p>– Internal signals from FIFO_RX
+signal data_plus_k_char_to_dl                   : std_logic_vector(35 downto 00);   –! 32-bit Data and 4-bit valid K character to Data_link
+signal data_plus_k_char_to_fifo_rx              : std_logic_vector(35 downto 00);   –! 32-bit Data and 4-bit valid K character to RX FiFo</p>
+<p>– Internal signals from lane_ctrl_word_detect
+signal no_signal_from_lcwd                      : std_logic;                        –! No_signal flag from lane_ctrl_word_detect
+signal rx_new_word_from_lcwd                    : std_logic;                        –! Rx new word receive flag from lane_ctrl_word_detect
+signal detected_init1_from_lcwd                 : std_logic;                        –! INIT1 detected flag from lane_ctrl_word_detect
+signal detected_init2_from_lcwd                 : std_logic;                        –! INIT2 detected flag from lane_ctrl_word_detect
+signal detected_init3_from_lcwd                 : std_logic;                        –! INIT3 detected flag from lane_ctrl_word_detect
+signal detected_inv_init1_from_lcwd             : std_logic;                        –! Inversed INIT1 detected flag from lane_ctrl_word_detect
+signal detected_inv_init2_from_lcwd             : std_logic;                        –! Inversed INIT2 detected flag from lane_ctrl_word_detect
+signal detected_rxerr_word_from_lcwd            : std_logic;                        –! RXERR control word detected flag from lane_ctrl_word_detect
+signal detected_lost_signal_from_lcwd           : std_logic;                        –! LOST_SIGNAL control word detected from lane_ctrl_word_detect
+signal detected_standby_from_lcwd               : std_logic;                        –! STANDBY control word detected from lane_ctrl_word_detect
+signal comma_k287_rxed_from_lcwd                : std_logic;                        –! Comma character K28.7 received flag from lane_ctrl_word_detect
+signal data_rx_from_lcwd                        : std_logic_vector(31 downto 00);   –! 32-bit data from lane_ctrl_word_detect
+signal valid_k_charac_from_lcwd                 : std_logic_vector(03 downto 00);   –! 4-bit valid K character flags from lane_ctrl_word_detect
+signal data_rdy_from_lcwd                       : std_logic;                        –! Data ready flag from lane_ctrl_word_detect
+signal far_end_capa_i                           : std_logic_vector(07 downto 00);   –! far_end_capa internal</p>
+<p>– Internal signals from extended_phy_layer (Manufacturer_IP)
+signal QUAD0_TX0_outclk                         : std_logic;                        –! PLL out clock 150MHz generated by GTY IP
+signal reset                                    : std_logic;                        –! Reset signal grouping (not RST_N or LANE_RESET or LANE_RESET_DL) in order to reset GTY IP
+signal QUAD0_rxp                                : std_logic_vector(03 downto 00);   –! RX positive signal of GTY IP
+signal QUAD0_rxn                                : std_logic_vector(03 downto 00);   –! RX negative signal of GTY IP
+signal QUAD0_txp                                : std_logic_vector(03 downto 00);   –! TX positive signal of GTY IP
+signal QUAD0_txn                                : std_logic_vector(03 downto 00);   –! TX negative signal of GTY IP
+signal QUAD0_ch0_loopback                       : std_logic_vector(02 downto 00);   –! Loopback command (Near-end or Far-End loopback) of GTY IP
+signal INTF0_RX0_ch_rxcdrhold                   : std_logic_vector(00 downto 00);   –! CRD hold command used in conjunction with INTF0_RX0_ch_rxcdrovrden signal
+signal INTF0_RX0_ch_rxcdrovrden                 : std_logic_vector(00 downto 00);   –! CDR Overden command used in conjunction with INTF0_RX0_ch_rxcdrhold signal
+signal INTF0_RX0_ch_rxdata                      : std_logic_vector(127 downto 00);  –! 32-bit RX data received and decoded by GTY IP
+signal INTF0_RX0_ch_rxdatavalid                 : std_logic_vector(01 downto 00);   –! Data valid flag generated by GTY IP
+signal INTF0_RX0_ch_rxbyterealign               : std_logic_vector(00 downto 00);   –! Byte realign flag generated by GTY IP
+signal INTF0_RX0_ch_rxctrl0                     : std_logic_vector(15 downto 00);   –! 4-bit valid K character flags generated by GTY IP
+signal INTF0_RX0_ch_rxctrl1                     : std_logic_vector(15 downto 00);   –! 4-bit disparity flags generated by GTY IP
+signal INTF0_RX0_ch_rxctrl2                     : std_logic_vector(07 downto 00);   –! 4-bit valid comma character flags generated by GTY IP
+signal INTF0_RX0_ch_rxctrl3                     : std_logic_vector(07 downto 00);   –! 4-bit not valid charachter flags (in the 8B/10B table) generated by GTY IP
+signal QUAD0_hsclk0_lcplllock                   : std_logic;                        –! PLL lock flag generated by the GTY IP
+signal INTF0_TX0_ch_txpd                        : std_logic_vector(01 downto 00);   –! Command to disable the transmitter part of GTY IP
+signal INTF0_RX0_ch_rxpd                        : std_logic_vector(01 downto 00);   –! Command to disable the receiver part of GTY IP
+signal INTF0_rst_tx_done_out_0                  : std_logic;                        –! Up when internal tx reset done
+– Internal signals from BufG_GT_wrapper
+signal clk_tx                                   : std_logic;                        –! Clock generated by the BufG_GT, image of QUAD0_TX0_outclk generated by GTY IP
+– ctrl internal signals
+signal ctrl_in_dl               : std_logic_vector(8 downto 0);
+signal ctrl_in_dl_sync          : std_logic_vector(8 downto 0);
+signal ctrl_out_dl              : std_logic_vector(8 downto 0);
+signal ctrl_out_dl_sync         : std_logic_vector(8 downto 0);
+signal lane_reset_dl_i          : std_logic;
+signal capability_tx_i          : std_logic_vector(7 downto 0);
+signal lane_active_dl_i         : std_logic;
+signal fifo_in_ctrl_data_valid  : std_logic;
+signal fifo_out_ctrl_data_valid : std_logic;
+begin</p>
+<p>LANE_RESET_PPL_OUT &lt;= lane_reset_dl_i or LANE_RESET;</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-lane-init-fsm-module">
+<h1>–! Instance of lane_init_fsm module<a class="headerlink" href="#instance-of-lane-init-fsm-module" title="Link to this heading"></a></h1>
+<p>inst_lane_init_fsm : lane_init_fsm
+port map (
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– FROM/TO Data-link layer
+LANE_RESET_DL                    =&gt; lane_reset_dl_i,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  -- RX signals
+  NO_SIGNAL                        =&gt; no_signal_from_lcwd,
+  RX_NEW_WORD                      =&gt; rx_new_word_from_lcwd,
+  DETECTED_INIT1                   =&gt; detected_init1_from_lcwd,
+  DETECTED_INIT2                   =&gt; detected_init2_from_lcwd,
+  DETECTED_INIT3                   =&gt; detected_init3_from_lcwd,
+  DETECTED_INV_INIT1               =&gt; detected_inv_init1_from_lcwd,
+  DETECTED_INV_INIT2               =&gt; detected_inv_init2_from_lcwd,
+  DETECTED_RXERR_WORD              =&gt; detected_rxerr_word_from_lcwd,
+  DETECTED_LOSS_SIGNAL             =&gt; detected_lost_signal_from_lcwd,
+  DETECTED_STANDBY                 =&gt; detected_standby_from_lcwd,
+  COMMA_K287_RXED                  =&gt; comma_k287_rxed_from_lcwd,
+  RECEIVER_DISABLED                =&gt; receiver_dis_from_lif,
+  CDR                              =&gt; cdr_from_lif,
+  SEND_RXERR                       =&gt; send_rxerr_from_lif,
+  INVERT_RX_BITS                   =&gt; invert_rx_bits_from_lif,
+  NO_SIGNAL_DETECTION_ENABLED      =&gt; no_signal_detection_enabled_from_lif,
+  -- TX signals
+  STANDBY_SIGNAL_X32               =&gt; standby_signal_x32_from_lcwi,
+  LOST_SIGNAL_X32                  =&gt; lost_signal_x32_from_lcwi,
+  TRANSMITTER_DISABLED             =&gt; transmitter_dis_from_lif,
+  SEND_INIT1_CTRL_WORD             =&gt; send_init1_ctrl_word_from_lif,
+  SEND_INIT2_CTRL_WORD             =&gt; send_init2_ctrl_word_from_lif,
+  SEND_INIT3_CTRL_WORD             =&gt; send_init3_ctrl_word_from_lif,
+  ENABLE_TRANSM_DATA               =&gt; enable_transm_data_from_lif,
+  SEND_32_STANDBY_CTRL_WORDS       =&gt; send_32_standby_ctrl_words_from_lif,
+  SEND_32_LOSS_SIGNAL_CTRL_WORDS   =&gt; send_32_loss_signal_ctrl_word_from_lif,
+  LOST_CAUSE                       =&gt; lost_cause_from_lif,
+  -- PARAMETERS and STATUS
+  LANE_START                       =&gt; LANE_START,
+  AUTOSTART                        =&gt; AUTOSTART,
+  LANE_RESET                       =&gt; LANE_RESET,
+  LANE_STATE                       =&gt; lane_state_from_lif,
+  RX_ERROR_CNT                     =&gt; rx_error_cnt_from_lif,
+  RX_ERROR_OVF                     =&gt; rx_error_ovf_from_lif
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h1>);<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+</section>
+<section id="instance-of-tx-fifo-1mb-wrapper-module">
+<h1>– Instance of TX FIFO_1MB_wrapper module<a class="headerlink" href="#instance-of-tx-fifo-1mb-wrapper-module" title="Link to this heading"></a></h1>
+</section>
+<section id="ctrl-in-dl-lane-reset-dl-capability-tx-lane-reset-dl-i-0-when-lane-state-from-lif-0000-else-ctrl-in-dl-sync-8-when-fifo-in-ctrl-data-valid-1-capability-tx-i-ctrl-in-dl-sync-7-downto-0-when-fifo-in-ctrl-data-valid-1-inst-fifo-in-ctrl-fifo-dc-generic-map-g-dwidth-c-dwidth-ctrl-tx-g-awidth-c-awidth-ctrl-tx-g-threshold-high-2-c-awidth-ctrl-tx-g-threshold-low-0-port-map-rst-n-rst-txclk-n-writing-port-wr-clk-clk-wr-data-ctrl-in-dl-wr-data-en-1-reading-port-rd-clk-clk-tx-rd-data-ctrl-in-dl-sync-rd-data-en-1-rd-data-vld-fifo-in-ctrl-data-valid-command-port-cmd-flush-0-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-open-status-level-wr-open-status-level-rd-open">
+<h1>ctrl_in_dl      &lt;= LANE_RESET_DL &amp; CAPABILITY_TX;
+lane_reset_dl_i &lt;= ‘0’ when lane_state_from_lif = “0000” else ctrl_in_dl_sync(8) when fifo_in_ctrl_data_valid =’1’;
+capability_tx_i &lt;= ctrl_in_dl_sync(7 downto 0) when fifo_in_ctrl_data_valid =’1’;
+inst_fifo_in_ctrl : FIFO_DC
+generic map(
+G_DWIDTH                =&gt; C_DWIDTH_CTRL_TX,
+G_AWIDTH                =&gt; C_AWIDTH_CTRL_TX,
+G_THRESHOLD_HIGH        =&gt; 2**C_AWIDTH_CTRL_TX,
+G_THRESHOLD_LOW         =&gt; 0
+)
+port map(
+RST_N                   =&gt; RST_TXCLK_N,
+– Writing port
+WR_CLK                  =&gt; CLK,
+WR_DATA                 =&gt; ctrl_in_dl,
+WR_DATA_EN              =&gt; ‘1’,
+– Reading port
+RD_CLK                  =&gt; clk_tx,
+RD_DATA                 =&gt; ctrl_in_dl_sync,
+RD_DATA_EN              =&gt; ‘1’,
+RD_DATA_VLD             =&gt; fifo_in_ctrl_data_valid,
+– Command port
+CMD_FLUSH               =&gt; ‘0’,
+STATUS_BUSY_FLUSH       =&gt; open,
+– Status port
+STATUS_THRESHOLD_HIGH   =&gt; open,
+STATUS_THRESHOLD_LOW    =&gt; open,
+STATUS_FULL             =&gt; open,
+STATUS_EMPTY            =&gt; open,
+STATUS_LEVEL_WR         =&gt; open,
+STATUS_LEVEL_RD         =&gt; open
+);<a class="headerlink" href="#ctrl-in-dl-lane-reset-dl-capability-tx-lane-reset-dl-i-0-when-lane-state-from-lif-0000-else-ctrl-in-dl-sync-8-when-fifo-in-ctrl-data-valid-1-capability-tx-i-ctrl-in-dl-sync-7-downto-0-when-fifo-in-ctrl-data-valid-1-inst-fifo-in-ctrl-fifo-dc-generic-map-g-dwidth-c-dwidth-ctrl-tx-g-awidth-c-awidth-ctrl-tx-g-threshold-high-2-c-awidth-ctrl-tx-g-threshold-low-0-port-map-rst-n-rst-txclk-n-writing-port-wr-clk-clk-wr-data-ctrl-in-dl-wr-data-en-1-reading-port-rd-clk-clk-tx-rd-data-ctrl-in-dl-sync-rd-data-en-1-rd-data-vld-fifo-in-ctrl-data-valid-command-port-cmd-flush-0-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-open-status-level-wr-open-status-level-rd-open" title="Link to this heading"></a></h1>
+</section>
+<section id="id2">
+<h1>– Instance of TX FIFO_1MB_wrapper module<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<p>inst_fifo_tx_data : FIFO_DC
+generic map(
+G_DWIDTH                =&gt; C_DWIDTH,
+G_AWIDTH                =&gt; C_AWIDTH,
+G_THRESHOLD_HIGH        =&gt; 2**C_AWIDTH,
+G_THRESHOLD_LOW         =&gt; 0
+)
+port map(
+RST_N                   =&gt; RST_TXCLK_N,
+– Writing port
+WR_CLK                  =&gt; CLK,
+WR_DATA                 =&gt; data_plus_k_char_from_dl,
+WR_DATA_EN              =&gt; NEW_DATA_TX,
+– Reading port
+RD_CLK                  =&gt; clk_tx,
+RD_DATA                 =&gt; data_tx_from_fifo,
+RD_DATA_EN              =&gt; rd_data_en_from_lcwi,
+RD_DATA_VLD             =&gt; fifo_tx_data_valid,
+– Command port
+CMD_FLUSH               =&gt; LANE_RESET_DL,
+STATUS_BUSY_FLUSH       =&gt; open,
+– Status port
+STATUS_THRESHOLD_HIGH   =&gt; open,
+STATUS_THRESHOLD_LOW    =&gt; open,
+STATUS_FULL             =&gt; FIFO_TX_FULL,
+STATUS_EMPTY            =&gt; fifo_tx_empty,
+STATUS_LEVEL_WR         =&gt; open,
+STATUS_LEVEL_RD         =&gt; open
+);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-lane-ctrl-word-insert-module">
+<h1>– Instance of lane_ctrl_word_insert module<a class="headerlink" href="#instance-of-lane-ctrl-word-insert-module" title="Link to this heading"></a></h1>
+<p>inst_lane_ctrl_word_insert : lane_ctrl_word_insert
+port map(
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– From DATA-LINK/TOP
+RD_DATA_FROM_DL                  =&gt; rd_data_en_from_lcwi,
+RD_DATA_VALID_FROM_DL            =&gt; fifo_tx_data_valid,
+CAPABILITY_FROM_DL               =&gt; capability_tx_i,
+DATA_TX_FROM_DL                  =&gt; data_tx_from_fifo(31 downto 00),
+VALID_K_CHARAC_FROM_DL           =&gt; data_tx_from_fifo(35 downto 32),
+NO_DATA_FROM_DL                  =&gt; fifo_tx_empty,
+– From/To skip_insertion
+WAIT_SEND_DATA_FROM_SKIP         =&gt; wait_send_data_from_si,
+NEW_DATA_TO_SKIP                 =&gt; new_data_from_lcwi,
+DATA_TX_TO_SKIP                  =&gt; data_tx_from_lcwi,
+VALID_K_CHARAC_TO_SKIP           =&gt; valid_k_charac_from_lcwi,
+– TX signals command from/to lane_init_fsm
+SEND_INIT1_CTRL_WORD             =&gt; send_init1_ctrl_word_from_lif,
+SEND_INIT2_CTRL_WORD             =&gt; send_init2_ctrl_word_from_lif,
+SEND_INIT3_CTRL_WORD             =&gt; send_init3_ctrl_word_from_lif,
+ENABLE_TRANSM_DATA               =&gt; enable_transm_data_from_lif,
+SEND_32_STANDBY_CTRL_WORDS       =&gt; send_32_standby_ctrl_words_from_lif,
+STANDBY_REASON                   =&gt; STANDBY_REASON,
+SEND_32_LOSS_SIGNAL_CTRL_WORDS   =&gt; send_32_loss_signal_ctrl_word_from_lif,
+LOST_CAUSE                       =&gt; lost_cause_from_lif,
+STANDBY_SIGNAL_X32               =&gt; standby_signal_x32_from_lcwi,
+LOST_SIGNAL_X32                  =&gt; lost_signal_x32_from_lcwi
+);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-skip-insertion-module">
+<h1>– Instance of skip_insertion module<a class="headerlink" href="#instance-of-skip-insertion-module" title="Link to this heading"></a></h1>
+<p>inst_skip_insertion : skip_insertion
+port map(
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– From/to lane_ctrl_word_insert
+NEW_DATA_FROM_LCWI               =&gt; new_data_from_lcwi,
+DATA_TX_FROM_LCWI                =&gt; data_tx_from_lcwi,
+VALID_K_CHARAC_FROM_LCWI         =&gt; valid_k_charac_from_lcwi,
+WAIT_SEND_DATA                   =&gt; wait_send_data_from_si,
+– To manufacturer IP
+DATA_TX_TO_IP                    =&gt; data_tx_from_si(31 downto 00),
+VALID_K_CHARAC_TO_IP             =&gt; valid_k_charac_from_si(03 downto 00),
+– TX signals command from/to lane_init_fsm
+ENABLE_TRANSM_DATA               =&gt; enable_transm_data_from_lif
+);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-parallel-loopback-module">
+<h1>– Instance of parallel_loopback module<a class="headerlink" href="#instance-of-parallel-loopback-module" title="Link to this heading"></a></h1>
+<p>inst_parallel_loopback : parallel_loopback
+port map(
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– FROM lane_ctrl_word_insert
+DATA_TX_FROM_LCWI                =&gt; data_tx_from_lcwi,
+VALID_K_CARAC_FROM_LCWI          =&gt; valid_k_charac_from_lcwi,
+DATA_RDY_FROM_LCWI               =&gt; new_data_from_lcwi,
+– FROM rx_sync_fsm
+DATA_TX_FROM_RSF                 =&gt; data_rx_from_rsf,
+VALID_K_CARAC_FROM_RSF           =&gt; valid_k_charac_from_rsf,
+DATA_RDY_FROM_RSF                =&gt; data_rdy_from_rsf,
+– FROM skip_insertion
+WAIT_SKIP_DATA                   =&gt; wait_send_data_from_si,
+–TO lane_ctrl_word_detection
+DATA_TX_TO_LCWD                  =&gt; data_tx_from_plb,
+VALID_K_CARAC_TO_LCWD            =&gt; valid_k_charac_from_plb,
+DATA_RDY_TO_LCWD                 =&gt; data_rdy_from_plb,
+– Parameter
+PARALLEL_LOOPBACK_EN             =&gt; PARALLEL_LOOPBACK_EN
+);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-rx-sync-fsm-module">
+<h1>– Instance of rx_sync_fsm module<a class="headerlink" href="#instance-of-rx-sync-fsm-module" title="Link to this heading"></a></h1>
+<p>inst_rx_sync_fsm : rx_sync_fsm
+port map(
+CLK_SYS                          =&gt; CLK,
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– FROM Data-link layer
+LANE_RESET_DL                    =&gt; lane_reset_dl_i,
+– TO lane_ctrl_word_detection
+DATA_RX_TO_LCWD                  =&gt; data_rx_from_rsf,
+VALID_K_CARAC_TO_LCWD            =&gt; valid_k_charac_from_rsf,
+DATA_RDY_TO_LCWD                 =&gt; data_rdy_from_rsf,
+– FROM MANUFACTURER IP
+DATA_RX_FROM_IP                  =&gt; INTF0_RX0_ch_rxdata(31 downto 00),
+VALID_K_CARAC_FROM_IP            =&gt; INTF0_RX0_ch_rxctrl0(03 downto 00),
+DATA_RDY_FROM_IP                 =&gt; INTF0_RX0_ch_rxdatavalid(0),
+INVALID_CHAR_FROM_IP             =&gt; INTF0_RX0_ch_rxctrl3(03 downto 00),
+DISPARITY_ERR_FROM_IP            =&gt; INTF0_RX0_ch_rxctrl1(03 downto 00),
+RX_WORD_REALIGN_FROM_IP          =&gt; INTF0_RX0_ch_rxbyterealign(0),
+COMMA_DET_FROM_IP                =&gt; INTF0_RX0_ch_rxctrl2(0),
+– PARAMETERS
+LANE_RESET                       =&gt; LANE_RESET
+);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-lane-ctrl-word-detect-module">
+<h1>– Instance of lane_ctrl_word_detect module<a class="headerlink" href="#instance-of-lane-ctrl-word-detect-module" title="Link to this heading"></a></h1>
+<p>inst_lane_ctrl_word_detect : lane_ctrl_word_detect
+port map(
+RST_N                            =&gt; RST_TXCLK_N,
+CLK                              =&gt; clk_tx,
+– RX control flag signals to from lane_init fsm
+NO_SIGNAL                        =&gt; no_signal_from_lcwd,
+RX_NEW_WORD                      =&gt; rx_new_word_from_lcwd,
+DETECTED_INIT1                   =&gt; detected_init1_from_lcwd,
+DETECTED_INIT2                   =&gt; detected_init2_from_lcwd,
+DETECTED_INIT3                   =&gt; detected_init3_from_lcwd,
+DETECTED_INV_INIT1               =&gt; detected_inv_init1_from_lcwd,
+DETECTED_INV_INIT2               =&gt; detected_inv_init2_from_lcwd,
+DETECTED_RXERR_WORD              =&gt; detected_rxerr_word_from_lcwd,
+DETECTED_LOSS_SIGNAL             =&gt; detected_lost_signal_from_lcwd,
+DETECTED_STANDBY                 =&gt; detected_standby_from_lcwd,
+COMMA_K287_RXED                  =&gt; comma_k287_rxed_from_lcwd,
+CAPABILITY                       =&gt; far_end_capa_i,
+SEND_RXERR                       =&gt; send_rxerr_from_lif,
+NO_SIGNAL_DETECTION_ENABLED      =&gt; no_signal_detection_enabled_from_lif,
+ENABLE_TRANSM_DATA               =&gt; enable_transm_data_from_lif,
+– RX signal from rx_sync_fsm/parallel_loopback
+DATA_RX_FROM_RSF                 =&gt; data_tx_from_plb,
+VALID_K_CARAC_FROM_RSF           =&gt; valid_k_charac_from_plb,
+DATA_RDY_FROM_RSF                =&gt; data_rdy_from_plb,
+– RX signals to DATA-LINK
+DATA_RX_TO_DL                    =&gt; data_rx_from_lcwd,
+VALID_K_CARAC_TO_DL              =&gt; valid_k_charac_from_lcwd,
+DATA_RDY_TO_DL                   =&gt; data_rdy_from_lcwd</p>
+<p>);</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-rx-fifo-1mb-wrapper-module">
+<h1>– Instance of RX FIFO_1MB_wrapper module<a class="headerlink" href="#instance-of-rx-fifo-1mb-wrapper-module" title="Link to this heading"></a></h1>
+<p>data_plus_k_char_to_fifo_rx   &lt;= valid_k_charac_from_lcwd &amp; data_rx_from_lcwd;   – regroup data and valid K char on 36-bit vector</p>
+</section>
+<section id="inst-fifo-rx-data-fifo-dc-generic-map-g-dwidth-c-dwidth-g-awidth-c-awidth-g-threshold-high-2-c-awidth-g-threshold-low-0-port-map-rst-n-rst-n-writing-port-wr-clk-clk-tx-wr-data-data-plus-k-char-to-fifo-rx-wr-data-en-data-rdy-from-lcwd-reading-port-rd-clk-clk-rd-data-data-plus-k-char-to-dl-rd-data-en-fifo-rx-rd-en-rd-data-vld-fifo-rx-data-valid-command-port-cmd-flush-lane-reset-dl-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-fifo-rx-empty-status-level-wr-open-status-level-rd-open">
+<h1>inst_fifo_rx_data : FIFO_DC
+generic map(
+G_DWIDTH                =&gt; C_DWIDTH,
+G_AWIDTH                =&gt; C_AWIDTH,
+G_THRESHOLD_HIGH        =&gt; 2**C_AWIDTH,
+G_THRESHOLD_LOW         =&gt; 0
+)
+port map(
+RST_N                   =&gt; RST_N,
+– Writing port
+WR_CLK                  =&gt; clk_tx,
+WR_DATA                 =&gt; data_plus_k_char_to_fifo_rx,
+WR_DATA_EN              =&gt; data_rdy_from_lcwd,
+– Reading port
+RD_CLK                  =&gt; CLK,
+RD_DATA                 =&gt; data_plus_k_char_to_dl,
+RD_DATA_EN              =&gt; FIFO_RX_RD_EN,
+RD_DATA_VLD             =&gt; FIFO_RX_DATA_VALID,
+– Command port
+CMD_FLUSH               =&gt; LANE_RESET_DL,
+STATUS_BUSY_FLUSH       =&gt; open,
+– Status port
+STATUS_THRESHOLD_HIGH   =&gt; open,
+STATUS_THRESHOLD_LOW    =&gt; open,
+STATUS_FULL             =&gt; open,
+STATUS_EMPTY            =&gt; FIFO_RX_EMPTY,
+STATUS_LEVEL_WR         =&gt; open,
+STATUS_LEVEL_RD         =&gt; open
+);<a class="headerlink" href="#inst-fifo-rx-data-fifo-dc-generic-map-g-dwidth-c-dwidth-g-awidth-c-awidth-g-threshold-high-2-c-awidth-g-threshold-low-0-port-map-rst-n-rst-n-writing-port-wr-clk-clk-tx-wr-data-data-plus-k-char-to-fifo-rx-wr-data-en-data-rdy-from-lcwd-reading-port-rd-clk-clk-rd-data-data-plus-k-char-to-dl-rd-data-en-fifo-rx-rd-en-rd-data-vld-fifo-rx-data-valid-command-port-cmd-flush-lane-reset-dl-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-fifo-rx-empty-status-level-wr-open-status-level-rd-open" title="Link to this heading"></a></h1>
+</section>
+<section id="id3">
+<h1>– Instance of TX FIFO_1MB_wrapper module<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
+</section>
+<section id="ctrl-out-dl-lane-active-dl-i-far-end-capa-i-lane-active-dl-ctrl-out-dl-sync-8-when-fifo-out-ctrl-data-valid-1-far-end-capa-dl-ctrl-out-dl-sync-7-downto-0-when-fifo-out-ctrl-data-valid-1-inst-fifo-out-ctrl-fifo-dc-generic-map-g-dwidth-c-dwidth-ctrl-rx-g-awidth-c-awidth-ctrl-rx-g-threshold-high-2-c-awidth-ctrl-rx-g-threshold-low-0-port-map-rst-n-rst-n-writing-port-wr-clk-clk-tx-wr-data-ctrl-out-dl-wr-data-en-1-reading-port-rd-clk-clk-rd-data-ctrl-out-dl-sync-rd-data-en-1-rd-data-vld-fifo-out-ctrl-data-valid-command-port-cmd-flush-0-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-open-status-level-wr-open-status-level-rd-open">
+<h1>ctrl_out_dl     &lt;= lane_active_dl_i &amp; far_end_capa_i;
+LANE_ACTIVE_DL  &lt;= ctrl_out_dl_sync(8)          when fifo_out_ctrl_data_valid =’1’;
+FAR_END_CAPA_DL &lt;= ctrl_out_dl_sync(7 downto 0) when fifo_out_ctrl_data_valid =’1’;
+inst_fifo_out_ctrl : FIFO_DC
+generic map(
+G_DWIDTH                =&gt; C_DWIDTH_CTRL_RX,
+G_AWIDTH                =&gt; C_AWIDTH_CTRL_RX,
+G_THRESHOLD_HIGH        =&gt; 2**C_AWIDTH_CTRL_RX,
+G_THRESHOLD_LOW         =&gt; 0
+)
+port map(
+RST_N                   =&gt; RST_N,
+– Writing port
+WR_CLK                  =&gt; clk_tx,
+WR_DATA                 =&gt; ctrl_out_dl,
+WR_DATA_EN              =&gt; ‘1’,
+– Reading port
+RD_CLK                  =&gt; CLK,
+RD_DATA                 =&gt; ctrl_out_dl_sync,
+RD_DATA_EN              =&gt; ‘1’,
+RD_DATA_VLD             =&gt; fifo_out_ctrl_data_valid,
+– Command port
+CMD_FLUSH               =&gt; ‘0’,
+STATUS_BUSY_FLUSH       =&gt; open,
+– Status port
+STATUS_THRESHOLD_HIGH   =&gt; open,
+STATUS_THRESHOLD_LOW    =&gt; open,
+STATUS_FULL             =&gt; open,
+STATUS_EMPTY            =&gt; open,
+STATUS_LEVEL_WR         =&gt; open,
+STATUS_LEVEL_RD         =&gt; open
+);<a class="headerlink" href="#ctrl-out-dl-lane-active-dl-i-far-end-capa-i-lane-active-dl-ctrl-out-dl-sync-8-when-fifo-out-ctrl-data-valid-1-far-end-capa-dl-ctrl-out-dl-sync-7-downto-0-when-fifo-out-ctrl-data-valid-1-inst-fifo-out-ctrl-fifo-dc-generic-map-g-dwidth-c-dwidth-ctrl-rx-g-awidth-c-awidth-ctrl-rx-g-threshold-high-2-c-awidth-ctrl-rx-g-threshold-low-0-port-map-rst-n-rst-n-writing-port-wr-clk-clk-tx-wr-data-ctrl-out-dl-wr-data-en-1-reading-port-rd-clk-clk-rd-data-ctrl-out-dl-sync-rd-data-en-1-rd-data-vld-fifo-out-ctrl-data-valid-command-port-cmd-flush-0-status-busy-flush-open-status-port-status-threshold-high-open-status-threshold-low-open-status-full-open-status-empty-open-status-level-wr-open-status-level-rd-open" title="Link to this heading"></a></h1>
+</section>
+<section id="instance-of-tx-bufg-gt-wrapper-module-for-tx-clock">
+<h1>– Instance of TX BufG_GT_wrapper module for TX clock<a class="headerlink" href="#instance-of-tx-bufg-gt-wrapper-module-for-tx-clock" title="Link to this heading"></a></h1>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  -- see https://docs.amd.com/r/en-US/am003-versal-clocking-resources/BUFG_GT-and-BUFG_GT_SYNC for buffer definition
+  BUFG_GT_inst : BUFG_GT
+  generic map (
+     SIM_DEVICE =&gt; &quot;VERSAL_AI_EDGE&quot;  
+  )
+  port map (
+     O =&gt; clk_tx,          -- user output clock 150MHz 
+     CE =&gt; &#39;1&#39;,            -- 1-bit input: Buffer enable
+     CEMASK =&gt; &#39;0&#39;,        -- 1-bit input: CE Mask
+     CLR =&gt; &#39;0&#39;,           -- 1-bit input: Asynchronous clear
+     CLRMASK =&gt; &#39;0&#39;,       -- 1-bit input: CLR Mask
+     DIV =&gt; &quot;000&quot;,         -- 3-bit input: Dynamic divide Value
+     I =&gt; QUAD0_TX0_outclk -- input GTY clock 100 MHz
+  );
+</pre></div>
+</div>
+<p>reset &lt;= not RST_N or LANE_RESET or lane_reset_dl_i;</p>
+<p>– Near-End and Far-End loopback drivin function
+QUAD0_ch0_loopback         &lt;= “010”    when NEAR_END_SERIAL_LB_EN = ‘1’ else
+“100”    when FAR_END_SERIAL_LB_EN = ‘1’  else
+“000”;</p>
+<p>– Clock Data recovery drivin function
+INTF0_RX0_ch_rxcdrhold     &lt;= “0”      when cdr_from_lif = ‘1’ else “1”;
+INTF0_RX0_ch_rxcdrovrden   &lt;= “0”      when cdr_from_lif = ‘1’ else “0”;</p>
+<p>– Disable transmitter and/or receiver drinvin function
+INTF0_TX0_ch_txpd          &lt;= “11”     when transmitter_dis_from_lif = ‘1’ else “00”;
+INTF0_RX0_ch_rxpd          &lt;= “11”     when receiver_dis_from_lif = ‘1’ else “00”;</p>
+<hr class="docutils" />
+</section>
+<section id="instance-of-extended-phy-layer-module">
+<h1>– Instance of extended_phy_layer module<a class="headerlink" href="#instance-of-extended-phy-layer-module" title="Link to this heading"></a></h1>
+<p>gtwiz_versal_0: extended_phy_layer_gtwiz_versal_0_0
+port map (
+INTF0_RX0_ch_cdrbmcdrreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_cdrfreqos(0) =&gt; ‘0’,
+INTF0_RX0_ch_cdrincpctrl(0) =&gt; ‘0’,
+INTF0_RX0_ch_cdrstepdir(0) =&gt; ‘0’,
+INTF0_RX0_ch_cdrstepsq(0) =&gt; ‘0’,
+INTF0_RX0_ch_cdrstepsx(0) =&gt; ‘0’,
+INTF0_RX0_ch_dfehold(0) =&gt; ‘0’,
+INTF0_RX0_ch_dfeovrd(0) =&gt; ‘0’,
+INTF0_RX0_ch_eyescandataerror =&gt; open,
+INTF0_RX0_ch_eyescanreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_eyescantrigger(0) =&gt; ‘0’,
+INTF0_RX0_ch_gtrxreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_refdebugout =&gt; open,
+INTF0_RX0_ch_rx10gstat =&gt; open,
+INTF0_RX0_ch_rxbufstatus =&gt; open,
+INTF0_RX0_ch_rxbyteisaligned =&gt; open,
+INTF0_RX0_ch_rxbyterealign(0) =&gt; INTF0_RX0_ch_rxbyterealign(0),
+INTF0_RX0_ch_rxcdrhold(0) =&gt; INTF0_RX0_ch_rxcdrhold(0),
+INTF0_RX0_ch_rxcdrlock =&gt; open,
+INTF0_RX0_ch_rxcdrovrden(0) =&gt; INTF0_RX0_ch_rxcdrovrden(0),
+INTF0_RX0_ch_rxcdrphdone =&gt; open,
+INTF0_RX0_ch_rxcdrreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxchanbond_busy =&gt; open,
+INTF0_RX0_ch_rxchanbond_en(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxchanbond_level(2 downto 0) =&gt; B”000”,
+INTF0_RX0_ch_rxchanbond_master(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxchanbond_slave(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxchanbondseq =&gt; open,
+INTF0_RX0_ch_rxchanisaligned =&gt; open,
+INTF0_RX0_ch_rxchanrealign =&gt; open,
+INTF0_RX0_ch_rxchbondi(4 downto 0) =&gt; B”00000”,
+INTF0_RX0_ch_rxchbondo =&gt; open,
+INTF0_RX0_ch_rxclkcorcnt =&gt; open,
+INTF0_RX0_ch_rxcominitdet =&gt; open,
+INTF0_RX0_ch_rxcommadet =&gt; open,
+INTF0_RX0_ch_rxcomsasdet =&gt; open,
+INTF0_RX0_ch_rxcomwakedet =&gt; open,
+INTF0_RX0_ch_rxctrl0(15 downto 0) =&gt; INTF0_RX0_ch_rxctrl0,
+INTF0_RX0_ch_rxctrl1(15 downto 0) =&gt; INTF0_RX0_ch_rxctrl1,
+INTF0_RX0_ch_rxctrl2(7 downto 0) =&gt; INTF0_RX0_ch_rxctrl2,
+INTF0_RX0_ch_rxctrl3(7 downto 0) =&gt; INTF0_RX0_ch_rxctrl3,
+INTF0_RX0_ch_rxdapicodeovrden(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxdapicodereset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxdapireset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxdapiresetdone =&gt; open,
+INTF0_RX0_ch_rxdapiresetmask(1 downto 0) =&gt; B”00”,
+INTF0_RX0_ch_rxdata(127 downto 0) =&gt; INTF0_RX0_ch_rxdata,
+INTF0_RX0_ch_rxdatavalid(1 downto 0) =&gt; INTF0_RX0_ch_rxdatavalid,
+INTF0_RX0_ch_rxdebugpcsout =&gt; open,
+INTF0_RX0_ch_rxdlyalignerr =&gt; open,
+INTF0_RX0_ch_rxdlyalignprog =&gt; open,
+INTF0_RX0_ch_rxdlyalignreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxelecidle =&gt; open,
+INTF0_RX0_ch_rxeqtraining(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxfinealigndone =&gt; open,
+INTF0_RX0_ch_rxgearboxslip(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxheader =&gt; open,
+INTF0_RX0_ch_rxheadervalid =&gt; open,
+INTF0_RX0_ch_rxlatclk(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxlpmen(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxmldchaindone(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxmldchainreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxmlfinealignreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxoobreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxosintdone =&gt; open,
+INTF0_RX0_ch_rxpcsresetmask(4 downto 0) =&gt; B”11111”,
+INTF0_RX0_ch_rxpd(1 downto 0) =&gt; INTF0_RX0_ch_rxpd,
+INTF0_RX0_ch_rxphaligndone =&gt; open,
+INTF0_RX0_ch_rxphalignerr =&gt; open,
+INTF0_RX0_ch_rxphalignreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxphalignresetmask(1 downto 0) =&gt; B”11”,
+INTF0_RX0_ch_rxphdlypd(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxphdlyreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxphdlyresetdone =&gt; open,
+INTF0_RX0_ch_rxphsetinitdone =&gt; open,
+INTF0_RX0_ch_rxphsetinitreq(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxphshift180(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxphshift180done =&gt; open,
+INTF0_RX0_ch_rxpkdet =&gt; open,
+INTF0_RX0_ch_rxpmaresetmask(6 downto 0) =&gt; B”1111111”,
+INTF0_RX0_ch_rxpolarity(0) =&gt; invert_rx_bits_from_lif,
+INTF0_RX0_ch_rxprbscntreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxprbserr =&gt; open,
+INTF0_RX0_ch_rxprbslocked =&gt; open,
+INTF0_RX0_ch_rxprbssel(3 downto 0) =&gt; B”0000”,
+INTF0_RX0_ch_rxprogdivreset(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxprogdivresetdone =&gt; open,
+INTF0_RX0_ch_rxqpien(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxqpisenn =&gt; open,
+INTF0_RX0_ch_rxqpisenp =&gt; open,
+INTF0_RX0_ch_rxrate(7 downto 0) =&gt; “00000000”,
+INTF0_RX0_ch_rxresetdone =&gt; open,
+INTF0_RX0_ch_rxresetmode(1 downto 0) =&gt; B”00”,
+INTF0_RX0_ch_rxsimplexphystatus =&gt; open,
+INTF0_RX0_ch_rxslide(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxsliderdy =&gt; open,
+INTF0_RX0_ch_rxslipdone =&gt; open,
+INTF0_RX0_ch_rxstartofseq =&gt; open,
+INTF0_RX0_ch_rxstatus =&gt; open,
+INTF0_RX0_ch_rxsyncallin(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxsyncdone =&gt; open,
+INTF0_RX0_ch_rxtermination(0) =&gt; ‘0’,
+INTF0_RX0_ch_rxvalid =&gt; open,
+INTF0_RX_clr_out =&gt; open,
+INTF0_RX_clrb_leaf_out =&gt; open,
+INTF0_TX0_ch_gttxreset(0) =&gt; ‘0’,
+INTF0_TX0_ch_tx10gstat =&gt; open,
+INTF0_TX0_ch_txbufstatus =&gt; open,
+INTF0_TX0_ch_txcomfinish =&gt; open,
+INTF0_TX0_ch_txcominit(0) =&gt; ‘0’,
+INTF0_TX0_ch_txcomsas(0) =&gt; ‘0’,
+INTF0_TX0_ch_txcomwake(0) =&gt; ‘0’,
+INTF0_TX0_ch_txctrl0(15 downto 0) =&gt; “0000000000000000”,
+INTF0_TX0_ch_txctrl1(15 downto 0) =&gt; “0000000000000000”,
+INTF0_TX0_ch_txctrl2(7 downto 0) =&gt; valid_k_charac_from_si,
+INTF0_TX0_ch_txdapicodeovrden(0) =&gt; ‘0’,
+INTF0_TX0_ch_txdapicodereset(0) =&gt; ‘0’,
+INTF0_TX0_ch_txdapireset(0) =&gt; ‘0’,
+INTF0_TX0_ch_txdapiresetdone =&gt; open,
+INTF0_TX0_ch_txdapiresetmask(1 downto 0) =&gt; B”00”,
+INTF0_TX0_ch_txdata(127 downto 0) =&gt; data_tx_from_si,
+INTF0_TX0_ch_txdccdone =&gt; open,
+INTF0_TX0_ch_txdebugpcsout =&gt; open,
+INTF0_TX0_ch_txdeemph(1 downto 0) =&gt; B”00”,
+INTF0_TX0_ch_txdetectrx(0) =&gt; ‘0’,
+INTF0_TX0_ch_txdiffctrl(4 downto 0) =&gt; B”11001”,
+INTF0_TX0_ch_txdlyalignerr =&gt; open,
+INTF0_TX0_ch_txdlyalignprog =&gt; open,
+INTF0_TX0_ch_txdlyalignreq(0) =&gt; ‘0’,
+INTF0_TX0_ch_txelecidle(0) =&gt; ‘0’,
+INTF0_TX0_ch_txheader(5 downto 0) =&gt; B”000000”,
+INTF0_TX0_ch_txinhibit(0) =&gt; ‘0’,
+INTF0_TX0_ch_txlatclk(0) =&gt; ‘0’,
+INTF0_TX0_ch_txmaincursor(6 downto 0) =&gt; B”1001101”,
+INTF0_TX0_ch_txmargin(2 downto 0) =&gt; B”000”,
+INTF0_TX0_ch_txmldchaindone(0) =&gt; ‘0’,
+INTF0_TX0_ch_txmldchainreq(0) =&gt; ‘0’,
+INTF0_TX0_ch_txoneszeros(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpausedelayalign(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpcsresetmask(0) =&gt; ‘1’,
+INTF0_TX0_ch_txpd(1 downto 0) =&gt; INTF0_TX0_ch_txpd,
+INTF0_TX0_ch_txphaligndone =&gt; open,
+INTF0_TX0_ch_txphalignerr =&gt; open,
+INTF0_TX0_ch_txphalignoutrsvd =&gt; open,
+INTF0_TX0_ch_txphalignreq(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphalignresetmask(1 downto 0) =&gt; B”11”,
+INTF0_TX0_ch_txphdlypd(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphdlyreset(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphdlyresetdone =&gt; open,
+INTF0_TX0_ch_txphdlytstclk(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphsetinitdone =&gt; open,
+INTF0_TX0_ch_txphsetinitreq(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphshift180(0) =&gt; ‘0’,
+INTF0_TX0_ch_txphshift180done =&gt; open,
+INTF0_TX0_ch_txpicodeovrden(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpicodereset(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpippmen(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpippmstepsize(4 downto 0) =&gt; B”00000”,
+INTF0_TX0_ch_txpisopd(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpmaresetmask(2 downto 0) =&gt; B”111”,
+INTF0_TX0_ch_txpolarity(0) =&gt; ‘0’,
+INTF0_TX0_ch_txpostcursor(4 downto 0) =&gt; B”00000”,
+INTF0_TX0_ch_txprbsforceerr(0) =&gt; ‘0’,
+INTF0_TX0_ch_txprbssel(3 downto 0) =&gt; B”0000”,
+INTF0_TX0_ch_txprecursor(4 downto 0) =&gt; B”00000”,
+INTF0_TX0_ch_txprogdivreset(0) =&gt; ‘0’,
+INTF0_TX0_ch_txprogdivresetdone =&gt; open,
+INTF0_TX0_ch_txqpibiasen(0) =&gt; ‘0’,
+INTF0_TX0_ch_txqpisenn =&gt; open,
+INTF0_TX0_ch_txqpisenp =&gt; open,
+INTF0_TX0_ch_txqpiweakpu(0) =&gt; ‘0’,
+INTF0_TX0_ch_txrate(7 downto 0) =&gt; “00000000”,
+INTF0_TX0_ch_txresetdone =&gt; open,
+INTF0_TX0_ch_txresetmode(1 downto 0) =&gt; B”00”,
+INTF0_TX0_ch_txsequence(6 downto 0) =&gt; B”0000000”,
+INTF0_TX0_ch_txswing(0) =&gt; ‘0’,
+INTF0_TX0_ch_txswingouthigh =&gt; open,
+INTF0_TX0_ch_txswingoutlow =&gt; open,
+INTF0_TX0_ch_txsyncallin(0) =&gt; ‘0’,
+INTF0_TX0_ch_txsyncdone =&gt; open,
+INTF0_TX_clr_out =&gt; open,
+INTF0_TX_clrb_leaf_out =&gt; open,
+INTF0_rst_all_in =&gt; reset,
+INTF0_rst_rx_datapath_in =&gt; ‘0’,
+INTF0_rst_rx_done_out =&gt; open,
+INTF0_rst_rx_pll_and_datapath_in =&gt; ‘0’,
+INTF0_rst_tx_datapath_in =&gt; ‘0’,
+INTF0_rst_tx_done_out =&gt; INTF0_rst_tx_done_out_0,
+INTF0_rst_tx_pll_and_datapath_in =&gt; ‘0’,
+QUAD0_GTREFCLK0 =&gt; CLK_GTY,
+QUAD0_RX0_outclk =&gt; open,
+QUAD0_RX0_usrclk =&gt; clk_tx,
+QUAD0_TX0_outclk =&gt; QUAD0_TX0_outclk,
+QUAD0_TX0_usrclk =&gt; clk_tx,
+QUAD0_ch0_loopback(2 downto 0) =&gt; QUAD0_ch0_loopback,
+QUAD0_gpi(31 downto 0) =&gt; x”00000000”,
+QUAD0_gpo =&gt; open,
+QUAD0_hsclk0_lcplllock =&gt; QUAD0_hsclk0_lcplllock,
+QUAD0_rxn(3 downto 0) =&gt; QUAD0_rxn,
+QUAD0_rxp(3 downto 0) =&gt; QUAD0_rxp,
+QUAD0_txn(3 downto 0) =&gt; QUAD0_txn,
+QUAD0_txp(3 downto 0) =&gt; QUAD0_txp,
+gtpowergood =&gt; open,
+gtwiz_freerun_clk =&gt; CLK
+);</p>
+<p>– Inputs/Outputs
+CLK_TX_OUT                 &lt;= clk_tx;</p>
+<p>data_plus_k_char_from_dl   &lt;= VALID_K_CHARAC_TX &amp; DATA_TX;
+DATA_RX                    &lt;= data_plus_k_char_to_dl(31 downto 00);
+VALID_K_CHARAC_RX          &lt;= data_plus_k_char_to_dl(35 downto 32);</p>
+<p>LANE_STATE                 &lt;= lane_state_from_lif;
+RX_ERROR_CNT               &lt;= rx_error_cnt_from_lif;
+RX_ERROR_OVF               &lt;= rx_error_ovf_from_lif;
+LOSS_SIGNAL                &lt;= no_signal_from_lcwd;
+RX_POLARITY                &lt;= invert_rx_bits_from_lif;
+FAR_END_CAPA               &lt;= far_end_capa_i;
+lane_active_dl_i           &lt;= enable_transm_data_from_lif;</p>
+<p>QUAD0_rxp(0)               &lt;= RX_POS;
+QUAD0_rxn(0)               &lt;= RX_NEG;
+TX_POS                     &lt;= QUAD0_txp(0);
+TX_NEG                     &lt;= QUAD0_txn(0);</p>
+<p>RST_TX_DONE                &lt;= INTF0_rst_tx_done_out_0;</p>
+<p>end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Scenario &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/ip/fifo_dc_custom_to_axis/tb/tb_fifo_dc_custom_to_axis/" />
+      <script src="../../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Scenario</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../../_sources/build/html/code/src/ip/fifo_dc_custom_to_axis/tb/tb_fifo_dc_custom_to_axis.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;</p>
+<p>entity tb_fifo_dc_custom_to_axis is
+end tb_fifo_dc_custom_to_axis;</p>
+<p>architecture Behavioral of tb_fifo_dc_custom_to_axis is</p>
+<p>component FIFO_DC_AXIS_M is
+generic (
+– Users to add parameters here
+G_DWIDTH                : integer := 36;                                 – Data bus fifo length
+G_AWIDTH                : integer := 10;                                 – Address bus fifo length
+G_THRESHOLD_HIGH        : integer := 2**10;                              – high threshold
+G_THRESHOLD_LOW         : integer := 0    ;                             – low threshold
+– User parameters ends
+M_AXIS_TDATA_WIDTH      : integer   := 32;
+M_AXIS_TUSER_WIDTH      : integer := 4
+);
+port (
+– Users to add ports here
+aresetn      	        : in std_logic;
+WR_CLK                  : in  std_logic;                                – Clock
+WR_DATA                 : in  std_logic_vector(G_DWIDTH-1 downto 0);    – Data write bus
+WR_DATA_EN              : in  std_logic;                                – Write command
+– STATUS FIFO
+CMD_FLUSH               : in  std_logic;                                – fifo flush
+STATUS_BUSY_FLUSH       : out std_logic;                                – fifo is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                – threshold high reached flag (sur WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                – threshold low reached flag (sur RD_CLK)
+STATUS_FULL             : out std_logic;                                – full fifo flag (sur WR_CLK)
+STATUS_EMPTY            : out std_logic;                                – empty fifo flag (sur RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    – Niveau de remplissage de la FIFO (sur WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0) ;   – Niveau de remplissage de la FIFO (sur RD_CLK)
+– User ports ends
+– Do not modify the ports beyond this line
+– Ports of Axi Master Bus Interface M00_AXIS
+M_AXIS_ACLK	            : in std_logic;
+M_AXIS_TVALID	        : out std_logic;
+M_AXIS_TDATA	        : out std_logic_vector(M_AXIS_TDATA_WIDTH-1 downto 0);
+M_AXIS_TLAST	        : out std_logic;
+M_AXIS_TREADY	        : in std_logic;
+M_AXIS_TUSER            : out std_logic_vector(M_AXIS_TUSER_WIDTH-1 downto 0)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>);
+</pre></div>
+</div>
+<p>end component FIFO_DC_AXIS_M;</p>
+<p>signal rst_n        : std_logic := ‘0’;
+signal m_ready_rd   : std_logic := ‘0’;
+signal CLK          : std_logic := ‘0’;
+signal s_wr_data    : std_logic_vector(35 downto 00) := (others =&gt;’0’);
+signal s_wr_data_en : std_logic := ‘0’;</p>
+<p>constant periode                        : time := 6.667 ns;
+constant C_AWIDTH                       : integer := 10;
+constant C_DWIDTH                       : integer := 36;
+constant C_M_AXIS_TDATA_WIDTH           : integer := 32;
+constant C_M_AXIS_TUSER_WIDTH           : integer := 4;</p>
+<p>begin</p>
+<p>FIFO_DC_AXIS_M_inst: FIFO_DC_AXIS_M
+generic map(
+G_DWIDTH             =&gt; C_DWIDTH,<br />
+G_AWIDTH             =&gt; C_AWIDTH,<br />
+G_THRESHOLD_HIGH     =&gt; 2**C_AWIDTH,<br />
+G_THRESHOLD_LOW      =&gt; 0,
+M_AXIS_TDATA_WIDTH   =&gt; C_M_AXIS_TDATA_WIDTH,
+M_AXIS_TUSER_WIDTH   =&gt; C_M_AXIS_TUSER_WIDTH
+)
+port map(
+aresetn      	     =&gt; rst_n,
+WR_CLK               =&gt; CLK,
+WR_DATA              =&gt; s_wr_data,
+WR_DATA_EN           =&gt; s_wr_data_en,
+CMD_FLUSH            =&gt; ‘0’,<br />
+STATUS_BUSY_FLUSH    =&gt; open,<br />
+STATUS_THRESHOLD_HIGH=&gt; open,
+STATUS_THRESHOLD_LOW =&gt; open,<br />
+STATUS_FULL          =&gt; open,<br />
+STATUS_EMPTY         =&gt; open,<br />
+STATUS_LEVEL_WR      =&gt; open,<br />
+STATUS_LEVEL_RD      =&gt; open,<br />
+M_AXIS_ACLK	         =&gt; CLK,
+M_AXIS_TVALID	     =&gt; open,<br />
+M_AXIS_TDATA	     =&gt; open,<br />
+M_AXIS_TUSER	     =&gt; open,<br />
+M_AXIS_TLAST	     =&gt; open,<br />
+M_AXIS_TREADY	     =&gt; m_ready_rd
+);</p>
+<p>horloge : process
+begin
+CLK   &lt;= not CLK;
+wait for periode/2;
+end process;</p>
+<hr class="docutils" />
+<section id="scenario">
+<h1>– Scenario<a class="headerlink" href="#scenario" title="Link to this heading"></a></h1>
+<p>scenario : process
+begin
+rst_n &lt;= ‘0’;
+wait for 1 us;
+wait until rising_edge(CLK);
+rst_n &lt;= ‘1’;
+wait for 1 us;
+m_ready_rd &lt;= ‘1’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<p>– Trame 1
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+s_wr_data_en   &lt;= ‘1’;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;</p>
+<p>– Trame 2
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<p>– Trame 3 arrive alors que ready ? 0
+s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+m_ready_rd &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+m_ready_rd &lt;= ‘1’;
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<p>– Trame 4 : ready passe ? 0 en m?me temps que rd_data_vld ? 1
+s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+m_ready_rd &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+m_ready_rd &lt;= ‘1’;</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<p>– Trame 5 : ready passe ? 0 un cycle apr?s rd_valid ? 1
+s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+m_ready_rd &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<p>– Trame 6 : ready passe ? 0 deux cycle apr?s rd_valid ? 1
+s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+m_ready_rd &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Trame 7 : ready passe ? 0 en m?me temps que rd_data_valid (fin de trame) 
+</pre></div>
+</div>
+<p>s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Trame 8 : ready ? 0 au moment de tlast et nouvelle trame et ready ? 0
+</pre></div>
+</div>
+<p>s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+wait until rising_edge(CLK);</p>
+<p>s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”3” &amp; x”44444444”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”5” &amp; x”66666666”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”7” &amp; x”88888888”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”9” &amp; x”AAAAAAAA”;
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”B” &amp; x”CCCCCCCC”;
+m_ready_rd &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+s_wr_data &lt;= x”D” &amp; x”EEEEEEEE”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘0’;<br />
+wait until rising_edge(CLK);</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;</p>
+<p>wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Trame 9 : une seule donn?e
+</pre></div>
+</div>
+<p>s_wr_data_en   &lt;= ‘1’;<br />
+s_wr_data &lt;= x”1” &amp; x”22222222”;
+wait until rising_edge(CLK);
+s_wr_data_en   &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘0’;
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+m_ready_rd &lt;= ‘1’;</p>
+<p>wait;<br />
+end process;</p>
+<p>end Behavioral;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_in_bc_buf/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_in_bc_buf.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-24-02-2025">
+<h1>– Creation date : 24/02/2025<a class="headerlink" href="#creation-date-24-02-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-describes-the-input-broadcast-buffer">
+<h1>– Description : This module describes the Input Broadcast Buffer<a class="headerlink" href="#description-this-module-describes-the-input-broadcast-buffer" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_in_bc_buf is
+port (
+RST_N                  : in  std_logic;                                           –! Global reset (Active-low)
+CLK                    : in  std_logic;                                           –! Global Clock
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE        : in  std_logic;                                          –! Link Reset command
+– AXI-Stream interface
+M_AXIS_ARSTN_NW	       : in  std_logic;                                          –! Active-low asynchronous reset for the AXI-Stream interface
+M_AXIS_ACLK_NW	       : in  std_logic;                                          –! Clock signal for the AXI-Stream interface
+M_AXIS_TVALID_DIBUF	   : out std_logic;                                          –! Indicates that TDATA, TUSER, and TLAST are valid
+M_AXIS_TDATA_DIBUF	   : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! AXI-Stream data bus
+M_AXIS_TLAST_DIBUF	   : out std_logic;                                          –! Indicates the end of a data packet
+M_AXIS_TREADY_NW	     : in  std_logic;                                          –! Receiver ready signal (slave is ready to accept data)
+M_AXIS_TUSER_DIBUF     : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! AXI-Stream user-defined sideband signal
+– data_desencapsulation_bc (DDESBC) interface
+DATA_DDESBC            : in  std_logic_vector(C_DATA_K_WIDTH-1 downto 0);        –! Data parallel (K character + DATA) from data_desencapsulation_bc
+DATA_EN_DDESBC         : in  std_logic                                           –! Data valid flag associated with DDESBC
+);
+end data_in_bc_buf;</p>
+</section>
+<section id="architecture-rtl-of-data-in-bc-buf-is">
+<h1>architecture rtl of data_in_bc_buf is<a class="headerlink" href="#architecture-rtl-of-data-in-bc-buf-is" title="Link to this heading"></a></h1>
+</section>
+<section id="module-declaration">
+<h1>—–                  Module declaration           —–<a class="headerlink" href="#module-declaration" title="Link to this heading"></a></h1>
+<p>component FIFO_DC_AXIS_M is
+generic (
+– Users to add parameters here
+G_DWIDTH                 : integer := 36;                                 – Data bus fifo length
+G_AWIDTH                 : integer := 10;                                 – Address bus fifo length
+G_THRESHOLD_HIGH         : integer := 2**10;                              – high threshold
+G_THRESHOLD_LOW          : integer := 0;                                  – low threshold
+– User parameters ends
+M_AXIS_TDATA_WIDTH       : integer := 32;                                  – Data AXIS length
+M_AXIS_TUSER_WIDTH       : integer := 4                                    – User AXIS length
+);
+port (
+– Users to add ports here
+aresetn      	          : in std_logic;
+– Custom interface (slave)
+WR_CLK                  : in  std_logic;                                – Clock
+WR_DATA                 : in  std_logic_vector(G_DWIDTH-1 downto 0);    – Data write bus
+WR_DATA_EN              : in  std_logic;                                – Write command
+– STATUS FIFO
+CMD_FLUSH               : in  std_logic;                                – Fifo flush
+STATUS_BUSY_FLUSH       : out std_logic;                                – Fifo is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                – Threshold high reached flag (on WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                – Threshold low reached flag (on RD_CLK)
+STATUS_FULL             : out std_logic;                                – Full fifo flag (on WR_CLK)
+STATUS_EMPTY            : out std_logic;                                – Empty fifo flag (on RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    – FIFO fill level (on WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0) ;   – FIFO fill level (on RD_CLK)
+– User ports ends
+– Do not modify the ports beyond this line
+– Ports of Axi Master Bus Interface M00_AXIS
+M_AXIS_ACLK	            : in std_logic;
+M_AXIS_TVALID	          : out std_logic;
+M_AXIS_TDATA	          : out std_logic_vector(M_AXIS_TDATA_WIDTH-1 downto 0);
+M_AXIS_TLAST	          : out std_logic;
+M_AXIS_TREADY	          : in std_logic;
+M_AXIS_TUSER            : out std_logic_vector(M_AXIS_TUSER_WIDTH-1 downto 0)
+);
+end component;</p>
+<hr class="docutils" />
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>signal link_reset_cmd         : std_logic;
+signal status_busy_flush      : std_logic;
+signal status_full            : std_logic;
+signal cmd_flush              : std_logic;
+signal last_k_char            : std_logic;
+signal data_in                : std_logic_vector(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal data_in_en             : std_logic;
+signal cnt_word_sent          : unsigned (7 downto 0);
+signal cnt_req_fct            : unsigned (2 downto 0);
+– AXIS Stream
+signal m_axis_tvalid	        : std_logic;
+signal m_axis_tdata	          : std_logic_vector(C_DATA_LENGTH-1 downto 0);
+signal m_axis_tlast	          : std_logic;
+signal m_axis_tready	        : std_logic;
+signal m_axis_tuser           : std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+– Fifo
+signal rst_n_fifo             : std_logic;</p>
+</section>
+<section id="begin">
+<h1>begin<a class="headerlink" href="#begin" title="Link to this heading"></a></h1>
+</section>
+<section id="instantiation">
+<h1>—–                     Instantiation             —–<a class="headerlink" href="#instantiation" title="Link to this heading"></a></h1>
+<p>– FIFO_DC_AXIS_S Instantiation
+ints_fifo_dc_axis_m : FIFO_DC_AXIS_M
+generic map (
+G_DWIDTH                =&gt; C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH,
+G_AWIDTH                =&gt; C_IN_BUF_SIZE,
+M_AXIS_TDATA_WIDTH      =&gt; C_DATA_LENGTH,
+M_AXIS_TUSER_WIDTH      =&gt; C_BYTE_BY_WORD_LENGTH
+)
+port map (
+aresetn                =&gt; rst_n_fifo,
+WR_CLK                 =&gt; CLK,
+WR_DATA                =&gt; DATA_DDESBC,
+WR_DATA_EN             =&gt; DATA_EN_DDESBC,
+CMD_FLUSH              =&gt; cmd_flush,
+STATUS_BUSY_FLUSH      =&gt; status_busy_flush,
+STATUS_THRESHOLD_HIGH  =&gt; open,
+STATUS_THRESHOLD_LOW   =&gt; open,
+STATUS_FULL            =&gt; status_full,
+STATUS_EMPTY           =&gt; open,
+STATUS_LEVEL_WR        =&gt; open,
+STATUS_LEVEL_RD        =&gt; open,
+M_AXIS_ACLK            =&gt; M_AXIS_ACLK_NW,
+M_AXIS_TVALID          =&gt; M_AXIS_TVALID_DIBUF,
+M_AXIS_TDATA           =&gt; M_AXIS_TDATA_DIBUF,
+M_AXIS_TLAST           =&gt; M_AXIS_TLAST_DIBUF,
+M_AXIS_TREADY          =&gt; M_AXIS_TREADY_NW,
+M_AXIS_TUSER           =&gt; M_AXIS_TUSER_DIBUF
+);</p>
+<hr class="docutils" />
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo">
+<h1>– Process: p_rst_fifo
+– Description: Manages the reset signal of the FiFo<a class="headerlink" href="#process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="p-rst-fifo-process-m-axis-aclk-nw-rst-n-m-axis-arstn-nw-begin-if-rst-n-0-or-m-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-m-axis-aclk-nw-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo">
+<h1>p_rst_fifo: process(M_AXIS_ACLK_NW, RST_N, M_AXIS_ARSTN_NW)
+begin
+if RST_N = ‘0’ or M_AXIS_ARSTN_NW = ‘0’ then
+rst_n_fifo &lt;= ‘0’;
+elsif rising_edge(M_AXIS_ACLK_NW) then
+rst_n_fifo &lt;= ‘1’;
+end if;
+end process p_rst_fifo;<a class="headerlink" href="#p-rst-fifo-process-m-axis-aclk-nw-rst-n-m-axis-arstn-nw-begin-if-rst-n-0-or-m-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-m-axis-aclk-nw-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-link-reset-description-flush-command-management">
+<h1>– Process: p_link_reset
+– Description: Flush command management<a class="headerlink" href="#process-p-link-reset-description-flush-command-management" title="Link to this heading"></a></h1>
+<p>p_link_reset: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cmd_flush &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if LINK_RESET_DLRE = ‘1’ then
+cmd_flush &lt;=’1’;
+else
+cmd_flush &lt;=’0’;
+end if;
+end if;
+end process p_link_reset;</p>
+<p>end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

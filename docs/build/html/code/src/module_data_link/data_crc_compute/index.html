@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_crc_compute/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_crc_compute.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-24-02-2025">
+<h1>– Creation date : 24/02/2025<a class="headerlink" href="#creation-date-24-02-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-calculates-the-crc-for-each-frame">
+<h1>– Description : This module calculates the CRC for each frame<a class="headerlink" href="#description-this-module-calculates-the-crc-for-each-frame" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_crc_compute is
+port (
+CLK                   : in  std_logic;                                          –! Global Clock
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE       : in  std_logic;                                          –! Link Reset command
+– phy_plus_lane (PPL) interface
+LANE_ACTIVE_PPL       : in  std_logic;                                          –! Lane Active flag for the DATA Link Layer
+– data_seq_compute (DSCOM) interface
+NEW_WORD_DSCOM        : in  std_logic;                                          –! New word flag associated with DATA_DSCOM
+DATA_DSCOM            : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! Data parallel from data_seq_compute
+VALID_K_CHARAC_DSCOM  : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! K charachter valid in the 32-bit DATA_DSCOM vector
+TYPE_FRAME_DSCOM      : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   –! Type of the frame associated with DATA_DSCOM
+END_FRAME_DSCOM       : in  std_logic;                                          –! End frame/control word associated with DATA_DSCOM
+– FIFO_TX_LANE interface
+FIFO_FULL_TX_LANE     : in  std_logic;                                          –! Fifo TX full flag from the lane layer
+VALID_K_CHARAC_DCCOM  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! Data parallel to lane layer
+DATA_DCCOM            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! K charachter valid in the 32-bit DATA_DCCOM vector
+NEW_WORD_DCCOM        : out std_logic                                           –! New word Flag associated with DATA_DCCOM
+);
+end data_crc_compute;</p>
+</section>
+<section id="architecture-rtl-of-data-crc-compute-is">
+<h1>architecture rtl of data_crc_compute is<a class="headerlink" href="#architecture-rtl-of-data-crc-compute-is" title="Link to this heading"></a></h1>
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>– Arrays to identify usefull byte
+type int_array      is array (0 to 3) of integer;
+type int_array_tier is array (0 to 2) of integer;
+type int_array_dem  is array (0 to 1) of integer;
+signal indices                : int_array      := (0, 8, 16, 24);
+signal indices_tier           : int_array_tier := (0, 8, 16);
+signal indices_dem            : int_array_dem  := (0, 8);
+– CRC 16 Bits compute
+signal crc_reg_16b            : std_logic_vector(16-1 downto 0);
+signal crc_reg_16b_comp       : std_logic_vector(16-1 downto 0);
+signal crc_to_inv_16b         : std_logic;
+– CRC 8 Bits compute
+signal crc_reg_8b             : std_logic_vector(8-1 downto 0);
+signal crc_reg_8b_comp        : std_logic_vector(8-1 downto 0);
+signal crc_to_inv_8b          : std_logic;
+– control signals
+signal end_frame_dscom_prev   : std_logic;
+signal new_word_dccom_i       : std_logic;
+signal type_frame_dscom_r     : std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);
+signal data_dscom_r           : std_logic_vector(C_DATA_LENGTH-1 downto 0);
+signal valid_k_charac_dscom_r : std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+begin</p>
+<hr class="docutils" />
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-crc-16b-description-computes-the-crc-for-a-data-frame">
+<h1>– Process: p_crc_16b
+– Description: Computes the CRC for a data frame<a class="headerlink" href="#process-p-crc-16b-description-computes-the-crc-for-a-data-frame" title="Link to this heading"></a></h1>
+</section>
+<section id="p-crc-16b-process-clk-variable-crc-var-std-logic-vector-15-downto-0-variable-used-to-calculate-the-crc-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-crc-reg-16b-others-1-reset-crc-to-seed-value-crc-reg-16b-comp-others-1-reset-crc-to-seed-value-crc-to-inv-16b-0-elsif-lane-active-ppl-1-then-crc-var-crc-reg-16b-comp-crc-to-inv-16b-0-if-type-frame-dscom-c-data-frm-then-if-end-frame-dscom-1-and-new-word-dscom-1-then-last-word-crc-to-inv-16b-1-calculates-the-crc-16-bit-byte-by-byte-for-i-in-indices-dem-range-loop-crc-var-calculate-crc-16-data-dscom-7-indices-dem-i-downto-0-indices-dem-i-crc-var-end-loop-crc-reg-16b-comp-others-1-reset-crc-to-seed-value-crc-reg-16b-crc-var-elsif-new-word-dscom-1-then-calculates-the-crc-16-bit-byte-by-byte-for-i-in-indices-range-loop-crc-var-calculate-crc-16-data-dscom-7-indices-i-downto-0-indices-i-crc-var-end-loop-crc-reg-16b-comp-crc-var-end-if-end-if-end-if-end-if-end-process-p-crc-16b">
+<h1>p_crc_16b: process(CLK)
+variable crc_var : std_logic_vector(15 downto 0); – variable used to calculate the CRC
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+crc_reg_16b        &lt;= (others =&gt; ‘1’); – Reset CRC to seed value
+crc_reg_16b_comp   &lt;= (others =&gt; ‘1’); – Reset CRC to seed value
+crc_to_inv_16b     &lt;= ‘0’;
+elsif LANE_ACTIVE_PPL= ‘1’ then
+crc_var        := crc_reg_16b_comp;
+crc_to_inv_16b &lt;= ‘0’;
+if (TYPE_FRAME_DSCOM = C_DATA_FRM) then
+if END_FRAME_DSCOM = ‘1’ and NEW_WORD_DSCOM = ‘1’then – Last word
+crc_to_inv_16b &lt;=’1’;
+– calculates the crc 16-bit byte by byte
+for i in indices_dem’range loop
+crc_var := calculate_crc_16(DATA_DSCOM(7+ indices_dem(i) downto 0 + indices_dem(i)), crc_var);
+end loop;
+crc_reg_16b_comp   &lt;= (others =&gt; ‘1’); – Reset CRC to seed value
+crc_reg_16b        &lt;= crc_var;
+elsif NEW_WORD_DSCOM = ‘1’ then
+– calculates the crc 16-bit byte by byte
+for i in indices’range loop
+crc_var := calculate_crc_16(DATA_DSCOM(7+ indices(i) downto 0 + indices(i)), crc_var);
+end loop;
+crc_reg_16b_comp &lt;= crc_var;
+end if;
+end if;
+end if;
+end if;
+end process p_crc_16b;<a class="headerlink" href="#p-crc-16b-process-clk-variable-crc-var-std-logic-vector-15-downto-0-variable-used-to-calculate-the-crc-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-crc-reg-16b-others-1-reset-crc-to-seed-value-crc-reg-16b-comp-others-1-reset-crc-to-seed-value-crc-to-inv-16b-0-elsif-lane-active-ppl-1-then-crc-var-crc-reg-16b-comp-crc-to-inv-16b-0-if-type-frame-dscom-c-data-frm-then-if-end-frame-dscom-1-and-new-word-dscom-1-then-last-word-crc-to-inv-16b-1-calculates-the-crc-16-bit-byte-by-byte-for-i-in-indices-dem-range-loop-crc-var-calculate-crc-16-data-dscom-7-indices-dem-i-downto-0-indices-dem-i-crc-var-end-loop-crc-reg-16b-comp-others-1-reset-crc-to-seed-value-crc-reg-16b-crc-var-elsif-new-word-dscom-1-then-calculates-the-crc-16-bit-byte-by-byte-for-i-in-indices-range-loop-crc-var-calculate-crc-16-data-dscom-7-indices-i-downto-0-indices-i-crc-var-end-loop-crc-reg-16b-comp-crc-var-end-if-end-if-end-if-end-if-end-process-p-crc-16b" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-crc-8b-description-computes-the-crc-for-broadcast-frame-fct-ack-nack-and-sif">
+<h1>– Process: p_crc_8b
+– Description: Computes the CRC for broadcast frame,
+–              FCT, ACK, NACK and SIF<a class="headerlink" href="#process-p-crc-8b-description-computes-the-crc-for-broadcast-frame-fct-ack-nack-and-sif" title="Link to this heading"></a></h1>
+<p>p_crc_8b: process(CLK)
+variable crc_var : std_logic_vector(7 downto 0); – variable used to calculate the CRC
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+crc_reg_8b      &lt;= (others =&gt; ‘0’); – Reset CRC to seed value
+crc_reg_8b_comp &lt;= (others =&gt; ‘0’); – Reset CRC to seed value
+crc_to_inv_8b   &lt;= ‘0’;
+elsif LANE_ACTIVE_PPL= ‘1’ then
+crc_var       := crc_reg_8b_comp;
+crc_to_inv_8b &lt;= ‘0’;
+if TYPE_FRAME_DSCOM = C_BC_FRM then – Broadcast frame
+if END_FRAME_DSCOM = ‘1’and NEW_WORD_DSCOM = ‘1’then – Last word
+crc_to_inv_8b &lt;= ‘1’;
+– calculates the crc 8-bit byte by byte
+for i in indices_tier’range loop
+crc_var := calculate_crc_8(DATA_DSCOM(7+ indices_tier(i) downto 0 + indices_tier(i)), crc_var);
+end loop;
+crc_reg_8b_comp &lt;= (others =&gt; ‘0’); – Reset CRC to seed value
+crc_reg_8b      &lt;= crc_var;
+elsif NEW_WORD_DSCOM = ‘1’ then
+– calculates the crc 8-bit byte by byte
+for i in indices’range loop
+crc_var := calculate_crc_8(DATA_DSCOM(7+ indices(i) downto 0 + indices(i)), crc_var);
+end loop;
+crc_reg_8b_comp &lt;= crc_var;
+end if;
+elsif END_FRAME_DSCOM = ‘1’and NEW_WORD_DSCOM = ‘1’then – Control word
+crc_to_inv_8b &lt;= ‘1’;
+– calculates the crc 8-bit byte by byte
+for i in indices_tier’range loop
+crc_var := calculate_crc_8(DATA_DSCOM(7+ indices_tier(i) downto 0 + indices_tier(i)), crc_var);
+end loop;
+crc_reg_8b_comp &lt;= (others =&gt; ‘0’); – Reset CRC to seed value
+crc_reg_8b      &lt;= crc_var;
+elsif DATA_DSCOM(15 downto 0) = C_SIF_WORD and VALID_K_CHARAC_DSCOM = “0001” and NEW_WORD_DSCOM = ‘1’then – SIF
+crc_to_inv_8b &lt;= ‘1’;
+– calculates the crc 8_bit byte by byte
+for i in indices_tier’range loop
+crc_var := calculate_crc_8(DATA_DSCOM(7+ indices_tier(i) downto 0 + indices_tier(i)), crc_var);
+end loop;
+crc_reg_8b_comp &lt;= (others =&gt; ‘0’); – Reset CRC to seed value
+crc_reg_8b      &lt;= crc_var;
+end if;
+end if;
+end if;
+end process p_crc_8b;</p>
+<hr class="docutils" />
+</section>
+<section id="process-p-crc-inv-description-last-operation-of-the-crc-calculation-bit-by-bit-inversion">
+<h1>– Process: p_crc_inv
+– Description: Last operation of the CRC calculation
+–              (Bit-by-bit inversion)<a class="headerlink" href="#process-p-crc-inv-description-last-operation-of-the-crc-calculation-bit-by-bit-inversion" title="Link to this heading"></a></h1>
+</section>
+<section id="p-crc-inv-process-clk-variable-crc-var-16b-std-logic-vector-15-downto-0-variable-crc-var-8b-std-logic-vector-7-downto-0-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-data-dccom-others-0-valid-k-charac-dscom-r-others-0-valid-k-charac-dccom-others-0-type-frame-dscom-r-others-0-data-dscom-r-others-0-new-word-dccom-i-0-new-word-dccom-0-elsif-lane-active-ppl-1-then-new-word-dccom-i-new-word-dscom-valid-k-charac-dscom-r-valid-k-charac-dscom-valid-k-charac-dccom-valid-k-charac-dscom-r-type-frame-dscom-r-type-frame-dscom-data-dscom-r-data-dscom-new-word-dccom-new-word-dccom-i-if-type-frame-dscom-r-c-data-frm-and-new-word-dccom-i-1-then-data-frame-if-crc-to-inv-16b-1-then-bit-by-bit-inversion-for-i-in-0-to-15-loop-crc-var-16b-i-crc-reg-16b-15-i-end-loop-data-dccom-crc-var-16b-data-dscom-r-15-downto-0-else-data-dccom-data-dscom-r-end-if-elsif-new-word-dccom-i-1-then-other-than-data-frame-if-crc-to-inv-8b-1-then-bit-by-bit-inversion-for-i-in-0-to-7-loop-crc-var-8b-i-crc-reg-8b-7-i-end-loop-data-dccom-crc-var-8b-data-dscom-r-23-downto-0-else-data-dccom-data-dscom-r-end-if-else-data-dccom-data-dscom-r-end-if-else-new-word-dccom-0-new-word-dccom-i-0-end-if-end-if-end-process-p-crc-inv">
+<h1>p_crc_inv: process(CLK)
+variable crc_var_16b : std_logic_vector(15 downto 0);
+variable crc_var_8b  : std_logic_vector(7 downto 0);
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+DATA_DCCOM             &lt;= (others =&gt; ‘0’);
+valid_k_charac_dscom_r &lt;= (others =&gt; ‘0’);
+VALID_K_CHARAC_DCCOM   &lt;= (others =&gt; ‘0’);
+type_frame_dscom_r     &lt;= (others =&gt; ‘0’);
+data_dscom_r           &lt;= (others =&gt; ‘0’);
+new_word_dccom_i       &lt;= ‘0’;
+NEW_WORD_DCCOM         &lt;= ‘0’;
+elsif LANE_ACTIVE_PPL= ‘1’ then
+new_word_dccom_i       &lt;= NEW_WORD_DSCOM;
+valid_k_charac_dscom_r &lt;= VALID_K_CHARAC_DSCOM;
+VALID_K_CHARAC_DCCOM   &lt;= valid_k_charac_dscom_r;
+type_frame_dscom_r     &lt;= TYPE_FRAME_DSCOM;
+data_dscom_r           &lt;= DATA_DSCOM;
+NEW_WORD_DCCOM         &lt;=  new_word_dccom_i;
+if type_frame_dscom_r = C_DATA_FRM  and new_word_dccom_i = ‘1’ then – Data frame
+if crc_to_inv_16b = ‘1’ then
+– Bit-by-bit inversion
+for i in 0 to 15 loop
+crc_var_16b(i) := crc_reg_16b(15 - i);
+end loop;
+DATA_DCCOM &lt;= crc_var_16b &amp; data_dscom_r (15 downto 0);
+else
+DATA_DCCOM &lt;= data_dscom_r;
+end if;
+elsif new_word_dccom_i = ‘1’ then – Other than data frame
+if crc_to_inv_8b = ‘1’ then
+– Bit-by-bit inversion
+for i in 0 to 7 loop
+crc_var_8b(i) := crc_reg_8b(7 - i);
+end loop;
+DATA_DCCOM &lt;= crc_var_8b &amp; data_dscom_r (23 downto 0);
+else
+DATA_DCCOM &lt;= data_dscom_r;
+end if;
+else
+DATA_DCCOM &lt;= data_dscom_r;
+end if;
+else
+NEW_WORD_DCCOM         &lt;= ‘0’;
+new_word_dccom_i       &lt;= ‘0’;
+end if;
+end if;
+end process p_crc_inv;<a class="headerlink" href="#p-crc-inv-process-clk-variable-crc-var-16b-std-logic-vector-15-downto-0-variable-crc-var-8b-std-logic-vector-7-downto-0-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-data-dccom-others-0-valid-k-charac-dscom-r-others-0-valid-k-charac-dccom-others-0-type-frame-dscom-r-others-0-data-dscom-r-others-0-new-word-dccom-i-0-new-word-dccom-0-elsif-lane-active-ppl-1-then-new-word-dccom-i-new-word-dscom-valid-k-charac-dscom-r-valid-k-charac-dscom-valid-k-charac-dccom-valid-k-charac-dscom-r-type-frame-dscom-r-type-frame-dscom-data-dscom-r-data-dscom-new-word-dccom-new-word-dccom-i-if-type-frame-dscom-r-c-data-frm-and-new-word-dccom-i-1-then-data-frame-if-crc-to-inv-16b-1-then-bit-by-bit-inversion-for-i-in-0-to-15-loop-crc-var-16b-i-crc-reg-16b-15-i-end-loop-data-dccom-crc-var-16b-data-dscom-r-15-downto-0-else-data-dccom-data-dscom-r-end-if-elsif-new-word-dccom-i-1-then-other-than-data-frame-if-crc-to-inv-8b-1-then-bit-by-bit-inversion-for-i-in-0-to-7-loop-crc-var-8b-i-crc-reg-8b-7-i-end-loop-data-dccom-crc-var-8b-data-dscom-r-23-downto-0-else-data-dccom-data-dscom-r-end-if-else-data-dccom-data-dscom-r-end-if-else-new-word-dccom-0-new-word-dccom-i-0-end-if-end-if-end-process-p-crc-inv" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-end-frame-prev-description-copy-end-frame-dscom">
+<h1>– Process: p_end_frame_prev
+– Description: Copy END_FRAME_DSCOM<a class="headerlink" href="#process-p-end-frame-prev-description-copy-end-frame-dscom" title="Link to this heading"></a></h1>
+<p>p_end_frame_prev: process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+end_frame_dscom_prev &lt;= ‘0’;
+elsif LANE_ACTIVE_PPL= ‘1’ then
+end_frame_dscom_prev &lt;= END_FRAME_DSCOM;
+end if;
+end if;
+end process p_end_frame_prev;</p>
+<p>end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

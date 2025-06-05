@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entity - lane_init_fsm &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/reports/design/module_27/" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Entity - lane_init_fsm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/reports/design/module_27.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+<br>
+<section id="entity-lane-init-fsm">
+<h1>Entity - lane_init_fsm<a class="headerlink" href="#entity-lane-init-fsm" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lane_init_fsm</p></td>
+<td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#32">lane_init_fsm.vhd#32</linty-anchor></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instantiations">
+<h2>Instantiations<a class="headerlink" href="#instantiations" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>inst_lane_init_fsm</p></td>
+<td><p><linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#632">phy_plus_lane.vhd#632</linty-anchor></p></td>
+<td><p>Instance of lane_init_fsm module</p></td>
+<td class="text-center"><p><a class="reference internal" href="instantiation_1/"><span class="std std-doc"><img title="View Instantiation Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generics">
+<h2>Generics<a class="headerlink" href="#generics" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="ports">
+<h2>Ports<a class="headerlink" href="#ports" title="Link to this heading"></a></h2>
+<p>Count: 35</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Mode</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#34">RST_N</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>global reset</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#35">CLK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Clock generated by GTY IP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#37">LANE_RESET_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Lane reset command from Data-Link Layer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#40">NO_SIGNAL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag no signal are received</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#41">RX_NEW_WORD</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag new word has been received</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#42">DETECTED_INIT1</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag INIT1 control word rxed</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#43">DETECTED_INIT2</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag INIT2 control word rxed</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#44">DETECTED_INIT3</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag INIT3 control word rxed</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#45">DETECTED_INV_INIT1</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag INV_INIT1 control word rxed</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#46">DETECTED_INV_INIT2</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag INV_INIT2 control word rxed</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#47">DETECTED_RXERR_WORD</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag RXERR detected</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#48">DETECTED_LOSS_SIGNAL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag LOSS_SINGAL control word detected</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#49">DETECTED_STANDBY</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag STANDBY control word detected</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#50">COMMA_K287_RXED</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag Comma K28.7 has been received</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#51">RECEIVER_DISABLED</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>flag to enabled RX function of HSSL IP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#52">CDR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to enabled CDR function of HSSL IP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#53">SEND_RXERR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag send RXERR control word to Data-Link layer when FSM leave ACTIVE_ST</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#54">INVERT_RX_BITS</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to Invert rx bit received</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#55">NO_SIGNAL_DETECTION_ENABLED</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to enable the no signal function</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#58">STANDBY_SIGNAL_X32</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag STANDBY control word has been send x32</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#59">LOST_SIGNAL_X32</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag LOST_SIGNAL control word has been send x32</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#60">TRANSMITTER_DISABLED</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>flag to enabled TX fonction of HSSL IP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#61">SEND_INIT1_CTRL_WORD</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to send INIT1 control word following by 64 pseudo-random data words</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#62">SEND_INIT2_CTRL_WORD</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to send control word following by 64 pseudo-random data words</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#63">SEND_INIT3_CTRL_WORD</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to send control word following by 64 pseudo-random data words</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#64">ENABLE_TRANSM_DATA</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to enable to send data</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#65">SEND_32_STANDBY_CTRL_WORDS</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to send STANDBY control word x32</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#66">SEND_32_LOSS_SIGNAL_CTRL_WORDS</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Flag to send LOSS_SIGNAL control word x32</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#67">LOST_CAUSE</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 01 downto 00 )</p></td>
+<td><p>Flag to indicate the reason of the LOST_SIGNAL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#70">LANE_START</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Asserts or de-asserts LaneStart for the lane</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#71">AUTOSTART</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Asserts or de-asserts AutoStart for the lane</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#72">LANE_RESET</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Asserts or de-asserts LaneReset for the lane</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#73">LANE_STATE</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 03 downto 00 )</p></td>
+<td><p>Indicates the current state of the Lane Initialization state machine in a lane</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#74">RX_ERROR_CNT</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>Counter of error detected on the RX link</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#75">RX_ERROR_OVF</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Overflow flag of the RX_ERROR_CNT</p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

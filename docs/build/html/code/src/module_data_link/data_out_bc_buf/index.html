@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_out_bc_buf/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_out_bc_buf.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-24-02-2025">
+<h1>– Creation date : 24/02/2025<a class="headerlink" href="#creation-date-24-02-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-describes-the-output-broadcast-buffer">
+<h1>– Description : This module describes the Output Broadcast Buffer<a class="headerlink" href="#description-this-module-describes-the-output-broadcast-buffer" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_out_bc_buf is
+port (
+RST_N                 : in  std_logic;                                          –! Global reset (Active-low)
+CLK                   : in  std_logic;                                          –! Global Clock
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE        :in  std_logic;                                          –! Link Reset command
+– AXI-Stream interface
+S_AXIS_ARSTN_NW	      : in std_logic;                                           –! Active-low asynchronous reset for the AXI-Stream interface
+S_AXIS_ACLK_NW	      : in std_logic;                                           –! Clock signal for the AXI-Stream interface
+S_AXIS_TREADY_DL      : out std_logic;                                          –! Indicates that TDATA, TUSER, and TLAST are valid
+S_AXIS_TDATA_NW       : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          –! AXI-Stream data bus
+S_AXIS_TUSER_NW       : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  –! Indicates the end of a data packet
+S_AXIS_TLAST_NW       : in std_logic;                                           –! Receiver ready signal (slave is ready to accept data)
+S_AXIS_TVALID_NW      : in std_logic;                                           –! AXI-Stream user-defined sideband signal
+– data_mac (DMAC) interface
+VC_READY_DOBUF        : out  std_logic;                                          –! Virtual Channel ready flag
+DATA_DOBUF            : out  std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! Data parallel to data_mac
+VALID_K_CHARAC_DOBUF  : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! K character valid in the 32-bit DATA_DOBUF vector
+DATA_VALID_DOBUF      : out  std_logic;                                          –! Data valid flag associated with DATA_DOBUF
+END_PACKET_DOBUF      : out  std_logic;                                          –! End packet flag
+VC_RD_EN_DMAC         : in   std_logic                                           –! Read command from data_mac
+);
+end data_out_bc_buf;</p>
+</section>
+<section id="architecture-rtl-of-data-out-bc-buf-is">
+<h1>architecture rtl of data_out_bc_buf is<a class="headerlink" href="#architecture-rtl-of-data-out-bc-buf-is" title="Link to this heading"></a></h1>
+</section>
+<section id="module-declaration">
+<h1>—–                  Module declaration           —–<a class="headerlink" href="#module-declaration" title="Link to this heading"></a></h1>
+<p>component FIFO_DC_AXIS_S is
+generic (
+– Users to add parameters here
+G_DWIDTH                : integer := 36;                                 – Data bus fifo length
+G_AWIDTH                : integer := 10;                                 – Address bus fifo length
+G_THRESHOLD_HIGH        : integer := 2**10;                              – high threshold
+G_THRESHOLD_LOW         : integer := 0;                                  – low threshold
+– User parameters ends
+S_AXIS_TDATA_WIDTH	    : integer := 32;                                 – Data AXIS length
+S_AXIS_TUSER_WIDTH	    : integer := 4                                   – User AXIS length
+);
+port (
+– Users to add ports here
+aresetn      	        : in std_logic;
+– Custom interface master (rd)
+RD_CLK                  : in  std_logic;                                – Clock
+RD_DATA                 : out std_logic_vector(G_DWIDTH-1 downto 0);    – Data read bus
+RD_DATA_EN              : in  std_logic;                                – Read command
+RD_DATA_VLD             : out std_logic;                                – Data valid
+– STATUS FIFO
+cmd_flush               : in  std_logic;                                 – Fifo flush
+STATUS_BUSY_FLUSH       : out std_logic;                                 – Fifo is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                 – Threshold high reached flag (on WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                 – Threshold low reached flag (on RD_CLK)
+STATUS_FULL             : out std_logic;                                 – Full fifo flag (on WR_CLK)
+STATUS_EMPTY            : out std_logic;                                 – Empty fifo flag (on RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);     – FIFO fill level (on WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0) ;    – FIFO fill level (on RD_CLK)
+– User ports ends
+– Do not modify the ports beyond this line
+– Ports of Axi SLAVE Bus Interface S00_AXIS
+S_AXIS_ACLK             : in std_logic;
+S_AXIS_TREADY         	: out std_logic;
+S_AXIS_TDATA          	: in std_logic_vector(C_DATA_LENGTH-1 downto 0);
+S_AXIS_TUSER          	: in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+S_AXIS_TLAST          	: in std_logic;
+S_AXIS_TVALID         	: in std_logic
+);
+end component;</p>
+<hr class="docutils" />
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>–Fifo signals
+signal rd_data                : std_logic_vector(C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal rd_data_vld            : std_logic;
+signal status_busy_flush      : std_logic;
+signal status_threshold_high  : std_logic;
+signal status_threshold_low   : std_logic;
+signal status_full            : std_logic;
+signal status_empty           : std_logic;</p>
+</section>
+<section id="continuous-mode-signal-cmd-flush-std-logic-signal-cnt-cmd-flush-unsigned-1-downto-0-signal-vc-end-packet-std-logic-signal-cnt-word-sent-unsigned-6-1-downto-0-cnt-word-sent-max-64-fifo-signal-rst-n-fifo-std-logic-begin">
+<h1>– continuous mode
+signal cmd_flush              : std_logic;
+signal cnt_cmd_flush          : unsigned (1 downto 0);
+signal vc_end_packet          : std_logic;
+signal cnt_word_sent          : unsigned(6-1 downto 0);     – cnt_word sent, max= 64
+– Fifo
+signal rst_n_fifo             : std_logic;
+begin<a class="headerlink" href="#continuous-mode-signal-cmd-flush-std-logic-signal-cnt-cmd-flush-unsigned-1-downto-0-signal-vc-end-packet-std-logic-signal-cnt-word-sent-unsigned-6-1-downto-0-cnt-word-sent-max-64-fifo-signal-rst-n-fifo-std-logic-begin" title="Link to this heading"></a></h1>
+</section>
+<section id="assignements">
+<h1>—–                     Assignements              —–<a class="headerlink" href="#assignements" title="Link to this heading"></a></h1>
+<p>DATA_DOBUF           &lt;= rd_data(C_DATA_LENGTH-1 downto 0);
+VALID_K_CHARAC_DOBUF &lt;= rd_data(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto C_DATA_LENGTH);
+DATA_VALID_DOBUF     &lt;= rd_data_vld;
+END_PACKET_DOBUF     &lt;= vc_end_packet and rd_data_vld;</p>
+<hr class="docutils" />
+</section>
+<section id="instantiation">
+<h1>—–                     Instantiation             —–<a class="headerlink" href="#instantiation" title="Link to this heading"></a></h1>
+</section>
+<section id="fifo-dc-axis-s-instantiation-ints-fifo-dc-axis-s-fifo-dc-axis-s-generic-map-g-dwidth-c-data-length-c-byte-by-word-length-g-awidth-c-out-buf-size-g-threshold-high-2-c-out-buf-size-3-g-threshold-low-2-s-axis-tdata-width-c-data-length-s-axis-tuser-width-c-byte-by-word-length-port-map-aresetn-rst-n-fifo-rd-clk-clk-rd-data-rd-data-rd-data-en-vc-rd-en-dmac-rd-data-vld-rd-data-vld-cmd-flush-cmd-flush-status-busy-flush-status-busy-flush-status-threshold-high-status-threshold-high-status-threshold-low-status-threshold-low-status-full-status-full-status-empty-status-empty-status-level-wr-open-status-level-rd-open-s-axis-aclk-s-axis-aclk-nw-s-axis-tready-s-axis-tready-dl-s-axis-tdata-s-axis-tdata-nw-s-axis-tuser-s-axis-tuser-nw-s-axis-tlast-s-axis-tlast-nw-s-axis-tvalid-s-axis-tvalid-nw">
+<h1>– FIFO_DC_AXIS_S Instantiation
+ints_fifo_dc_axis_s: FIFO_DC_AXIS_S
+generic map (
+G_DWIDTH              =&gt; C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH,
+G_AWIDTH              =&gt; C_OUT_BUF_SIZE,
+G_THRESHOLD_HIGH      =&gt; (2**C_OUT_BUF_SIZE)-3,
+G_THRESHOLD_LOW       =&gt; 2,
+S_AXIS_TDATA_WIDTH    =&gt; C_DATA_LENGTH,
+S_AXIS_TUSER_WIDTH    =&gt; C_BYTE_BY_WORD_LENGTH
+)
+port map (
+aresetn               =&gt; rst_n_fifo,
+RD_CLK                =&gt; CLK,
+RD_DATA               =&gt; rd_data,
+RD_DATA_EN            =&gt; VC_RD_EN_DMAC,
+RD_DATA_VLD           =&gt; rd_data_vld,
+cmd_flush             =&gt; cmd_flush,
+STATUS_BUSY_FLUSH     =&gt; status_busy_flush,
+STATUS_THRESHOLD_HIGH =&gt; status_threshold_high,
+STATUS_THRESHOLD_LOW  =&gt; status_threshold_low,
+STATUS_FULL           =&gt; status_full,
+STATUS_EMPTY          =&gt; status_empty,
+STATUS_LEVEL_WR       =&gt; open,
+STATUS_LEVEL_RD       =&gt; open,
+S_AXIS_ACLK           =&gt; S_AXIS_ACLK_NW,
+S_AXIS_TREADY         =&gt; S_AXIS_TREADY_DL,
+S_AXIS_TDATA          =&gt; S_AXIS_TDATA_NW,
+S_AXIS_TUSER          =&gt; S_AXIS_TUSER_NW,
+S_AXIS_TLAST          =&gt; S_AXIS_TLAST_NW,
+S_AXIS_TVALID         =&gt; S_AXIS_TVALID_NW
+);<a class="headerlink" href="#fifo-dc-axis-s-instantiation-ints-fifo-dc-axis-s-fifo-dc-axis-s-generic-map-g-dwidth-c-data-length-c-byte-by-word-length-g-awidth-c-out-buf-size-g-threshold-high-2-c-out-buf-size-3-g-threshold-low-2-s-axis-tdata-width-c-data-length-s-axis-tuser-width-c-byte-by-word-length-port-map-aresetn-rst-n-fifo-rd-clk-clk-rd-data-rd-data-rd-data-en-vc-rd-en-dmac-rd-data-vld-rd-data-vld-cmd-flush-cmd-flush-status-busy-flush-status-busy-flush-status-threshold-high-status-threshold-high-status-threshold-low-status-threshold-low-status-full-status-full-status-empty-status-empty-status-level-wr-open-status-level-rd-open-s-axis-aclk-s-axis-aclk-nw-s-axis-tready-s-axis-tready-dl-s-axis-tdata-s-axis-tdata-nw-s-axis-tuser-s-axis-tuser-nw-s-axis-tlast-s-axis-tlast-nw-s-axis-tvalid-s-axis-tvalid-nw" title="Link to this heading"></a></h1>
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo">
+<h1>– Process: p_rst_fifo
+– Description: Manages the reset signal of the FiFo<a class="headerlink" href="#process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="p-rst-fifo-process-clk-rst-n-s-axis-arstn-nw-begin-if-rst-n-0-or-s-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-clk-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo">
+<h1>p_rst_fifo: process(CLK, RST_N, S_AXIS_ARSTN_NW)
+begin
+if RST_N = ‘0’ or  S_AXIS_ARSTN_NW = ‘0’ then
+rst_n_fifo &lt;= ‘0’;
+elsif rising_edge(CLK) then
+rst_n_fifo &lt;= ‘1’;
+end if;
+end process p_rst_fifo;<a class="headerlink" href="#p-rst-fifo-process-clk-rst-n-s-axis-arstn-nw-begin-if-rst-n-0-or-s-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-clk-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-link-reset-description-flush-management-on-link-reset-command">
+<h1>– Process: p_link_reset
+– Description: Flush management on link reset command<a class="headerlink" href="#process-p-link-reset-description-flush-management-on-link-reset-command" title="Link to this heading"></a></h1>
+</section>
+<section id="p-link-reset-process-clk-rst-n-begin-if-rst-n-0-then-cmd-flush-0-cnt-cmd-flush-others-0-elsif-rising-edge-clk-then-if-cnt-cmd-flush-2-then-cmd-flush-0-cnt-cmd-flush-others-0-elsif-link-reset-dlre-1-then-cnt-cmd-flush-cnt-cmd-flush-1-cmd-flush-1-elsif-cmd-flush-1-then-cnt-cmd-flush-cnt-cmd-flush-1-else-cmd-flush-0-cnt-cmd-flush-others-0-end-if-end-if-end-process-p-link-reset">
+<h1>p_link_reset: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cmd_flush     &lt;= ‘0’;
+cnt_cmd_flush &lt;= (others =&gt; ‘0’);
+elsif rising_edge(CLK) then
+if (cnt_cmd_flush &gt; 2) then
+cmd_flush     &lt;= ‘0’;
+cnt_cmd_flush &lt;= (others =&gt; ‘0’);
+elsif LINK_RESET_DLRE = ‘1’ then
+cnt_cmd_flush &lt;= cnt_cmd_flush + 1;
+cmd_flush     &lt;= ‘1’;
+elsif cmd_flush = ‘1’ then
+cnt_cmd_flush &lt;= cnt_cmd_flush + 1;
+else
+cmd_flush     &lt;=’0’;
+cnt_cmd_flush &lt;= (others =&gt; ‘0’);
+end if;
+end if;
+end process p_link_reset;<a class="headerlink" href="#p-link-reset-process-clk-rst-n-begin-if-rst-n-0-then-cmd-flush-0-cnt-cmd-flush-others-0-elsif-rising-edge-clk-then-if-cnt-cmd-flush-2-then-cmd-flush-0-cnt-cmd-flush-others-0-elsif-link-reset-dlre-1-then-cnt-cmd-flush-cnt-cmd-flush-1-cmd-flush-1-elsif-cmd-flush-1-then-cnt-cmd-flush-cnt-cmd-flush-1-else-cmd-flush-0-cnt-cmd-flush-others-0-end-if-end-if-end-process-p-link-reset" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-vc-end-packet-description-manages-the-end-of-packet">
+<h1>– Process: p_vc_end_packet
+– Description: Manages the end of packet<a class="headerlink" href="#process-p-vc-end-packet-description-manages-the-end-of-packet" title="Link to this heading"></a></h1>
+</section>
+<section id="p-vc-end-packet-process-clk-rst-n-begin-if-rst-n-0-then-vc-end-packet-0-elsif-rising-edge-clk-then-if-link-reset-dlre-1-then-vc-end-packet-0-elsif-rd-data-vld-1-and-vc-end-packet-1-then-vc-end-packet-0-elsif-rd-data-vld-1-then-vc-end-packet-1-end-if-end-if-end-process-p-vc-end-packet">
+<h1>p_vc_end_packet: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+vc_end_packet &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if LINK_RESET_DLRE = ‘1’ then
+vc_end_packet &lt;= ‘0’;
+elsif rd_data_vld = ‘1’ and vc_end_packet =’1’ then
+vc_end_packet &lt;= ‘0’;
+elsif rd_data_vld = ‘1’ then
+vc_end_packet &lt;= ‘1’;
+end if;
+end if;
+end process p_vc_end_packet;<a class="headerlink" href="#p-vc-end-packet-process-clk-rst-n-begin-if-rst-n-0-then-vc-end-packet-0-elsif-rising-edge-clk-then-if-link-reset-dlre-1-then-vc-end-packet-0-elsif-rd-data-vld-1-and-vc-end-packet-1-then-vc-end-packet-0-elsif-rd-data-vld-1-then-vc-end-packet-1-end-if-end-if-end-process-p-vc-end-packet" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-vc-ready-description-manages-the-virtual-channel-ready-signal">
+<h1>– Process: p_vc_ready
+– Description: Manages the virtual channel ready signal<a class="headerlink" href="#process-p-vc-ready-description-manages-the-virtual-channel-ready-signal" title="Link to this heading"></a></h1>
+<p>p_vc_ready: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+VC_READY_DOBUF &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if status_empty = ‘0’ then
+VC_READY_DOBUF &lt;= ‘1’;
+else
+VC_READY_DOBUF &lt;= ‘0’;
+end if;
+end if;
+end process p_vc_ready;
+end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

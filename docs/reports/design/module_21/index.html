@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entity - data_seq_check &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/reports/design/module_21/" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Entity - data_seq_check</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/reports/design/module_21.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+<br>
+<section id="entity-data-seq-check">
+<h1>Entity - data_seq_check<a class="headerlink" href="#entity-data-seq-check" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>data_seq_check</p></td>
+<td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#32">data_seq_check.vhd#32</linty-anchor></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instantiations">
+<h2>Instantiations<a class="headerlink" href="#instantiations" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>inst_data_seq_check</p></td>
+<td><p><linty-anchor href="//src/module_data_link/data_link.vhd#862">data_link.vhd#862</linty-anchor></p></td>
+<td><p></p></td>
+<td class="text-center"><p><a class="reference internal" href="instantiation_1/"><span class="std std-doc"><img title="View Instantiation Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generics">
+<h2>Generics<a class="headerlink" href="#generics" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="ports">
+<h2>Ports<a class="headerlink" href="#ports" title="Link to this heading"></a></h2>
+<p>Count: 52</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Mode</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#34">CLK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Global clock</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#36">LINK_RESET_DLRE</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Link Reset command</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#38">DATA_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( C_DATA_LENGTH - 1 downto 0 )</p></td>
+<td><p>Data parallel from data_crc_check</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#39">VALID_K_CHARAC_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p>K character valid in the 32-bit DATA_DCCHECK vector</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#40">NEW_WORD_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>New word Flag associated with DATA_DCCHECK vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#41">END_FRAME_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>End frame/control word from data_crc_check</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#42">TYPE_FRAME_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( C_TYPE_FRAME_LENGTH - 1 downto 0 )</p></td>
+<td><p>Current frame/control word type from data_crc_check</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#43">SEQ_NUM_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>SEQ_NUM from data_crc_check</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#44">CRC_ERR_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC error flag from data_crc_check</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#45">FRAME_ERR_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error flag from data_crc_check</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#46">MULTIPLIER_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( C_MULT_SIZE - 1 downto 0 )</p></td>
+<td><p>Multiplier value of the current FCT word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#47">VC_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( C_CHANNEL_SIZE - 1 downto 0 )</p></td>
+<td><p>Virtual Channel of the current FCT word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#48">RXERR_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>RXERR flag detection</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#49">RXERR_ALL_DCCHECK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>RXERR flag detection during broadcast and data frame status</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#51">NEAR_END_RPF_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Near-End received polarity flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#52">SEQ_NUM_ACK_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>SEQ_NUM ACK value</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#53">END_FRAME_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>End flag of the current frame/control word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#54">TYPE_FRAME_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_TYPE_FRAME_LENGTH - 1 downto 0 )</p></td>
+<td><p>Current frame/control word type</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#55">TRANS_POL_FLG_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Transmission polarity flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#56">CRC_ERR_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC error flag for the current frame/control word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#57">FRAME_ERR_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error flag for the current frame/control word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#58">SEQ_NUM_ERR_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>SEQ_NUM error for the current frame/control word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#59">RXERR_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>RXERR flag for the current frame/control word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#61">DATA_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_DATA_LENGTH - 1 downto 0 )</p></td>
+<td><p>Data parallel to data_mid_buffer (data frame)</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#62">VALID_K_CHARAC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p>K character valid in the 32-bit DATA_DSCHECK vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#63">NEW_WORD_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New word flag associated with DATA_DSCHECK vector</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#64">END_FRAME_FIFO_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>End data frame flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#65">FRAME_ERR_DATA_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error flag for the current data frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#66">SEQ_NUM_ERR_DATA_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>SEQ_NUM error for the current data frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#67">CRC_ERR_DATA_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC error flag for the current data frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#68">RXERR_DATA_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>RXERR flag for the current data frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#70">DATA_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_DATA_LENGTH - 1 downto 0 )</p></td>
+<td><p>Data parallel to data_mid_buffer_bc (broadcast frame)</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#71">VALID_K_CHARAC_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p>K character valid in the 32-bit DATA_BC_DSCHECK vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#72">NEW_WORD_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New word flag associated with DATA_BC_DSCHECK vector</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#73">END_FRAME_FIFO_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>End broadcast frame flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#74">FRAME_ERR_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error flag for the current broadcast frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#75">SEQ_NUM_ERR_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>SEQ_NUM error for the current broadcast frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#76">CRC_ERR_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC error flag for the current broadcast frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#77">RXERR_BC_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>RXERR flag for the current broadcast frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#79">FCT_FAR_END_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_VC_NUM - 1 downto 0 )</p></td>
+<td><p>FCT received flag for each virtual channel</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#80">M_VAL_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_M_SIZE - 1 downto 0 )</p></td>
+<td><p>M value associated with FCT_FAR_END_DSCHECK</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#82">SEQ_NUM_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>last SEQ_NUM</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#83">NACK_SEQ_NUM_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>last NACK SEQ_NUM</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#84">ACK_SEQ_NUM_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>last ACK SEQ_NUM</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#85">ACK_COUNTER_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter RX</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#86">NACK_COUNTER_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter RX</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#87">FCT_COUNTER_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter RX</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#88">FULL_COUNTER_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 1 downto 0 )</p></td>
+<td><p>FULL counter RX</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#89">ACK_PULSE_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New ACK received flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#90">NACK_PULSE_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New NACK received flag</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#91">FCT_PULSE_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New FCT received flag</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_seq_check.vhd#92">FULL_PULSE_RX_DSCHECK</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New FULL received flag</p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

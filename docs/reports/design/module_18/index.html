@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entity - data_mac &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/reports/design/module_18/" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Entity - data_mac</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/reports/design/module_18.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+<br>
+<section id="entity-data-mac">
+<h1>Entity - data_mac<a class="headerlink" href="#entity-data-mac" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>data_mac</p></td>
+<td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#32">data_mac.vhd#32</linty-anchor></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instantiations">
+<h2>Instantiations<a class="headerlink" href="#instantiations" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>inst_data_mac</p></td>
+<td><p><linty-anchor href="//src/module_data_link/data_link.vhd#1067">data_link.vhd#1067</linty-anchor></p></td>
+<td><p></p></td>
+<td class="text-center"><p><a class="reference internal" href="instantiation_1/"><span class="std std-doc"><img title="View Instantiation Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generics">
+<h2>Generics<a class="headerlink" href="#generics" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#34">G_VC_NUM</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>Number of virtual channel</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ports">
+<h2>Ports<a class="headerlink" href="#ports" title="Link to this heading"></a></h2>
+<p>Count: 35</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Mode</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#37">CLK</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Global Clock</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#39">LINK_RESET_DLRE</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Link Reset command</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#41">LANE_ACTIVE_PPL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Lane Active flag for the DATA Link Layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#43">REQ_ACK_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>ACK request from data_err_management</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#44">REQ_NACK_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>NACK request from data_err_management</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#45">TRANS_POL_FLG_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Transmission polarity flag from data_err_management</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#46">REQ_ACK_DONE_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Acknowledge done signal to data_err_management</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#47">SEQ_NUM_ACK_DERRM</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>SEQ_NUM ACK value from data_err_management</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#49">REQ_FCT_DIBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>FCT request from data_in_buf</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#50">REQ_FCT_DONE_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>FCT request done flag to data_in_buf</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#52">VC_READY_DOBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Virtual Channel ready flag vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#53">VC_DATA_DOBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>vc_data_array ( G_VC_NUM downto 0 )</p></td>
+<td><p>Array of data vector for each Virtual Channel</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#54">VC_VALID_K_CHAR_DOBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>vc_k_array ( G_VC_NUM downto 0 )</p></td>
+<td><p>Array of K character valid in the 32-bit VC_DATA_DOBUF</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#55">VC_DATA_VALID_DOBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Data valid flag associated with VC_DATA_DOBUF</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#56">VC_END_PACKET_DOBUF</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>End packet flag vector for each Virtual Channel</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#57">VC_RD_EN_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Read command vector for each Virtual Channel</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#59">VC_PAUSE_MIB</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Pause the corresponding virtual channel after the end of current transmission</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#60">VC_END_EMISSION_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Indicates that corresponding channel finished emitting a frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#61">VC_RUN_EMISSION_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Indicates that corresponding channel is emitting a frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#62">DATA_COUNTER_TX_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>Indicate the number of data transmitted in last frame emitted</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#63">ACK_COUNTER_TX_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter TX</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#64">NACK_COUNTER_TX_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter TX</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#65">FCT_COUNTER_TX_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter TX</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#67">DATA_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_DATA_LENGTH - 1 downto 0 )</p></td>
+<td><p>Data parallel to data_encapsulation</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#68">VALID_K_CHAR_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p>K charachter valid in the 32-bit DATA_DMAC vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#69">NEW_WORD_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>New word Flag to data_encapsulation</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#70">END_PACKET_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>End frame/control word to data_encapsulation</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#71">TYPE_FRAME_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( C_TYPE_FRAME_LENGTH - 1 downto 0 )</p></td>
+<td><p>Type of the frame associated with DATA_DMAC</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#72">VIRTUAL_CHANNEL_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Virtual channel of the frame associated with DATA_DMAC</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#73">BC_TYPE_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>BROADCAST Type</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#74">BC_CHANNEL_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>BROADCAST Channel (one channel in this implementation)</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#75">BC_STATUS_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 - 1 downto 0 )</p></td>
+<td><p>BOADCAST status</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#76">MULT_CHANNEL_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Multiplier and Channel field for FCT word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#77">TRANS_POL_FLG_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Transmission polarity flag</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/data_mac.vhd#78">SEQ_NUM_ACK_DMAC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>SEQ_NUM ACK value</p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

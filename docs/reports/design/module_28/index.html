@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entity - mib_data_link &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/reports/design/module_28/" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Entity - mib_data_link</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/reports/design/module_28.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+<br>
+<section id="entity-mib-data-link">
+<h1>Entity - mib_data_link<a class="headerlink" href="#entity-mib-data-link" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>mib_data_link</p></td>
+<td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#29">mib_data_link.vhd#29</linty-anchor></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instantiations">
+<h2>Instantiations<a class="headerlink" href="#instantiations" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>inst_mib_data_link</p></td>
+<td><p><linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#649">spacefibre_light_top.vhd#649</linty-anchor></p></td>
+<td><p></p></td>
+<td class="text-center"><p><a class="reference internal" href="instantiation_1/"><span class="std std-doc"><img title="View Instantiation Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generics">
+<h2>Generics<a class="headerlink" href="#generics" title="Link to this heading"></a></h2>
+<p>Count: 1</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#31">G_VC_NUM</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>Number of virtual channel</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ports">
+<h2>Ports<a class="headerlink" href="#ports" title="Link to this heading"></a></h2>
+<p>Count: 78</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Mode</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#35">INTERFACE_RESET</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset the link and all configuration register of the Data Link layer from the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#36">LINK_RESET</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset the link from the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#37">NACK_RST_EN</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Enable automatic link reset on NACK reception from the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#38">NACK_RST_MODE</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Up for instant link reset on NACK reception, down for link reset at the end of the current received frame on NACK reception from the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#39">PAUSE_VC</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Pause the corresponding virtual channel after the end of current transmission from the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#40">CONTINUOUS_VC</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Enable the corresponding virtual channel continuous mode from the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#42">INTERFACE_RESET_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset the link and all configuration register of the Data Link layer to DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#43">LINK_RESET_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset the link to DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#44">NACK_RST_EN_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Enable automatic link reset on NACK reception to DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#45">NACK_RST_MODE_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Up for instant link reset on NACK reception, down for link reset at the end of current received frame on NACK reception to DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#46">PAUSE_VC_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Pause the corresponding virtual channel after the end of current transmission to DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#47">CONTINUOUS_VC_DL</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Enable the corresponding virtual channel continuous mode to DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#49">SEQ_NUMBER_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>SEQ_NUMBER in transmission from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#50">SEQ_NUMBER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>SEQ_NUMBER in reception from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#51">CREDIT_VC_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates if each corresponding far-end input buffer has credit from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#52">INPUT_BUF_OVF_VC_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates input buffer overflow from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#53">FCT_CREDIT_OVERFLOW_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates overflow of each corresponding input buffer from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#54">CRC_LONG_ERROR_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC long error from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#55">CRC_SHORT_ERROR_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC short error from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#56">FRAME_ERROR_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#57">SEQUENCE_ERROR_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Sequence error from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#58">FAR_END_LINK_RESET_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Far-end link reset status from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#59">FRAME_FINISHED_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Indicates that corresponding channel finished emitting a frame from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#60">FRAME_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM downto 0 )</p></td>
+<td><p>Indicates that corresponding channel is emitting a frame from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#61">DATA_COUNTER_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>Indicate the number of data transmitted in last frame emitted from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#62">DATA_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>Indicate the number of data received in last frame received from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#63">ACK_COUNTER_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter TX from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#64">NACK_COUNTER_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter TX from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#65">FCT_COUNTER_TX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter TX from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#66">ACK_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter RX from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#67">NACK_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter RX from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#68">FCT_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter RX from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#69">FULL_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 1 downto 0 )</p></td>
+<td><p>FULL counter RX from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#70">RETRY_COUNTER_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 1 downto 0 )</p></td>
+<td><p>RETRY counter RX from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#71">CURRENT_TIME_SLOT_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Current time slot from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#72">RESET_PARAM_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset configuration parameters control from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#73">LINK_RST_ASSERTED_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Link has been reseted from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#74">NACK_SEQ_NUM_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>NACK Seq_num received from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#75">ACK_SEQ_NUM_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>ACK Seq_num received from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#76">DATA_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>Data received pulse signal from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#77">ACK_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>ACK received pulse signal from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#78">NACK_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>NACK received pulse signal from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#79">FCT_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>FCT received pulse signal from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#80">FULL_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>FULL received pulse signal from DL</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#81">RETRY_PULSE_RX_DL</linty-anchor></p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>RETRY received pulse signal from DL</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#83">SEQ_NUMBER_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>SEQ_NUMBER in transmission to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#84">SEQ_NUMBER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>SEQ_NUMBER in reception to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#85">CREDIT_VC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates if each corresponding far-end input buffer has credit to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#86">INPUT_BUF_OVF_VC</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates input buffer overflow to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#87">FCT_CREDIT_OVERFLOW</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Indicates overflow of each corresponding input buffer to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#88">CRC_LONG_ERROR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC long error to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#89">CRC_SHORT_ERROR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>CRC short error to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#90">FRAME_ERROR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Frame error to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#91">SEQUENCE_ERROR</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Sequence error to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#92">FAR_END_LINK_RESET</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Far-end link reset status to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#93">FRAME_FINISHED</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 8 downto 0 )</p></td>
+<td><p>Indicates that corresponding channel finished emitting a frame to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#94">FRAME_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 8 downto 0 )</p></td>
+<td><p>Indicates that corresponding channel is emitting a frame to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#95">DATA_COUNTER_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>Indicate the number of data transmitted in last frame emitted to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#96">DATA_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 6 downto 0 )</p></td>
+<td><p>Indicate the number of data received in last frame received to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#97">ACK_COUNTER_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter TX to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#98">NACK_COUNTER_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter TX to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#99">FCT_COUNTER_TX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter TX to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#100">ACK_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>ACK counter RX to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#101">NACK_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 2 downto 0 )</p></td>
+<td><p>NACK counter RX to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#102">FCT_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>FCT counter RX to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#103">FULL_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 1 downto 0 )</p></td>
+<td><p>FULL counter RX to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#104">RETRY_COUNTER_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 1 downto 0 )</p></td>
+<td><p>RETRY counter RX to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#105">CURRENT_TIME_SLOT</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( G_VC_NUM - 1 downto 0 )</p></td>
+<td><p>Current time slot to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#106">RESET_PARAM</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Reset configuration parameters control to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#107">LINK_RST_ASSERTED</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Link has been reseted to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#108">NACK_SEQ_NUM</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>NACK Seq_num received to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#109">ACK_SEQ_NUM</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector ( 7 downto 0 )</p></td>
+<td><p>ACK Seq_num received to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#110">DATA_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>Data received pulse signal to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#111">ACK_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>ACK received pulse signal to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#112">NACK_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>NACK received pulse signal to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#113">FCT_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>FCT received pulse signal to the TOP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#114">FULL_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>FULL received pulse signal to the TOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/module_data_link/mib_data_link.vhd#115">RETRY_PULSE_RX</linty-anchor></p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>RETRY received pulse signal to the TOP</p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><a class="reference internal" href="../../design_hierarchy/#vhdl-entities"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

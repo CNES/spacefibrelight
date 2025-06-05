@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Scenario &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/ip/fifo_dc_axis_to_custom/tb/tb_fifo_dc_axis_to_custom/" />
+      <script src="../../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Scenario</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../../_sources/build/html/code/src/ip/fifo_dc_axis_to_custom/tb/tb_fifo_dc_axis_to_custom.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;</p>
+<p>– Uncomment the following library declaration if using
+– arithmetic functions with Signed or Unsigned values
+–use IEEE.NUMERIC_STD.ALL;</p>
+<p>– Uncomment the following library declaration if instantiating
+– any Xilinx leaf cells in this code.
+–library UNISIM;
+–use UNISIM.VComponents.all;</p>
+<p>entity tb_fifo_dc_axis_to_custom is
+end tb_fifo_dc_axis_to_custom;</p>
+<p>architecture Behavioral of tb_fifo_dc_axis_to_custom is</p>
+<p>component FIFO_DC_AXIS_S is
+generic (
+– Users to add parameters here
+G_DWIDTH                : integer := 36;                                 – Data bus fifo length
+G_AWIDTH                : integer := 10;                                 – Address bus fifo length
+G_THRESHOLD_HIGH        : integer := 2**10;                              – high threshold
+G_THRESHOLD_LOW         : integer := 0;                                 – low threshold
+S_AXIS_TDATA_WIDTH	    : integer	:= 32;
+S_AXIS_TUSER_WIDTH	    : integer	:= 4
+);
+port (
+– Users to add ports here
+aresetn      	        : in std_logic;
+– Custom interface master (rd)
+RD_CLK                  : in  std_logic;                                – Clock
+RD_DATA                 : out std_logic_vector(G_DWIDTH-1 downto 0);    – Data read bus
+RD_DATA_EN              : in  std_logic;                                – Read command
+RD_DATA_VLD             : out std_logic;                                – Data valid		
+– STATUS FIFO
+CMD_FLUSH               : in  std_logic;                                – fifo flush
+STATUS_BUSY_FLUSH       : out std_logic;                                – fifo is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                – threshold high reached flag (sur WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                – threshold low reached flag (sur RD_CLK)
+STATUS_FULL             : out std_logic;                                – full fifo flag (sur WR_CLK)
+STATUS_EMPTY            : out std_logic;                                – empty fifo flag (sur RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    – Niveau de remplissage de la FIFO (sur WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0) ;   – Niveau de remplissage de la FIFO (sur RD_CLK)
+– Ports of Axi SLAVE Bus Interface S00_AXIS
+S_AXIS_ACLK	            : in std_logic;
+S_AXIS_TREADY       	: out std_logic;
+S_AXIS_TDATA        	: in std_logic_vector(S_AXIS_TDATA_WIDTH-1 downto 0);
+S_AXIS_TUSER        	: in std_logic_vector(S_AXIS_TUSER_WIDTH-1 downto 0);
+S_AXIS_TLAST        	: in std_logic;
+S_AXIS_TVALID       	: in std_logic
+– User ports ends
+);
+end component FIFO_DC_AXIS_S;</p>
+<p>signal rst_n        : std_logic := ‘0’;
+signal CLK          : std_logic := ‘0’;
+signal s_data_wr    : std_logic_vector(31 downto 0):=(others =&gt;’0’);
+signal s_last_wr    : std_logic := ‘0’;
+signal s_valid_wr   : std_logic := ‘0’;
+signal s_rd_data_en : std_logic := ‘0’;
+signal s_user_wr    : std_logic_vector(3 downto 0);</p>
+<p>constant periode              : time := 6.667 ns;
+constant C_AWIDTH             : integer := 10;
+constant C_DWIDTH             : integer := 36;
+constant C_S_AXIS_TDATA_WIDTH : integer := 32;
+constant C_S_AXIS_TUSER_WIDTH : integer := 4;</p>
+<p>begin</p>
+<p>FIFO_DC_AXIS_S_inst: FIFO_DC_AXIS_S
+generic map(
+G_DWIDTH           =&gt; C_DWIDTH,<br />
+G_AWIDTH           =&gt; C_AWIDTH,<br />
+G_THRESHOLD_HIGH   =&gt; 2**C_AWIDTH,<br />
+G_THRESHOLD_LOW    =&gt; 0,
+S_AXIS_TDATA_WIDTH =&gt; C_S_AXIS_TDATA_WIDTH,
+S_AXIS_TUSER_WIDTH =&gt; C_S_AXIS_TUSER_WIDTH
+)
+port map(
+aresetn      	        =&gt; rst_n,
+RD_CLK                  =&gt; CLK,
+RD_DATA                 =&gt; open,<br />
+RD_DATA_EN              =&gt; s_rd_data_en,<br />
+RD_DATA_VLD             =&gt; open,<br />
+CMD_FLUSH               =&gt; ‘0’,<br />
+STATUS_BUSY_FLUSH       =&gt; open,<br />
+STATUS_THRESHOLD_HIGH   =&gt; open,
+STATUS_THRESHOLD_LOW    =&gt; open,<br />
+STATUS_FULL             =&gt; open,<br />
+STATUS_EMPTY            =&gt; open,<br />
+STATUS_LEVEL_WR         =&gt; open,<br />
+STATUS_LEVEL_RD         =&gt; open,<br />
+S_AXIS_ACLK	            =&gt; CLK,
+S_AXIS_TREADY           =&gt; open,<br />
+S_AXIS_TDATA            =&gt; s_data_wr,
+S_AXIS_TUSER            =&gt; s_user_wr,
+S_AXIS_TLAST            =&gt; s_last_wr,
+S_AXIS_TVALID           =&gt; s_valid_wr
+);</p>
+<p>horloge : process
+begin
+CLK   &lt;= not CLK;
+wait for periode/2;
+end process;</p>
+<hr class="docutils" />
+<section id="scenario">
+<h1>– Scenario<a class="headerlink" href="#scenario" title="Link to this heading"></a></h1>
+<p>scenario : process
+begin
+rst_n &lt;= ‘0’;
+wait for 10 us;
+wait until rising_edge(CLK);
+rst_n &lt;= ‘1’;
+wait for 20 us;
+s_rd_data_en &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+s_data_wr &lt;= x”23456789”;
+s_user_wr &lt;= x”1”;
+s_valid_wr   &lt;= ‘1’;
+s_last_wr &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_data_wr &lt;= x”23456789”;
+s_user_wr &lt;= x”B”;
+s_valid_wr   &lt;= ‘1’;
+s_last_wr &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_data_wr &lt;= x”23456789”;
+s_user_wr &lt;= x”C”;
+s_valid_wr   &lt;= ‘1’;
+s_last_wr &lt;= ‘0’;
+wait until rising_edge(CLK);
+s_data_wr &lt;= x”BCDEF123”;
+s_user_wr &lt;= x”A”;
+s_valid_wr   &lt;= ‘1’;
+s_last_wr &lt;= ‘1’;
+wait until rising_edge(CLK);
+s_last_wr &lt;= ‘0’;
+s_valid_wr   &lt;= ‘0’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+s_rd_data_en &lt;= ‘1’;<br />
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait;<br />
+end process;</p>
+<p>end Behavioral;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

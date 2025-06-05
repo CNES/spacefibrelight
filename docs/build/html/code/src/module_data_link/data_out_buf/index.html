@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_out_buf/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_out_buf.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-24-02-2025">
+<h1>– Creation date : 24/02/2025<a class="headerlink" href="#creation-date-24-02-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-describes-the-output-buffer-flow-control">
+<h1>– Description : This module describes the Output Buffer &amp; Flow control<a class="headerlink" href="#description-this-module-describes-the-output-buffer-flow-control" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_out_buff is
+port (
+RST_N                 : in  std_logic;                                          –! Global reset (Active-low)
+CLK                   : in  std_logic;                                          –! Global Clock
+– phy_plus_lane (PPL) interface
+LANE_ACTIVE_ST_PPL    : in  std_logic;                                          –! Lane Active state flag
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE        :in  std_logic;                                          –! Link Reset command
+– AXI-Stream interface
+S_AXIS_ARSTN_NW	      : in  std_logic;                                          –! Active-low asynchronous reset signal for the AXI-Stream i
+S_AXIS_ACLK_NW	      : in  std_logic;                                          –! Clock signal for the AXI-Stream interface
+S_AXIS_TREADY_DL      : out std_logic;                                          –! Ready signal from the slave indicating it can accept data
+S_AXIS_TDATA_NW       : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! Data bus carrying the actual payload
+S_AXIS_TUSER_NW       : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! User-defined sideband information (optional)
+S_AXIS_TLAST_NW       : in  std_logic;                                          –! Signal indicating the last transfer in a packet
+S_AXIS_TVALID_NW      : in  std_logic;                                          –! Valid signal indicating that the data on TDATA is valid
+– data_mac (DMAC) interface
+VC_READY_DOBUF        : out std_logic;                                          –! Virtual Channel ready flag
+DATA_DOBUF            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         –! Data parallel to data_mac
+VALID_K_CHARAC_DOBUF  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); –! K character valid in the 32-bit DATA_DOBUF vector
+DATA_VALID_DOBUF      : out std_logic;                                          –! Data valid flag associated with DATA_DOBUF
+END_PACKET_DOBUF      : out std_logic;                                          –! End packet flag
+VC_RD_EN_DMAC         : in  std_logic;                                          –! Read command from data_mac
+–DSCHECK interface
+M_VAL_DSCHECK         : in  std_logic_vector(C_M_SIZE-1 downto 0);              –! M value associated with FCT_FAR_END_DSCHECK
+FCT_FAR_END_DSCHECK   : in  std_logic;                                          –! FCT Fare-end received flag
+–MIB Interface
+FCT_CC_OVF_DOBUF      : out std_logic;                                          –! FCT credit counter overflow flag
+CREDIT_VC_DOBUF       : out std_logic;                                          –! Has credit flag (crdit counter &gt; 0)
+VC_CONT_MODE_MIB      : in  std_logic                                           –! Continuous mode command
+);
+end data_out_buff;</p>
+</section>
+<section id="architecture-rtl-of-data-out-buff-is">
+<h1>architecture rtl of data_out_buff is<a class="headerlink" href="#architecture-rtl-of-data-out-buff-is" title="Link to this heading"></a></h1>
+</section>
+<section id="module-declaration">
+<h1>—–                  Module declaration           —–<a class="headerlink" href="#module-declaration" title="Link to this heading"></a></h1>
+</section>
+<section id="component-fifo-dc-axis-s-is-generic-users-to-add-parameters-here-g-dwidth-integer-36-data-bus-fifo-length-g-awidth-integer-10-address-bus-fifo-length-g-threshold-high-integer-2-10-high-threshold-g-threshold-low-integer-0-low-threshold-user-parameters-ends-s-axis-tdata-width-integer-32-data-axis-length-s-axis-tuser-width-integer-4-user-axis-length-port-users-to-add-ports-here-aresetn-in-std-logic-custom-interface-master-rd-rd-clk-in-std-logic-clock-rd-data-out-std-logic-vector-g-dwidth-1-downto-0-data-read-bus-rd-data-en-in-std-logic-read-command-rd-data-vld-out-std-logic-data-valid-status-fifo-cmd-flush-in-std-logic-fifo-flush-status-busy-flush-out-std-logic-fifo-is-flushing-status-threshold-high-out-std-logic-threshold-high-reached-flag-on-wr-clk-status-threshold-low-out-std-logic-threshold-low-reached-flag-on-rd-clk-status-full-out-std-logic-full-fifo-flag-on-wr-clk-status-empty-out-std-logic-empty-fifo-flag-on-rd-clk-status-level-wr-out-std-logic-vector-g-awidth-1-downto-0-fifo-fill-level-on-wr-clk-status-level-rd-out-std-logic-vector-g-awidth-1-downto-0-fifo-fill-level-on-rd-clk-user-ports-ends-do-not-modify-the-ports-beyond-this-line-ports-of-axi-slave-bus-interface-s00-axis-s-axis-aclk-in-std-logic-s-axis-tready-out-std-logic-s-axis-tdata-in-std-logic-vector-c-data-length-1-downto-0-s-axis-tuser-in-std-logic-vector-c-byte-by-word-length-1-downto-0-s-axis-tlast-in-std-logic-s-axis-tvalid-in-std-logic-end-component">
+<h1>component FIFO_DC_AXIS_S is
+generic (
+– Users to add parameters here
+G_DWIDTH                : integer := 36;                                 – Data bus fifo length
+G_AWIDTH                : integer := 10;                                 – Address bus fifo length
+G_THRESHOLD_HIGH        : integer := 2**10;                              – high threshold
+G_THRESHOLD_LOW         : integer := 0;                                  – low threshold
+– User parameters ends
+S_AXIS_TDATA_WIDTH	    : integer := 32;                                 – Data AXIS length
+S_AXIS_TUSER_WIDTH	    : integer := 4                                   – User AXIS length
+);
+port (
+– Users to add ports here
+aresetn      	        : in std_logic;
+– Custom interface master (rd)
+RD_CLK                  : in  std_logic;                                – Clock
+RD_DATA                 : out std_logic_vector(G_DWIDTH-1 downto 0);    – Data read bus
+RD_DATA_EN              : in  std_logic;                                – Read command
+RD_DATA_VLD             : out std_logic;                                – Data valid
+– STATUS FIFO
+cmd_flush               : in  std_logic;                                – Fifo flush
+STATUS_BUSY_FLUSH       : out std_logic;                                – Fifo is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                – Threshold high reached flag (on WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                – Threshold low reached flag (on RD_CLK)
+STATUS_FULL             : out std_logic;                                – Full fifo flag (on WR_CLK)
+STATUS_EMPTY            : out std_logic;                                – Empty fifo flag (on RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    – FIFO fill level (on WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0) ;   – FIFO fill level (on RD_CLK)
+– User ports ends
+– Do not modify the ports beyond this line
+– Ports of Axi SLAVE Bus Interface S00_AXIS
+S_AXIS_ACLK             : in std_logic;
+S_AXIS_TREADY         	: out std_logic;
+S_AXIS_TDATA          	: in std_logic_vector(C_DATA_LENGTH-1 downto 0);
+S_AXIS_TUSER          	: in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+S_AXIS_TLAST          	: in std_logic;
+S_AXIS_TVALID         	: in std_logic
+);
+end component;<a class="headerlink" href="#component-fifo-dc-axis-s-is-generic-users-to-add-parameters-here-g-dwidth-integer-36-data-bus-fifo-length-g-awidth-integer-10-address-bus-fifo-length-g-threshold-high-integer-2-10-high-threshold-g-threshold-low-integer-0-low-threshold-user-parameters-ends-s-axis-tdata-width-integer-32-data-axis-length-s-axis-tuser-width-integer-4-user-axis-length-port-users-to-add-ports-here-aresetn-in-std-logic-custom-interface-master-rd-rd-clk-in-std-logic-clock-rd-data-out-std-logic-vector-g-dwidth-1-downto-0-data-read-bus-rd-data-en-in-std-logic-read-command-rd-data-vld-out-std-logic-data-valid-status-fifo-cmd-flush-in-std-logic-fifo-flush-status-busy-flush-out-std-logic-fifo-is-flushing-status-threshold-high-out-std-logic-threshold-high-reached-flag-on-wr-clk-status-threshold-low-out-std-logic-threshold-low-reached-flag-on-rd-clk-status-full-out-std-logic-full-fifo-flag-on-wr-clk-status-empty-out-std-logic-empty-fifo-flag-on-rd-clk-status-level-wr-out-std-logic-vector-g-awidth-1-downto-0-fifo-fill-level-on-wr-clk-status-level-rd-out-std-logic-vector-g-awidth-1-downto-0-fifo-fill-level-on-rd-clk-user-ports-ends-do-not-modify-the-ports-beyond-this-line-ports-of-axi-slave-bus-interface-s00-axis-s-axis-aclk-in-std-logic-s-axis-tready-out-std-logic-s-axis-tdata-in-std-logic-vector-c-data-length-1-downto-0-s-axis-tuser-in-std-logic-vector-c-byte-by-word-length-1-downto-0-s-axis-tlast-in-std-logic-s-axis-tvalid-in-std-logic-end-component" title="Link to this heading"></a></h1>
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>type data_in_fsm is (
+INIT_ST,           –! Initialization State
+IDLE_ST,           –! Idle State
+WAIT_END_FLUSH_ST, –! Waiting for the end of fifo flush State
+ADD_EEP_ST,        –! EEP injection State
+WAIT_EIP_ST        –! EOP or EEP waiting State
+);</p>
+<p>signal current_state          : data_in_fsm;
+–Fifo signals
+signal rd_data                : std_logic_vector(C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal rd_data_vld            : std_logic;
+signal status_busy_flush      : std_logic;
+signal status_threshold_high  : std_logic;
+signal status_threshold_low   : std_logic;
+signal status_full            : std_logic;
+signal status_empty           : std_logic;</p>
+</section>
+<section id="signal-s-axis-tdata-i-std-logic-vector-c-data-length-1-downto-0-signal-s-axis-tuser-i-std-logic-vector-c-byte-by-word-length-1-downto-0-signal-s-axis-tlast-i-std-logic-signal-s-axis-tvalid-i-std-logic-signal-s-axis-tready-i-std-logic-signal-s-axis-tready-r-std-logic-continuous-mode-signal-cont-mode-flg-std-logic-signal-last-k-char-std-logic-signal-cmd-flush-std-logic-signal-cmd-flush-reg1-std-logic-signal-cmd-flush-sync-std-logic-flow-control-signals-signal-fct-credit-cnt-unsigned-c-fct-cc-size-1-downto-0-signal-eip-out-std-logic-signal-eip-in-req-std-logic-signal-eip-in-req-reg1-std-logic-signal-eip-in-req-reg2-std-logic-signal-eip-out-ack-std-logic-signal-cnt-eip-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-cnt-eip-out-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-cnt-eip-out-reg-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-data-out-std-logic-vector-c-data-length-1-downto-0-signal-valid-k-char-out-std-logic-vector-c-byte-by-word-length-1-downto-0-signal-cnt-word-sent-unsigned-7-1-downto-0-cnt-word-sent-max-64-signal-status-level-rd-std-logic-vector-c-out-buf-size-1-downto-0-signal-m-value-for-credit-std-logic-vector-c-m-size-5-downto-0-signal-fct-credit-cnt-low-std-logic-signal-vc-ready-std-logic-signal-rd-en-std-logic-signal-link-reset-dlre-reg1-std-logic-signal-link-reset-dlre-sync-std-logic-signal-flag-last-data-std-logic-fifo-signal-rst-n-fifo-std-logic-begin">
+<h1>signal s_axis_tdata_i         : std_logic_vector(C_DATA_LENGTH-1 downto 0);
+signal s_axis_tuser_i         : std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal s_axis_tlast_i         : std_logic;
+signal s_axis_tvalid_i        : std_logic;
+signal s_axis_tready_i        : std_logic;
+signal s_axis_tready_r        : std_logic;
+– continuous mode
+signal cont_mode_flg          : std_logic;
+signal last_k_char            : std_logic;
+signal cmd_flush              : std_logic;
+signal cmd_flush_reg1         : std_logic;
+signal cmd_flush_sync         : std_logic;
+–Flow control signals
+signal fct_credit_cnt         : unsigned(C_FCT_CC_SIZE-1 downto 0);
+signal eip_out                : std_logic;
+signal eip_in_req             : std_logic;
+signal eip_in_req_reg1        : std_logic;
+signal eip_in_req_reg2        : std_logic;
+signal eip_out_ack            : std_logic;
+signal cnt_eip                : unsigned(6-1 downto 0);     – cnt_word sent, max= 64
+signal cnt_eip_out            : unsigned(6-1 downto 0);     – cnt_word sent, max= 64
+signal cnt_eip_out_reg        : unsigned(6-1 downto 0);     – cnt_word sent, max= 64
+signal data_out               : std_logic_vector(C_DATA_LENGTH-1 downto 0);
+signal valid_k_char_out       : std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal cnt_word_sent          : unsigned(7-1 downto 0);     – cnt_word sent, max= 64
+signal status_level_rd        : std_logic_vector(C_OUT_BUF_SIZE-1 downto 0);
+signal m_value_for_credit     : std_logic_vector(C_M_SIZE + 5 downto 0);
+signal fct_credit_cnt_low     : std_logic;
+signal vc_ready               : std_logic;
+signal rd_en                  : std_logic;
+signal link_reset_dlre_reg1   : std_logic;
+signal link_reset_dlre_sync   : std_logic;
+signal flag_last_data         : std_logic;
+– Fifo
+signal rst_n_fifo             : std_logic;
+begin<a class="headerlink" href="#signal-s-axis-tdata-i-std-logic-vector-c-data-length-1-downto-0-signal-s-axis-tuser-i-std-logic-vector-c-byte-by-word-length-1-downto-0-signal-s-axis-tlast-i-std-logic-signal-s-axis-tvalid-i-std-logic-signal-s-axis-tready-i-std-logic-signal-s-axis-tready-r-std-logic-continuous-mode-signal-cont-mode-flg-std-logic-signal-last-k-char-std-logic-signal-cmd-flush-std-logic-signal-cmd-flush-reg1-std-logic-signal-cmd-flush-sync-std-logic-flow-control-signals-signal-fct-credit-cnt-unsigned-c-fct-cc-size-1-downto-0-signal-eip-out-std-logic-signal-eip-in-req-std-logic-signal-eip-in-req-reg1-std-logic-signal-eip-in-req-reg2-std-logic-signal-eip-out-ack-std-logic-signal-cnt-eip-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-cnt-eip-out-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-cnt-eip-out-reg-unsigned-6-1-downto-0-cnt-word-sent-max-64-signal-data-out-std-logic-vector-c-data-length-1-downto-0-signal-valid-k-char-out-std-logic-vector-c-byte-by-word-length-1-downto-0-signal-cnt-word-sent-unsigned-7-1-downto-0-cnt-word-sent-max-64-signal-status-level-rd-std-logic-vector-c-out-buf-size-1-downto-0-signal-m-value-for-credit-std-logic-vector-c-m-size-5-downto-0-signal-fct-credit-cnt-low-std-logic-signal-vc-ready-std-logic-signal-rd-en-std-logic-signal-link-reset-dlre-reg1-std-logic-signal-link-reset-dlre-sync-std-logic-signal-flag-last-data-std-logic-fifo-signal-rst-n-fifo-std-logic-begin" title="Link to this heading"></a></h1>
+</section>
+<section id="assignements">
+<h1>—–                     Assignements              —–<a class="headerlink" href="#assignements" title="Link to this heading"></a></h1>
+<p>data_out             &lt;= rd_data(C_DATA_LENGTH-1 downto 0);
+valid_k_char_out     &lt;= rd_data(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto C_DATA_LENGTH);</p>
+</section>
+<section id="data-dobuf-rd-data-c-data-length-1-downto-0-valid-k-charac-dobuf-rd-data-c-data-length-c-byte-by-word-length-1-downto-c-data-length-data-valid-dobuf-rd-data-vld-end-packet-dobuf-rd-data-vld-and-status-threshold-low-or-fct-credit-cnt-low-when-cnt-word-sent-63-else-rd-data-vld-m-value-for-credit-m-val-dscheck-000000-s-axis-tready-dl-s-axis-tready-i-when-vc-cont-mode-mib-0-else-1-tready-at-1-in-continuous-mode-rd-en-vc-rd-en-dmac-and-not-rd-data-vld-and-fct-credit-cnt-low-when-cnt-word-sent-63-else-flag-last-data-vc-ready-dobuf-vc-ready">
+<h1>DATA_DOBUF           &lt;= rd_data(C_DATA_LENGTH-1 downto 0);
+VALID_K_CHARAC_DOBUF &lt;= rd_data(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto C_DATA_LENGTH);
+DATA_VALID_DOBUF     &lt;= rd_data_vld;
+END_PACKET_DOBUF     &lt;= rd_data_vld and (status_threshold_low or fct_credit_cnt_low) when (cnt_word_sent&lt;63) else rd_data_vld;
+m_value_for_credit   &lt;= M_VAL_DSCHECK &amp; “000000”;
+S_AXIS_TREADY_DL     &lt;= s_axis_tready_i when(VC_CONT_MODE_MIB = ‘0’) else ‘1’;  – Tready at ‘1’ in continuous mode
+rd_en                &lt;= VC_RD_EN_DMAC and not(rd_data_vld and fct_credit_cnt_low) when (cnt_word_sent&lt;63) else flag_last_data;
+VC_READY_DOBUF       &lt;= vc_ready;<a class="headerlink" href="#data-dobuf-rd-data-c-data-length-1-downto-0-valid-k-charac-dobuf-rd-data-c-data-length-c-byte-by-word-length-1-downto-c-data-length-data-valid-dobuf-rd-data-vld-end-packet-dobuf-rd-data-vld-and-status-threshold-low-or-fct-credit-cnt-low-when-cnt-word-sent-63-else-rd-data-vld-m-value-for-credit-m-val-dscheck-000000-s-axis-tready-dl-s-axis-tready-i-when-vc-cont-mode-mib-0-else-1-tready-at-1-in-continuous-mode-rd-en-vc-rd-en-dmac-and-not-rd-data-vld-and-fct-credit-cnt-low-when-cnt-word-sent-63-else-flag-last-data-vc-ready-dobuf-vc-ready" title="Link to this heading"></a></h1>
+</section>
+<section id="instantiation">
+<h1>—–                     Instantiation             —–<a class="headerlink" href="#instantiation" title="Link to this heading"></a></h1>
+</section>
+<section id="fifo-dc-axis-s-instantiation-ints-fifo-dc-axis-s-fifo-dc-axis-s-generic-map-g-dwidth-c-data-length-c-byte-by-word-length-g-awidth-c-out-buf-size-g-threshold-high-2-c-out-buf-size-3-g-threshold-low-1-s-axis-tdata-width-c-data-length-s-axis-tuser-width-c-byte-by-word-length-port-map-aresetn-rst-n-fifo-rd-clk-clk-rd-data-rd-data-rd-data-en-rd-en-rd-data-vld-rd-data-vld-cmd-flush-cmd-flush-status-busy-flush-status-busy-flush-status-threshold-high-status-threshold-high-status-threshold-low-status-threshold-low-status-full-status-full-status-empty-status-empty-status-level-wr-open-status-level-rd-status-level-rd-s-axis-aclk-s-axis-aclk-nw-s-axis-tready-s-axis-tready-i-s-axis-tdata-s-axis-tdata-i-s-axis-tuser-s-axis-tuser-i-s-axis-tlast-s-axis-tlast-i-s-axis-tvalid-s-axis-tvalid-i">
+<h1>– FIFO_DC_AXIS_S Instantiation
+ints_fifo_dc_axis_s: FIFO_DC_AXIS_S
+generic map (
+G_DWIDTH              =&gt; C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH,
+G_AWIDTH              =&gt; C_OUT_BUF_SIZE,
+G_THRESHOLD_HIGH      =&gt; (2**C_OUT_BUF_SIZE)-3,
+G_THRESHOLD_LOW       =&gt; 1,
+S_AXIS_TDATA_WIDTH    =&gt; C_DATA_LENGTH,
+S_AXIS_TUSER_WIDTH    =&gt; C_BYTE_BY_WORD_LENGTH
+)
+port map (
+aresetn               =&gt; rst_n_fifo,
+RD_CLK                =&gt; CLK,
+RD_DATA               =&gt; rd_data,
+RD_DATA_EN            =&gt; rd_en,
+RD_DATA_VLD           =&gt; rd_data_vld,
+cmd_flush             =&gt; cmd_flush,
+STATUS_BUSY_FLUSH     =&gt; status_busy_flush,
+STATUS_THRESHOLD_HIGH =&gt; status_threshold_high,
+STATUS_THRESHOLD_LOW  =&gt; status_threshold_low,
+STATUS_FULL           =&gt; status_full,
+STATUS_EMPTY          =&gt; status_empty,
+STATUS_LEVEL_WR       =&gt; open,
+STATUS_LEVEL_RD       =&gt; status_level_rd,
+S_AXIS_ACLK           =&gt; S_AXIS_ACLK_NW,
+S_AXIS_TREADY         =&gt; s_axis_tready_i,
+S_AXIS_TDATA          =&gt; s_axis_tdata_i,
+S_AXIS_TUSER          =&gt; s_axis_tuser_i,
+S_AXIS_TLAST          =&gt; s_axis_tlast_i,
+S_AXIS_TVALID         =&gt; s_axis_tvalid_i
+);<a class="headerlink" href="#fifo-dc-axis-s-instantiation-ints-fifo-dc-axis-s-fifo-dc-axis-s-generic-map-g-dwidth-c-data-length-c-byte-by-word-length-g-awidth-c-out-buf-size-g-threshold-high-2-c-out-buf-size-3-g-threshold-low-1-s-axis-tdata-width-c-data-length-s-axis-tuser-width-c-byte-by-word-length-port-map-aresetn-rst-n-fifo-rd-clk-clk-rd-data-rd-data-rd-data-en-rd-en-rd-data-vld-rd-data-vld-cmd-flush-cmd-flush-status-busy-flush-status-busy-flush-status-threshold-high-status-threshold-high-status-threshold-low-status-threshold-low-status-full-status-full-status-empty-status-empty-status-level-wr-open-status-level-rd-status-level-rd-s-axis-aclk-s-axis-aclk-nw-s-axis-tready-s-axis-tready-i-s-axis-tdata-s-axis-tdata-i-s-axis-tuser-s-axis-tuser-i-s-axis-tlast-s-axis-tlast-i-s-axis-tvalid-s-axis-tvalid-i" title="Link to this heading"></a></h1>
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo">
+<h1>– Process: p_rst_fifo
+– Description: Manages the reset signal of the FiFo<a class="headerlink" href="#process-p-rst-fifo-description-manages-the-reset-signal-of-the-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="p-rst-fifo-process-clk-rst-n-s-axis-arstn-nw-begin-if-rst-n-0-or-s-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-clk-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo">
+<h1>p_rst_fifo: process(CLK, RST_N, S_AXIS_ARSTN_NW)
+begin
+if RST_N = ‘0’ or  S_AXIS_ARSTN_NW = ‘0’ then
+rst_n_fifo &lt;= ‘0’;
+elsif rising_edge(CLK) then
+rst_n_fifo &lt;= ‘1’;
+end if;
+end process p_rst_fifo;<a class="headerlink" href="#p-rst-fifo-process-clk-rst-n-s-axis-arstn-nw-begin-if-rst-n-0-or-s-axis-arstn-nw-0-then-rst-n-fifo-0-elsif-rising-edge-clk-then-rst-n-fifo-1-end-if-end-process-p-rst-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-continuous-mode-description-manages-continuous-mode-procedure-trigger">
+<h1>– Process: p_continuous_mode
+– Description: Manages continuous mode procedure trigger<a class="headerlink" href="#process-p-continuous-mode-description-manages-continuous-mode-procedure-trigger" title="Link to this heading"></a></h1>
+</section>
+<section id="p-continuous-mode-process-s-axis-aclk-nw-rst-n-s-axis-arstn-nw-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-cont-mode-flg-0-elsif-rising-edge-s-axis-aclk-nw-then-cont-mode-flg-0-if-vc-cont-mode-mib-1-and-status-threshold-high-1-or-lane-active-st-ppl-0-then-cont-mode-flg-1-end-if-end-if-end-process-p-continuous-mode">
+<h1>p_continuous_mode: process(S_AXIS_ACLK_NW, RST_N, S_AXIS_ARSTN_NW)
+begin
+if S_AXIS_ARSTN_NW = ‘0’ or RST_N=’0’ then
+cont_mode_flg &lt;= ‘0’;
+elsif rising_edge(S_AXIS_ACLK_NW) then
+cont_mode_flg  &lt;= ‘0’;
+if VC_CONT_MODE_MIB = ‘1’ and (status_threshold_high =’1’ or LANE_ACTIVE_ST_PPL =’0’) then
+cont_mode_flg  &lt;= ‘1’;
+end if;
+end if;
+end process p_continuous_mode;<a class="headerlink" href="#p-continuous-mode-process-s-axis-aclk-nw-rst-n-s-axis-arstn-nw-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-cont-mode-flg-0-elsif-rising-edge-s-axis-aclk-nw-then-cont-mode-flg-0-if-vc-cont-mode-mib-1-and-status-threshold-high-1-or-lane-active-st-ppl-0-then-cont-mode-flg-1-end-if-end-if-end-process-p-continuous-mode" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-cmd-flush-resync-description-cmd-flush-resynchronisation-in-clk-domain">
+<h1>– Process: p_cmd_flush_resync
+– Description: cmd_flush resynchronisation in CLK domain<a class="headerlink" href="#process-p-cmd-flush-resync-description-cmd-flush-resynchronisation-in-clk-domain" title="Link to this heading"></a></h1>
+</section>
+<section id="p-cmd-flush-resync-process-clk-rst-n-begin-if-rst-n-0-then-cmd-flush-reg1-0-cmd-flush-sync-0-elsif-rising-edge-clk-then-cmd-flush-reg1-cmd-flush-cmd-flush-sync-cmd-flush-reg1-end-if-end-process-p-cmd-flush-resync">
+<h1>p_cmd_flush_resync: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cmd_flush_reg1 &lt;= ‘0’;
+cmd_flush_sync &lt;= ‘0’;
+elsif rising_edge(CLK) then
+cmd_flush_reg1 &lt;= cmd_flush;
+cmd_flush_sync &lt;= cmd_flush_reg1;
+end if;
+end process p_cmd_flush_resync;<a class="headerlink" href="#p-cmd-flush-resync-process-clk-rst-n-begin-if-rst-n-0-then-cmd-flush-reg1-0-cmd-flush-sync-0-elsif-rising-edge-clk-then-cmd-flush-reg1-cmd-flush-cmd-flush-sync-cmd-flush-reg1-end-if-end-process-p-cmd-flush-resync" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-data-in-fifo-description-manages-the-data-written-into-the-fifo">
+<h1>– Process: p_data_in_fifo
+– Description: Manages the data written into the fifo<a class="headerlink" href="#process-p-data-in-fifo-description-manages-the-data-written-into-the-fifo" title="Link to this heading"></a></h1>
+<p>p_data_in_fifo: process(S_AXIS_ARSTN_NW, S_AXIS_ACLK_NW, RST_N)
+begin
+if S_AXIS_ARSTN_NW = ‘0’ or RST_N=’0’ then
+s_axis_tdata_i       &lt;= (others =&gt; ‘0’);
+s_axis_tuser_i       &lt;= (others =&gt; ‘0’);
+s_axis_tlast_i       &lt;= ‘0’;
+s_axis_tvalid_i      &lt;= ‘0’;
+s_axis_tready_r      &lt;= ‘0’;
+cmd_flush            &lt;= ‘0’;
+current_state        &lt;= INIT_ST;
+link_reset_dlre_reg1 &lt;= ‘1’;
+link_reset_dlre_sync &lt;= ‘1’;
+elsif rising_edge(S_AXIS_ACLK_NW) then
+link_reset_dlre_reg1 &lt;= LINK_RESET_DLRE;
+link_reset_dlre_sync &lt;= link_reset_dlre_reg1;
+s_axis_tready_r      &lt;= s_axis_tready_i;
+cmd_flush            &lt;= ‘0’;
+case current_state is
+when INIT_ST =&gt;
+if link_reset_dlre_sync =’0’ and LINK_RESET_DLRE = ‘0’ then
+current_state &lt;= IDLE_ST;
+end if;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  when IDLE_ST =&gt;
+                              s_axis_tdata_i  &lt;= S_AXIS_TDATA_NW;
+                              s_axis_tuser_i  &lt;= S_AXIS_TUSER_NW;
+                              s_axis_tlast_i  &lt;= S_AXIS_TLAST_NW;
+                              s_axis_tvalid_i &lt;= S_AXIS_TVALID_NW;
+                              if link_reset_dlre_sync = &#39;1&#39; then
+                                cmd_flush &lt;= &#39;1&#39;;
+                                if last_k_char = &#39;1&#39; then
+                                  current_state   &lt;= WAIT_END_FLUSH_ST;
+                                else
+                                  current_state   &lt;= WAIT_EIP_ST;
+                                end if;
+                              elsif cont_mode_flg  = &#39;1&#39; then
+                                cmd_flush       &lt;= &#39;1&#39;;
+                                current_state   &lt;= ADD_EEP_ST;
+                                s_axis_tdata_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tuser_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;0&#39;;
+                              end if;
+
+    when WAIT_END_FLUSH_ST =&gt;
+                              if s_axis_tready_i = &#39;1&#39; then
+                                current_state &lt;= IDLE_ST;
+                              end if;
+
+    when ADD_EEP_ST =&gt;        if s_axis_tready_i = &#39;1&#39; and s_axis_tready_r = &#39;1&#39; then
+                                s_axis_tdata_i  &lt;= C_FILL_SYMB &amp; C_FILL_SYMB &amp; C_FILL_SYMB &amp; C_EEP_SYMB;
+                                s_axis_tuser_i  &lt;= &quot;1111&quot;;
+                                s_axis_tlast_i  &lt;= &#39;1&#39;;
+                                s_axis_tvalid_i &lt;= &#39;1&#39;;
+                                if S_AXIS_TUSER_NW(C_BYTE_BY_WORD_LENGTH-1)=&#39;1&#39; and S_AXIS_TVALID_NW=&#39;1&#39; then
+                                  current_state   &lt;= IDLE_ST;
+                                else
+                                  current_state   &lt;= WAIT_EIP_ST;
+                                end if;
+                              end if;
+
+    when WAIT_EIP_ST =&gt;     if S_AXIS_TVALID_NW=&#39;1&#39; then
+                              if S_AXIS_TUSER_NW(0)=&#39;1&#39; and (S_AXIS_TDATA_NW(7 downto 0) = C_EEP_SYMB or S_AXIS_TDATA_NW(7 downto 0) = C_EOP_SYMB) then
+                                s_axis_tdata_i  &lt;= S_AXIS_TDATA_NW(31 downto 8) &amp; C_FILL_SYMB;
+                                s_axis_tuser_i  &lt;= S_AXIS_TUSER_NW(3 downto 1) &amp; &#39;1&#39;;
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;1&#39;;
+                                current_state   &lt;= IDLE_ST;
+                              elsif S_AXIS_TUSER_NW(1)=&#39;1&#39; and (S_AXIS_TDATA_NW(15 downto 8) = C_EEP_SYMB or S_AXIS_TDATA_NW(15 downto 8) = C_EOP_SYMB) then
+                                s_axis_tdata_i  &lt;= S_AXIS_TDATA_NW(31 downto 16) &amp; C_FILL_SYMB &amp; C_FILL_SYMB;
+                                s_axis_tuser_i  &lt;= S_AXIS_TUSER_NW(3 downto 2) &amp; &quot;11&quot;;
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;1&#39;;
+                                current_state   &lt;= IDLE_ST;
+                              elsif S_AXIS_TUSER_NW(2)=&#39;1&#39; and (S_AXIS_TDATA_NW(23 downto 16) = C_EEP_SYMB or S_AXIS_TDATA_NW(23 downto 16) = C_EOP_SYMB) then
+                                s_axis_tdata_i  &lt;= S_AXIS_TDATA_NW(31 downto 24) &amp; C_FILL_SYMB &amp; C_FILL_SYMB &amp; C_FILL_SYMB;
+                                s_axis_tuser_i  &lt;= S_AXIS_TUSER_NW(3) &amp; &quot;111&quot;;
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;1&#39;;
+                                current_state   &lt;= IDLE_ST;
+                              elsif S_AXIS_TUSER_NW(3)=&#39;1&#39; and (S_AXIS_TDATA_NW(31 downto 24) = C_EEP_SYMB or S_AXIS_TDATA_NW(31 downto 24) = C_EOP_SYMB) then
+                                s_axis_tdata_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tuser_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;0&#39;;
+                                current_state   &lt;= IDLE_ST;
+                              else
+                                s_axis_tdata_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tuser_i  &lt;= (others =&gt; &#39;0&#39;);
+                                s_axis_tlast_i  &lt;= &#39;0&#39;;
+                                s_axis_tvalid_i &lt;= &#39;0&#39;;
+                              end if;
+                            else
+                              s_axis_tdata_i       &lt;= (others =&gt; &#39;0&#39;);
+                              s_axis_tuser_i       &lt;= (others =&gt; &#39;0&#39;);
+                              s_axis_tlast_i       &lt;= &#39;0&#39;;
+                              s_axis_tvalid_i      &lt;= &#39;0&#39;;
+                            end if;
+end case;
+</pre></div>
+</div>
+</section>
+<section id="end-if-end-process-p-data-in-fifo">
+<h1>end if;
+end process p_data_in_fifo;<a class="headerlink" href="#end-if-end-process-p-data-in-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-last-char-written-description-analyses-if-the-last-character-written-into-the-fifo-was-an-eop-eep-or-fill">
+<h1>– Process: p_last_char_written
+– Description: Analyses if the last character written into
+–              the fifo was an EOP, EEP or Fill<a class="headerlink" href="#process-p-last-char-written-description-analyses-if-the-last-character-written-into-the-fifo-was-an-eop-eep-or-fill" title="Link to this heading"></a></h1>
+</section>
+<section id="p-last-char-written-process-s-axis-arstn-nw-s-axis-aclk-nw-rst-n-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-last-k-char-0-elsif-rising-edge-s-axis-aclk-nw-then-if-s-axis-tuser-nw-c-byte-by-word-length-1-1-and-s-axis-tvalid-nw-1-and-s-axis-tready-i-1-then-last-k-char-1-elsif-s-axis-tvalid-nw-1-and-s-axis-tready-i-1-then-last-k-char-0-end-if-end-if-end-process-p-last-char-written">
+<h1>p_last_char_written: process(S_AXIS_ARSTN_NW, S_AXIS_ACLK_NW, RST_N)
+begin
+if S_AXIS_ARSTN_NW = ‘0’ or RST_N=’0’  then
+last_k_char &lt;= ‘0’;
+elsif rising_edge(S_AXIS_ACLK_NW) then
+if S_AXIS_TUSER_NW(C_BYTE_BY_WORD_LENGTH-1)=’1’ and S_AXIS_TVALID_NW=’1’ and s_axis_tready_i =’1’ then
+last_k_char &lt;= ‘1’;
+elsif S_AXIS_TVALID_NW=’1’ and s_axis_tready_i =’1’ then
+last_k_char &lt;= ‘0’;
+end if;
+end if;
+end process p_last_char_written;<a class="headerlink" href="#p-last-char-written-process-s-axis-arstn-nw-s-axis-aclk-nw-rst-n-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-last-k-char-0-elsif-rising-edge-s-axis-aclk-nw-then-if-s-axis-tuser-nw-c-byte-by-word-length-1-1-and-s-axis-tvalid-nw-1-and-s-axis-tready-i-1-then-last-k-char-1-elsif-s-axis-tvalid-nw-1-and-s-axis-tready-i-1-then-last-k-char-0-end-if-end-if-end-process-p-last-char-written" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-fct-ccnt-low-description-indicates-when-fct-credit-counter-is-almost-0">
+<h1>– Process: p_fct_ccnt_low
+– Description: Indicates when fct credit counter is almost 0<a class="headerlink" href="#process-p-fct-ccnt-low-description-indicates-when-fct-credit-counter-is-almost-0" title="Link to this heading"></a></h1>
+</section>
+<section id="p-fct-ccnt-low-process-clk-rst-n-begin-if-rst-n-0-then-fct-credit-cnt-low-0-elsif-rising-edge-clk-then-if-fct-credit-cnt-2-and-rd-data-vld-1-then-fct-credit-cnt-low-1-elsif-fct-credit-cnt-1-then-fct-credit-cnt-low-0-end-if-end-if-end-process-p-fct-ccnt-low">
+<h1>p_fct_ccnt_low: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+fct_credit_cnt_low &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if fct_credit_cnt  &lt;= 2 and rd_data_vld = ‘1’ then
+fct_credit_cnt_low &lt;= ‘1’;
+elsif fct_credit_cnt  &gt; 1 then
+fct_credit_cnt_low &lt;= ‘0’;
+end if;
+end if;
+end process p_fct_ccnt_low;<a class="headerlink" href="#p-fct-ccnt-low-process-clk-rst-n-begin-if-rst-n-0-then-fct-credit-cnt-low-0-elsif-rising-edge-clk-then-if-fct-credit-cnt-2-and-rd-data-vld-1-then-fct-credit-cnt-low-1-elsif-fct-credit-cnt-1-then-fct-credit-cnt-low-0-end-if-end-if-end-process-p-fct-ccnt-low" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-has-credit-description-indicates-if-far-end-input-buffer-has-credit">
+<h1>– Process: p_has_credit
+– Description: Indicates if far end input buffer has credit<a class="headerlink" href="#process-p-has-credit-description-indicates-if-far-end-input-buffer-has-credit" title="Link to this heading"></a></h1>
+</section>
+<section id="p-has-credit-process-clk-rst-n-begin-if-rst-n-0-then-credit-vc-dobuf-0-elsif-rising-edge-clk-then-if-fct-credit-cnt-0-then-credit-vc-dobuf-1-else-credit-vc-dobuf-0-end-if-end-if-end-process-p-has-credit">
+<h1>p_has_credit: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+CREDIT_VC_DOBUF &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if fct_credit_cnt &gt; 0 then
+CREDIT_VC_DOBUF &lt;= ‘1’;
+else
+CREDIT_VC_DOBUF &lt;= ‘0’;
+end if;
+end if;
+end process p_has_credit;<a class="headerlink" href="#p-has-credit-process-clk-rst-n-begin-if-rst-n-0-then-credit-vc-dobuf-0-elsif-rising-edge-clk-then-if-fct-credit-cnt-0-then-credit-vc-dobuf-1-else-credit-vc-dobuf-0-end-if-end-if-end-process-p-has-credit" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-fct-credit-cnt-description-manages-the-fct-credit-counter">
+<h1>– Process: p_fct_credit_cnt
+– Description: Manages the FCT credit counter<a class="headerlink" href="#process-p-fct-credit-cnt-description-manages-the-fct-credit-counter" title="Link to this heading"></a></h1>
+</section>
+<section id="p-fct-credit-cnt-process-clk-rst-n-begin-if-rst-n-0-then-fct-credit-cnt-others-0-fct-cc-ovf-dobuf-0-elsif-rising-edge-clk-then-fct-cc-ovf-dobuf-0-if-link-reset-dlre-1-then-fct-credit-cnt-others-0-else-if-fct-far-end-dscheck-1-and-rd-data-vld-1-then-fct-received-and-packet-sent-if-c-fct-cc-max-fct-credit-cnt-unsigned-m-value-for-credit-1-then-fct-credit-counter-will-not-overflow-fct-credit-cnt-fct-credit-cnt-unsigned-m-val-dscheck-64-1-else-fct-cc-ovf-dobuf-1-fct-credit-cnt-c-fct-cc-max-end-if-elsif-rd-data-vld-1-then-packet-sent-if-fct-credit-cnt-1-then-fct-credit-counter-will-not-be-negative-fct-credit-cnt-fct-credit-cnt-1-else-fct-credit-cnt-others-0-end-if-elsif-fct-far-end-dscheck-1-then-fct-received-if-c-fct-cc-max-fct-credit-cnt-unsigned-m-value-for-credit-then-fct-credit-counter-will-not-overflow-fct-credit-cnt-fct-credit-cnt-unsigned-m-value-for-credit-c-fct-cc-size-1-downto-0-else-fct-cc-ovf-dobuf-1-fct-credit-cnt-c-fct-cc-max-end-if-end-if-end-if-end-if-end-process-p-fct-credit-cnt">
+<h1>p_fct_credit_cnt: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+fct_credit_cnt   &lt;= (others =&gt; ‘0’);
+FCT_CC_OVF_DOBUF &lt;= ‘0’;
+elsif rising_edge(CLK) then
+FCT_CC_OVF_DOBUF &lt;= ‘0’;
+if LINK_RESET_DLRE = ‘1’ then
+fct_credit_cnt &lt;= (others =&gt; ‘0’);
+else
+if FCT_FAR_END_DSCHECK = ‘1’ and rd_data_vld = ‘1’ then – FCT received and packet sent
+if C_FCT_CC_MAX &gt; (fct_credit_cnt + unsigned(m_value_for_credit) - 1) then – FCT credit counter will not overflow
+fct_credit_cnt &lt;= fct_credit_cnt + (unsigned(M_VAL_DSCHECK)*64) - 1;
+else
+FCT_CC_OVF_DOBUF &lt;= ‘1’;
+fct_credit_cnt   &lt;= C_FCT_CC_MAX;
+end if;
+elsif rd_data_vld = ‘1’ then – Packet sent
+if fct_credit_cnt &gt; 1 then – FCT credit counter will not be negative
+fct_credit_cnt &lt;= fct_credit_cnt - 1;
+else
+fct_credit_cnt &lt;= (others =&gt; ‘0’);
+end if;
+elsif FCT_FAR_END_DSCHECK = ‘1’ then – FCT received
+if C_FCT_CC_MAX &gt; fct_credit_cnt + unsigned(m_value_for_credit) then – FCT credit counter will not overflow
+fct_credit_cnt &lt;= fct_credit_cnt + unsigned(m_value_for_credit(C_FCT_CC_SIZE-1 downto 0));
+else
+FCT_CC_OVF_DOBUF &lt;= ‘1’;
+fct_credit_cnt   &lt;= C_FCT_CC_MAX;
+end if;
+end if;
+end if;
+end if;
+end process p_fct_credit_cnt;<a class="headerlink" href="#p-fct-credit-cnt-process-clk-rst-n-begin-if-rst-n-0-then-fct-credit-cnt-others-0-fct-cc-ovf-dobuf-0-elsif-rising-edge-clk-then-fct-cc-ovf-dobuf-0-if-link-reset-dlre-1-then-fct-credit-cnt-others-0-else-if-fct-far-end-dscheck-1-and-rd-data-vld-1-then-fct-received-and-packet-sent-if-c-fct-cc-max-fct-credit-cnt-unsigned-m-value-for-credit-1-then-fct-credit-counter-will-not-overflow-fct-credit-cnt-fct-credit-cnt-unsigned-m-val-dscheck-64-1-else-fct-cc-ovf-dobuf-1-fct-credit-cnt-c-fct-cc-max-end-if-elsif-rd-data-vld-1-then-packet-sent-if-fct-credit-cnt-1-then-fct-credit-counter-will-not-be-negative-fct-credit-cnt-fct-credit-cnt-1-else-fct-credit-cnt-others-0-end-if-elsif-fct-far-end-dscheck-1-then-fct-received-if-c-fct-cc-max-fct-credit-cnt-unsigned-m-value-for-credit-then-fct-credit-counter-will-not-overflow-fct-credit-cnt-fct-credit-cnt-unsigned-m-value-for-credit-c-fct-cc-size-1-downto-0-else-fct-cc-ovf-dobuf-1-fct-credit-cnt-c-fct-cc-max-end-if-end-if-end-if-end-if-end-process-p-fct-credit-cnt" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-cnt-word-description-count-the-number-of-word-sent">
+<h1>– Process: p_cnt_word
+– Description: Count the number of word sent<a class="headerlink" href="#process-p-cnt-word-description-count-the-number-of-word-sent" title="Link to this heading"></a></h1>
+<p>p_cnt_word: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cnt_word_sent &lt;= (others =&gt;’0’);
+elsif rising_edge(CLK) then
+if LINK_RESET_DLRE = ‘1’ then
+cnt_word_sent &lt;= (others =&gt;’0’);
+elsif status_threshold_low = ‘1’ and rd_data_vld=’1’ then
+cnt_word_sent  &lt;= (others =&gt;’0’);
+elsif cnt_word_sent &gt;= 63  and rd_data_vld = ‘1’ then
+cnt_word_sent &lt;= (others =&gt;’0’);
+elsif rd_data_vld = ‘1’ then
+cnt_word_sent &lt;= cnt_word_sent +1;
+elsif fct_credit_cnt = 0 then
+cnt_word_sent  &lt;= (others =&gt;’0’);
+end if;
+end if;
+end process p_cnt_word;</p>
+<hr class="docutils" />
+</section>
+<section id="process-p-flag-last-data-description-raise-a-flag-if-last-data-was-not-sent">
+<h1>– Process: p_flag_last_data
+– Description: Raise a flag if last data was not sent<a class="headerlink" href="#process-p-flag-last-data-description-raise-a-flag-if-last-data-was-not-sent" title="Link to this heading"></a></h1>
+</section>
+<section id="p-flag-last-data-process-clk-rst-n-begin-if-rst-n-0-then-flag-last-data-0-elsif-rising-edge-clk-then-if-cnt-word-sent-62-and-rd-data-vld-1-and-vc-rd-en-dmac-0-and-status-threshold-low-0-and-fct-credit-cnt-low-0-then-flag-last-data-1-elsif-cnt-word-sent-63-and-vc-rd-en-dmac-1-then-flag-last-data-0-elsif-cnt-word-sent-62-then-flag-last-data-0-end-if-end-if-end-process-p-flag-last-data">
+<h1>p_flag_last_data: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+flag_last_data &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if cnt_word_sent = 62 and rd_data_vld = ‘1’ and VC_RD_EN_DMAC = ‘0’ and status_threshold_low = ‘0’ and fct_credit_cnt_low = ‘0’then
+flag_last_data &lt;= ‘1’;
+elsif cnt_word_sent = 63 and VC_RD_EN_DMAC = ‘1’ then
+flag_last_data &lt;= ‘0’;
+elsif cnt_word_sent &lt; 62 then
+flag_last_data &lt;= ‘0’;
+end if;
+end if;
+end process p_flag_last_data;<a class="headerlink" href="#p-flag-last-data-process-clk-rst-n-begin-if-rst-n-0-then-flag-last-data-0-elsif-rising-edge-clk-then-if-cnt-word-sent-62-and-rd-data-vld-1-and-vc-rd-en-dmac-0-and-status-threshold-low-0-and-fct-credit-cnt-low-0-then-flag-last-data-1-elsif-cnt-word-sent-63-and-vc-rd-en-dmac-1-then-flag-last-data-0-elsif-cnt-word-sent-62-then-flag-last-data-0-end-if-end-if-end-process-p-flag-last-data" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-detect-eip-out-description-eip-output-detection">
+<h1>– Process: p_detect_eip_out
+– Description: EIP output detection<a class="headerlink" href="#process-p-detect-eip-out-description-eip-output-detection" title="Link to this heading"></a></h1>
+</section>
+<section id="p-detect-eip-out-process-clk-rst-n-begin-if-rst-n-0-then-eip-out-0-elsif-rising-edge-clk-then-if-valid-k-char-out-0-1-and-data-out-7-downto-0-c-eep-symb-or-data-out-7-downto-0-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-1-1-and-data-out-15-downto-8-c-eep-symb-or-data-out-15-downto-8-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-2-1-and-data-out-23-downto-16-c-eep-symb-or-data-out-23-downto-16-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-3-1-and-data-out-31-downto-24-c-eep-symb-or-data-out-31-downto-24-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-else-eip-out-0-end-if-end-if-end-process-p-detect-eip-out">
+<h1>p_detect_eip_out: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+eip_out &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if valid_k_char_out(0)=’1’ and (data_out(7 downto 0) = C_EEP_SYMB or data_out(7 downto 0) = C_EOP_SYMB) and  rd_data_vld=’1’ then
+eip_out &lt;= ‘1’;
+elsif valid_k_char_out(1)=’1’ and (data_out(15 downto 8) = C_EEP_SYMB or data_out(15 downto 8) = C_EOP_SYMB) and  rd_data_vld=’1’ then
+eip_out &lt;= ‘1’;
+elsif valid_k_char_out(2)=’1’ and (data_out(23 downto 16) = C_EEP_SYMB or data_out(23 downto 16) = C_EOP_SYMB) and  rd_data_vld=’1’ then
+eip_out &lt;= ‘1’;
+elsif valid_k_char_out(3)=’1’ and (data_out(31 downto 24) = C_EEP_SYMB or data_out(31 downto 24) = C_EOP_SYMB) and  rd_data_vld=’1’ then
+eip_out &lt;= ‘1’;
+else
+eip_out &lt;= ‘0’;
+end if;
+end if;
+end process p_detect_eip_out;<a class="headerlink" href="#p-detect-eip-out-process-clk-rst-n-begin-if-rst-n-0-then-eip-out-0-elsif-rising-edge-clk-then-if-valid-k-char-out-0-1-and-data-out-7-downto-0-c-eep-symb-or-data-out-7-downto-0-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-1-1-and-data-out-15-downto-8-c-eep-symb-or-data-out-15-downto-8-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-2-1-and-data-out-23-downto-16-c-eep-symb-or-data-out-23-downto-16-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-elsif-valid-k-char-out-3-1-and-data-out-31-downto-24-c-eep-symb-or-data-out-31-downto-24-c-eop-symb-and-rd-data-vld-1-then-eip-out-1-else-eip-out-0-end-if-end-if-end-process-p-detect-eip-out" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-eip-in-description-detection-of-eip-in-the-buffer">
+<h1>– Process: p_eip_in
+– Description: Detection of EIP in the buffer<a class="headerlink" href="#process-p-eip-in-description-detection-of-eip-in-the-buffer" title="Link to this heading"></a></h1>
+</section>
+<section id="p-eip-in-process-s-axis-arstn-nw-s-axis-aclk-nw-rst-n-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-eip-in-req-0-elsif-rising-edge-s-axis-aclk-nw-then-if-s-axis-tlast-i-1-and-s-axis-tvalid-i-1-and-s-axis-tready-i-1-or-s-axis-tready-r-1-then-eip-in-req-1-else-eip-in-req-0-end-if-end-if-end-process-p-eip-in">
+<h1>p_eip_in: process(S_AXIS_ARSTN_NW, S_AXIS_ACLK_NW, RST_N)
+begin
+if S_AXIS_ARSTN_NW = ‘0’ or RST_N=’0’  then
+eip_in_req      &lt;= ‘0’;
+elsif rising_edge(S_AXIS_ACLK_NW) then
+if s_axis_tlast_i = ‘1’ and s_axis_tvalid_i= ‘1’ and (s_axis_tready_i= ‘1’ or s_axis_tready_r =’1’) then
+eip_in_req &lt;= ‘1’;
+else
+eip_in_req &lt;= ‘0’;
+end if;
+end if;
+end process p_eip_in;<a class="headerlink" href="#p-eip-in-process-s-axis-arstn-nw-s-axis-aclk-nw-rst-n-begin-if-s-axis-arstn-nw-0-or-rst-n-0-then-eip-in-req-0-elsif-rising-edge-s-axis-aclk-nw-then-if-s-axis-tlast-i-1-and-s-axis-tvalid-i-1-and-s-axis-tready-i-1-or-s-axis-tready-r-1-then-eip-in-req-1-else-eip-in-req-0-end-if-end-if-end-process-p-eip-in" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-eip-cnt-out-description-counter-of-eip-output-from-fifo">
+<h1>– Process: p_eip_cnt_out
+– Description: Counter of EIP output from fifo<a class="headerlink" href="#process-p-eip-cnt-out-description-counter-of-eip-output-from-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="p-eip-cnt-out-process-clk-rst-n-begin-if-rst-n-0-then-cnt-eip-out-others-0-cnt-eip-out-reg-others-0-elsif-rising-edge-clk-then-cnt-eip-out-reg-cnt-eip-out-if-cmd-flush-sync-1-then-cnt-eip-out-others-0-cnt-eip-out-reg-others-0-elsif-eip-out-1-and-eip-out-ack-1-then-cnt-eip-out-to-unsigned-1-cnt-eip-out-length-elsif-eip-out-ack-1-then-cnt-eip-out-others-0-elsif-eip-out-1-then-cnt-eip-out-cnt-eip-out-1-end-if-end-if-end-process-p-eip-cnt-out">
+<h1>p_eip_cnt_out: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cnt_eip_out      &lt;= (others =&gt;’0’);
+cnt_eip_out_reg  &lt;= (others =&gt;’0’);
+elsif rising_edge(CLK) then
+cnt_eip_out_reg &lt;= cnt_eip_out;
+if cmd_flush_sync =’1’ then
+cnt_eip_out      &lt;= (others =&gt;’0’);
+cnt_eip_out_reg  &lt;= (others =&gt;’0’);
+elsif eip_out = ‘1’ and eip_out_ack=’1’  then
+cnt_eip_out    &lt;= to_unsigned(1,cnt_eip_out’length);
+elsif eip_out_ack=’1’ then
+cnt_eip_out   &lt;= (others =&gt;’0’);
+elsif eip_out = ‘1’ then
+cnt_eip_out &lt;= cnt_eip_out+1;
+end if;
+end if;
+end process p_eip_cnt_out;<a class="headerlink" href="#p-eip-cnt-out-process-clk-rst-n-begin-if-rst-n-0-then-cnt-eip-out-others-0-cnt-eip-out-reg-others-0-elsif-rising-edge-clk-then-cnt-eip-out-reg-cnt-eip-out-if-cmd-flush-sync-1-then-cnt-eip-out-others-0-cnt-eip-out-reg-others-0-elsif-eip-out-1-and-eip-out-ack-1-then-cnt-eip-out-to-unsigned-1-cnt-eip-out-length-elsif-eip-out-ack-1-then-cnt-eip-out-others-0-elsif-eip-out-1-then-cnt-eip-out-cnt-eip-out-1-end-if-end-if-end-process-p-eip-cnt-out" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-eip-cnt-description-counter-of-eip-in-the-fifo">
+<h1>– Process: p_eip_cnt
+– Description: Counter of EIP in the FiFO<a class="headerlink" href="#process-p-eip-cnt-description-counter-of-eip-in-the-fifo" title="Link to this heading"></a></h1>
+</section>
+<section id="p-eip-cnt-process-clk-rst-n-begin-if-rst-n-0-then-cnt-eip-others-0-eip-in-req-reg1-0-eip-in-req-reg2-0-eip-out-ack-0-elsif-rising-edge-clk-then-eip-in-req-reg1-eip-in-req-eip-in-req-reg2-eip-in-req-reg1-eip-out-ack-0-if-cmd-flush-sync-1-then-cnt-eip-others-0-eip-in-req-reg1-0-eip-in-req-reg2-0-eip-out-ack-0-elsif-eip-in-req-reg2-1-then-cnt-eip-cnt-eip-1-elsif-cnt-eip-out-0-and-eip-out-ack-0-then-cnt-eip-cnt-eip-cnt-eip-out-eip-out-ack-1-end-if-end-if-end-process-p-eip-cnt">
+<h1>p_eip_cnt: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+cnt_eip     &lt;= (others =&gt;’0’);
+eip_in_req_reg1  &lt;= ‘0’;
+eip_in_req_reg2  &lt;= ‘0’;
+eip_out_ack &lt;= ‘0’;
+elsif rising_edge(CLK) then
+eip_in_req_reg1 &lt;= eip_in_req;
+eip_in_req_reg2 &lt;= eip_in_req_reg1;
+eip_out_ack &lt;= ‘0’;
+if cmd_flush_sync =’1’ then
+cnt_eip     &lt;= (others =&gt;’0’);
+eip_in_req_reg1  &lt;= ‘0’;
+eip_in_req_reg2  &lt;= ‘0’;
+eip_out_ack &lt;= ‘0’;
+elsif eip_in_req_reg2 = ‘1’ then
+cnt_eip     &lt;= cnt_eip + 1;
+elsif cnt_eip_out &gt; 0 and eip_out_ack = ‘0’ then
+cnt_eip     &lt;= cnt_eip - cnt_eip_out;
+eip_out_ack &lt;= ‘1’;
+end if;
+end if;
+end process p_eip_cnt;<a class="headerlink" href="#p-eip-cnt-process-clk-rst-n-begin-if-rst-n-0-then-cnt-eip-others-0-eip-in-req-reg1-0-eip-in-req-reg2-0-eip-out-ack-0-elsif-rising-edge-clk-then-eip-in-req-reg1-eip-in-req-eip-in-req-reg2-eip-in-req-reg1-eip-out-ack-0-if-cmd-flush-sync-1-then-cnt-eip-others-0-eip-in-req-reg1-0-eip-in-req-reg2-0-eip-out-ack-0-elsif-eip-in-req-reg2-1-then-cnt-eip-cnt-eip-1-elsif-cnt-eip-out-0-and-eip-out-ack-0-then-cnt-eip-cnt-eip-cnt-eip-out-eip-out-ack-1-end-if-end-if-end-process-p-eip-cnt" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-vc-ready-description-manages-the-virtual-channel-ready-signal">
+<h1>– Process: p_vc_ready
+– Description: Manages the virtual channel ready signal<a class="headerlink" href="#process-p-vc-ready-description-manages-the-virtual-channel-ready-signal" title="Link to this heading"></a></h1>
+<p>p_vc_ready: process(CLK, RST_N)
+begin
+if RST_N = ‘0’ then
+vc_ready &lt;= ‘0’;
+elsif rising_edge(CLK) then
+if VC_RD_EN_DMAC=’0’ then
+if fct_credit_cnt &gt; 0 and ((unsigned(status_level_rd) &gt; 63 or status_full  = ‘1’) or cnt_eip &gt; 0) then
+vc_ready &lt;= ‘1’;
+else
+vc_ready &lt;= ‘0’;
+end if;
+end if;
+end if;
+end process p_vc_ready;
+end architecture rtl;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/tb/data_crc_check_tb/" />
+      <script src="../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../_sources/build/html/code/src/module_data_link/tb/data_crc_check_tb.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_crc_check_tb is
+end data_crc_check_tb;</p>
+<p>architecture Behavioral of data_crc_check_tb is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Component Declaration for the Unit Under Test (UUT)
+component data_crc_check
+    port (
+        RST_N                  : in  std_logic;                                           --! Global reset
+        CLK                    : in  std_logic;                                           --! Global clock
+        -- data_word_identification (DWI) interface
+        DATA_DWI               : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from daata_word_id_fsm
+        VALID_K_CHARAC_DWI     : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DWI vector
+        NEW_WORD_DWI           : in  std_logic;                                           --! New word Flag from data_word_id_fsm
+        END_FRAME_DWI          : in  std_logic;                                           --! End frame/control word from data_word_id_fsm
+        SEQ_NUM_DWI            : in  std_logic_vector(7 downto 0);                        --! SEQ_NUM from data_word_id_fsm
+        CRC_16B_DWI            : in  std_logic_vector(15 downto 0);                       --! 16 bits CRC (data frame)  from data_word_id_fsm
+        CRC_8B_DWI             : in  std_logic_vector(7 downto 0);                        --! 8 bits CRC from data_word_id_fsm
+        TYPE_FRAME_DWI         : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type from data_word_id_fsm
+        FRAME_ERR_DWI          : in std_logic;
+        -- data_seq_check (DSCHECK) interface
+        NEW_WORD_DCCHECK       : out std_logic;                                           --! New word Flag from data_word_id_fsm
+        DATA_DCCHECK           : out std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from daata_word_id_fsm
+        VALID_K_CHARAC_DCCHECK : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DCCHECK vector
+        END_FRAME_DCCHECK      : out std_logic;                                           --! End frame/control word from data_word_id_fsm
+        TYPE_FRAME_DCCHECK     : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type from data_word_id_fsm
+        SEQ_NUM_DCCHECK        : out std_logic_vector(7 downto 0);                        --! SEQ_NUM from data_word_id_fsm
+        CRC_ERR_DCCHECK        : out std_logic;                                           --! CRC error flag
+        FRAME_ERR_DCCHECK      : out std_logic;
+        -- MIB
+        CRC_LONG_ERR_DCCHECK   : out std_logic;                                           --! CRC 16 bits error flag
+        CRC_SHORT_ERR_DCCHECK  : out std_logic                                            --! CRC 16 bits error flag
+      );
+end component;
+
+-- Inputs
+signal CLK         : STD_LOGIC := &#39;0&#39;;
+signal RST_N       : STD_LOGIC := &#39;0&#39;;
+signal DATA_FROM_DWI     : STD_LOGIC_VECTOR(31 downto 0);
+signal CRC_16B     : STD_LOGIC_VECTOR(15 downto 0);
+signal TYPE_INCOM_FRAME : STD_LOGIC_VECTOR(3 downto 0);
+signal new_word_dwi  : STD_LOGIC := &#39;0&#39;;
+signal end_frame_dwi  : STD_LOGIC := &#39;0&#39;;
+-- Outputs
+signal crc_out    : STD_LOGIC_VECTOR(15 downto 0);
+signal CRC_ERR    : STD_LOGIC;
+signal CRC_8B        : STD_LOGIC_VECTOR(7 downto 0);
+
+-- Clock process definitions
+constant CLOCK_PERIOD : time := 10 ns;
+</pre></div>
+</div>
+<p>begin</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Instantiate the Unit Under Test (UUT)
+uut: data_crc_check   port map (
+    RST_N                  =&gt; RST_N,
+    CLK                    =&gt; CLK,
+    DATA_DWI               =&gt; DATA_FROM_DWI,
+    VALID_K_CHARAC_DWI     =&gt; &quot;0000&quot;,
+    NEW_WORD_DWI           =&gt; new_word_dwi,
+    END_FRAME_DWI          =&gt; end_frame_dwi,
+    SEQ_NUM_DWI            =&gt; &quot;00000000&quot;,
+    CRC_16B_DWI            =&gt; CRC_16B,
+    CRC_8B_DWI             =&gt; CRC_8B,
+    TYPE_FRAME_DWI         =&gt; TYPE_INCOM_FRAME,
+    FRAME_ERR_DWI          =&gt; &#39;0&#39;,
+    NEW_WORD_DCCHECK       =&gt; open,
+    DATA_DCCHECK           =&gt; open,
+    VALID_K_CHARAC_DCCHECK =&gt; open,
+    END_FRAME_DCCHECK      =&gt; open,
+    TYPE_FRAME_DCCHECK     =&gt; open,
+    SEQ_NUM_DCCHECK        =&gt; open,
+    CRC_ERR_DCCHECK        =&gt; open,
+    FRAME_ERR_DCCHECK      =&gt; open,
+    CRC_LONG_ERR_DCCHECK   =&gt; open,
+    CRC_SHORT_ERR_DCCHECK  =&gt; open
+);
+-- Clock process
+CLK_process :process
+begin
+    CLK &lt;= &#39;0&#39;;
+    wait for CLOCK_PERIOD/2;
+    CLK &lt;= &#39;1&#39;;
+    wait for CLOCK_PERIOD/2;
+end process;
+
+-- Stimulus process
+stim_proc: process
+begin
+    -- RST_N the CRC
+    RST_N &lt;= &#39;0&#39;;
+    wait for 2 * CLOCK_PERIOD;
+    RST_N &lt;= &#39;1&#39;;
+    -- TYPE_INCOM_FRAME &lt;= C_FCT_FRM;
+    -- CRC_8B &lt;= x&quot;22&quot;;
+    wait until rising_edge(CLK);
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= x&quot;22&quot; &amp; x&quot;01&quot; &amp; x&quot;00&quot; &amp; C_K28_3_SYMB;
+    -- new_word_dwi &lt;= &#39;1&#39;;
+    -- end_frame_dwi &lt;= &#39;1&#39;;
+    -- wait until rising_edge(CLK);
+
+    -- end_frame_dwi &lt;= &#39;0&#39;;
+    -- new_word_dwi &lt;= &#39;0&#39;;
+    -- CRC_8B &lt;= x&quot;22&quot;;
+    -- wait until rising_edge(CLK);
+    -- wait until rising_edge(CLK);
+
+    -- wait until rising_edge(CLK);
+    -- wait until rising_edge(CLK);
+    -- wait until rising_edge(CLK);
+    --------------------------------------------------------------------------------------
+    -------------------------- Test 1: Broadcast frame------------------------------------
+    --------------------------------------------------------------------------------------
+    -- TYPE_INCOM_FRAME &lt;= &quot;10&quot;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp; C_SBF_SYMB &amp; C_K28_7_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+    -- CRC_8B &lt;= x&quot;29&quot;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp;C_RESERVED_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= x&quot;01&quot; &amp; x&quot;01&quot; &amp; x&quot;01&quot; &amp; x&quot;01&quot;;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= x&quot;29&quot; &amp; x&quot;41&quot; &amp; x&quot;00&quot; &amp; C_K28_2_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+
+    -- -- Wait for a while to observe the output
+
+    -- wait for 10 * CLOCK_PERIOD;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= x&quot;4F&quot; &amp; x&quot;01&quot; &amp; x&quot;01&quot; &amp; C_K28_3_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+    -- CRC_8B &lt;= x&quot;4F&quot;;
+
+    -- Wait for a while to observe the output
+
+    wait for 10 * CLOCK_PERIOD;
+    --------------------------------------------------------------------------------------
+    -------------------------- Test 2: Data frame------------------------------------
+    --------------------------------------------------------------------------------------
+    TYPE_INCOM_FRAME &lt;= C_DATA_FRM;
+    CRC_16B &lt;= x&quot;353D&quot;;
+    -- Send the frame data
+    -- COMMA SDF 0x01 0x00
+</pre></div>
+</div>
+<p>–        DATA_FROM_DWI &lt;= C_RESERVED_SYMB &amp; x”01” &amp; C_SDF_SYMB &amp; C_K28_7_SYMB;
+DATA_FROM_DWI &lt;= x”000050FC”;
+new_word_dwi &lt;= ‘1’;
+wait for CLOCK_PERIOD;
+–CRC_16B &lt;= x”35” &amp; x”3D”;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    -- Send the frame data
+    -- COMMA SDF 0x01 0x00
+    DATA_FROM_DWI &lt;= C_FILL_SYMB &amp; C_FILL_SYMB &amp; C_EOP_SYMB &amp;C_RESERVED_SYMB;
+    new_word_dwi &lt;= &#39;1&#39;;
+    wait for CLOCK_PERIOD;
+
+    -- Send the frame data
+    -- COMMA SDF 0x01 0x00
+    DATA_FROM_DWI &lt;= x&quot;35&quot; &amp; x&quot;3D&quot; &amp; x&quot;7D&quot; &amp; C_K28_0_SYMB;
+    new_word_dwi &lt;= &#39;1&#39;;
+    end_frame_dwi &lt;= &#39;1&#39;;
+    wait for CLOCK_PERIOD;
+    new_word_dwi &lt;= &#39;0&#39;;
+
+    -- DATA_FROM_DWI &lt;= (others =&gt;&#39;0&#39;);
+
+    -- -- Wait for a while to observe the output
+    -- wait for 10 * CLOCK_PERIOD;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= C_RESERVED_SYMB &amp; x&quot;01&quot; &amp; C_SDF_SYMB &amp; C_K28_7_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+    -- CRC_16B &lt;= x&quot;B7&quot; &amp; x&quot;A1&quot;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= C_EOP_SYMB &amp; x&quot;02&quot; &amp; x&quot;01&quot; &amp; C_RESERVED_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+
+    -- -- Send the frame data
+    -- -- COMMA SDF 0x01 0x00
+    -- DATA_FROM_DWI &lt;= x&quot;B7&quot; &amp; x&quot;A1&quot; &amp; x&quot;7E&quot; &amp; C_K28_0_SYMB;
+    -- data_valid &lt;= &#39;1&#39;;
+    -- wait for CLOCK_PERIOD;
+    -- data_valid &lt;= &#39;0&#39;;
+
+    -- End of stimulus process
+    wait;
+end process;
+</pre></div>
+</div>
+<p>end Behavioral;</p>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

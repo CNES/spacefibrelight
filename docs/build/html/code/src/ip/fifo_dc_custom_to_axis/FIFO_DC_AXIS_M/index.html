@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M/" />
+      <script src="../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s)        :</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../_sources/build/html/code/src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s">
+<h1>– Author(s)        :<a class="headerlink" href="#author-s" title="Link to this heading"></a></h1>
+</section>
+<section id="project">
+<h1>– Project          :<a class="headerlink" href="#project" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date">
+<h1>– Creation Date    :<a class="headerlink" href="#creation-date" title="Link to this heading"></a></h1>
+</section>
+<section id="description-dual-clock-fifo-module-with-axis-master-interface-custom-interface-write-and-axis-master-interface-read">
+<h1>– Description      : Dual clock FIFO module with AXIS MASTER interface
+–                    Custom interface (write) and AXIS Master interface (read)<a class="headerlink" href="#description-dual-clock-fifo-module-with-axis-master-interface-custom-interface-write-and-axis-master-interface-read" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="library-declaration">
+<h1>– LIBRARY DECLARATION<a class="headerlink" href="#library-declaration" title="Link to this heading"></a></h1>
+<p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<hr class="docutils" />
+</section>
+<section id="entity-declaration">
+<h1>– ENTITY DECLARATION<a class="headerlink" href="#entity-declaration" title="Link to this heading"></a></h1>
+<p>entity FIFO_DC_AXIS_M is
+generic (
+– Users to add parameters here
+G_DWIDTH                : integer := 36;                                 –! Data bus FIFO length
+G_AWIDTH                : integer := 10;                                 –! Address bus FIFO length
+G_THRESHOLD_HIGH        : integer := 2**10;                              –! High threshold
+G_THRESHOLD_LOW         : integer := 0;                                  –! Low threshold
+– User parameters ends
+M_AXIS_TDATA_WIDTH      : integer := 32;                                 –! Data AXIS length
+M_AXIS_TUSER_WIDTH      : integer := 4                                   –! User AXIS length
+);
+port (
+– Users to add ports here
+aresetn      	        : in std_logic;                                  –! Active-low reset
+– Custom interface (slave)
+WR_CLK                  : in  std_logic;                                –! Clock
+WR_DATA                 : in  std_logic_vector(G_DWIDTH-1 downto 0);    –! Data write bus
+WR_DATA_EN              : in  std_logic;                                –! Write command
+– FIFO STATUS
+CMD_FLUSH               : in  std_logic;                                –! FIFO flush command
+STATUS_BUSY_FLUSH       : out std_logic;                                –! FIFO is flushing
+STATUS_THRESHOLD_HIGH   : out std_logic;                                –! High threshold reached flag (on WR_CLK)
+STATUS_THRESHOLD_LOW    : out std_logic;                                –! Low threshold reached flag (on RD_CLK)
+STATUS_FULL             : out std_logic;                                –! Full FIFO flag (on WR_CLK)
+STATUS_EMPTY            : out std_logic;                                –! Empty FIFO flag (on RD_CLK)
+STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    –! FIFO fill level (on WR_CLK)
+STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0);    –! FIFO fill level (on RD_CLK)
+– User ports ends
+– Do not modify the ports beyond this line
+– Ports of AXI Master Bus Interface M00_AXIS
+M_AXIS_ACLK	            : in std_logic;                                 –! Clock input for the AXI Stream Master interface
+M_AXIS_TVALID	        : out std_logic;                                –! Indicates that the data on M_AXIS_TDATA is valid
+M_AXIS_TDATA	        : out std_logic_vector(M_AXIS_TDATA_WIDTH-1 downto 0); –! Data output bus for the AXI Stream Master interface
+M_AXIS_TLAST	        : out std_logic;                                –! Indicates the last transfer in a packet
+M_AXIS_TREADY	        : in std_logic;                                 –! Indicates that the receiver is ready to accept data
+M_AXIS_TUSER            : out std_logic_vector(M_AXIS_TUSER_WIDTH-1 downto 0) –! User-defined data output bus for the AXI Stream Master interface
+);
+end FIFO_DC_AXIS_M;</p>
+<hr class="docutils" />
+</section>
+<section id="architecture-declaration">
+<h1>– ARCHITECTURE DECLARATION<a class="headerlink" href="#architecture-declaration" title="Link to this heading"></a></h1>
+<p>architecture arch_imp of FIFO_DC_AXIS_M is</p>
+<hr class="docutils" />
+</section>
+<section id="component-declaration">
+<h1>– COMPONENT DECLARATION<a class="headerlink" href="#component-declaration" title="Link to this heading"></a></h1>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>component AXIS_MASTER is
+	generic (
+	G_DWIDTH                : integer := 36;                                -- Data bus length
+	M_AXIS_TDATA_WIDTH      : integer := 32;                                -- Data AXIS length
+	M_AXIS_TUSER_WIDTH      : integer := 4                                  -- User AXIS length
+	);
+	port (
+	rd_data                 : in std_logic_vector(G_DWIDTH-1 downto 0);    -- Data read bus
+	rd_data_vld             : in std_logic;                                 -- Read command
+	rd_data_en              : out std_logic;                                -- Data valid
+	m00_axis_aclk	        : in std_logic;                                 -- Clock input
+	m00_axis_aresetn	    : in std_logic;                                 -- Active-low reset input
+	m00_axis_tvalid	        : out std_logic;                                -- Indicates that the data on m00_axis_tdata is valid
+	m00_axis_tdata	        : out std_logic_vector(M_AXIS_TDATA_WIDTH-1 downto 0); -- Data output bus for the AXI Stream Master interface
+	m00_axis_tlast	        : out std_logic;                                -- Indicates the last transfer in a packet
+	m00_axis_tready	        : in std_logic;                                 -- Indicates that the receiver is ready to accept data
+	m00_axis_tuser          : out std_logic_vector(M_AXIS_TUSER_WIDTH-1 downto 0) -- User-defined data output bus for the AXI Stream Master interface
+	);
+end component AXIS_MASTER;
+
+component FIFO_DC is
+    generic (
+    G_DWIDTH                : integer := 36;                                 -- Data bus FIFO length
+    G_AWIDTH                : integer := 10;                                 -- Address bus FIFO length
+    G_THRESHOLD_HIGH        : integer := 2**10;                              -- High threshold
+    G_THRESHOLD_LOW         : integer := 0                                   -- Low threshold
+    );
+    port (
+    RST_N                   : in  std_logic;                                 -- Active-low reset
+
+    -- Writing port
+    WR_CLK                  : in  std_logic;                                -- Clock
+    WR_DATA                 : in  std_logic_vector(G_DWIDTH-1 downto 0);    -- Data write bus
+    WR_DATA_EN              : in  std_logic;                                -- Write command
+
+    -- Reading port
+    RD_CLK                  : in  std_logic;                                -- Clock
+    RD_DATA                 : out std_logic_vector(G_DWIDTH-1 downto 0);    -- Data read bus
+    RD_DATA_EN              : in  std_logic;                                -- Read command
+    RD_DATA_VLD             : out std_logic;                                -- Data valid
+
+    -- Command port
+    CMD_FLUSH               : in  std_logic;                                -- FIFO flush command
+    STATUS_BUSY_FLUSH       : out std_logic;                                -- FIFO is flushing
+
+    -- Status port
+    STATUS_THRESHOLD_HIGH   : out std_logic;                                -- High threshold reached flag (on WR_CLK)
+    STATUS_THRESHOLD_LOW    : out std_logic;                                -- Low threshold reached flag (on RD_CLK)
+    STATUS_FULL             : out std_logic;                                -- Full FIFO flag (on WR_CLK)
+    STATUS_EMPTY            : out std_logic;                                -- Empty FIFO flag (on RD_CLK)
+    STATUS_LEVEL_WR         : out std_logic_vector(G_AWIDTH-1 downto 0);    -- FIFO fill level (on WR_CLK)
+    STATUS_LEVEL_RD         : out std_logic_vector(G_AWIDTH-1 downto 0)     -- FIFO fill level (on RD_CLK)
+    );
+end component FIFO_DC;
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+<section id="signal-declaration">
+<h1>– SIGNAL DECLARATION<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>– FIFO to AXIS Master
+signal rd_data_reg          : std_logic_vector(G_DWIDTH-1 downto 0);     – Data read bus register
+signal rd_data_vld_reg      : std_logic;                                   – Data valid register
+signal rd_data_en_reg       : std_logic;                                   – Read command register</p>
+<p>begin</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+-- instantiation
+---------------------------------------------------------------------------
+
+-- Instantiation of AXI Bus Interface M00_AXIS
+AXIS_MASTER_inst : AXIS_MASTER
+    generic map (
+       G_DWIDTH                =&gt; G_DWIDTH,
+       M_AXIS_TDATA_WIDTH      =&gt; M_AXIS_TDATA_WIDTH,
+	   M_AXIS_TUSER_WIDTH      =&gt; M_AXIS_TUSER_WIDTH
+    )
+    port map (
+        rd_data                =&gt; rd_data_reg,
+        rd_data_vld            =&gt; rd_data_vld_reg,
+        rd_data_en             =&gt; rd_data_en_reg,
+        m00_axis_aclk	       =&gt; M_AXIS_ACLK,
+        m00_axis_aresetn	   =&gt; aresetn,
+        m00_axis_tvalid	       =&gt; M_AXIS_TVALID,
+        m00_axis_tdata	       =&gt; M_AXIS_TDATA,
+        m00_axis_tlast	       =&gt; M_AXIS_TLAST,
+        m00_axis_tready	       =&gt; M_AXIS_TREADY,
+        m00_axis_tuser         =&gt; M_AXIS_TUSER
+    );
+
+-- Instantiation of FIFO dual-clock
+fifo_dc_inst : FIFO_DC
+    generic map (
+        G_DWIDTH              =&gt; G_DWIDTH,
+        G_AWIDTH              =&gt; G_AWIDTH,
+        G_THRESHOLD_HIGH      =&gt; G_THRESHOLD_HIGH,
+        G_THRESHOLD_LOW       =&gt; G_THRESHOLD_LOW
+    )
+    port map (
+        RST_N                 =&gt; aresetn,
+        WR_CLK                =&gt; WR_CLK,
+        WR_DATA               =&gt; WR_DATA,
+        WR_DATA_EN            =&gt; WR_DATA_EN,
+        RD_CLK                =&gt; M_AXIS_ACLK,
+        RD_DATA               =&gt; rd_data_reg,
+        RD_DATA_EN            =&gt; rd_data_en_reg,
+        RD_DATA_VLD           =&gt; rd_data_vld_reg,
+        CMD_FLUSH             =&gt; CMD_FLUSH,
+        STATUS_BUSY_FLUSH     =&gt; STATUS_BUSY_FLUSH,
+        STATUS_THRESHOLD_HIGH =&gt; STATUS_THRESHOLD_HIGH,
+        STATUS_THRESHOLD_LOW  =&gt; STATUS_THRESHOLD_LOW,
+        STATUS_FULL           =&gt; STATUS_FULL,
+        STATUS_EMPTY          =&gt; STATUS_EMPTY,
+        STATUS_LEVEL_WR       =&gt; STATUS_LEVEL_WR,
+        STATUS_LEVEL_RD       =&gt; STATUS_LEVEL_RD
+    );
+</pre></div>
+</div>
+<p>end arch_imp;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

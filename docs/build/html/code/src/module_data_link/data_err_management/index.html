@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>– Author(s) : Y. DAURIAC &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/data_err_management/" />
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">– Author(s) : Y. DAURIAC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/build/html/code/src/module_data_link/data_err_management.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <hr class="docutils" />
+<section id="author-s-y-dauriac">
+<h1>– Author(s) : Y. DAURIAC<a class="headerlink" href="#author-s-y-dauriac" title="Link to this heading"></a></h1>
+</section>
+<section id="project-ip-spacefibrelight">
+<h1>– Project : IP SpaceFibreLight<a class="headerlink" href="#project-ip-spacefibrelight" title="Link to this heading"></a></h1>
+</section>
+<section id="creation-date-14-03-2025">
+<h1>– Creation date : 14/03/2025<a class="headerlink" href="#creation-date-14-03-2025" title="Link to this heading"></a></h1>
+</section>
+<section id="description-this-module-describes-the-management-of-the-ack-nack-request-and-the-polarity-flags">
+<h1>– Description : This module describes the management of the ACK, NACK request
+–							 and the polarity flags<a class="headerlink" href="#description-this-module-describes-the-management-of-the-ack-nack-request-and-the-polarity-flags" title="Link to this heading"></a></h1>
+<p>library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;</p>
+<p>library data_link_lib;
+use data_link_lib.data_link_lib.all;</p>
+<p>entity data_err_management is
+port (
+CLK                      : in std_logic;                                –! Global Clock
+– data_link_reset (DLRE) interface
+LINK_RESET_DLRE          : in  std_logic;                               –! Link Reset command
+LINK_RESET_DERRM         : out std_logic;                               –! Link Reset request
+– data_seq_check (DSCHECK) interface
+TYPE_FRAME_DSCHECK       : in std_logic_vector(3 downto 0);             –! Current frame/control word type from data_seq_check
+END_FRAME_DSCHECK        : in std_logic;                                –! End flag of the current frame/control word from data_seq_check
+SEQ_ERR_DSCHECK          : in std_logic;                                –! SEQ_NUM error for the current frame/control word from data_seq_check
+SEQ_NUM_ACK_DSCHECK      : in std_logic_vector(6 downto 0);             –! SEQ_NUM ACK value from data_seq_check
+FAR_END_RPF_DSCHECK      : in std_logic;                                –! Far-end RPF flag
+NEAR_END_RPF_DERRM       : out std_logic;                               –! Near-end RPF flag
+CRC_ERR_DSCHECK          : in std_logic;                                –! CRC error flag for the current frame/control word from data_seq_check
+FRAME_ERR_DSCHECK        : in std_logic;                                –! Frame error flag for the current frame/control word from data_seq_check
+RXERR_DSCHECK            : in std_logic;                                –! Receive error flag from data_word_interface
+– data_mac (DMAC) interface
+REQ_ACK_DERRM            : out std_logic;                               –! ACK request to data_mac
+REQ_NACK_DERRM           : out std_logic;                               –! NACK request to data_mac
+TRANS_POL_FLG_DERRM      : out std_logic;                               –! Transmission polarity flag to data_mac
+SEQ_NUM_ACK_DERRM        : out std_logic_vector(7 downto 0);            –! SEQ_NUM ACK value to data_mac
+REQ_ACK_DONE_DMAC        : in std_logic;                                –! Acknowledge done signal from data_mac
+– MIB  interface
+NACK_RST_EN_MIB          : in std_logic;                                –! Enable automatic link reset on NACK reception
+NACK_RST_MODE_MIB        : in std_logic                                 –! Up for instant link reset on NACK reception, down for link reset at the end of the current received frame on NACK reception
+);
+end data_err_management;</p>
+</section>
+<section id="architecture-behavioral-of-data-err-management-is">
+<h1>architecture Behavioral of data_err_management is<a class="headerlink" href="#architecture-behavioral-of-data-err-management-is" title="Link to this heading"></a></h1>
+</section>
+<section id="signal-declaration">
+<h1>—–                  Signal declaration           —–<a class="headerlink" href="#signal-declaration" title="Link to this heading"></a></h1>
+<p>type state_type is (
+VALID_POSITIVE_ST,  –! Valid Positive State
+VALID_NEGATIVE_ST,  –! Valid Negative State
+ERROR_POSITIVE_ST,  –! Error Positive State
+ERROR_NEGATIVE_ST   –! Error Negative State
+);</p>
+<p>signal state               : state_type;</p>
+</section>
+<section id="signal-s-nack-request-std-logic-signal-s-ack-request-std-logic-signal-nack-request-fsm-std-logic-signal-ack-request-fsm-std-logic-signal-nack-request-out-std-logic-signal-ack-request-out-std-logic-signal-s-far-end-rpf-std-logic-signal-s-seq-err-std-logic-signal-flg-nack-rst-flg-std-logic-signal-s-seq-num-request-std-logic-vector-6-downto-0-signal-s-seq-num-fsm-std-logic-vector-6-downto-0-signal-s-seq-num-out-std-logic-vector-6-downto-0-signal-near-end-rpf-std-logic-signal-trans-pol-flg-std-logic-signal-ack-pol-flg-std-logic-begin-assignements-req-nack-derrm-nack-request-out-req-ack-derrm-ack-request-out-seq-num-ack-derrm-ack-pol-flg-s-seq-num-fsm-near-end-rpf-derrm-near-end-rpf-trans-pol-flg-derrm-trans-pol-flg">
+<h1>signal s_nack_request      : std_logic;
+signal s_ack_request       : std_logic;
+signal nack_request_fsm    : std_logic;
+signal ack_request_fsm     : std_logic;
+signal nack_request_out    : std_logic;
+signal ack_request_out     : std_logic;
+signal s_far_end_rpf       : std_logic;
+signal s_seq_err           : std_logic;
+signal flg_nack_rst_flg    : std_logic;
+signal s_seq_num_request   : std_logic_vector(6 downto 0);
+signal s_seq_num_fsm       : std_logic_vector(6 downto 0);
+signal s_seq_num_out       : std_logic_vector(6 downto 0);
+signal near_end_rpf        : std_logic;
+signal trans_pol_flg       : std_logic;
+signal ack_pol_flg         : std_logic;
+begin
+——————————————————–
+–                  Assignements                     —
+——————————————————–
+REQ_NACK_DERRM      &lt;= nack_request_out;
+REQ_ACK_DERRM       &lt;= ack_request_out;
+SEQ_NUM_ACK_DERRM   &lt;= ack_pol_flg &amp; s_seq_num_fsm;
+NEAR_END_RPF_DERRM  &lt;= near_end_rpf;
+TRANS_POL_FLG_DERRM &lt;= trans_pol_flg;<a class="headerlink" href="#signal-s-nack-request-std-logic-signal-s-ack-request-std-logic-signal-nack-request-fsm-std-logic-signal-ack-request-fsm-std-logic-signal-nack-request-out-std-logic-signal-ack-request-out-std-logic-signal-s-far-end-rpf-std-logic-signal-s-seq-err-std-logic-signal-flg-nack-rst-flg-std-logic-signal-s-seq-num-request-std-logic-vector-6-downto-0-signal-s-seq-num-fsm-std-logic-vector-6-downto-0-signal-s-seq-num-out-std-logic-vector-6-downto-0-signal-near-end-rpf-std-logic-signal-trans-pol-flg-std-logic-signal-ack-pol-flg-std-logic-begin-assignements-req-nack-derrm-nack-request-out-req-ack-derrm-ack-request-out-seq-num-ack-derrm-ack-pol-flg-s-seq-num-fsm-near-end-rpf-derrm-near-end-rpf-trans-pol-flg-derrm-trans-pol-flg" title="Link to this heading"></a></h1>
+</section>
+<section id="process">
+<h1>—–                     Process                   —–<a class="headerlink" href="#process" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+</section>
+<section id="process-p-fsm-description-fsm-to-determine-the-polarity-flags-tpf-and-rpf">
+<h1>– Process: p_fsm
+– Description: FSM to determine the polarity flags
+–							(TPF and RPF)<a class="headerlink" href="#process-p-fsm-description-fsm-to-determine-the-polarity-flags-tpf-and-rpf" title="Link to this heading"></a></h1>
+<p>p_fsm : process (CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+state               &lt;= VALID_POSITIVE_ST;
+near_end_rpf        &lt;= ‘0’;
+nack_request_fsm    &lt;= ‘0’;
+ack_request_fsm     &lt;= ‘0’;
+s_far_end_rpf       &lt;= ‘0’;
+s_seq_err           &lt;= ‘0’;
+s_seq_num_fsm       &lt;= (others =&gt; ‘0’);
+ack_pol_flg         &lt;= ‘0’;
+else
+– Synchronization for the FSM
+s_far_end_rpf    &lt;= FAR_END_RPF_DSCHECK;
+s_seq_err        &lt;= SEQ_ERR_DSCHECK;
+ack_request_fsm  &lt;= s_ack_request;
+nack_request_fsm &lt;= s_nack_request;
+s_seq_num_fsm    &lt;= s_seq_num_request;
+case state is
+when VALID_POSITIVE_ST =&gt;
+near_end_rpf        &lt;= ‘0’;  – positive
+ack_pol_flg         &lt;= ‘0’;  – positive
+if s_nack_request = ‘1’ then – NACK Request
+state &lt;= ERROR_NEGATIVE_ST;
+end if;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>      when VALID_NEGATIVE_ST =&gt;
+          									near_end_rpf        &lt;= &#39;1&#39;;  -- negative
+                            ack_pol_flg         &lt;= &#39;1&#39;;  -- negative
+          									if s_nack_request = &#39;1&#39; then -- NACK Request
+          									    state &lt;= ERROR_POSITIVE_ST;
+          									end if;
+
+      when ERROR_POSITIVE_ST =&gt;
+          									near_end_rpf        &lt;= &#39;0&#39;; -- positive
+                            ack_pol_flg         &lt;= &#39;1&#39;; -- negative
+          									if s_ack_request = &#39;1&#39; then -- ACK Request
+          									    state &lt;= VALID_POSITIVE_ST;
+          									elsif s_far_end_rpf = &#39;0&#39; and s_seq_err = &#39;1&#39; then --Invalid Sequence Number received with positive polarity
+          									    state &lt;= ERROR_NEGATIVE_ST;
+          									end if;
+
+      when ERROR_NEGATIVE_ST  =&gt;
+          									near_end_rpf         &lt;= &#39;1&#39;; -- negative
+                            ack_pol_flg          &lt;= &#39;0&#39;; -- positive
+          									if s_ack_request = &#39;1&#39; then -- ACK Request
+          									    state &lt;= VALID_NEGATIVE_ST;
+          									elsif s_far_end_rpf = &#39;1&#39; and s_seq_err = &#39;1&#39; then --Invalid Sequence Number received with negative polarity
+          									    state &lt;= ERROR_POSITIVE_ST;
+          									end if;
+    end case;
+  end if;
+end if;
+</pre></div>
+</div>
+</section>
+<section id="end-process-p-fsm">
+<h1>end process p_fsm;<a class="headerlink" href="#end-process-p-fsm" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-err-description-error-detection-internal-request-management">
+<h1>– Process: p_err
+– Description: Error detection, internal request management<a class="headerlink" href="#process-p-err-description-error-detection-internal-request-management" title="Link to this heading"></a></h1>
+</section>
+<section id="p-err-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-s-nack-request-0-s-ack-request-0-s-seq-num-request-others-0-else-nack-requested-for-broadcast-and-data-frames-if-rx-err-or-crc-err-if-rxerr-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-elsif-crc-err-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-nack-requested-for-broadcast-data-fct-and-full-frames-if-seq-err-elsif-seq-err-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-nack-requested-for-broadcast-data-fct-and-full-frames-if-seq-err-elsif-seq-err-dscheck-1-and-crc-err-dscheck-0-and-type-frame-dscheck-c-idle-frm-or-type-frame-dscheck-c-fct-frm-or-type-frame-dscheck-c-full-frm-then-s-nack-request-1-s-ack-request-0-ack-requested-for-broadcast-data-fct-and-full-frames-if-end-of-frame-without-seq-err-elsif-seq-err-dscheck-0-and-end-frame-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-or-type-frame-dscheck-c-fct-frm-or-type-frame-dscheck-c-full-frm-then-s-ack-request-1-s-nack-request-0-s-seq-num-request-seq-num-ack-dscheck-else-s-ack-request-0-s-nack-request-0-end-if-end-if-end-if-end-process-p-err">
+<h1>p_err : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+s_nack_request    &lt;= ‘0’;
+s_ack_request     &lt;= ‘0’;
+s_seq_num_request &lt;= (others =&gt; ‘0’);
+else
+– Nack requested for broadcast and data frames if rx_err or crc_err
+if RXERR_DSCHECK = ‘1’ and (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM) then
+s_nack_request &lt;= ‘1’;
+s_ack_request  &lt;= ‘0’;
+elsif CRC_ERR_DSCHECK = ‘1’ and (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM) then
+s_nack_request &lt;= ‘1’;
+s_ack_request  &lt;= ‘0’;
+– Nack requested for broadcast, data, FCT, and FULL frames if seq_err
+elsif SEQ_ERR_DSCHECK = ‘1’ and  (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM) then
+s_nack_request &lt;= ‘1’;
+s_ack_request  &lt;= ‘0’;
+– Nack requested for broadcast, data, FCT, and FULL frames if seq_err
+elsif SEQ_ERR_DSCHECK = ‘1’ and CRC_ERR_DSCHECK = ‘0’ and  (TYPE_FRAME_DSCHECK = C_IDLE_FRM or TYPE_FRAME_DSCHECK = C_FCT_FRM or TYPE_FRAME_DSCHECK = C_FULL_FRM) then
+s_nack_request &lt;= ‘1’;
+s_ack_request  &lt;= ‘0’;
+– Ack requested for broadcast, data, FCT, and FULL frames if end of frame without seq_err
+elsif SEQ_ERR_DSCHECK = ‘0’ and END_FRAME_DSCHECK = ‘1’  and (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM or TYPE_FRAME_DSCHECK = C_FCT_FRM or TYPE_FRAME_DSCHECK = C_FULL_FRM) then
+s_ack_request     &lt;= ‘1’;
+s_nack_request    &lt;= ‘0’;
+s_seq_num_request &lt;= SEQ_NUM_ACK_DSCHECK;
+else
+s_ack_request  &lt;= ‘0’;
+s_nack_request &lt;= ‘0’;
+end if;
+end if;
+end if;
+end process p_err;<a class="headerlink" href="#p-err-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-s-nack-request-0-s-ack-request-0-s-seq-num-request-others-0-else-nack-requested-for-broadcast-and-data-frames-if-rx-err-or-crc-err-if-rxerr-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-elsif-crc-err-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-nack-requested-for-broadcast-data-fct-and-full-frames-if-seq-err-elsif-seq-err-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-then-s-nack-request-1-s-ack-request-0-nack-requested-for-broadcast-data-fct-and-full-frames-if-seq-err-elsif-seq-err-dscheck-1-and-crc-err-dscheck-0-and-type-frame-dscheck-c-idle-frm-or-type-frame-dscheck-c-fct-frm-or-type-frame-dscheck-c-full-frm-then-s-nack-request-1-s-ack-request-0-ack-requested-for-broadcast-data-fct-and-full-frames-if-end-of-frame-without-seq-err-elsif-seq-err-dscheck-0-and-end-frame-dscheck-1-and-type-frame-dscheck-c-data-frm-or-type-frame-dscheck-c-bc-frm-or-type-frame-dscheck-c-fct-frm-or-type-frame-dscheck-c-full-frm-then-s-ack-request-1-s-nack-request-0-s-seq-num-request-seq-num-ack-dscheck-else-s-ack-request-0-s-nack-request-0-end-if-end-if-end-if-end-process-p-err" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-sync-description-output-request-management-priority-to-the-latest-done-handling-synchronization">
+<h1>– Process: p_sync
+– Description: Output request management: priority to
+–							the latest, done handling, synchronization<a class="headerlink" href="#process-p-sync-description-output-request-management-priority-to-the-latest-done-handling-synchronization" title="Link to this heading"></a></h1>
+</section>
+<section id="p-sync-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-ack-request-out-0-nack-request-out-0-s-seq-num-out-others-0-else-if-ack-request-out-1-then-ack-valid-but-new-nack-request-if-req-ack-done-dmac-1-and-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-ack-valid-but-new-ack-request-elsif-req-ack-done-dmac-1-and-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-ack-valid-elsif-req-ack-done-dmac-1-then-ack-request-out-0-nack-request-out-0-priority-to-the-latest-request-elsif-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-end-if-elsif-nack-request-out-1-then-nack-valid-but-new-nack-request-if-req-ack-done-dmac-1-and-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-nack-valid-but-new-ack-request-elsif-req-ack-done-dmac-1-and-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-ack-valid-elsif-req-ack-done-dmac-1-then-ack-request-out-0-nack-request-out-0-priority-to-the-latest-request-elsif-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-end-if-priority-to-the-latest-request-elsif-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-elsif-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-end-if-end-if-end-if-end-process-p-sync">
+<h1>p_sync : process (CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘0’;
+s_seq_num_out    &lt;= (others =&gt;’0’);
+else
+if ack_request_out = ‘1’ then
+– Ack valid but new Nack request
+if REQ_ACK_DONE_DMAC = ‘1’ and nack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘1’;
+– Ack valid but new Ack request
+elsif REQ_ACK_DONE_DMAC = ‘1’ and ack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘1’;
+nack_request_out &lt;= ‘0’;
+s_seq_num_out    &lt;= s_seq_num_fsm;
+– Ack valid
+elsif REQ_ACK_DONE_DMAC = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘0’;
+– Priority to the latest request
+elsif nack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘1’;
+end if;
+elsif nack_request_out = ‘1’ then
+– Nack valid but new Nack request
+if REQ_ACK_DONE_DMAC = ‘1’ and nack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘1’;
+– Nack valid but new Ack request
+elsif REQ_ACK_DONE_DMAC = ‘1’ and ack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘1’;
+nack_request_out &lt;= ‘0’;
+s_seq_num_out    &lt;= s_seq_num_fsm;
+– Ack valid
+elsif REQ_ACK_DONE_DMAC = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘0’;
+– Priority to the latest request
+elsif ack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘1’;
+nack_request_out &lt;= ‘0’;
+s_seq_num_out    &lt;= s_seq_num_fsm;
+end if;
+– Priority to the latest request
+elsif ack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘1’;
+nack_request_out &lt;= ‘0’;
+s_seq_num_out    &lt;= s_seq_num_fsm;
+elsif nack_request_fsm = ‘1’ then
+ack_request_out  &lt;= ‘0’;
+nack_request_out &lt;= ‘1’;
+end if;
+end if;
+end if;
+end process p_sync;<a class="headerlink" href="#p-sync-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-ack-request-out-0-nack-request-out-0-s-seq-num-out-others-0-else-if-ack-request-out-1-then-ack-valid-but-new-nack-request-if-req-ack-done-dmac-1-and-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-ack-valid-but-new-ack-request-elsif-req-ack-done-dmac-1-and-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-ack-valid-elsif-req-ack-done-dmac-1-then-ack-request-out-0-nack-request-out-0-priority-to-the-latest-request-elsif-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-end-if-elsif-nack-request-out-1-then-nack-valid-but-new-nack-request-if-req-ack-done-dmac-1-and-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-nack-valid-but-new-ack-request-elsif-req-ack-done-dmac-1-and-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-ack-valid-elsif-req-ack-done-dmac-1-then-ack-request-out-0-nack-request-out-0-priority-to-the-latest-request-elsif-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-end-if-priority-to-the-latest-request-elsif-ack-request-fsm-1-then-ack-request-out-1-nack-request-out-0-s-seq-num-out-s-seq-num-fsm-elsif-nack-request-fsm-1-then-ack-request-out-0-nack-request-out-1-end-if-end-if-end-if-end-process-p-sync" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-tpf-description-transmit-polarity-flag-management">
+<h1>– Process: p_tpf
+– Description: Transmit polarity flag management<a class="headerlink" href="#process-p-tpf-description-transmit-polarity-flag-management" title="Link to this heading"></a></h1>
+</section>
+<section id="p-tpf-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-trans-pol-flg-0-else-if-type-frame-dscheck-c-nack-frm-and-end-frame-dscheck-1-and-crc-err-dscheck-0-and-seq-err-dscheck-0-then-trans-pol-flg-not-trans-pol-flg-end-if-end-if-end-if-end-process-p-tpf">
+<h1>p_tpf : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+trans_pol_flg &lt;= ‘0’;
+else
+if (TYPE_FRAME_DSCHECK = C_NACK_FRM) and END_FRAME_DSCHECK = ‘1’ and CRC_ERR_DSCHECK =’0’ and SEQ_ERR_DSCHECK = ‘0’ then
+trans_pol_flg &lt;= not(trans_pol_flg);
+end if;
+end if;
+end if;
+end process p_tpf;<a class="headerlink" href="#p-tpf-process-clk-begin-if-rising-edge-clk-then-if-link-reset-dlre-1-then-trans-pol-flg-0-else-if-type-frame-dscheck-c-nack-frm-and-end-frame-dscheck-1-and-crc-err-dscheck-0-and-seq-err-dscheck-0-then-trans-pol-flg-not-trans-pol-flg-end-if-end-if-end-if-end-process-p-tpf" title="Link to this heading"></a></h1>
+</section>
+<section id="process-p-nack-rst-strat-description-nack-reset-strategy">
+<h1>– Process: p_nack_rst_strat
+– Description: NACK reset strategy<a class="headerlink" href="#process-p-nack-rst-strat-description-nack-reset-strategy" title="Link to this heading"></a></h1>
+<p>p_nack_rst_strat : process(CLK)
+begin
+if rising_edge(CLK)  then
+if LINK_RESET_DLRE =’1’ then
+LINK_RESET_DERRM &lt;= ‘0’;
+flg_nack_rst_flg &lt;=’0’;
+else
+if NACK_RST_EN_MIB = ‘1’ then
+if NACK_RST_MODE_MIB = ‘1’ then
+if FRAME_ERR_DSCHECK = ‘0’ and SEQ_ERR_DSCHECK = ‘0’ and CRC_ERR_DSCHECK = ‘0’ and (TYPE_FRAME_DSCHECK = C_NACK_FRM) and END_FRAME_DSCHECK = ‘1’ then
+LINK_RESET_DERRM &lt;= ‘1’;
+else
+LINK_RESET_DERRM &lt;= ‘0’;
+end if;
+– else
+– if FRAME_ERR_DSCHECK = ‘0’ and (TYPE_FRAME_DSCHECK = C_NACK_FRM) and END_FRAME_DSCHECK = ‘1’ then
+–   flg_nack_rst_flg &lt;= ‘1’;
+–   LINK_RESET_DERRM &lt;= ‘0’;
+– elsif (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM) and END_FRAME_DSCHECK = ‘1’ and FRAME_ERR_DSCHECK = ‘0’ and flg_nack_rst_flg = ‘1’ then
+–   LINK_RESET_DERRM &lt;= ‘1’;
+– else
+–   LINK_RESET_DERRM &lt;= ‘0’;
+– end if;
+end if;
+else
+LINK_RESET_DERRM &lt;= ‘0’;
+end if;
+end if;
+end if;
+end process p_nack_rst_strat;</p>
+<p>end Behavioral;</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

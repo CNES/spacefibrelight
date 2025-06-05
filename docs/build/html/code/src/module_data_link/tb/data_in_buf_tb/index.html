@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/style/linty.css?v=252e56ff" />
+
+  
+    <link rel="canonical" href="https://cnes.github.io/spacefibrelight/build/html/code/src/module_data_link/tb/data_in_buf_tb/" />
+      <script src="../../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../../_static/documentation_options.js?v=187304be"></script>
+      <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../../" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/design_hierarchy/">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domains/">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domains/">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/clock_domain_crossings/">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/reset_domain_crossings/">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/finite_state_machines/">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../reports/combinational_loops/">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../../_sources/build/html/code/src/module_data_link/tb/data_in_buf_tb.vhd.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;</p>
+<p>entity tb_data_in_buf is
+end tb_data_in_buf;</p>
+<p>library work;
+use work.data_link_lib.all;</p>
+<p>architecture testbench of tb_data_in_buf is</p>
+<p>– Component declaration
+component data_in_buf
+port (
+RST_N                  : in  std_logic;
+CLK                    : in  std_logic;
+LINK_RESET             : in  std_logic;
+M_AXIS_ACLK_IBUF       : in  std_logic;
+M_AXIS_TVALID_IBUF     : out std_logic;
+M_AXIS_TDATA_IBUF      : out std_logic_vector(C_DATA_LENGTH-1 downto 0);
+M_AXIS_TLAST_IBUF      : out std_logic;
+M_AXIS_TREADY_IBUF     : in  std_logic;
+M_AXIS_TUSER_IBUF      : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+DATA_DDES              : in  std_logic_vector(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto 0);
+DATA_EN_DDES           : in  std_logic;
+REQ_FCT_DIBUF          : out std_logic;
+REQ_FCT_DONE_DMAC      : in  std_logic;
+FCT_CREDIT_OVERFLOW_DL : out std_logic
+);
+end component;</p>
+<p>– Signal declarations
+signal RST_N                  : std_logic := ‘1’;
+signal CLK                    : std_logic := ‘0’;
+signal LINK_RESET             : std_logic := ‘0’;
+signal M_AXIS_ACLK_IBUF       : std_logic := ‘0’;
+signal M_AXIS_TVALID_IBUF     : std_logic;
+signal M_AXIS_TDATA_IBUF      : std_logic_vector(C_DATA_LENGTH-1 downto 0);
+signal M_AXIS_TLAST_IBUF      : std_logic;
+signal M_AXIS_TREADY_IBUF     : std_logic := ‘0’;
+signal M_AXIS_TUSER_IBUF      : std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal DATA_DDES              : std_logic_vector(C_DATA_LENGTH+C_BYTE_BY_WORD_LENGTH-1 downto 0);
+signal DATA_EN_DDES           : std_logic := ‘0’;
+signal REQ_FCT_DIBUF          : std_logic;
+signal REQ_FCT_DONE_DMAC      : std_logic := ‘0’;
+signal FCT_CREDIT_OVERFLOW_DL : std_logic;</p>
+<p>begin</p>
+<p>– Instantiate the Unit Under Test (UUT)
+uut: data_in_buf
+port map (
+RST_N                  =&gt; RST_N,
+CLK                    =&gt; CLK,
+LINK_RESET             =&gt; LINK_RESET,
+M_AXIS_ACLK_IBUF       =&gt; CLK,
+M_AXIS_TVALID_IBUF     =&gt; M_AXIS_TVALID_IBUF,
+M_AXIS_TDATA_IBUF      =&gt; M_AXIS_TDATA_IBUF,
+M_AXIS_TLAST_IBUF      =&gt; M_AXIS_TLAST_IBUF,
+M_AXIS_TREADY_IBUF     =&gt; M_AXIS_TREADY_IBUF,
+M_AXIS_TUSER_IBUF      =&gt; M_AXIS_TUSER_IBUF,
+DATA_DDES              =&gt; DATA_DDES,
+DATA_EN_DDES           =&gt; DATA_EN_DDES,
+REQ_FCT_DIBUF          =&gt; REQ_FCT_DIBUF,
+REQ_FCT_DONE_DMAC      =&gt; REQ_FCT_DONE_DMAC,
+FCT_CREDIT_OVERFLOW_DL =&gt; FCT_CREDIT_OVERFLOW_DL
+);</p>
+<p>– Clock process
+clk_process :process
+begin
+CLK &lt;= ‘0’;
+wait for 5 ns;
+CLK &lt;= ‘1’;
+wait for 5 ns;
+end process;</p>
+<p>– Stimulus process
+stim_proc: process
+begin
+– Initialize inputs
+RST_N &lt;= ‘0’;
+wait for 20 ns;
+RST_N &lt;= ‘1’;
+wait until rising_edge(CLK);
+– Test sequence
+– Example: Apply test vectors
+wait for 100 ns;
+for i in 0 to 10  loop
+DATA_DDES    &lt;= std_logic_vector(to_unsigned(i+1, DATA_DDES’length));
+DATA_EN_DDES &lt;= ‘1’;
+wait until rising_edge(CLK);
+end loop; –
+DATA_DDES    &lt;= std_logic_vector(to_unsigned(0, DATA_DDES’length));
+DATA_EN_DDES &lt;= ‘0’;
+wait until rising_edge(CLK);
+M_AXIS_TREADY_IBUF &lt;=’1’;
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+wait until rising_edge(CLK);
+M_AXIS_TREADY_IBUF &lt;=’0’;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-- Add more test vectors as needed
+
+-- End simulation
+wait;
+</pre></div>
+</div>
+<p>end process;</p>
+<p>end architecture testbench;</p>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated juin 05, 2025 at 15:35:05 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
