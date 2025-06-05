@@ -1,26 +1,3 @@
------------------------------------------------------------------------------------
--- #                          Copyright CNES 2025                                 #
--- #                                                                              #
--- # This source describes Open Hardware and is licensed under the CERN-OHL-W v2. #
--- #                                                                              #
--- # You may redistribute and modify this documentation and make products         #
--- # using it under the terms of the CERN-OHL-W v2 (https:/cern.ch/cern-ohl).     #
--- #                                                                              #
--- # This documentation is distributed WITHOUT ANY EXPRESS OR IMPLIED             #
--- # WARRANTY, INCLUDING OF MERCHANTABILITY, SATISFACTORY QUALITY                 #
--- # AND FITNESS FOR A PARTICULAR PURPOSE.                                        #
--- #                                                                              #
--- # Please see the CERN-OHL-W v2 for applicable conditions.                      #
------------------------------------------------------------------------------------
-----------------------------------------------------------------------------
--- Author(s) : F. Manni
---
--- Project : IP SpaceFibreLight
---
--- Creation date : 065/06/2025
---
--- Description : This module is a wrapper optimized for Xilinx IP
-----------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.all;
 

@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Package - data_link_lib &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=252e56ff" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domain_crossings.html">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finite_state_machines.html">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../combinational_loops.html">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Package - data_link_lib</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reports/design/package_2.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference internal" href="../design_hierarchy.html#vhdl-packages"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+<br>
+<section id="package-data-link-lib">
+<h1>Package - data_link_lib<a class="headerlink" href="#package-data-link-lib" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>data_link_lib</p></td>
+<td><p><linty-anchor href="//src/pkg_data_link.vhd#32">pkg_data_link.vhd#32</linty-anchor></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Link to this heading"></a></h2>
+<p>Count: 54</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#34">C_CAPA_LINK_RST</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>0</p></td>
+<td><p>Link Reset bitfield in lane capability vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#35">C_CAPA_LANE_START</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>1</p></td>
+<td><p>Lane Start bitfield in lane capability vector</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#36">C_CAPA_DATA_SCRAM</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>2</p></td>
+<td><p>Data Scrambled bitfield in lane capability vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#37">C_CAPA_MULTI_LANE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>3</p></td>
+<td><p>Multi-Lane bitfield in lane capability vector</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#38">C_CAPA_ROUTING_SW</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>4</p></td>
+<td><p>Routing Switch bitfield in lane capability vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#40">C_VC_NUM</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>Number of Virtual Channels</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#42">C_OUT_BUF_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>7</p></td>
+<td><p>fifo depth = 2**7= 128 words of 32 bits</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#43">C_FCT_CC_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>FCT credit counter size: 4x64xM = 256</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#44">C_FCT_CC_MAX</linty-anchor></p></td>
+<td><p>unsigned</p></td>
+<td><p>to_unsigned ( 255 , C_FCT_CC_SIZE )</p></td>
+<td><p>FCT credit counter size: 4x64xM = 256</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#45">C_M_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>4</p></td>
+<td><p>Size of M which is multiplier +1</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#46">C_MULT_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>3</p></td>
+<td><p>Size of multiplier</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#47">C_CHANNEL_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>5</p></td>
+<td><p>Channel number field</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#49">C_MID_BUF_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>7</p></td>
+<td><p>fifo depth = 2**7= 128 words of 32 bits for the middle buffer (data)</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#50">C_MID_BUF_BC_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>3</p></td>
+<td><p>fifo depth = 2**3= 8 words of 32 bits for the middle buffer (broadcast)</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#52">C_IN_BUF_SIZE</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>fifo depth = 2**8= 256 words of 32 bits for the input buffer</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#54">C_DATA_LENGTH</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>32</p></td>
+<td><p>Data width</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#55">C_BYTE_BY_WORD_LENGTH</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>4</p></td>
+<td><p>Number of byte in a word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#56">C_DATA_K_WIDTH</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH</p></td>
+<td><p>Data + k character width</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#57">C_TYPE_FRAME_LENGTH</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>4</p></td>
+<td><p>Type of frame vector width</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#58">C_MAX_DATA_FRAME</linty-anchor></p></td>
+<td><p>unsigned ( 7 downto 0 )</p></td>
+<td><p>to_unsigned ( 65 , 8 )</p></td>
+<td><p>Maximum number of words in a Data frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#59">C_MAX_IDLE_FRAME</linty-anchor></p></td>
+<td><p>unsigned ( 7 downto 0 )</p></td>
+<td><p>to_unsigned ( 64 , 8 )</p></td>
+<td><p>Maximum number of words in an Idle frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#60">C_WORD_BC_FRAME</linty-anchor></p></td>
+<td><p>unsigned ( 1 downto 0 )</p></td>
+<td><p>to_unsigned ( 2 , 2 )</p></td>
+<td><p>Number of words in a Broadcast frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#61">C_BYTE_WIDTH</linty-anchor></p></td>
+<td><p>integer</p></td>
+<td><p>8</p></td>
+<td><p>Byte width</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#63">C_DATA_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0001”</p></td>
+<td><p>DATA Frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#64">C_BC_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0010”</p></td>
+<td><p>BROADCAST Frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#65">C_IDLE_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0011”</p></td>
+<td><p>IDLE Frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#66">C_FCT_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0100”</p></td>
+<td><p>FCT Frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#67">C_ACK_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0101”</p></td>
+<td><p>ACK Frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#68">C_NACK_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0110”</p></td>
+<td><p>NACK Frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#69">C_FULL_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“0111”</p></td>
+<td><p>FULL Frame</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#70">C_RETRY_FRM</linty-anchor></p></td>
+<td><p>std_logic_vector ( 3 downto 0 )</p></td>
+<td><p>“1000”</p></td>
+<td><p>RETRY Frame</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#72">C_EEP_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”FE”</p></td>
+<td><p>K30.7 EEP</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#73">C_EOP_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”FD”</p></td>
+<td><p>K29.7 EOP</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#74">C_K28_7_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”FC”</p></td>
+<td><p>K28.7 Comma</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#75">C_K28_3_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”7C”</p></td>
+<td><p>K28.3 FCT</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#76">C_K28_2_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”5C”</p></td>
+<td><p>K28.2 EBF</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#77">C_K28_0_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”1C”</p></td>
+<td><p>K28.0 EDF</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#78">C_FILL_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”FB”</p></td>
+<td><p>K27.7</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#79">C_SBF_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”5D”</p></td>
+<td><p>D29.2 SBF</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#80">C_NACK_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”BB”</p></td>
+<td><p>D27.5</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#81">C_SDF_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”50”</p></td>
+<td><p>D16.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#82">C_FULL_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”6F”</p></td>
+<td><p>D15.3</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#83">C_RETRY_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”87”</p></td>
+<td><p>D7.4</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#84">C_SIF_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”84”</p></td>
+<td><p>D4.2 SIF</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#85">C_ACK_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”A2”</p></td>
+<td><p>D2.5</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#86">C_RESERVED_SYMB</linty-anchor></p></td>
+<td><p>std_logic_vector ( 07 downto 00 )</p></td>
+<td><p>x”00”</p></td>
+<td><p>D0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#88">C_SDF_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_SDF_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a Start of Data Frame word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#89">C_SBF_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_SBF_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a Start of Broadcast Frame word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#90">C_SIF_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_SIF_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a Start of Idle Frame word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#91">C_ACK_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_ACK_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a ACK word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#92">C_NACK_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_NACK_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a NACK word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#93">C_FULL_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector ( 15 downto 00 )</p></td>
+<td><p>C_FULL_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>2 first bytes of a FULL word</p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#94">C_RETRY_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector</p></td>
+<td><p>C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp; C_RETRY_SYMB &amp; C_K28_7_SYMB</p></td>
+<td><p>Retry word</p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#95">C_RXERR_WORD</linty-anchor></p></td>
+<td><p>std_logic_vector</p></td>
+<td><p>C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp; C_RESERVED_SYMB &amp; C_RESERVED_SYMB</p></td>
+<td><p>RXERR word</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h2>
+<p>Count: 5</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Definition</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#99">int_array</linty-anchor></p></td>
+<td><p>array ( natural range &lt;&gt; ) of integer</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#100">vc_data_array</linty-anchor></p></td>
+<td><p>array ( natural range &lt;&gt; ) of std_logic_vector ( C_DATA_LENGTH - 1 downto 0 )</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#101">vc_k_array</linty-anchor></p></td>
+<td><p>array ( natural range &lt;&gt; ) of std_logic_vector ( C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#102">vc_data_k_array</linty-anchor></p></td>
+<td><p>array ( natural range &lt;&gt; ) of std_logic_vector ( C_DATA_LENGTH + C_BYTE_BY_WORD_LENGTH - 1 downto 0 )</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#103">vc_m_val_array</linty-anchor></p></td>
+<td><p>array ( natural range &lt;&gt; ) of std_logic_vector ( C_M_SIZE - 1 downto 0 )</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subtypes">
+<h2>Subtypes<a class="headerlink" href="#subtypes" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<p>Count: 3</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Returned type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#107">calculate_crc_16</linty-anchor></p></td>
+<td><p>STD_LOGIC_VECTOR</p></td>
+<td><p>Calcluates the crc 16 bits</p></td>
+<td class="text-center"><p><a class="reference internal" href="package_2/function_1.html"><span class="std std-doc"><img title="View Function Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Function Details"></span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="//src/pkg_data_link.vhd#108">calculate_crc_8</linty-anchor></p></td>
+<td><p>STD_LOGIC_VECTOR</p></td>
+<td><p>Calcluates the crc 8 bits</p></td>
+<td class="text-center"><p><a class="reference internal" href="package_2/function_2.html"><span class="std std-doc"><img title="View Function Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Function Details"></span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="//src/pkg_data_link.vhd#109">calculate_idle</linty-anchor></p></td>
+<td><p>STD_LOGIC_VECTOR</p></td>
+<td><p>Calcluates Idle data</p></td>
+<td class="text-center"><p><a class="reference internal" href="package_2/function_3.html"><span class="std std-doc"><img title="View Function Details" src="/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Function Details"></span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="procedures">
+<h2>Procedures<a class="headerlink" href="#procedures" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="global-signals">
+<h2>Global Signals<a class="headerlink" href="#global-signals" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="global-variables">
+<h2>Global Variables<a class="headerlink" href="#global-variables" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+</section>
+<section id="component-definitions">
+<h2>Component Definitions<a class="headerlink" href="#component-definitions" title="Link to this heading"></a></h2>
+<p>Count: 0</p>
+<br>
+<p><a class="reference internal" href="../design_hierarchy.html#vhdl-packages"><span class="std std-ref">Back to Design Hierarchy Report</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated June 05, 2025 at 16:26:55 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
