@@ -1,0 +1,30 @@
+digraph "spacefibre_light_top" {
+label=<<b>CDC #94</b>>;
+labelloc="t"
+fontsize="30"
+node ["fontname"="Courier"]
+edge ["fontname"="Courier"]
+rankdir="LR";
+remincross=true;
+n1 [ shape=octagon, label="CLK", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45" ];
+n2 [ shape=octagon, label="RST_N", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#44" ];
+n3 [ shape=diamond, label="inst_data_link.gen_data_in_buff(1)&#9586;.inst_data_in_buf.last_k_char", colorscheme="dark28", color="1", fontcolor="1", href="/src/module_data_link/data_in_buf.vhd#122" ];
+n4 [ shape=diamond, label="inst_data_link.gen_data_in_buff(1)&#9586;.inst_data_in_buf.last_k_char_reg1", colorscheme="dark28", color="2", fontcolor="2", href="/src/module_data_link/data_in_buf.vhd#123" ];
+{ rank="source"; n1; n2;}
+{ rank="sink";}
+c8 [ shape=record, label="{{<p1> CLK|<p5> D|<p6> EN}|$238322\n$dffe|{<p7> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/module_data_link/data_in_buf.vhd#225"  ];
+v0 [ label="AXIS_ARSTN_RX_DL [1]" ];
+v1 [ label="AXIS_ACLK_RX_DL [1]" ];
+v2 [ label="$224445" ];
+v3 [ label="$224441" ];
+c10 [ shape=record, label="{{<p9> ARST|<p1> CLK|<p5> D|<p6> EN}|$238470\n$adffe|{<p7> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/module_data_link/data_in_buf.vhd#276"  ];
+n1:e -> c8:p1:w [color="black", fontcolor="black", label=""];
+n2:e -> c8:p6:w [color="black", fontcolor="black", label=""];
+c10:p7:e -> n3:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n3:e -> c8:p5:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+c8:p7:e -> n4:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v0:e -> c10:p9:w [color="black", fontcolor="black", label=""];
+v1:e -> c10:p1:w [color="black", fontcolor="black", label=""];
+v2:e -> c10:p5:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+v3:e -> c10:p6:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+}

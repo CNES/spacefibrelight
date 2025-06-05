@@ -1,0 +1,7 @@
+{% extends "!footer.html" %}
+
+{% block contentinfo %}
+  <p>{{ project_name }}{% if project_version|length != 0 %}, {{ project_version }} {% endif %}</p>
+  <p>Generated {{ generation_time }} by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/_static/js/linty-viewer.js"></script>
+{% endblock %}

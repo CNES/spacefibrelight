@@ -1,0 +1,61 @@
+digraph "spacefibre_light_top" {
+label=<<b>CDC #23</b>>;
+labelloc="t"
+fontsize="30"
+node ["fontname"="Courier"]
+edge ["fontname"="Courier"]
+rankdir="LR";
+remincross=true;
+n4 [ shape=octagon, label="CLK", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45" ];
+n5 [ shape=octagon, label="RST_N", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#44" ];
+n6 [ shape=diamond, label="inst_demux_rx.FIFO_RX_RD_EN_DEMUX", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip_spacefibre_light_top/demux_rx.vhd#43" ];
+n7 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_rx_data.RD_DATA_VLD", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#55" ];
+n8 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_rx_data.cmd_flush_req", colorscheme="dark28", color="2", fontcolor="2", href="/src/ip/fifo_dc/fifo_dc.vhd#111" ];
+n9 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_rx_data.empty", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#129" ];
+n10 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_rx_data.rd_en", colorscheme="dark28", color="3", fontcolor="3", href="/src/ip/fifo_dc/fifo_dc.vhd#124" ];
+{ rank="source"; n4; n5;}
+{ rank="sink";}
+v0 [ label="$230694" ];
+v1 [ label="$237611" ];
+c15 [ shape=record, label="{{<p11> ARST|<p4> CLK|<p12> D|<p13> EN}|$237610\n$adffe|{<p14> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#378"  ];
+v2 [ label="inst_phy_plus_lane.clk_tx" ];
+v3 [ label="$230731" ];
+v4 [ label="$238545" ];
+c16 [ shape=record, label="{{<p11> ARST|<p4> CLK|<p12> D|<p13> EN}|$238544\n$adffe|{<p14> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
+v5 [ label="$230106" ];
+c17 [ shape=record, label="{{<p11> ARST|<p4> CLK|<p12> D}|$230113\n$adff|{<p14> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip_spacefibre_light_top/demux_rx.vhd#59"  ];
+c18 [ shape=record, label="{{<p11> ARST|<p4> CLK|<p12> D}|$230881\n$adff|{<p14> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#300"  ];
+c22 [ shape=record, label="{{<p19> A|<p20> B}|$230867\n$or|{<p21> Y}}", colorscheme="dark28", color="3", fontcolor="3" , href="/src/ip/fifo_dc/fifo_dc.vhd#290"  ];
+c23 [ shape=record, label="{{<p19> A}|$230868\n$not|{<p21> Y}}", colorscheme="dark28", color="3", fontcolor="3" , href="/src/ip/fifo_dc/fifo_dc.vhd#290"  ];
+c24 [ shape=record, label="{{<p19> A|<p20> B}|$230869\n$and|{<p21> Y}}", colorscheme="dark28", color="3", fontcolor="3" , href="/src/ip/fifo_dc/fifo_dc.vhd#290"  ];
+v6 [ label="1'0" ];
+v7 [ label="1'1" ];
+c26 [ shape=record, label="{{<p19> A|<p20> B|<p25> S}|$230880\n$mux|{<p21> Y}}", colorscheme="dark28", color="3", fontcolor="3" , href="/src/ip/fifo_dc/fifo_dc.vhd#305"  ];
+c22:p21:e -> c23:p19:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+c24:p21:e -> n10:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+n10:e -> c26:p25:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+c23:p21:e -> c24:p20:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+c26:p21:e -> c18:p12:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+n4:e -> c15:p4:w [color="black", fontcolor="black", label=""];
+n4:e -> c17:p4:w [color="black", fontcolor="black", label=""];
+n4:e -> c18:p4:w [color="black", fontcolor="black", label=""];
+n5:e -> c15:p11:w [color="black", fontcolor="black", label=""];
+n5:e -> c16:p11:w [color="black", fontcolor="black", label=""];
+n5:e -> c17:p11:w [color="black", fontcolor="black", label=""];
+n5:e -> c18:p11:w [color="black", fontcolor="black", label=""];
+c17:p14:e -> n6:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n6:e -> c24:p19:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+c18:p14:e -> n7:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+c16:p14:e -> n8:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n8:e -> c22:p20:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+c15:p14:e -> n9:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n9:e -> c22:p19:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+v0:e -> c15:p12:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+v1:e -> c15:p13:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+v2:e -> c16:p4:w [color="black", fontcolor="black", label=""];
+v3:e -> c16:p12:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+v4:e -> c16:p13:w [colorscheme="dark28", color="3", fontcolor="3", label=""];
+v5:e -> c17:p12:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+v6:e -> c26:p19:w [color="black", fontcolor="black", label=""];
+v7:e -> c26:p20:w [color="black", fontcolor="black", label=""];
+}

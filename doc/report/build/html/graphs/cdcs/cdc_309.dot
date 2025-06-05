@@ -1,0 +1,76 @@
+digraph "spacefibre_light_top" {
+label=<<b>CDC #309</b>>;
+labelloc="t"
+fontsize="30"
+node ["fontname"="Courier"]
+edge ["fontname"="Courier"]
+rankdir="LR";
+remincross=true;
+n4 [ shape=octagon, label="RST_N", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#44" ];
+n5 [ shape=diamond, label="inst_phy_plus_lane.clk_tx", color="black", fontcolor="black", href="/src/module_phy_plus_lane/phy_plus_lane.vhd#614" ];
+n6 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_out_ctrl.flush_ack_rd", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#120" ];
+n7 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_out_ctrl.ptr_rd_gray", colorscheme="dark28", color="2", fontcolor="2", href="/src/ip/fifo_dc/fifo_dc.vhd#103" ];
+n8 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_out_ctrl.ptr_rd_in_wr", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#106" ];
+{ rank="source"; n4;}
+{ rank="sink";}
+v0 [ label="$231103" ];
+c14 [ shape=record, label="{{<p9> ARST|<p10> CLK|<p11> D|<p12> EN}|$237028\n$adffe|{<p13> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
+c18 [ shape=record, label="{{<p15> A|<p16> B}|$231188\n$xor|{<p17> Y}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#144"  ];
+x1 [ shape=record, style=rounded, label="<s0> 2:2 - 0:0 ", colorscheme="dark28", color="2", fontcolor="2" ];
+x1:e -> c18:p15:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="2", fontcolor="2", label=""];
+x2 [ shape=record, style=rounded, label="<s0> 1:1 - 0:0 ", colorscheme="dark28", color="2", fontcolor="2" ];
+x2:e -> c18:p16:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="2", fontcolor="2", label=""];
+c19 [ shape=record, label="{{<p15> A|<p16> B}|$231190\n$xor|{<p17> Y}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#144"  ];
+x3 [ shape=record, style=rounded, label="<s0> 0:0 - 0:0 ", colorscheme="dark28", color="2", fontcolor="2" ];
+x3:e -> c19:p16:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="2", fontcolor="2", label=""];
+v5 [ label="3'000" ];
+c21 [ shape=record, label="{{<p15> A|<p16> B|<p20> S}|$231193\n$mux|{<p17> Y}}", colorscheme="dark28", color="3", fontcolor="3" , href="/src/ip/fifo_dc/fifo_dc.vhd#225"  ];
+x4 [ shape=record, style=rounded, label="<s2> 2:2 - 2:2 |<s1> 0:0 - 1:1 |<s0> 0:0 - 0:0 ", colorscheme="dark28", color="2", fontcolor="2" ];
+x4:e -> c21:p15:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label=""];
+v6 [ label="CLK" ];
+v8 [ label="inst_phy_plus_lane.inst_fifo_out_ctrl.ptr_rd [2]" ];
+v9 [ label="$231140" ];
+c22 [ shape=record, label="{{<p9> ARST|<p10> CLK|<p11> D}|$231275\n$adff|{<p13> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#362"  ];
+x7 [ shape=record, style=rounded, label="<s1> 2:2 - 2:2 |<s0> 1:0 - 1:0 ", colorscheme="dark28", color="2", fontcolor="2" ];
+x7:e -> c22:p11:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label=""];
+c23 [ shape=record, label="{{<p9> ARST|<p10> CLK|<p11> D}|$231194\n$adff|{<p13> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#222"  ];
+v10 [ label="1'1" ];
+v11 [ label="1'0" ];
+v12 [ label="1'0" ];
+v13 [ label="1'0" ];
+v14 [ label="3'000" ];
+v15 [ label="inst_phy_plus_lane.QUAD0_TX0_outclk" ];
+c31 [ shape=record, label="{{<p24> CE|<p25> CEMASK|<p26> CLR|<p27> CLRMASK|<p28> DIV|<p29> I}|inst_phy_plus_lane.BUFG_GT_inst\nBUFG_GT|{<p30> O}}", href="/src/module_phy_plus_lane/phy_plus_lane.vhd#954"  ];
+n1 [ shape=point ];
+c18:p17:e -> n1:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n1:e -> c19:p15:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n1:e -> x4:s1:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+c19:p17:e -> x4:s0:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+c21:p17:e -> c23:p11:w [colorscheme="dark28", color="3", fontcolor="3", style="setlinewidth(3)", label=""];
+n4:e -> c14:p9:w [color="black", fontcolor="black", label=""];
+n4:e -> c22:p9:w [color="black", fontcolor="black", label=""];
+n4:e -> c23:p9:w [color="black", fontcolor="black", label=""];
+c31:p30:e -> n5:w [color="black", fontcolor="black", label=""];
+n5:e -> c14:p10:w [color="black", fontcolor="black", label=""];
+n5:e -> c23:p10:w [color="black", fontcolor="black", label=""];
+c14:p13:e -> n6:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n6:e -> c14:p12:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n6:e -> c21:p20:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+c22:p13:e -> n7:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label=""];
+n7:e -> x1:s0:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n7:e -> x2:s0:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n7:e -> x3:s0:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n7:e -> x4:s2:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+c23:p13:e -> n8:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+v0:e -> c14:p11:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+v10:e -> c31:p24:w [color="black", fontcolor="black", label=""];
+v11:e -> c31:p25:w [color="black", fontcolor="black", label=""];
+v12:e -> c31:p26:w [color="black", fontcolor="black", label=""];
+v13:e -> c31:p27:w [color="black", fontcolor="black", label=""];
+v14:e -> c31:p28:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+v15:e -> c31:p29:w [color="black", fontcolor="black", label=""];
+v5:e -> c21:p16:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+v6:e -> c22:p10:w [color="black", fontcolor="black", label=""];
+v8:e -> x7:s1:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v9:e -> x7:s0:w [colorscheme="dark28", color="2", fontcolor="2", style="setlinewidth(3)", label=""];
+}

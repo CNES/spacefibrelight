@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link href="/_static/style/prism.css" rel="stylesheet" />
+  <style>
+    .line-highlight {
+      background-color: rgba(255, 255, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+<pre id="code" class="line-numbers" data-line=""><code id="code-block" class="language-vhdl"></code></pre>
+<script src="/_static/js/prism.js"></script>
+<script>
+  function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  async function highlightElement(element) {
+    return new Promise(resolve => {
+      Prism.highlightElement(element);
+      setTimeout(resolve, 0);
+    });
+  }
+
+  async function loadContent() {
+    const filePath = getUrlParameter("path");
+    if (filePath) {
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+          throw new Error('File not found or network error');
+        }
+        const content = await response.text();
+        const codeBlock = document.getElementById('code-block');
+        codeBlock.innerHTML = content;
+        await highlightElement(codeBlock);
+      } catch (error) {
+        console.error('Error loading content:', error);
+        const codeBlock = document.getElementById('code-block');
+        if (codeBlock) {
+          codeBlock.innerHTML = 'Error loading content: ' + error.message;
+        }
+      }
+    } else {
+      console.error('No file parameter found in URL');
+    }
+  }
+
+  async function updateHighlightedLine() {
+    await loadContent();
+    const hash = window.location.hash;
+    if (hash) {
+      const lineMatch = hash.match(/(\d+)/);
+      if (lineMatch) {
+        const lineNumber = parseInt(lineMatch[1], 10);
+        const pre = document.getElementById("code");
+        pre.setAttribute("data-line", lineNumber);
+        const codeElement = document.getElementById("code-block");
+        await highlightElement(codeElement); // Highlight again if needed
+        const lineElements = pre.querySelector(".line-numbers-rows");
+        if (lineElements) {
+          const lines = lineElements.children;
+          const targetLine = lines[lineNumber - 1];
+          if (targetLine) {
+            targetLine.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      }
+    }
+  }
+
+  window.onload = () => updateHighlightedLine();
+  window.onhashchange = () => updateHighlightedLine();
+</script>
+</body>
+
+</html>

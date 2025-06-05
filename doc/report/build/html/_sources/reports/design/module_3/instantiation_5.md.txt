@@ -1,0 +1,28 @@
+[Back to Module Report](../module_3.md#instantiations)
+
+<br>
+
+# Instantiation - fifo_dc_inst
+
+## Summary
+
+| Name | Architecture | Description |
+| --- | --- | --- |
+| <linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#183">fifo_dc_inst</linty-anchor> | <linty-anchor href="//src/ip/fifo_dc/fifo_dc.vhd#75">RTL</linty-anchor> | |
+
+
+## Generics
+
+Count: 4
+
+| Name | Value | Is equal to default value? | Is set? | Description |
+| --- | --- | :---: | :---: | --- |
+|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#186">G_AWIDTH</linty-anchor>|7|&#10007;|&#10004;||
+|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#185">G_DWIDTH</linty-anchor>|36|&#10007;|&#10004;||
+|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#187">G_THRESHOLD_HIGH</linty-anchor>|125|&#10007;|&#10004;||
+|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#188">G_THRESHOLD_LOW</linty-anchor>|1|&#10007;|&#10004;||
+
+
+<br>
+
+[Back to Module Report](../module_3.md#instantiations)

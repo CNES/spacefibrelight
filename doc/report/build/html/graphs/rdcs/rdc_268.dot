@@ -1,0 +1,48 @@
+digraph "spacefibre_light_top" {
+label=<<b>RDC #268</b>>;
+labelloc="t"
+fontsize="30"
+node ["fontname"="Courier"]
+edge ["fontname"="Courier"]
+rankdir="LR";
+remincross=true;
+n2 [ shape=octagon, label="CLK", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45" ];
+n3 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_tx_data.ptr_wr", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#94" ];
+n4 [ shape=diamond, label="inst_phy_plus_lane.inst_fifo_tx_data.ptr_wr_gray", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc/fifo_dc.vhd#102" ];
+n5 [ shape=diamond, label="inst_reset_sync_clk_from_GTY.reset_gen_rr_n", colorscheme="dark28", color="2", fontcolor="2", href="/src/ip_spacefibre_light_top/reset_gen.vhd#46" ];
+{ rank="source"; n2;}
+{ rank="sink";}
+v0 [ label="RST_N" ];
+v1 [ label="inst_phy_plus_lane.clk_tx" ];
+v2 [ label="$233649" ];
+v3 [ label="$236046" ];
+c10 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D|<p8> EN}|$236045\n$adffe|{<p9> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip_spacefibre_light_top/reset_gen.vhd#56"  ];
+v4 [ label="$230741" ];
+v5 [ label="$238527" ];
+c11 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D|<p8> EN}|$238526\n$adffe|{<p9> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#199"  ];
+c12 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D}|$230840\n$adff|{<p9> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#240"  ];
+x6 [ shape=record, style=rounded, label="<s1> 9:9 - 9:9 |<s0> 8:0 - 8:0 ", colorscheme="dark28", color="1", fontcolor="1" ];
+x6:e -> c12:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+c16 [ shape=record, label="{{<p13> A|<p14> B}|$230837\n$xor|{<p15> Y}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#136"  ];
+x7 [ shape=record, style=rounded, label="<s0> 9:1 - 8:0 ", colorscheme="dark28", color="1", fontcolor="1" ];
+x7:e -> c16:p13:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+x8 [ shape=record, style=rounded, label="<s0> 8:0 - 8:0 ", colorscheme="dark28", color="1", fontcolor="1" ];
+x8:e -> c16:p14:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+c16:p15:e -> x6:s0:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+n2:e -> c11:p2:w [color="black", fontcolor="black", label=""];
+n2:e -> c12:p2:w [color="black", fontcolor="black", label=""];
+c11:p9:e -> n3:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+n3:e -> x6:s1:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+n3:e -> x7:s0:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+n3:e -> x8:s0:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+c12:p9:e -> n4:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+c10:p9:e -> n5:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n5:e -> c11:p6:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n5:e -> c12:p6:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v0:e -> c10:p6:w [color="black", fontcolor="black", label=""];
+v1:e -> c10:p2:w [color="black", fontcolor="black", label=""];
+v2:e -> c10:p7:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v3:e -> c10:p8:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v4:e -> c11:p7:w [colorscheme="dark28", color="1", fontcolor="1", style="setlinewidth(3)", label=""];
+v5:e -> c11:p8:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+}

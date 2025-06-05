@@ -1,0 +1,30 @@
+digraph "spacefibre_light_top" {
+label=<<b>RDC #237</b>>;
+labelloc="t"
+fontsize="30"
+node ["fontname"="Courier"]
+edge ["fontname"="Courier"]
+rankdir="LR";
+remincross=true;
+n1 [ shape=octagon, label="AXIS_ACLK_TX_DL", color="black", fontcolor="black", href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#58" ];
+n2 [ shape=diamond, label="inst_data_link.gen_data_out_buff(6)&#9586;.inst_data_out_buff.ints_fifo_dc_axis_s.AXIS_SLAVE_inst.reset_sync", colorscheme="dark28", color="1", fontcolor="1", href="/src/ip/fifo_dc_axis_to_custom/AXIS_SLAVE.vhd#47" ];
+n3 [ shape=diamond, label="inst_data_link.gen_data_out_buff(6)&#9586;.inst_data_out_buff.rst_n_fifo", colorscheme="dark28", color="2", fontcolor="2", href="/src/module_data_link/data_out_buf.vhd#165" ];
+{ rank="source"; n1;}
+{ rank="sink";}
+v0 [ label="$226649" ];
+v1 [ label="CLK" ];
+v2 [ label="1'1" ];
+c8 [ shape=record, label="{{<p4> ARST|<p5> CLK|<p6> D}|$226951\n$adff|{<p7> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/module_data_link/data_out_buf.vhd#225"  ];
+v4 [ label="1'1" ];
+c9 [ shape=record, label="{{<p4> ARST|<p5> CLK|<p6> D}|$226156\n$adff|{<p7> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc_axis_to_custom/AXIS_SLAVE.vhd#56"  ];
+x3 [ shape=record, style=rounded, label="<s0> 6:6 - 0:0 ", color="black", fontcolor="black" ];
+x3:e -> c9:p5:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", fontcolor="black", label=""];
+n1:e -> x3:s0:w [color="black", fontcolor="black", label=""];
+c9:p7:e -> n2:w [colorscheme="dark28", color="1", fontcolor="1", label=""];
+c8:p7:e -> n3:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+n3:e -> c9:p4:w [colorscheme="dark28", color="2", fontcolor="2", label=""];
+v0:e -> c8:p4:w [color="black", fontcolor="black", label=""];
+v1:e -> c8:p5:w [color="black", fontcolor="black", label=""];
+v2:e -> c8:p6:w [color="black", fontcolor="black", label=""];
+v4:e -> c9:p6:w [color="black", fontcolor="black", label=""];
+}
