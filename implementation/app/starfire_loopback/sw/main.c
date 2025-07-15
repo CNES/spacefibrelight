@@ -38,6 +38,7 @@ uint32_t exit_code;
 
 
 //bit position for GLOBAL_REG
+#define RST_DUT_N            0x1
 #define LANE_SPY_EN_POS      0x2
 #define DATALINK_DISABLE_POS 0x4
 
@@ -71,6 +72,10 @@ int main(void)
 {	int val;
 
 	printf("INIT IP --\r\n");
+
+	printf("disable global IP reset --\r\n");
+	Xil_Out32(GLOBAL_REG,RST_DUT_N);
+
 
 	printf("reset LINK --\r\n");
 	Xil_Out32(DATALINK_PARAM_REG,DATALINK_POR_POS);
