@@ -1279,6 +1279,7 @@ lane_active_dl_i           <= enable_transm_data_from_lif;
 
 QUAD0_rxp(lane_number)     <= RX_POS;
 QUAD0_rxn(lane_number)     <= RX_NEG;
+
 TX_POS                     <= QUAD0_txp(lane_number);
 TX_NEG                     <= QUAD0_txn(lane_number);
 
