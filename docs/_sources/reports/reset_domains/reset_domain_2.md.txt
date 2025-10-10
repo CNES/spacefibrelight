@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/module_data_link/data_link_reset.vhd#73">inst_data_link.inst_data_link_reset.lane_reset_dlre_i</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_link_reset.lane_reset_dlre_i**: <linty-anchor href="//src/module_data_link/data_link_reset.vhd#92"> data_link_reset.vhd#92 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10007;|&#10004;|&#10004;|&#10007;|**111**/1245 (8.92%)|**10**/103|
+|**<linty-anchor href="/src/module_data_link/data_link_reset.vhd#73">inst_data_link.inst_data_link_reset.lane_reset_dlre_i</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_link_reset.lane_reset_dlre_i**: <linty-anchor href="//src/module_data_link/data_link_reset.vhd#92"> data_link_reset.vhd#92 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10007;|&#10004;|&#10004;|&#10007;|**111**/1246 (8.91%)|**10**/103|
 
 
 ## Instances using this reset domain

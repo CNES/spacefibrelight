@@ -2,22 +2,19 @@
 
 <br>
 
-# Instantiation - inst_data_link
+# Instantiation - gen_data_in_buff(0)\.inst_data_in_buf
 
 ## Summary
 
 | Name | Architecture | Description |
 | --- | --- | --- |
-| <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#567">inst_data_link</linty-anchor> | <linty-anchor href="/src/module_data_link/data_link.vhd#114">Behavioral</linty-anchor> | |
+| <linty-anchor href="/src/module_data_link/data_link.vhd#803">gen_data_in_buff(0)\.inst_data_in_buf</linty-anchor> | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#59">rtl</linty-anchor> | |
 
 
 ## Generics
 
-Count: 1
+Count: 0
 
-| Name | Value | Is equal to default value? | Is set? | Description |
-| --- | --- | :---: | :---: | --- |
-|<linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#569">G_VC_NUM</linty-anchor>|8|&#10004;|&#10004;|Number of virtual channel|
 
 
 <br>

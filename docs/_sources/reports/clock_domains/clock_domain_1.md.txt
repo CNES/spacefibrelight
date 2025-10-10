@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Rising | Falling | Number of flip-flops<br>using this clock domain | Number of instances<br>using this clock domain |
 | --- | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45">CLK</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**CLK**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45"> spacefibre_light_top.vhd#45 (Port)</linty-anchor>|<a href="/spacefibrelight/graphs/clock_hierarchy_graph.html"><img title="Open Clock Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Clock Hierarchy Graph"></a>|&#10004;|&#10007;|**707**/1245 (56.79%)|**38**/103|
+|**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45">CLK</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**CLK**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#45"> spacefibre_light_top.vhd#45 (Port)</linty-anchor>|<a href="/spacefibrelight/graphs/clock_hierarchy_graph.html"><img title="Open Clock Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Clock Hierarchy Graph"></a>|&#10004;|&#10007;|**707**/1246 (56.74%)|**38**/103|
 
 
 ## Instances using this clock domain

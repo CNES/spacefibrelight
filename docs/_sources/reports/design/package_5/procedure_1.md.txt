@@ -1,0 +1,25 @@
+[Back to Package Report](../package_5.md#procedures)
+
+<br>
+
+# Procedure - log_info
+
+## Summary
+
+| Name | Description |
+| --- | --- |
+|<linty-anchor href="//src/pkg_simu.vhd#39">log_info</linty-anchor>||
+
+
+## Parameters
+
+Count: 1
+
+| Name | Mode | Type | Description |
+| --- | --- | --- | --- |
+|<linty-anchor href="//src/pkg_simu.vhd#39">msg</linty-anchor>||string||
+
+
+<br>
+
+[Back to Package Report](../package_5.md#procedures)

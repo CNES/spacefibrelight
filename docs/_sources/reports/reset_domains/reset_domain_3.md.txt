@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_reset_sync_clk_from_GTY.reset_gen_rr_n**: <linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#56"> reset_gen.vhd#56 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;|**126**/1245 (10.12%)|**8**/103|
+|**<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_reset_sync_clk_from_GTY.reset_gen_rr_n**: <linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#56"> reset_gen.vhd#56 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;|**126**/1246 (10.11%)|**8**/103|
 
 
 ## Instances using this reset domain

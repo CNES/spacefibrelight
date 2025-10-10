@@ -15,20 +15,20 @@ n13 [ shape=diamond, label="inst_data_link.inst_data_out_bc_buf.ints_fifo_dc_axi
 n14 [ shape=diamond, label="inst_data_link.inst_data_out_bc_buf.rst_n_fifo", colorscheme="dark28", color="1", fontcolor="1", href="/src/module_data_link/data_out_bc_buf.vhd#118" ];
 { rank="source"; n8;}
 { rank="sink";}
-c20 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$236126\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
+c20 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$236163\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
 x0 [ shape=record, style=rounded, label="<s0> 8:8 - 0:0 ", color="black", fontcolor="black" ];
 x0:e -> c20:p16:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", fontcolor="black", label=""];
 v2 [ label="$226286" ];
-v3 [ label="$236131" ];
-c21 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$236130\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
+v3 [ label="$236167" ];
+c21 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$236166\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
 x1 [ shape=record, style=rounded, label="<s0> 8:8 - 0:0 ", color="black", fontcolor="black" ];
 x1:e -> c21:p16:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", fontcolor="black", label=""];
 v5 [ label="$226169" ];
 v6 [ label="$226168" ];
-c22 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$238507\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#199"  ];
+c22 [ shape=record, label="{{<p15> ARST|<p16> CLK|<p17> D|<p18> EN}|$238490\n$adffe|{<p19> Q}}", colorscheme="dark28", color="2", fontcolor="2" , href="/src/ip/fifo_dc/fifo_dc.vhd#199"  ];
 x4 [ shape=record, style=rounded, label="<s0> 8:8 - 0:0 ", color="black", fontcolor="black" ];
 x4:e -> c22:p16:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", fontcolor="black", label=""];
-c25 [ shape=record, label="{{<p23> A}|$236128\n$reduce_bool|{<p24> Y}}", colorscheme="dark28", color="3", fontcolor="3" ];
+c25 [ shape=record, label="{{<p23> A}|$236165\n$reduce_bool|{<p24> Y}}", colorscheme="dark28", color="3", fontcolor="3" ];
 x7 [ shape=record, style=rounded, label="<s1> 0:0 - 1:1 |<s0> 0:0 - 0:0 ", colorscheme="dark28", color="3", fontcolor="3" ];
 x7:e -> c25:p23:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, colorscheme="dark28", color="3", fontcolor="3", style="setlinewidth(3)", label=""];
 v8 [ label="RST_N" ];

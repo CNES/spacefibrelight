@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | ---: | ---: |
-|**Complex:** ****<br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_link_reset.lane_reset_dlre_i**: <linty-anchor href="//src/module_data_link/data_link_reset.vhd#92"> data_link_reset.vhd#92 (Flip-flop)</linty-anchor><br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_word_id_fsm.FRAME_ERR_DWI**: <linty-anchor href="//src/module_data_link/data_word_id_fsm.vhd#134"> data_word_id_fsm.vhd#134 (Flip-flop)</linty-anchor><br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_word_id_fsm.RXNOTHING_ACTIVE_DWI**: <linty-anchor href="//src/module_data_link/data_word_id_fsm.vhd#134"> data_word_id_fsm.vhd#134 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10007;|&#10004;|&#10007;|&#10004;|&#10004;|&#10007;|**2**/1245 (0.16%)|**1**/103|
+|**Complex:** ****<br>&nbsp;&nbsp;-&nbsp;**LANE_RESET**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#132"> spacefibre_light_top.vhd#132 (Port)</linty-anchor><br>&nbsp;&nbsp;-&nbsp;**RST_N**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#44"> spacefibre_light_top.vhd#44 (Port)</linty-anchor><br>&nbsp;&nbsp;-&nbsp;**inst_phy_plus_lane.lane_reset_dl_i**: <linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#716"> phy_plus_lane.vhd#716 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10007;|&#10004;|&#10004;|&#10007;|&#10004;|&#10007;|**3**/1246 (0.24%)|**1**/103|
 
 
 ## Instances using this reset domain
@@ -17,32 +17,30 @@
 
 | Instance | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low
 | --- | :---: | :---: | :---: | :---: |
-|TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#146">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#567">inst_data_link</linty-anchor> (<linty-anchor href="/src/module_data_link/data_link.vhd#31">data_link</linty-anchor>) > <linty-anchor href="/src/module_data_link/data_link.vhd#918">inst_data_crc_check</linty-anchor> (<linty-anchor href="/src/module_data_link/data_crc_check.vhd#32">data_crc_check</linty-anchor>)|&#10007;|&#10004;|&#10004;|&#10007;|
+|TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#146">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#556">inst_reset_sync_clk_from_GTY</linty-anchor> (<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#30">reset_gen</linty-anchor>)|&#10004;|&#10007;|&#10004;|&#10007;|
 
 
 ## Flip-flops using this reset domain
 
-**Count: 2**
+**Count: 3**
 
 ### Asynchronous usage
+
+| Count: 3 |
+| --- |
+| <linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#56">reset_gen.vhd#56</linty-anchor> |
+
+### Synchronous usage
 
 | Count: 0 |
 | --- |
 
 
-### Synchronous usage
-
-| Count: 2 |
-| --- |
-| <linty-anchor href="/src/module_data_link/data_crc_check.vhd#109">data_crc_check.vhd#109</linty-anchor> |
-| <linty-anchor href="/src/module_data_link/data_crc_check.vhd#156">data_crc_check.vhd#156</linty-anchor> |
-
 ### Active-high usage
 
-| Count: 2 |
+| Count: 3 |
 | --- |
-| <linty-anchor href="/src/module_data_link/data_crc_check.vhd#109">data_crc_check.vhd#109</linty-anchor> |
-| <linty-anchor href="/src/module_data_link/data_crc_check.vhd#156">data_crc_check.vhd#156</linty-anchor> |
+| <linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#56">reset_gen.vhd#56</linty-anchor> |
 
 ### Active-low usage
 

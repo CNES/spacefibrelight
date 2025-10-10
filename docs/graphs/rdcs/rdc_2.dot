@@ -12,7 +12,7 @@ n4 [ shape=diamond, label="inst_data_link.gen_data_in_buff(7)&#9586;.inst_data_i
 n5 [ shape=diamond, label="inst_data_link.gen_data_in_buff(7)&#9586;.inst_data_in_buf.rst_n_fifo", colorscheme="dark28", color="2", fontcolor="2", href="/src/module_data_link/data_in_buf.vhd#142" ];
 { rank="source"; n2;}
 { rank="sink";}
-c10 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D|<p8> EN}|$236077\n$adffe|{<p9> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
+c10 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D|<p8> EN}|$236050\n$adffe|{<p9> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/ip/fifo_dc/fifo_dc.vhd#440"  ];
 v0 [ label="RST_N" ];
 v1 [ label="$224434" ];
 c11 [ shape=record, label="{{<p6> ARST|<p2> CLK|<p7> D}|$224621\n$adff|{<p9> Q}}", colorscheme="dark28", color="1", fontcolor="1" , href="/src/module_data_link/data_in_buf.vhd#225"  ];

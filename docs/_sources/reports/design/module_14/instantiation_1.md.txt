@@ -2,13 +2,13 @@
 
 <br>
 
-# Instantiation - inst_data_in_bc_buf
+# Instantiation - inst_data_err_management
 
 ## Summary
 
 | Name | Architecture | Description |
 | --- | --- | --- |
-| <linty-anchor href="/src/module_data_link/data_link.vhd#750">inst_data_in_bc_buf</linty-anchor> | <linty-anchor href="/src/module_data_link/data_in_bc_buf.vhd#52">rtl</linty-anchor> | |
+| <linty-anchor href="/src/module_data_link/data_link.vhd#980">inst_data_err_management</linty-anchor> | <linty-anchor href="/src/module_data_link/data_err_management.vhd#60">Behavioral</linty-anchor> | |
 
 
 ## Generics

@@ -37,7 +37,7 @@ Count: 11
 |---|---|
 |DATA_RDY_TO_LCWD|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#42">rx_sync_fsm.vhd#42</linty-anchor>|
 |DATA_RX_TO_LCWD|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#40">rx_sync_fsm.vhd#40</linty-anchor>|
-|VALID_K_CARAC_TO_LCWD|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#41">rx_sync_fsm.vhd#41</linty-anchor>|
+|VALID_K_CHARAC_TO_LCWD|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#41">rx_sync_fsm.vhd#41</linty-anchor>|
 |data_rdy_to_lcwd_i|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#73">rx_sync_fsm.vhd#73</linty-anchor>|
 |data_rx_to_lcwd_i|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#71">rx_sync_fsm.vhd#71</linty-anchor>|
 |disparity_err|<linty-anchor href="/src/module_phy_plus_lane/rx_sync_fsm.vhd#78">rx_sync_fsm.vhd#78</linty-anchor>|

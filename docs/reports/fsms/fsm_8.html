@@ -99,7 +99,7 @@
 <td class="text-center"><p><a href="/spacefibrelight/graphs/fsm_states_8_graph.html"><img title="Open FSM Diagram" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open FSM Diagram"></a></p></td>
 <td><p>RX_NOTHING_ST</p></td>
 <td><p>Count: 5<br>RX_BROADCAST_AND_DATA_FRAME_ST<br>RX_BROADCAST_FRAME_ST<br>RX_DATA_FRAME_ST<br>RX_IDLE_FRAME_ST<br>RX_NOTHING_ST</p></td>
-<td class="text-right"><p>13</p></td>
+<td class="text-right"><p>14</p></td>
 <td class="text-right"><p>23</p></td>
 </tr>
 </tbody>
@@ -108,7 +108,7 @@
 </section>
 <section id="input-signals">
 <h2>Input Signals<a class="headerlink" href="#input-signals" title="Link to this heading"></a></h2>
-<p>Count: 13</p>
+<p>Count: 14</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -122,37 +122,40 @@
 <tr class="row-odd"><td><p>DATA_COUNTER_RX_DWI</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#61">data_word_id_fsm.vhd#61</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>LINK_RESET_DLRE</p></td>
+<tr class="row-even"><td><p>FIFO_RX_DATA_VALID_PPL</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#38">data_word_id_fsm.vhd#38</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>LINK_RESET_DLRE</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#36">data_word_id_fsm.vhd#36</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>SEQ_ERR_DSCHECK</p></td>
+<tr class="row-even"><td><p>SEQ_ERR_DSCHECK</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#58">data_word_id_fsm.vhd#58</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>bc_word_cnt</p></td>
+<tr class="row-odd"><td><p>bc_word_cnt</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#89">data_word_id_fsm.vhd#89</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>data_word_cnt</p></td>
+<tr class="row-even"><td><p>data_word_cnt</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#88">data_word_id_fsm.vhd#88</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>detected_ebf</p></td>
+<tr class="row-odd"><td><p>detected_ebf</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#95">data_word_id_fsm.vhd#95</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>detected_edf</p></td>
+<tr class="row-even"><td><p>detected_edf</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#93">data_word_id_fsm.vhd#93</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>detected_retry</p></td>
+<tr class="row-odd"><td><p>detected_retry</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#101">data_word_id_fsm.vhd#101</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>detected_rxerr_i</p></td>
+<tr class="row-even"><td><p>detected_rxerr_i</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#102">data_word_id_fsm.vhd#102</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>detected_sbf</p></td>
+<tr class="row-odd"><td><p>detected_sbf</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#94">data_word_id_fsm.vhd#94</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>detected_sdf</p></td>
+<tr class="row-even"><td><p>detected_sdf</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#92">data_word_id_fsm.vhd#92</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>detected_sif</p></td>
+<tr class="row-odd"><td><p>detected_sif</p></td>
 <td><p><linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#96">data_word_id_fsm.vhd#96</linty-anchor></p></td>
 </tr>
 </tbody>
@@ -272,7 +275,7 @@
 </tr>
 <tr class="row-odd"><td><p>RX_BROADCAST_FRAME_ST</p></td>
 <td><p>RX_NOTHING_ST</p></td>
-<td><p>CRC_ERR_DCCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#57">data_word_id_fsm.vhd#57</linty-anchor><br>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#36">data_word_id_fsm.vhd#36</linty-anchor><br>SEQ_ERR_DSCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#58">data_word_id_fsm.vhd#58</linty-anchor><br>bc_word_cnt: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#89">data_word_id_fsm.vhd#89</linty-anchor><br>detected_ebf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#95">data_word_id_fsm.vhd#95</linty-anchor><br>detected_edf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#93">data_word_id_fsm.vhd#93</linty-anchor><br>detected_retry: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#101">data_word_id_fsm.vhd#101</linty-anchor><br>detected_rxerr_i: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#102">data_word_id_fsm.vhd#102</linty-anchor><br>detected_sbf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#94">data_word_id_fsm.vhd#94</linty-anchor><br>detected_sdf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#92">data_word_id_fsm.vhd#92</linty-anchor><br>detected_sif: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#96">data_word_id_fsm.vhd#96</linty-anchor></p></td>
+<td><p>CRC_ERR_DCCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#57">data_word_id_fsm.vhd#57</linty-anchor><br>FIFO_RX_DATA_VALID_PPL: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#38">data_word_id_fsm.vhd#38</linty-anchor><br>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#36">data_word_id_fsm.vhd#36</linty-anchor><br>SEQ_ERR_DSCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#58">data_word_id_fsm.vhd#58</linty-anchor><br>bc_word_cnt: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#89">data_word_id_fsm.vhd#89</linty-anchor><br>detected_ebf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#95">data_word_id_fsm.vhd#95</linty-anchor><br>detected_edf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#93">data_word_id_fsm.vhd#93</linty-anchor><br>detected_retry: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#101">data_word_id_fsm.vhd#101</linty-anchor><br>detected_rxerr_i: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#102">data_word_id_fsm.vhd#102</linty-anchor><br>detected_sbf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#94">data_word_id_fsm.vhd#94</linty-anchor><br>detected_sdf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#92">data_word_id_fsm.vhd#92</linty-anchor><br>detected_sif: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#96">data_word_id_fsm.vhd#96</linty-anchor></p></td>
 </tr>
 <tr class="row-even"><td><p>RX_BROADCAST_FRAME_ST</p></td>
 <td><p>RX_NOTHING_ST</p></td>
@@ -288,7 +291,7 @@
 </tr>
 <tr class="row-odd"><td><p>RX_BROADCAST_FRAME_ST</p></td>
 <td><p>RX_BROADCAST_FRAME_ST</p></td>
-<td><p>CRC_ERR_DCCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#57">data_word_id_fsm.vhd#57</linty-anchor><br>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#36">data_word_id_fsm.vhd#36</linty-anchor><br>SEQ_ERR_DSCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#58">data_word_id_fsm.vhd#58</linty-anchor><br>bc_word_cnt: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#89">data_word_id_fsm.vhd#89</linty-anchor><br>detected_ebf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#95">data_word_id_fsm.vhd#95</linty-anchor><br>detected_edf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#93">data_word_id_fsm.vhd#93</linty-anchor><br>detected_retry: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#101">data_word_id_fsm.vhd#101</linty-anchor><br>detected_rxerr_i: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#102">data_word_id_fsm.vhd#102</linty-anchor><br>detected_sbf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#94">data_word_id_fsm.vhd#94</linty-anchor><br>detected_sdf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#92">data_word_id_fsm.vhd#92</linty-anchor><br>detected_sif: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#96">data_word_id_fsm.vhd#96</linty-anchor></p></td>
+<td><p>CRC_ERR_DCCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#57">data_word_id_fsm.vhd#57</linty-anchor><br>FIFO_RX_DATA_VALID_PPL: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#38">data_word_id_fsm.vhd#38</linty-anchor><br>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#36">data_word_id_fsm.vhd#36</linty-anchor><br>SEQ_ERR_DSCHECK: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#58">data_word_id_fsm.vhd#58</linty-anchor><br>bc_word_cnt: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#89">data_word_id_fsm.vhd#89</linty-anchor><br>detected_ebf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#95">data_word_id_fsm.vhd#95</linty-anchor><br>detected_edf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#93">data_word_id_fsm.vhd#93</linty-anchor><br>detected_retry: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#101">data_word_id_fsm.vhd#101</linty-anchor><br>detected_rxerr_i: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#102">data_word_id_fsm.vhd#102</linty-anchor><br>detected_sbf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#94">data_word_id_fsm.vhd#94</linty-anchor><br>detected_sdf: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#92">data_word_id_fsm.vhd#92</linty-anchor><br>detected_sif: <linty-anchor href="/src/module_data_link/data_word_id_fsm.vhd#96">data_word_id_fsm.vhd#96</linty-anchor></p></td>
 </tr>
 <tr class="row-even"><td><p>RX_IDLE_FRAME_ST</p></td>
 <td><p>RX_NOTHING_ST</p></td>
@@ -378,7 +381,7 @@
 
   <div role="contentinfo">
   <p>spacefibrelight</p>
-  <p>Generated July 15, 2025 at 11:04:25 by <a href="https://linty-services.com">Linty Services</a></p>
+  <p>Generated October 10, 2025 at 06:33:58 by <a href="https://linty-services.com">Linty Services</a></p>
   <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
 
   </div>

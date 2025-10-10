@@ -2,113 +2,67 @@
 
 <br>
 
-# Entity - mib_data_link
+# Entity - lane_init_fsm
 
 ## Summary
 
 | Name | Location | Description |
 | --- | --- | --- |
-|mib_data_link|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#29">mib_data_link.vhd#29</linty-anchor>||
+|lane_init_fsm|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#32">lane_init_fsm.vhd#32</linty-anchor>||
 ## Instantiations
 
 Count: 1
 
 | Name | Location | Description | Details |
 | --- | --- | --- | :---: |
-| inst_mib_data_link | <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#649">spacefibre_light_top.vhd#649</linty-anchor> |  | [<img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details">](module_28/instantiation_1.md) |
+| inst_lane_init_fsm | <linty-anchor href="/src/module_phy_plus_lane/phy_plus_lane.vhd#669">phy_plus_lane.vhd#669</linty-anchor> | Instance of lane_init_fsm module | [<img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details">](module_28/instantiation_1.md) |
 
 
 ## Generics
 
-Count: 1
+Count: 0
 
-| Name | Type | Default value | Description |
-| --- | --- | --- | --- |
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#31">G_VC_NUM</linty-anchor>|integer|8|Number of virtual channel|
 ## Ports
 
-Count: 78
+Count: 35
 
 | Name | Mode | Type | Description |
 | --- | --- | --- | --- |
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#35">INTERFACE_RESET</linty-anchor>|in|std_logic|Reset the link and all configuration register of the Data Link layer from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#36">LINK_RESET</linty-anchor>|in|std_logic|Reset the link from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#37">NACK_RST_EN</linty-anchor>|in|std_logic|Enable automatic link reset on NACK reception from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#38">NACK_RST_MODE</linty-anchor>|in|std_logic|Up for instant link reset on NACK reception, down for link reset at the end of the current received frame on NACK reception from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#39">PAUSE_VC</linty-anchor>|in|std_logic_vector ( G_VC_NUM downto 0 )|Pause the corresponding virtual channel after the end of current transmission from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#40">CONTINUOUS_VC</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Enable the corresponding virtual channel continuous mode from the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#42">INTERFACE_RESET_DL</linty-anchor>|out|std_logic|Reset the link and all configuration register of the Data Link layer to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#43">LINK_RESET_DL</linty-anchor>|out|std_logic|Reset the link to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#44">NACK_RST_EN_DL</linty-anchor>|out|std_logic|Enable automatic link reset on NACK reception to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#45">NACK_RST_MODE_DL</linty-anchor>|out|std_logic|Up for instant link reset on NACK reception, down for link reset at the end of current received frame on NACK reception to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#46">PAUSE_VC_DL</linty-anchor>|out|std_logic_vector ( G_VC_NUM downto 0 )|Pause the corresponding virtual channel after the end of current transmission to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#47">CONTINUOUS_VC_DL</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Enable the corresponding virtual channel continuous mode to DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#49">SEQ_NUMBER_TX_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|SEQ_NUMBER in transmission from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#50">SEQ_NUMBER_RX_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|SEQ_NUMBER in reception from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#51">CREDIT_VC_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates if each corresponding far-end input buffer has credit from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#52">INPUT_BUF_OVF_VC_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates input buffer overflow from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#53">FCT_CREDIT_OVERFLOW_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates overflow of each corresponding input buffer from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#54">CRC_LONG_ERROR_DL</linty-anchor>|in|std_logic|CRC long error from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#55">CRC_SHORT_ERROR_DL</linty-anchor>|in|std_logic|CRC short error from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#56">FRAME_ERROR_DL</linty-anchor>|in|std_logic|Frame error from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#57">SEQUENCE_ERROR_DL</linty-anchor>|in|std_logic|Sequence error from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#58">FAR_END_LINK_RESET_DL</linty-anchor>|in|std_logic|Far-end link reset status from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#59">FRAME_FINISHED_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM downto 0 )|Indicates that corresponding channel finished emitting a frame from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#60">FRAME_TX_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM downto 0 )|Indicates that corresponding channel is emitting a frame from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#61">DATA_COUNTER_TX_DL</linty-anchor>|in|std_logic_vector ( 6 downto 0 )|Indicate the number of data transmitted in last frame emitted from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#62">DATA_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 6 downto 0 )|Indicate the number of data received in last frame received from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#63">ACK_COUNTER_TX_DL</linty-anchor>|in|std_logic_vector ( 2 downto 0 )|ACK counter TX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#64">NACK_COUNTER_TX_DL</linty-anchor>|in|std_logic_vector ( 2 downto 0 )|NACK counter TX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#65">FCT_COUNTER_TX_DL</linty-anchor>|in|std_logic_vector ( 3 downto 0 )|FCT counter TX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#66">ACK_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 2 downto 0 )|ACK counter RX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#67">NACK_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 2 downto 0 )|NACK counter RX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#68">FCT_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 3 downto 0 )|FCT counter RX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#69">FULL_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 1 downto 0 )|FULL counter RX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#70">RETRY_COUNTER_RX_DL</linty-anchor>|in|std_logic_vector ( 1 downto 0 )|RETRY counter RX from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#71">CURRENT_TIME_SLOT_DL</linty-anchor>|in|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Current time slot from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#72">RESET_PARAM_DL</linty-anchor>|in|std_logic|Reset configuration parameters control from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#73">LINK_RST_ASSERTED_DL</linty-anchor>|in|std_logic|Link has been reseted from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#74">NACK_SEQ_NUM_DL</linty-anchor>|in|std_logic_vector ( 7 downto 0 )|NACK Seq_num received from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#75">ACK_SEQ_NUM_DL</linty-anchor>|in|std_logic_vector ( 7 downto 0 )|ACK Seq_num received from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#76">DATA_PULSE_RX_DL</linty-anchor>|in|std_logic|Data received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#77">ACK_PULSE_RX_DL</linty-anchor>|in|std_logic|ACK received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#78">NACK_PULSE_RX_DL</linty-anchor>|in|std_logic|NACK received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#79">FCT_PULSE_RX_DL</linty-anchor>|in|std_logic|FCT received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#80">FULL_PULSE_RX_DL</linty-anchor>|in|std_logic|FULL received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#81">RETRY_PULSE_RX_DL</linty-anchor>|in|std_logic|RETRY received pulse signal from DL|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#83">SEQ_NUMBER_TX</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|SEQ_NUMBER in transmission to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#84">SEQ_NUMBER_RX</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|SEQ_NUMBER in reception to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#85">CREDIT_VC</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates if each corresponding far-end input buffer has credit to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#86">INPUT_BUF_OVF_VC</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates input buffer overflow to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#87">FCT_CREDIT_OVERFLOW</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Indicates overflow of each corresponding input buffer to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#88">CRC_LONG_ERROR</linty-anchor>|out|std_logic|CRC long error to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#89">CRC_SHORT_ERROR</linty-anchor>|out|std_logic|CRC short error to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#90">FRAME_ERROR</linty-anchor>|out|std_logic|Frame error to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#91">SEQUENCE_ERROR</linty-anchor>|out|std_logic|Sequence error to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#92">FAR_END_LINK_RESET</linty-anchor>|out|std_logic|Far-end link reset status to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#93">FRAME_FINISHED</linty-anchor>|out|std_logic_vector ( 8 downto 0 )|Indicates that corresponding channel finished emitting a frame to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#94">FRAME_TX</linty-anchor>|out|std_logic_vector ( 8 downto 0 )|Indicates that corresponding channel is emitting a frame to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#95">DATA_COUNTER_TX</linty-anchor>|out|std_logic_vector ( 6 downto 0 )|Indicate the number of data transmitted in last frame emitted to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#96">DATA_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 6 downto 0 )|Indicate the number of data received in last frame received to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#97">ACK_COUNTER_TX</linty-anchor>|out|std_logic_vector ( 2 downto 0 )|ACK counter TX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#98">NACK_COUNTER_TX</linty-anchor>|out|std_logic_vector ( 2 downto 0 )|NACK counter TX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#99">FCT_COUNTER_TX</linty-anchor>|out|std_logic_vector ( 3 downto 0 )|FCT counter TX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#100">ACK_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 2 downto 0 )|ACK counter RX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#101">NACK_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 2 downto 0 )|NACK counter RX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#102">FCT_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 3 downto 0 )|FCT counter RX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#103">FULL_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 1 downto 0 )|FULL counter RX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#104">RETRY_COUNTER_RX</linty-anchor>|out|std_logic_vector ( 1 downto 0 )|RETRY counter RX to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#105">CURRENT_TIME_SLOT</linty-anchor>|out|std_logic_vector ( G_VC_NUM - 1 downto 0 )|Current time slot to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#106">RESET_PARAM</linty-anchor>|out|std_logic|Reset configuration parameters control to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#107">LINK_RST_ASSERTED</linty-anchor>|out|std_logic|Link has been reseted to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#108">NACK_SEQ_NUM</linty-anchor>|out|std_logic_vector ( 7 downto 0 )|NACK Seq_num received to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#109">ACK_SEQ_NUM</linty-anchor>|out|std_logic_vector ( 7 downto 0 )|ACK Seq_num received to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#110">DATA_PULSE_RX</linty-anchor>|out|std_logic|Data received pulse signal to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#111">ACK_PULSE_RX</linty-anchor>|out|std_logic|ACK received pulse signal to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#112">NACK_PULSE_RX</linty-anchor>|out|std_logic|NACK received pulse signal to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#113">FCT_PULSE_RX</linty-anchor>|out|std_logic|FCT received pulse signal to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#114">FULL_PULSE_RX</linty-anchor>|out|std_logic|FULL received pulse signal to the TOP|
-|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#115">RETRY_PULSE_RX</linty-anchor>|out|std_logic|RETRY received pulse signal to the TOP|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#34">RST_N</linty-anchor>|in|std_logic|global reset|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#35">CLK</linty-anchor>|in|std_logic|Clock generated by GTY IP|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#37">LANE_RESET_DL</linty-anchor>|in|std_logic|Lane reset command from Data-Link Layer.|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#40">NO_SIGNAL</linty-anchor>|in|std_logic|Flag no signal are received|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#41">RX_NEW_WORD</linty-anchor>|in|std_logic|Flag new word has been received|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#42">DETECTED_INIT1</linty-anchor>|in|std_logic|Flag INIT1 control word rxed|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#43">DETECTED_INIT2</linty-anchor>|in|std_logic|Flag INIT2 control word rxed|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#44">DETECTED_INIT3</linty-anchor>|in|std_logic|Flag INIT3 control word rxed|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#45">DETECTED_INV_INIT1</linty-anchor>|in|std_logic|Flag INV_INIT1 control word rxed|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#46">DETECTED_INV_INIT2</linty-anchor>|in|std_logic|Flag INV_INIT2 control word rxed|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#47">DETECTED_RXERR_WORD</linty-anchor>|in|std_logic|Flag RXERR detected|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#48">DETECTED_LOSS_SIGNAL</linty-anchor>|in|std_logic|Flag LOSS_SINGAL control word detected|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#49">DETECTED_STANDBY</linty-anchor>|in|std_logic|Flag STANDBY control word detected|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#50">COMMA_K287_RXED</linty-anchor>|in|std_logic|Flag Comma K28.7 has been received|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#51">RECEIVER_DISABLED</linty-anchor>|out|std_logic|flag to enabled RX function of HSSL IP|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#52">CDR</linty-anchor>|out|std_logic|Flag to enabled CDR function of HSSL IP|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#53">SEND_RXERR</linty-anchor>|out|std_logic|Flag send RXERR control word to Data-Link layer when FSM leave ACTIVE_ST|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#54">INVERT_RX_BITS</linty-anchor>|out|std_logic|Flag to Invert rx bit received|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#55">NO_SIGNAL_DETECTION_ENABLED</linty-anchor>|out|std_logic|Flag to enable the no signal function|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#58">STANDBY_SIGNAL_X32</linty-anchor>|in|std_logic|Flag STANDBY control word has been send x32|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#59">LOST_SIGNAL_X32</linty-anchor>|in|std_logic|Flag LOST_SIGNAL control word has been send x32|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#60">TRANSMITTER_DISABLED</linty-anchor>|out|std_logic|flag to enabled TX fonction of HSSL IP|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#61">SEND_INIT1_CTRL_WORD</linty-anchor>|out|std_logic|Flag to send INIT1 control word following by 64 pseudo-random data words|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#62">SEND_INIT2_CTRL_WORD</linty-anchor>|out|std_logic|Flag to send control word following by 64 pseudo-random data words|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#63">SEND_INIT3_CTRL_WORD</linty-anchor>|out|std_logic|Flag to send control word following by 64 pseudo-random data words|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#64">ENABLE_TRANSM_DATA</linty-anchor>|out|std_logic|Flag to enable to send data|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#65">SEND_32_STANDBY_CTRL_WORDS</linty-anchor>|out|std_logic|Flag to send STANDBY control word x32|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#66">SEND_32_LOSS_SIGNAL_CTRL_WORDS</linty-anchor>|out|std_logic|Flag to send LOSS_SIGNAL control word x32|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#67">LOST_CAUSE</linty-anchor>|out|std_logic_vector ( 01 downto 00 )|Flag to indicate the reason of the LOST_SIGNAL|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#70">LANE_START</linty-anchor>|in|std_logic|Asserts or de-asserts LaneStart for the lane|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#71">AUTOSTART</linty-anchor>|in|std_logic|Asserts or de-asserts AutoStart for the lane|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#72">LANE_RESET</linty-anchor>|in|std_logic|Asserts or de-asserts LaneReset for the lane|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#73">LANE_STATE</linty-anchor>|out|std_logic_vector ( 03 downto 00 )|Indicates the current state of the Lane Initialization state machine in a lane|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#74">RX_ERROR_CNT</linty-anchor>|out|std_logic_vector ( 07 downto 00 )|Counter of error detected on the RX link|
+|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#75">RX_ERROR_OVF</linty-anchor>|out|std_logic|Overflow flag of the RX_ERROR_CNT|
 
 
 <br>

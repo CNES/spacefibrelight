@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/module_data_link/data_in_bc_buf.vhd#114">inst_data_link.inst_data_in_bc_buf.rst_n_fifo</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_in_bc_buf.rst_n_fifo**: <linty-anchor href="//src/module_data_link/data_in_bc_buf.vhd#158"> data_in_bc_buf.vhd#158 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;|**29**/1245 (2.33%)|**2**/103|
+|**<linty-anchor href="/src/module_data_link/data_in_bc_buf.vhd#114">inst_data_link.inst_data_in_bc_buf.rst_n_fifo</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_data_link.inst_data_in_bc_buf.rst_n_fifo**: <linty-anchor href="//src/module_data_link/data_in_bc_buf.vhd#158"> data_in_bc_buf.vhd#158 (Flip-flop)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;|**29**/1246 (2.33%)|**2**/103|
 
 
 ## Instances using this reset domain

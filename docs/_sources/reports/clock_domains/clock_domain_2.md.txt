@@ -8,7 +8,7 @@
 
 | Name: Origin | Graph | Rising | Falling | Number of flip-flops<br>using this clock domain | Number of instances<br>using this clock domain |
 | --- | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/module_phy_plus_lane/phy_plus_lane.vhd#651">inst_phy_plus_lane.clk_tx</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**O**: <linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#991"> phy_plus_lane.vhd#991 (Blackbox port: O)</linty-anchor>|<a href="/spacefibrelight/graphs/clock_hierarchy_graph.html"><img title="Open Clock Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Clock Hierarchy Graph"></a>|&#10004;|&#10007;|**129**/1245 (10.36%)|**11**/103|
+|**<linty-anchor href="/src/module_phy_plus_lane/phy_plus_lane.vhd#651">inst_phy_plus_lane.clk_tx</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**O**: <linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#991"> phy_plus_lane.vhd#991 (Blackbox port: O)</linty-anchor>|<a href="/spacefibrelight/graphs/clock_hierarchy_graph.html"><img title="Open Clock Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Clock Hierarchy Graph"></a>|&#10004;|&#10007;|**129**/1246 (10.35%)|**11**/103|
 
 
 ## Instances using this clock domain

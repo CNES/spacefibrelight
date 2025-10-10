@@ -2,13 +2,13 @@
 
 <br>
 
-# Instantiation - inst_parallel_loopback
+# Instantiation - inst_mux_tx
 
 ## Summary
 
 | Name | Architecture | Description |
 | --- | --- | --- |
-| <linty-anchor href="/src/module_phy_plus_lane/phy_plus_lane.vhd#834">inst_parallel_loopback</linty-anchor> | <linty-anchor href="/src/module_phy_plus_lane/parallel_loopback.vhd#55">rtl</linty-anchor> | |
+| <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#750">inst_mux_tx</linty-anchor> | <linty-anchor href="/src/ip_spacefibre_light_top/mux_tx.vhd#62">rtl</linty-anchor> | |
 
 
 ## Generics
