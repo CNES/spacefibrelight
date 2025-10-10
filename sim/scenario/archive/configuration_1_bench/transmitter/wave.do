@@ -419,7 +419,7 @@ add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_
 add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/DATA_RDY_FROM_RSF
 add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/WAIT_SKIP_DATA
 add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/DATA_TX_TO_LCWD
-add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/VALID_K_CARAC_TO_LCWD
+add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/VALID_K_CHARAC_TO_LCWD
 add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/DATA_RDY_TO_LCWD
 add wave -noupdate -group {Parallele loopback} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_parallel_loopback/PARALLEL_LOOPBACK_EN
 add wave -noupdate -group {Insert SKIP} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_skip_insertion/RST_N
@@ -437,10 +437,10 @@ add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/CLK
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/LANE_RESET_DL
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/DATA_RX_TO_LCWD
-add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/VALID_K_CARAC_TO_LCWD
+add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/VALID_K_CHARAC_TO_LCWD
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/DATA_RDY_TO_LCWD
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/DATA_RX_FROM_IP
-add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/VALID_K_CARAC_FROM_IP
+add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/VALID_K_CHARAC_FROM_IP
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/DATA_RDY_FROM_IP
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/INVALID_CHAR_FROM_IP
 add wave -noupdate -group {RX synchro FSM} /configuration_1_bench/I_DUT_PHY_LANE/inst_phy_plus_lane/inst_rx_sync_fsm/DISPARITY_ERR_FROM_IP

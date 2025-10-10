@@ -48,6 +48,8 @@ except ImportError as e:
 #Global variable of test success or failure
 test_failed = 0
 
+target = os.environ.get("HARDWARE_TARGET")
+
 def clean_dir(path):
     """Suppress all files of a directory pointed by path"""
     folder = path
@@ -57,7 +59,15 @@ def clean_dir(path):
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         os.unlink(file_path)
-        
+
+async def send_idle_ctrl_word(tb, number_of_words):
+    for x in range(number_of_words):
+        await tb.spacefibre_driver.write_to_Rx("11111100", delay = 0, k_encoding = 1)
+        await tb.spacefibre_driver.write_to_Rx("11001110", delay = 0, k_encoding = 0)
+        await tb.spacefibre_driver.write_to_Rx("11001111", delay = 0, k_encoding = 0)
+        await tb.spacefibre_driver.write_to_Rx("11001111", delay = 0, k_encoding = 0)
+
+
 async def init_to_started(tb):
     """
     Sets the DUT Lane initialisation FSM to Started state.
@@ -73,7 +83,7 @@ async def init_to_started(tb):
 
     #Wait end of phy reset
     tb.logger.info("sim_time %d ns: Wait PHY reset completion", get_sim_time(units = 'ns') )
-    await RisingEdge(tb.dut.spacefibre_instance.inst_phy_plus_lane.RST_TX_DONE)
+    await RisingEdge(tb.dut.spacefibre_instance.gen_inst_phy_plus_lane.inst_phy_plus_lane.RST_TX_DONE)
     tb.logger.info("sim_time %d ns: Reset PHY completed", get_sim_time(units = 'ns') )
 
     #Wait to go to Disabled
@@ -191,6 +201,7 @@ async def cocotb_run(dut):
 
     #Specific variable for the scenario
     global test_failed 
+    global target
 
 
     ##########################################################################
@@ -216,6 +227,7 @@ async def cocotb_run(dut):
 
     #Incremental data generation
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -239,13 +251,21 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_paralbfrominit_data_1_frame", number_of_word = 256))
     
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
+
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+    
+    await tempo_idle
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -256,6 +276,7 @@ async def cocotb_run(dut):
     
     #PRBS data generation
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -279,16 +300,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame_1.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2A_00_00_00))
     
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
+
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+    
+    await tempo_idle
 
     if error_cnt != "00000000":
         step_1_failed = 1
@@ -296,6 +325,8 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.2 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
     
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -319,6 +350,7 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame_2.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
@@ -326,10 +358,18 @@ async def cocotb_run(dut):
     
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
+
     
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -338,6 +378,8 @@ async def cocotb_run(dut):
         tb.logger.info("simulation time %d ns : step 1.3 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
 
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -361,16 +403,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame_3.dat",
                                                                     frame_number = 0x2,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2C_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame", number_of_word = 64*0x2))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
     
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -378,6 +428,8 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.4 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -401,16 +453,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame_4.dat",
                                                                     frame_number = 0x1,
                                                                     frame_size = 0x44,
                                                                     seed = 0x2D_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfrominit_data_0x1F_frame", number_of_word = 0x11*0x1))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
     
     if error_cnt != "00000000":
         step_1_failed = 1
@@ -422,7 +482,7 @@ async def cocotb_run(dut):
     #Without loopback in Active
     ###########################
 
-   
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 30))
     Data_read_lane_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  Parallele loopback
     await tb.masters[0].write_data(Data_read_lane_config_parameters)
 
@@ -452,13 +512,21 @@ async def cocotb_run(dut):
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
     # stimulus_tx = cocotb.start_soon(tb.spacefibre_loopback.loopback(((255+16384)*4)))
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_noparalb_data_1_frame", number_of_word = 256))
     
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
+
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+    
+    await tempo_idle
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -468,6 +536,7 @@ async def cocotb_run(dut):
 
     #PRBS data generation
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -491,16 +560,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame", number_of_word = 64*0x1F))
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame_1.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2A_00_00_00))
     
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
+
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+    
+    await tempo_idle
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -508,6 +585,9 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.7 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -531,6 +611,7 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame_2.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
@@ -538,10 +619,17 @@ async def cocotb_run(dut):
     
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame", number_of_word = 64*0x1F))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -549,6 +637,8 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.8 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -572,17 +662,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame_3.dat",
                                                                     frame_number = 0x2,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2C_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame", number_of_word = 64*0x02))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
+    await tempo_idle
     
-    await Combine(*[stimulus_tx, log_rx])
     
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -590,6 +687,8 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.9 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -613,16 +712,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame_4.dat",
                                                                     frame_number = 0x1,
                                                                     frame_size = 0x44,
                                                                     seed = 0x2D_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_noparalb_data_0x1F_frame", number_of_word = 0x11*0x1))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
     
     if error_cnt != "00000000":
         step_1_failed = 1
@@ -634,6 +741,7 @@ async def cocotb_run(dut):
     #With loopback from Active
     ###########################
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 30))
     Data_read_lane_config_parameters.data = bytearray([0x09,0x00,0x00,0x00]) # Enable  Parallele loopback
     await tb.masters[0].write_data(Data_read_lane_config_parameters)
 
@@ -662,13 +770,21 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_paralbfromactive_data_1_frame", number_of_word = 256))
+    
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
     
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -678,6 +794,7 @@ async def cocotb_run(dut):
 
     #PRBS data generation
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -701,16 +818,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame_1.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2A_00_00_00))
     
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
 
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -718,6 +843,7 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.12 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -741,6 +867,7 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame_2.dat",
                                                                     frame_number = 0x1F,
                                                                     frame_size = 0x100,
@@ -748,10 +875,17 @@ async def cocotb_run(dut):
     
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
     
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -759,6 +893,7 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.13 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -782,16 +917,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame_3.dat",
                                                                     frame_number = 0x2,
                                                                     frame_size = 0x100,
                                                                     seed = 0x2C_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame", number_of_word = 64*0x2))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await tempo_idle
+    
     
     if error_cnt != "00000000":
         step_1_failed = 1 
@@ -799,6 +942,8 @@ async def cocotb_run(dut):
     else:
         tb.logger.info("simulation time %d ns : step 1.14 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
+
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Configure Lane_Generator
     Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
     gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
@@ -822,16 +967,24 @@ async def cocotb_run(dut):
     await tb.masters[2].write_data(Data_lane_ana_control)
     Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
     await tb.masters[1].write_data(Data_lane_gen_control)
+    await tempo_idle
     stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame_4.dat",
                                                                     frame_number = 0x1,
                                                                     frame_size = 0x44,
                                                                     seed = 0x2D_00_00_00))
     log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_paralbfromactive_data_0x1F_frame", number_of_word = 0x11*0x1))
         
+    await stimulus_tx
+    
+    tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+    
+    await log_rx
+    
+
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+    
+    await tempo_idle
     
     if error_cnt != "00000000":
         step_1_failed = 1
@@ -850,656 +1003,839 @@ async def cocotb_run(dut):
     Data_read_lane_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  Parallele loopback
     await tb.masters[0].write_data(Data_read_lane_config_parameters)
 
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
-    #####        Step 2: Check phy layer near-end serial loopback        #####
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
 
-    await tb.reset_lane_only()
-    step_2_failed = 0
-    #Sets DUT lane initialisation FSM to Active with parallel loopback enabled 
-    await init_to_started(tb)
-    
-    ###########################
-    #With loopback during init
-    ###########################
-    
-    Data_read_phy_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  near-end loopback
-    await tb.masters[0].write_data(Data_read_phy_config_parameters)
-    await wait_for_started_to_active(tb)
 
-    #Incremental data generation
 
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
 
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
 
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
 
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
 
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nearendlbfrominit_data_1_frame", number_of_word = 256))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
 
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.1 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.1 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
-    #PRBS data generation
 
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
 
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
 
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
 
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
 
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_1.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2A_00_00_00))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
 
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.2 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.2 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
 
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
 
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
 
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x01,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
 
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_2.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2B_00_00_00))
-    
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if target == "VERSAL" : 
+        ##########################################################################
+        ##########################################################################
+        ##########################################################################
+        #####        Step 2: Check phy layer near-end serial loopback        #####
+        ##########################################################################
+        ##########################################################################
+        ##########################################################################
+
+        await tb.reset_lane_only()
+        step_2_failed = 0
+        #Sets DUT lane initialisation FSM to Active with parallel loopback enabled 
+        await init_to_started(tb)
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.3 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.3 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x02])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_3.dat",
-                                                                    frame_number = 0x2,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2C_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x2))
+        ###########################
+        #With loopback during init
+        ###########################
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
+        Data_read_phy_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  near-end loopback
+        await tb.masters[0].write_data(Data_read_phy_config_parameters)
+        await wait_for_started_to_active(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.4 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.4 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        #Incremental data generation
 
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
 
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
 
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
 
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x03])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
 
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_4.dat",
-                                                                    frame_number = 0x1,
-                                                                    frame_size = 0x44,
-                                                                    seed = 0x2D_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 0x11*0x1))
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nearendlbfrominit_data_1_frame", number_of_word = 256))
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+        await stimulus_tx
     
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.5 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.5 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-
-    ###########################
-    #Without loopback in Active
-    ###########################
-
-    Data_read_phy_config_parameters.data = bytearray([0x00,0x00,0x00,0x00]) # Disnable  near-end loopback
-    await tb.masters[0].write_data(Data_read_phy_config_parameters)
-
-    #Incremental data generation
-
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x01,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nonearendlb_data_1_frame", number_of_word = 256))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.6 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.6 result: Pass\n\n\n\n", get_sim_time(units = "ns")) 
-    
-    #PRBS data generation
-
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2A])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x1F))
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_1.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2A_00_00_00))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.7 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.7 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2B])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_2.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2B_00_00_00))
-    
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x1F))
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.8 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.8 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2C])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_3.dat",
-                                                                    frame_number = 0x2,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2C_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x02))
+        await log_rx
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.9 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.9 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2D])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_4.dat",
-                                                                    frame_number = 0x1,
-                                                                    frame_size = 0x44,
-                                                                    seed = 0x2D_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 0x11*0x1))
+        await tempo_idle
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.10 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.10 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    ###########################
-    #With loopback from Active
-    ###########################
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.1 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.1 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
-    Data_read_phy_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  near-end loopback
-    await tb.masters[0].write_data(Data_read_phy_config_parameters)
+        #PRBS data generation
 
-    #Incremental data generation
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
 
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
 
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
 
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
 
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nearendlbfromactive_data_1_frame", number_of_word = 256))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.11 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.11 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #PRBS data generation
-
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_1.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2A_00_00_00))
-    
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.12 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.12 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x01,0x00,0x00,0x00])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_2.dat",
-                                                                    frame_number = 0x1F,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2B_00_00_00))
-    
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_1.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2A_00_00_00))
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
+        await stimulus_tx
     
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.13 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.13 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-    
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x02])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_3.dat",
-                                                                    frame_number = 0x2,
-                                                                    frame_size = 0x100,
-                                                                    seed = 0x2C_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x2))
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
-
-    await Combine(*[stimulus_tx, log_rx])
-    
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.14 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.14 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
-
-    #Configure Lane_Generator
-    Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
-
-    #Configure Lane_Analizer
-    Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
-    ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
-    await Combine(gen_config, ana_config)
-
-    #Seed of Lane_Generator
-    Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
-    gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
-
-    #Seed of Lane_Analyzer
-    Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x03])
-    ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
-    await Combine(gen_seed, ana_seed)
-
-    #Start Test
-    Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[2].write_data(Data_lane_ana_control)
-    Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
-    await tb.masters[1].write_data(Data_lane_gen_control)
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_4.dat",
-                                                                    frame_number = 0x1,
-                                                                    frame_size = 0x44,
-                                                                    seed = 0x2D_00_00_00))
-    log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 0x11*0x1))
+        await log_rx
         
-    #Pull until Test End
-    error_cnt = await wait_end_test(tb)
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+        await tempo_idle
+        
+
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.2 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.2 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+        
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x01,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_2.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2B_00_00_00))
+        
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x1F))
+            
+        await stimulus_tx
     
-    if error_cnt != "00000000":
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.15 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
-    else:
-        tb.logger.info("simulation time %d ns : step 2.15 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.3 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.3 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x02])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_3.dat",
+                                                                        frame_number = 0x2,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2C_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 64*0x2))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.4 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.4 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+
+        
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x03])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame_4.dat",
+                                                                        frame_number = 0x1,
+                                                                        frame_size = 0x44,
+                                                                        seed = 0x2D_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfrominit_data_0x1F_frame", number_of_word = 0x11*0x1))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+        
+        await tempo_idle
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.5 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.5 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+
+        ###########################
+        #Without loopback in Active
+        ###########################
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 30))
+        Data_read_phy_config_parameters.data = bytearray([0x00,0x00,0x00,0x00]) # Disnable  near-end loopback
+        await tb.masters[0].write_data(Data_read_phy_config_parameters)
+
+        #Incremental data generation
+
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x01,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nonearendlb_data_1_frame", number_of_word = 256))
+        
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+        
+        await tempo_idle
+
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.6 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.6 result: Pass\n\n\n\n", get_sim_time(units = "ns")) 
+        
+        #PRBS data generation
+
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2A])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x1F))
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_1.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2A_00_00_00))
+        
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.7 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.7 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2B])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_2.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2B_00_00_00))
+        
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x1F))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+        
+        await tempo_idle
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.8 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.8 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2C])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_3.dat",
+                                                                        frame_number = 0x2,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2C_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 64*0x02))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+        
+
+        await tempo_idle
+        
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.9 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.9 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+
+        
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x2D])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame_4.dat",
+                                                                        frame_number = 0x1,
+                                                                        frame_size = 0x44,
+                                                                        seed = 0x2D_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nonearendlb_data_0x1F_frame", number_of_word = 0x11*0x1))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        
+        await tempo_idle
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.10 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.10 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        ###########################
+        #With loopback from Active
+        ###########################
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 30))
+        Data_read_phy_config_parameters.data = bytearray([0x01,0x00,0x00,0x00]) # Enable  near-end loopback
+        await tb.masters[0].write_data(Data_read_phy_config_parameters)
+
+        #Incremental data generation
+
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x84,0x20,0x00,0x00])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/255_incremental_data_1_frame.dat", file_format = 16))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/255_incremental_nearendlbfromactive_data_1_frame", number_of_word = 256))
+        
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.11 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.11 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+        #PRBS data generation
+
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_1.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2A_00_00_00))
+        
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.12 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.12 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+        
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x9F,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x01,0x00,0x00,0x00])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x01,0x00,0x00,0x00])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_2.dat",
+                                                                        frame_number = 0x1F,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2B_00_00_00))
+        
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x1F))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.13 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.13 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+        
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x82,0x20,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x02])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x02])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_3.dat",
+                                                                        frame_number = 0x2,
+                                                                        frame_size = 0x100,
+                                                                        seed = 0x2C_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 64*0x2))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.14 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.14 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
+        #Configure Lane_Generator
+        Data_lane_gen_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        gen_config = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_config))
+
+        #Configure Lane_Analizer
+        Data_lane_ana_config.data = bytearray( [0x81,0x08,0x00,0x01])
+        ana_config = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_config))
+        await Combine(gen_config, ana_config)
+
+        #Seed of Lane_Generator
+        Data_lane_gen_seed.data = bytearray( [0x00,0x00,0x00,0x03])
+        gen_seed = cocotb.start_soon(tb.masters[1].write_data(Data_lane_gen_seed))
+
+        #Seed of Lane_Analyzer
+        Data_lane_ana_seed.data = bytearray( [0x00,0x00,0x00,0x03])
+        ana_seed = cocotb.start_soon(tb.masters[2].write_data(Data_lane_ana_seed))
+        await Combine(gen_seed, ana_seed)
+
+        #Start Test
+        Data_lane_ana_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[2].write_data(Data_lane_ana_control)
+        Data_lane_gen_control.data = bytearray( [0x01,0x00,0x00,0x00])
+        await tb.masters[1].write_data(Data_lane_gen_control)
+        await tempo_idle
+        stimulus_tx = cocotb.start_soon(tb.spacefibre_random_generator.write_random_inputs("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame_4.dat",
+                                                                        frame_number = 0x1,
+                                                                        frame_size = 0x44,
+                                                                        seed = 0x2D_00_00_00))
+        log_rx = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/16384_PRBS_nearendlbfromactive_data_0x1F_frame", number_of_word = 0x11*0x1))
+            
+        await stimulus_tx
+    
+        tempo_idle = cocotb.start_soon(send_idle_ctrl_word(tb, 5000))
+        
+        await log_rx
+        
+        
+        #Pull until Test End
+        error_cnt = await wait_end_test(tb)
+
+        await tempo_idle
+        
+        if error_cnt != "00000000":
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.15 result: Failed\n\n\n\n", get_sim_time(units = "ns"))
+        else:
+            tb.logger.info("simulation time %d ns : step 2.15 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
 
 
-    if step_2_failed == 0:
-        tb.logger.info("simulation time %d ns : step 2 result: Pass", get_sim_time(units = "ns"))
-    else:
-        test_failed = 1
-        tb.logger.error("simulation time %d ns : step 2 result: Failed", get_sim_time(units = "ns"))
+        if step_2_failed == 0:
+            tb.logger.info("simulation time %d ns : step 2 result: Pass", get_sim_time(units = "ns"))
+        else:
+            test_failed = 1
+            tb.logger.error("simulation time %d ns : step 2 result: Failed", get_sim_time(units = "ns"))
 
-    Data_read_phy_config_parameters.data = bytearray([0x00,0x00,0x00,0x00]) # Disable  near-end loopback
-    await tb.masters[0].write_data(Data_read_phy_config_parameters)
+        Data_read_phy_config_parameters.data = bytearray([0x00,0x00,0x00,0x00]) # Disable  near-end loopback
+        await tb.masters[0].write_data(Data_read_phy_config_parameters)
 
     ##########################################################################
     ##########################################################################
@@ -1519,7 +1855,7 @@ async def cocotb_run(dut):
     #With loopback during init
     ###########################
     
-    stimulus_tx = cocotb.start_soon(tb.spacefibre_loopback.loopback(30000))
+    stimulus_tx = cocotb.start_soon(tb.spacefibre_loopback.loopback(150000))
     await wait_for_started_to_active(tb)
 
     #Incremental data generation
@@ -1699,7 +2035,7 @@ async def cocotb_run(dut):
     #Pull until Test End
     error_cnt = await wait_end_test(tb)
 
-    await Combine(*[stimulus_tx, log_rx])
+    await Combine(*[log_rx,stimulus_tx])
     
     if error_cnt != "00000000":
         step_4_failed = 1
@@ -1717,17 +2053,18 @@ async def cocotb_run(dut):
     #writting the monitors loggers
     tb.write_monitor_data()
 
-        #print results of test
+    #print results of test
     tb.logger.info("simulation time %d ns : TEST RESULTS :",get_sim_time(units="ns"))
+    
     if step_1_failed == 0:
         tb.logger.info("simulation time %d ns : step 1 result: Pass",get_sim_time(units="ns"))
     else:
         tb.logger.error("simulation time %d ns : step 1 result: Failed", get_sim_time(units="ns"))
-
-    if step_2_failed == 0:
-        tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
-    else:
-        tb.logger.error("simulation time %d ns : step 2 result: Failed", get_sim_time(units="ns"))
+    if target == "VERSAL":
+        if step_2_failed == 0:
+            tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
+        else:
+            tb.logger.error("simulation time %d ns : step 2 result: Failed", get_sim_time(units="ns"))
 
     if step_4_failed == 0:
         tb.logger.info("simulation time %d ns : step 4 result: Pass",get_sim_time(units="ns"))

@@ -45,7 +45,7 @@ entity parallel_loopback is
       WAIT_SKIP_DATA                   : in  std_logic;                          --! Wait for data to be skip
       --TO lane_ctrl_word_detection
       DATA_TX_TO_LCWD                  : out std_logic_vector(31 downto 00);     --! 32-bit Data
-      VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);     --! 4-bit Valid K character
+      VALID_K_CHARAC_TO_LCWD            : out std_logic_vector(03 downto 00);     --! 4-bit Valid K character
       DATA_RDY_TO_LCWD                 : out std_logic;                          --! Data ready flag
       -- Parameter
       PARALLEL_LOOPBACK_EN             : in  std_logic                           --! Enable or disable the parallel loopback for the lane
@@ -74,7 +74,7 @@ begin
    
    -- Allows to make a parallele loopback into the LANE layer
    DATA_TX_TO_LCWD       <= DATA_TX_FROM_LCWI       when PARALLEL_LOOPBACK_EN = '1' else DATA_TX_FROM_RSF;
-   VALID_K_CARAC_TO_LCWD <= VALID_K_CARAC_FROM_LCWI when PARALLEL_LOOPBACK_EN = '1' else VALID_K_CARAC_FROM_RSF;
+   VALID_K_CHARAC_TO_LCWD <= VALID_K_CARAC_FROM_LCWI when PARALLEL_LOOPBACK_EN = '1' else VALID_K_CARAC_FROM_RSF;
    DATA_RDY_TO_LCWD      <= (DATA_RDY_FROM_LCWI and not(wait_skip_data_rrr) )    when PARALLEL_LOOPBACK_EN = '1' else DATA_RDY_FROM_RSF;
 
 end architecture rtl;

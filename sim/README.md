@@ -35,18 +35,22 @@ This framework include additionnal features for `cocotbext-axi` such as stimuli 
     - SPACEFIBRELIGHT_ROOT_PATH : the main absolute path location of your spacefibre cloned project (the one with .git folder)
     - FRAMEWORK_COCOTB_INSTALL_PATH : the absolute path location for your cocotb_framework 
     - GUI : set the variable to 1 to launch questa GUI or simply write 0 to directly run the simulaiton without GUI.
+    - HARDWARE_TARGET : sete the variable to "NG_ULTRA" or "VERSAL" depending on the target you are building the IP for
 
    To do so you can execute in a terminal (or add them to you .bashrc)
    ```
    #set you absolute path to the root of the project spacefibrelight
-        export SPACEFIBRELIGHT_ROOT_PATH=<ABSOLUTE/PATH/>24-9771-ED_CNES_IP-SPACE-FIBRE
+        export SPACEFIBRELIGHT_ROOT_PATH=<ABSOLUTE/PATH/>CNES_IP-SPACE-FIBRE
 
         #set your framework location
-        export FRAMEWORK_COCOTB_INSTALL_PATH==<ABSOLUTE/PATH/>24-9771-ed-cnes_test-cocotb-framework
+        export FRAMEWORK_COCOTB_INSTALL_PATH==<ABSOLUTE/PATH/>CNES_IP-SPACE-FIBRE/sim/cocyb-framework/src
 
         # Select 1 to have to gui loaded (you will have to click run all to start simualtion)
         # select 0 to have automatic
         export GUI=0
+
+        # Specfy the target, either VERSAL or NG_ULTRA
+        export HARDWARE_TARGET="VERSAL"
    ```
 - edit `RunSim.sh` to 
     - match your framework installation path 
@@ -56,20 +60,25 @@ This framework include additionnal features for `cocotbext-axi` such as stimuli 
 - to execute every test available in every folders use command `RunSim.sh all`
 
 
-cccc
+  
+___    
 
-The `Runme.sh' script as several configuration variables:
+
+The `Runme.sh` script as several configuration variables:
 
 - `SPACEFIBRELIGHT_ROOT_PATH`:absolute path to the root of the project spacefibrelight
-- `FRAMEWORK_COCOTB_INSTALL_PATH`: absolute path to the root of the project cocotb framework 
+- `FRAMEWORK_COCOTB_INSTALL_PATH`: absolute path to the src directory of the project cocotb framework 
 - `GUI` :
     -Select `1` to have to gui loaded (you will have to click run all to start simulation)
     -Select `0` to have automatic
 - `WAVES`
     - Select `1` to create the full waveform for the test (questa WLF file)
-    - select `0` not ot generate the waveforms
+    - select `0` not to generate the waveforms
 
 - `EXTRA_VSIM_CMD` : you can set addition vsim command with this variable
+- `HARDWARE_TARGET` : 
+    - Select `VERSAL` to build the IP for a VERSAL target
+    - Select `NG_ULTRA` to build the IP for a NG-ULTRA target
 
 For convenience , you can create a file called `sim/scenario/environnement`.
 This file will include all paramaters and will be sourced prior to launch simulation.
@@ -89,6 +98,10 @@ export GUI=0
 # Select 1 to create the full waveform for the test (questa WLF file)
 # select 0 not ot generate the waveforms
 export WAVES=0
+
+# Specify target (uncomment the line needed and comment the other one)
+export HARDWARE_TARGET="VERSAL"
+# export HARDWARE_TARGET="NG_ULTRA"
 
 ##additionnal VSIM command  
 export EXTRA_VSIM_CMD="-do $SPACEFIBRELIGHT_ROOT_PATH/sim/scenario/custom.do"

@@ -51,18 +51,18 @@ begin
 -----                     Process                   -----
 ---------------------------------------------------------
    -- Resynchronized reset on 50MHz internal clock
-   p_reset_gen : process(CLK,RST_N)
+   p_reset_gen : process(CLK,RST_N, LANE_RESET)
    begin
-      if (RST_N = '0') then  -- Asynchronous activation reset
+      if (RST_N = '0' or LANE_RESET ='1') then  -- Asynchronous activation reset
          reset_gen_r_n  <= '0';
          reset_gen_rr_n <= '0';
          rst_tx_done_r  <= '1';
       elsif rising_edge(CLK) then   -- Synchronous deactivation reset
-         if LANE_RESET ='1' then
-           reset_gen_r_n  <= '0';
-           reset_gen_rr_n <= '0';
-           rst_tx_done_r  <= '1';
-         else
+         -- if LANE_RESET ='1' then
+         --   reset_gen_r_n  <= '0';
+         --   reset_gen_rr_n <= '0';
+         --   rst_tx_done_r  <= '1';
+         -- else
            if rst_tx_done_r = '0' and RST_TX_DONE = '1'  then
               reset_gen_r_n  <= '1';
            elsif RST_TX_DONE = '1' then
@@ -72,7 +72,7 @@ begin
               reset_gen_rr_n <= '0';
            end if;
            rst_tx_done_r <= RST_TX_DONE;
-         end if;
+         -- end if;
       end if;
    end process p_reset_gen;
 

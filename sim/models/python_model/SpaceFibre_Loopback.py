@@ -49,14 +49,16 @@ class SpaceFibre_Loopback:
             if variation > 0:
                 variation = 1
             for j in range(10):
-                if invert_polarity == 0:
-                    self.dut.RX_POS.value = self.dut.TX_POS.value
-                    self.dut.RX_NEG.value = self.dut.TX_NEG.value
-                else:
-                    self.dut.RX_NEG.value = self.dut.TX_POS.value
-                    self.dut.RX_POS.value = self.dut.TX_NEG.value
                 data = self.dut.TX_POS.value.binstr + data
-                await Timer(time_per_input + variation, units = "fs")
+                for k in range(5):
+                    if invert_polarity == 0:
+                        self.dut.RX_POS.value = self.dut.TX_POS.value
+                        self.dut.RX_NEG.value = self.dut.TX_NEG.value
+                    else:
+                        self.dut.RX_NEG.value = self.dut.TX_POS.value
+                        self.dut.RX_POS.value = self.dut.TX_NEG.value
+                    await Timer(time_per_input//5, units = "fs")
+                await Timer(time_per_input%5 + variation, units = "fs")
             ls_encoded_data = data[0:6]
             ms_encoded_data = data[6:10]
             disparity_1 = 0

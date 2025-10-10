@@ -586,6 +586,7 @@ architecture rtl of LANE_ANALYZER is
                else 
                  if (cnt_data_valid > 3) then
                    err_counter_frame  <= err_counter_frame+1;
+                   cnt_frame        <= (others=>'0');
                    generation_state   <= END_TEST;
                    cnt_data_valid     <= (others =>'0');
                  else 
@@ -656,24 +657,26 @@ architecture rtl of LANE_ANALYZER is
                end if;
 
             when ANA_CONTROL_WORD =>
-               if (DATA_RX /= std_logic_vector(data_verif_cont_word) or VALID_K_CHARAC_RX_PPL/="0001") then-- is DATA_RX not OK ?
-                  err_counter_cont_word      <= err_counter_cont_word+1;
-               end if;
-               if (cnt_cont_word = 0)then
-                  data_verif_cont_word     <= "00000000000000000000000000011100"; -- EDF: D0.0, D0.0, D0.0, K28.0
-               elsif (cnt_cont_word = 1)then
-                  data_verif_cont_word     <= "00000000000000000101110111111100"; -- SBF: D0.0, D0.0, D29.2, K28.7
-               elsif (cnt_cont_word = 2)then
-                  data_verif_cont_word     <= "00000000000000000000000001011100"; -- EBF: D0.0, D0.0, D0.0, K28.2
-               elsif (cnt_cont_word = 3)then
-                  data_verif_cont_word     <= "00000000000000000100010011111100"; -- SIF: D0.0, D0.0, D4.2, K28.7
+               if (FIFO_RX_DATA_VALID_PPL ='1') then
+                  if (DATA_RX /= std_logic_vector(data_verif_cont_word) or VALID_K_CHARAC_RX_PPL/="0001") then-- is DATA_RX not OK ?
+                     err_counter_cont_word      <= err_counter_cont_word+1;
+                  end if;
+                  if (cnt_cont_word = 0)then
+                     data_verif_cont_word     <= "00000000000000000000000000011100"; -- EDF: D0.0, D0.0, D0.0, K28.0
+                  elsif (cnt_cont_word = 1)then
+                     data_verif_cont_word     <= "00000000000000000101110111111100"; -- SBF: D0.0, D0.0, D29.2, K28.7
+                  elsif (cnt_cont_word = 2)then
+                     data_verif_cont_word     <= "00000000000000000000000001011100"; -- EBF: D0.0, D0.0, D0.0, K28.2
+                  elsif (cnt_cont_word = 3)then
+                     data_verif_cont_word     <= "00000000000000000100010011111100"; -- SIF: D0.0, D0.0, D4.2, K28.7
+                  end if;
+                  cnt_cont_word <= cnt_cont_word+1;
                end if;
                if (cnt_cont_word > 3)then
                   control_word_state <= END_TEST;
                elsif(unsigned(inter_pkt_delay) > 0) then -- delay requested
                   control_word_state <= DELAY;
                end if;
-               cnt_cont_word <= cnt_cont_word+1;
 
             when DELAY =>
                --Delay counter

@@ -48,6 +48,14 @@ except ImportError as e:
 #Global variable of test success or failure
 test_failed = 0
 
+target = os.environ.get("HARDWARE_TARGET")
+
+async def send_idle_ctrl_word(tb, number_of_words):
+    for x in range(number_of_words):
+        await tb.spacefibre_driver.write_to_Rx("11111100", delay = 0, k_encoding = 1)
+        await tb.spacefibre_driver.write_to_Rx("11001110", delay = 0, k_encoding = 0)
+        await tb.spacefibre_driver.write_to_Rx("11001111", delay = 0, k_encoding = 0)
+        await tb.spacefibre_driver.write_to_Rx("11001111", delay = 0, k_encoding = 0)
 
 def clean_dir(path):
     """Suppress all files of a directory pointed by path"""
@@ -111,7 +119,7 @@ async def initialization_procedure(tb):
 
     #Wait end of phy reset
     tb.logger.info("sim_time %d ns: Wait PHY reset completion", get_sim_time(units = 'ns') )
-    await RisingEdge(tb.dut.spacefibre_instance.inst_phy_plus_lane.RST_TX_DONE)
+    await RisingEdge(tb.dut.spacefibre_instance.gen_inst_phy_plus_lane.inst_phy_plus_lane.RST_TX_DONE)
     tb.logger.info("sim_time %d ns: Reset PHY completed", get_sim_time(units = 'ns') )
 
     #Wait to go to Disabled
@@ -130,12 +138,16 @@ async def initialization_procedure(tb):
     
     #Set Lane initialisatiion FSM from Started to Active state
     await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/Started_to_Active.dat")
-
+    await send_idle_ctrl_word(tb, 100)
+    stimuli = cocotb.start_soon(send_idle_ctrl_word(tb, 50))
     #Check that Lane initialisatiion FSM is in Active State
     await tb.masters[0].read_data(Data_read_lane_config_status)
     if format(Data_read_lane_config_status.data[0], '0>8b')[4:8] != ACTIVE:
         global test_failed 
+        tb.logger.error("simulation time %d ns : Initialisation failed\nState : %s \n\n\n", get_sim_time(units = "ns"), format(Data_read_lane_config_status.data[0], '0>8b')[4:8] )
         test_failed = 1
+    await stimuli
+
 
 def check_skip_word(file_path,tb):
     """
@@ -158,7 +170,7 @@ def check_skip_word(file_path,tb):
                 c = 0
                 init = 0
                 skip_counter += 1
-                tb.logger.info("simulation time %d ns : first skip word detected at line %d\n\n\n", get_sim_time(units = "ns"), line_number)
+                tb.logger.info("simulation time %d ns : first skip word detected at line %d after %d words\n\n\n", get_sim_time(units = "ns"), line_number, c)
             elif c != 5000:
                 compliancy_5000 = 0
                 skip_counter += 1
@@ -171,6 +183,7 @@ def check_skip_word(file_path,tb):
         if c >= 5000 and init == 0:
             compliancy_5000 = 0
             tb.logger.error("simulation time %d ns : skip word timeout at line %d \nline of timeout : %s \n\n\n", get_sim_time(units = "ns"), line_number, line)
+    input_file.close()
     return compliancy_5000, skip_counter
 
 def check_idle_word(file_path, tb):
@@ -187,6 +200,7 @@ def check_idle_word(file_path, tb):
         if line.find(idle_word) >= 0:
             c += 1
             tb.logger.debug("simulation time %d ns : idle word n° %d detected at line %d\n\n\n", get_sim_time(units = "ns"), c, line_number)
+    input_file.close()
     return c
 
 @cocotb.test()
@@ -201,6 +215,7 @@ async def cocotb_run(dut):
 
     #Specific variable for the scenario
     global test_failed 
+    global target
 
 
     ##########################################################################
@@ -216,8 +231,12 @@ async def cocotb_run(dut):
     #Sets DUT lane initialisation FSM to Active with parallel loopback enabled 
     await initialization_procedure(tb)
 
-    loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(72000))
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 18000))
+    if target == "NG_ULTRA" :
+        monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 75000))
+        loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(300000))
+    else :
+        loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(80000))
+        monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 20000))
 
 
     #Send 256 incremental data words
@@ -281,8 +300,17 @@ async def cocotb_run(dut):
     #Sets DUT lane initialisation FSM to Active with parallel loopback enabled 
     await initialization_procedure(tb)
 
-    loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(111200))
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 27800))
+
+
+    if target == "NG_ULTRA" :
+        loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(400000))
+        await RisingEdge(tb.dut.RX_POS)
+        await Timer(80, units="ps")
+        await tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2_alignement", number_of_word = 100)
+        monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 70000))
+    else:
+        loopback = cocotb.start_soon(tb.spacefibre_loopback.loopback(111200))
+        monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 27800))
 
     #Send 16384 PRBS data words
     for seed in range(0x2A, 0x2A+16):
@@ -315,11 +343,20 @@ async def cocotb_run(dut):
     #check that the right amount of idle words have been generated
     idle_number = check_idle_word("reference/spacefibre_serial/monitor_step_2_hexa.dat", tb)
 
-    if idle_number != (11160- skip_number):
-        step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.18 result: Failed\nIdle_umber : %d\n\n\n", get_sim_time(units = "ns"), idle_number)
-    else:
-        tb.logger.info("simulation time %d ns : step 2.18 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+
+
+    if target == "NG_ULTRA" :
+        if idle_number != (53360 - skip_number):
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.18 result: Failed\nIdle_umber : %d\n\n\n", get_sim_time(units = "ns"), idle_number)
+        else:
+            tb.logger.info("simulation time %d ns : step 2.18 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
+    else :
+        if idle_number != (11160- skip_number):
+            step_2_failed = 1
+            tb.logger.error("simulation time %d ns : step 2.18 result: Failed\nIdle_umber : %d\n\n\n", get_sim_time(units = "ns"), idle_number)
+        else:
+            tb.logger.info("simulation time %d ns : step 2.18 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 
 
 
