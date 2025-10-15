@@ -461,8 +461,17 @@ To use the SpaceFibre Light IP, different procedures must be followed. Those  pr
 
 #### 3.2.4 VHDL
 
-Except for the Xilinx/AMD sources, all source files can be compiled using the VHDL-93 or VHDL-2008 language version.  
+Except for the Xilinx/AMD sources, and 'src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd' all source files can be compiled using the VHDL-93 or VHDL-2008 language version.  
   
+File `src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd` must be ompiled with vhdl2008 due to `else generate` 
+```
+      );
+   
+   elsif G_TARGET = "NG_ULTRA" generate
+      inst_phy_plus_lane : phy_plus_lane_64b
+```
+This can be fixed easily but will have an impact on cocotb simulation which use generate name. This name will change between versal and nanxoplore.
+
 The Xilinx/AMD VHDL sources can be compiled using the VHDL-93 or VHDL-2008 language version, the Xilinx/AMD Verilog sources can be compiled using the Verilog 2005 language version and the Xilinx/AMD SystemVerilog sources can be compiled using the SystemVerilog language version.
 
 ## 4 Notes

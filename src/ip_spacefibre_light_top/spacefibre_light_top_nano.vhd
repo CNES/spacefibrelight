@@ -853,7 +853,7 @@ begin
    ---------------------------------------------------------
    -----                     Instantiation             -----
    ---------------------------------------------------------
-   gen_inst_phy_plus_lane_versal: if G_TARGET = "VERSAL" generate
+   gen_inst_phy_plus_lane: if G_TARGET = "VERSAL" generate
       inst_phy_plus_lane : phy_plus_lane
       port map(
          RST_N                            => RST_N,
@@ -901,8 +901,7 @@ begin
          RX_POLARITY                      => rx_polarity_ppl
       );
    
-   end generate;
-   gen_inst_phy_plus_lane_ngultra: if G_TARGET = "NG_ULTRA" generate
+   elsif G_TARGET = "NG_ULTRA" generate
       inst_phy_plus_lane : phy_plus_lane_64b
       port map(
          RST_N                            => RST_N,
