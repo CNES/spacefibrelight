@@ -27,8 +27,13 @@ library ieee;
   use ieee.std_logic_1164.all;
   use ieee.numeric_std.all;
 
+--this library is used when Xilinx FPGA is used
 library phy_plus_lane_lib;
  use phy_plus_lane_lib.all;
+
+-- this library is used when NX FPGA is used 
+library phy_plus_lane_64_lib;
+  use phy_plus_lane_64_lib.all;
 
 library data_link_lib;
 use data_link_lib.data_link_lib.all;
