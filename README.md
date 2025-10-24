@@ -463,7 +463,7 @@ To use the SpaceFibre Light IP, different procedures must be followed. Those  pr
 
 Except for the Xilinx/AMD sources, and 'src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd' all source files can be compiled using the VHDL-93 or VHDL-2008 language version.  
   
-File `src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd` must be ompiled with vhdl2008 due to `else generate` 
+File `src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd` must be compiled with vhdl2008 due to `else generate` 
 ```
       );
    
