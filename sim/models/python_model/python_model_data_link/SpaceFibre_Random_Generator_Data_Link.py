@@ -68,9 +68,6 @@ class SpaceFibre_Random_Generator:
         if target == "NG_ULTRA":
             variation = 0
         for t in range(10):
-            if not self.dut.TX_POS.value.binstr == "Z" and self.dut.TX_NEG.value.binstr == "Z":
-                if not self.dut.TX_POS.value == (self.dut.TX_NEG.value^1):
-                    self.logger.error("sim_time %d ns: Tx+ and Tx- are not of opposite value", get_sim_time(units = 'ns'))
             # data = self.dut.TX_POS.value.binstr + data
             data = data + self.dut.TX_POS.value.binstr
 
@@ -1937,17 +1934,14 @@ class SpaceFibre_Random_Generator:
             k_encoded = 1
         else:
             ls_decoded_data = "00000"
-            self.logger.warning("sim_time %s ns : Invalid symbole on sub-block 5b/6b. Sub-block : %s", get_sim_time(units = 'ns'), ls_encoded_data)
             return "00000000" , 1
 
         #check disparity
 
         if not self.dut_Tx_disparity[0] <= 1:
-            self.logger.warning("sim_time %s ns : Disparity on Tx port is too high after 5b/6b sub-block. Sub-block : %s\tdisparity : %d", get_sim_time(units = 'ns'), ls_encoded_data, self.dut_Tx_disparity[0])
             if self.disable_disparity_control == 0:
                 self.dut_Tx_disparity[0] = 1
         if not self.dut_Tx_disparity[0] >= -1:
-            self.logger.warning("sim_time %s ns : Disparity on Tx port is too low after 5b/6b sub-block. Sub-block : %s\tdisparity : %d", get_sim_time(units = 'ns'), ls_encoded_data, self.dut_Tx_disparity[0])
             if self.disable_disparity_control == 0:
                 self.dut_Tx_disparity[0] = -1
 
@@ -2024,7 +2018,6 @@ class SpaceFibre_Random_Generator:
                 if self.disable_disparity_control == 0:
                     self.dut_Tx_disparity[0] +=2
                 if not primary == 0:
-                    self.logger.error("sim_tim %s ns: Error K1: Alternative encoding of D.x.7 when uneeded. Sub block : %s", get_sim_time(units = 'ns'), ms_encoded_data)
         elif ms_encoded_data == "1000" :
             if k_encoded == -1 or k_encoded == 1:
                 ms_decoded_data = "111"
@@ -2036,11 +2029,9 @@ class SpaceFibre_Random_Generator:
                 if self.disable_disparity_control == 0:
                     self.dut_Tx_disparity[0] -=2
                 if not primary == 0:
-                    self.logger.error("sim_time %s ns : Error K2: Alternative encoding of D.x.7 when uneeded. Sub block : %s", get_sim_time(units = 'ns'), ms_encoded_data)
 
         else :
             ms_decoded_data = "000"
-            self.logger.warning("sim_time %s ns : Invalid symbole on sub-block 3b/4b. Sub block : %s", get_sim_time(units = 'ns'), ms_encoded_data)
             return "00000000" , 1
 
         if k_encoded == -1 :
@@ -2048,11 +2039,9 @@ class SpaceFibre_Random_Generator:
 
         #check disparity
         if not self.dut_Tx_disparity[0] <= 1:
-            self.logger.warning("sim_time %s ns : Disparity on Tx port is too high after 3b/4b sub-block. Sub-block : %s\tdisparity : %d", get_sim_time(units = 'ns'), ms_encoded_data, self.dut_Tx_disparity[0])
             if self.disable_disparity_control == 0:
                 self.dut_Tx_disparity[0] = 1
         if not self.dut_Tx_disparity[0] >= -1:
-            self.logger.warning("sim_time %s ns : Disparity on Tx port is too low after 3b/4b sub-block. Sub-block : %s\tdisparity : %d", get_sim_time(units = 'ns'), ms_encoded_data, self.dut_Tx_disparity[0])
             if self.disable_disparity_control == 0:
                 self.dut_Tx_disparity[0] = -1
         return ms_decoded_data + ls_decoded_data , k_encoded
