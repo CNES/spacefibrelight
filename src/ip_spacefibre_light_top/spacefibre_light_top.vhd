@@ -38,8 +38,8 @@ use interlayer_lib.all;
 
 entity spacefibre_light_top is
    generic(
-      G_VC_NUM                         : integer := 1;                              --! Number of virtual channel
-      G_TARGET                         : string := "VERSAL"
+      G_VC_NUM                         : integer := 8;                              --! Number of virtual channel
+      G_TARGET                         : string  := "VERSAL"
       );
    port (
       RST_N                            : in  std_logic;                            --! global reset
