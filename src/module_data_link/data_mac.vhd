@@ -69,11 +69,11 @@ entity data_mac is
     NEW_WORD_DMAC        : out std_logic;                                          --! New word Flag to data_encapsulation
     END_PACKET_DMAC      : out std_logic;                                          --! End frame/control word to data_encapsulation
     TYPE_FRAME_DMAC      : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DMAC
-    VIRTUAL_CHANNEL_DMAC : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Virtual channel of the frame associated with DATA_DMAC
-    BC_TYPE_DMAC         : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Type
-    BC_CHANNEL_DMAC      : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Channel (one channel in this implementation)
+    VIRTUAL_CHANNEL_DMAC : out std_logic_vector(7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
+    BC_TYPE_DMAC         : out std_logic_vector(7 downto 0);                       --! BROADCAST Type
+    BC_CHANNEL_DMAC      : out std_logic_vector(7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
     BC_STATUS_DMAC       : out std_logic_vector(2-1 downto 0);                     --! BOADCAST status
-    MULT_CHANNEL_DMAC    : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Multiplier and Channel field for FCT word
+    MULT_CHANNEL_DMAC    : out std_logic_vector(7 downto 0);                       --! Multiplier and Channel field for FCT word
     TRANS_POL_FLG_DMAC   : out std_logic;                                          --! Transmission polarity flag
     SEQ_NUM_ACK_DMAC     : out std_logic_vector(7 downto 0)                        --! SEQ_NUM ACK value
   );
