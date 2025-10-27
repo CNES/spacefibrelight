@@ -1108,8 +1108,20 @@ begin
   -- Instance of TX FIFO_1MB_wrapper module
   ------------------------------------------------------------------------------
   lane_active_capa_in_fifo_rx <= enable_transm_data_plif & capability_plcwd;
-  lane_active_plfrc           <= lane_active_capa_plfrc(8)          when fifo_data_valid_plfrc ='1';
-  far_end_capa_plfrc          <= lane_active_capa_plfrc(7 downto 0) when fifo_data_valid_plfrc ='1';
+  p_update_ctrl_rx : process(CLK,RST_N)
+  begin
+    if (RST_N = '0') then
+      lane_active_plfrc             <= '0';
+      far_end_capa_plfrc            <= (others => '0');
+    elsif rising_edge(CLK) then
+      if fifo_data_valid_plfrc ='1' then
+        lane_active_plfrc           <= lane_active_capa_plfrc(8);
+        far_end_capa_plfrc          <= lane_active_capa_plfrc(7 downto 0);
+      end if;
+    end if;
+  end process p_update_ctrl_rx;
+
+
   inst_fifo_rx_ctrl : FIFO_DC
   generic map(
        G_DWIDTH                => C_DWIDTH_CTRL_RX,
