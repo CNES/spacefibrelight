@@ -2017,7 +2017,6 @@ class SpaceFibre_Random_Generator:
                 ms_decoded_data = "111"
                 if self.disable_disparity_control == 0:
                     self.dut_Tx_disparity[0] +=2
-                if not primary == 0:
         elif ms_encoded_data == "1000" :
             if k_encoded == -1 or k_encoded == 1:
                 ms_decoded_data = "111"
@@ -2028,7 +2027,6 @@ class SpaceFibre_Random_Generator:
                 ms_decoded_data = "111"
                 if self.disable_disparity_control == 0:
                     self.dut_Tx_disparity[0] -=2
-                if not primary == 0:
 
         else :
             ms_decoded_data = "000"
