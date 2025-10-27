@@ -38,7 +38,7 @@ export RANDOM_SEED = 123456789
 #Add VHDL sources
 VHDL_SOURCES =  $(path_to_root_dir)/sim/benches/common/pkg_model.vhd
 VHDL_SOURCES += $(path_to_root_dir)/src/ip_spacefibre_light_top/reset_gen.vhd
-VHDL_SOURCES += $(path_to_root_dir)/src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd
+VHDL_SOURCES += $(path_to_root_dir)/src/ip_spacefibre_light_top/spacefibre_light_top.vhd
 VHDL_SOURCES += $(path_to_root_dir)/sim/models/lane/resync_double.vhd
 VHDL_SOURCES += $(path_to_root_dir)/sim/models/data_link/data_link_analyzer/data_link_analyzer.vhd
 VHDL_SOURCES += $(path_to_root_dir)/sim/models/data_link/data_link_configurator/data_link_configurator.vhd
