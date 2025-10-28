@@ -30,8 +30,13 @@ library ieee;
 library phy_plus_lane_lib;
  use phy_plus_lane_lib.all;
 
+--needed for Xilinx version
 library data_link_lib;
 use data_link_lib.data_link_lib.all;
+
+--needed for Nanoxplore version
+library phy_plus_lane_64_lib;
+use phy_plus_lane_64_lib.all;
 
 library interlayer_lib;
 use interlayer_lib.all;

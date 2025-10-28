@@ -73,7 +73,7 @@ getProject().addFile('interlayer_lib',PROJECT_ROOT+'src/ip_spacefibre_light_top/
 getProject().addFile('work',PROJECT_ROOT+'src/ip_spacefibre_light_top/demux_rx.vhd')  
 getProject().addFile('work',PROJECT_ROOT+'src/ip_spacefibre_light_top/mux_tx.vhd')
 getProject().addFile('work',PROJECT_ROOT+'src/ip_spacefibre_light_top/reset_gen.vhd')  
-getProject().addFile('work',PROJECT_ROOT+'src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd')  
+getProject().addFile('work',PROJECT_ROOT+'src/ip_spacefibre_light_top/spacefibre_light_top.vhd')  
 
 getProject().addParameters({})
 getProject().setDescription("")
