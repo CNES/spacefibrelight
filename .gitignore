@@ -59,7 +59,7 @@ sim/libraries/secureip/gtyp_quad/gtyp_quad_002.svp
 sim/scenario/custom.do
 
 #linty folder
-.linty
+.linty/work
 
 #vscode folder
 .vscode

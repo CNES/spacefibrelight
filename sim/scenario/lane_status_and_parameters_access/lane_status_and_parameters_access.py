@@ -47,6 +47,10 @@ except ImportError as e:
 
 #Global variable of test success or failure
 test_failed = 0
+
+target = os.environ.get("HARDWARE_TARGET")
+
+
 def clean_dir(path):
     """Suppress all files of a directory pointed by path"""
     folder = path
@@ -72,7 +76,7 @@ async def init_to_active(tb):
 
     #Wait end of phy reset
     tb.logger.info("sim_time %d ns: Wait PHY reset completion", get_sim_time(units = 'ns') )
-    await RisingEdge(tb.dut.spacefibre_instance.inst_phy_plus_lane.RST_TX_DONE)
+    await RisingEdge(tb.dut.spacefibre_instance.gen_inst_phy_plus_lane.inst_phy_plus_lane.RST_TX_DONE)
     tb.logger.info("sim_time %d ns: Reset PHY completed", get_sim_time(units = 'ns') )
 
     #Wait to go to Disabled
@@ -144,74 +148,78 @@ async def cocotb_run(dut):
     lane_status_spec = bytearray([0x00, 0x00, 0x00, 0x00])
     lane_parameter_spec = bytearray([0xFF, 0xEF, 0xFF, 0xFF])
     phy_parameter_spec = bytearray([0xFF, 0xFF, 0xFF, 0xFF])
+    if target == "VERSAL":
+        ##########################################################################
+        #Step 1: access lane layer status register
+        ##########################################################################
 
-    ##########################################################################
-    #Step 1: access lane layer status register
-    ##########################################################################
+        #Sets DUT lane initialisation FSM to Active
+        await init_to_active(tb)
+                    
+        #test access to lane status register
+        lane_status_result = await test_register(Data_read_lane_config_status, tb)
 
-    #Sets DUT lane initialisation FSM to Active
-    await init_to_active(tb)
-                
-    #test access to lane status register
-    lane_status_result = await test_register(Data_read_lane_config_status, tb)
+        if lane_status_result == lane_status_spec:
+            tb.logger.info("simulation time %d ns : step 1 result: Pass",get_sim_time(units="ns"))
+        else:
+            test_failed = 1
+            tb.logger.error("simulation time %d ns : step 1 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_status_result, lane_status_spec)
 
-    if lane_status_result == lane_status_spec:
-        tb.logger.info("simulation time %d ns : step 1 result: Pass",get_sim_time(units="ns"))
-    else:
-        test_failed = 1
-        tb.logger.error("simulation time %d ns : step 1 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_status_result, lane_status_spec)
+        ##########################################################################
+        #Step 2: access lane layer parameters register
+        ##########################################################################
 
-    ##########################################################################
-    #Step 2: access lane layer parameters register
-    ##########################################################################
+        #Sets DUT lane initialisation FSM to Active
+        await init_to_active(tb)
 
-    #Sets DUT lane initialisation FSM to Active
-    await init_to_active(tb)
+        #test access to lane parameter register
+        lane_parameter_result = await test_register(Data_read_lane_config_parameters, tb)
 
-    #test access to lane parameter register
-    lane_parameter_result = await test_register(Data_read_lane_config_parameters, tb)
+        if lane_parameter_result == lane_parameter_spec:
+            tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
+        else:
+            test_failed = 1
+            tb.logger.error("simulation time %d ns : step 2 result: Failed\nLane_parameters : %s\nExpected : %s", get_sim_time(units="ns"), lane_parameter_result, lane_parameter_spec)
 
-    if lane_parameter_result == lane_parameter_spec:
-        tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
-    else:
-        test_failed = 1
-        tb.logger.error("simulation time %d ns : step 2 result: Failed\nLane_parameters : %s\nExpected : %s", get_sim_time(units="ns"), lane_parameter_result, lane_parameter_spec)
+        ##########################################################################
+        #Step 3: access phy layer parameters register
+        ##########################################################################
 
-    ##########################################################################
-    #Step 3: access phy layer parameters register
-    ##########################################################################
+        #Sets DUT lane initialisation FSM to Active
+        await init_to_active(tb)
 
-    #Sets DUT lane initialisation FSM to Active
-    await init_to_active(tb)
+        #test access to phy status register
+        phy_parameter_result = await test_register(Data_read_phy_config_parameters, tb)
+        
+        if phy_parameter_result == phy_parameter_spec:
+            tb.logger.info("simulation time %d ns : step 3 result: Pass",get_sim_time(units="ns"))
+        else:
+            test_failed = 1
+            tb.logger.error("simulation time %d ns : step 3 result: Failed\nPhy_parameters : %s\nExpected : %s", get_sim_time(units="ns"), phy_parameter_result, phy_parameter_spec)
 
-    #test access to phy status register
-    phy_parameter_result = await test_register(Data_read_phy_config_parameters, tb)
-    
-    if phy_parameter_result == phy_parameter_spec:
-        tb.logger.info("simulation time %d ns : step 3 result: Pass",get_sim_time(units="ns"))
-    else:
-        test_failed = 1
-        tb.logger.error("simulation time %d ns : step 3 result: Failed\nPhy_parameters : %s\nExpected : %s", get_sim_time(units="ns"), phy_parameter_result, phy_parameter_spec)
+        #writting the monitors loggers
+        tb.write_monitor_data()
 
-    #writting the monitors loggers
-    tb.write_monitor_data()
+        #print results of test
+        tb.logger.info("simulation time %d ns : TEST RESULTS :",get_sim_time(units="ns"))
+        if lane_status_result == lane_status_spec:
+            tb.logger.info("simulation time %d ns : step 1 result: Pass",get_sim_time(units="ns"))
+        else:
+            tb.logger.error("simulation time %d ns : step 1 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_status_result, lane_status_spec)
 
-    #print results of test
-    tb.logger.info("simulation time %d ns : TEST RESULTS :",get_sim_time(units="ns"))
-    if lane_status_result == lane_status_spec:
-        tb.logger.info("simulation time %d ns : step 1 result: Pass",get_sim_time(units="ns"))
-    else:
-        tb.logger.error("simulation time %d ns : step 1 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_status_result, lane_status_spec)
+        if lane_parameter_result == lane_parameter_spec:
+            tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
+        else:
+            tb.logger.error("simulation time %d ns : step 2 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_parameter_result, lane_parameter_spec)
 
-    if lane_parameter_result == lane_parameter_spec:
-        tb.logger.info("simulation time %d ns : step 2 result: Pass",get_sim_time(units="ns"))
-    else:
-        tb.logger.error("simulation time %d ns : step 2 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), lane_parameter_result, lane_parameter_spec)
+        if phy_parameter_result == phy_parameter_spec:
+            tb.logger.info("simulation time %d ns : step 3 result: Pass",get_sim_time(units="ns"))
+        else:
+            tb.logger.error("simulation time %d ns : step 3 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), phy_parameter_result, phy_parameter_spec)
 
-    if phy_parameter_result == phy_parameter_spec:
-        tb.logger.info("simulation time %d ns : step 3 result: Pass",get_sim_time(units="ns"))
-    else:
-        tb.logger.error("simulation time %d ns : step 3 result: Failed\nLane_status : %s\nExpected : %s", get_sim_time(units="ns"), phy_parameter_result, phy_parameter_spec)
+    elif target == "NG_ULTRA" :
+        tb.logger.info("simulation time %d ns : Test lane_status_and_parameters_access is not tested for NG ULTRA target",get_sim_time(units="ns"))
+
 
     if test_failed == 1:
         raise TestFailure

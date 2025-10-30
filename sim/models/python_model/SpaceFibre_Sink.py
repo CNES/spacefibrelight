@@ -16,6 +16,7 @@ import logging
 import random
 import os
 from pathlib import Path
+import asyncio
 import cocotb
 import cocotbext
 from cocotb.clock import Clock
@@ -28,6 +29,7 @@ from framework import   AxiStreamSource, AxiStreamSink, AxiStreamMonitor, AxiBus
                         AxiMonitor, AxiLiteMonitor, Data
 
 
+target = os.environ.get("HARDWARE_TARGET")
 
 class SpaceFibre_Sink:
 
@@ -50,6 +52,8 @@ class SpaceFibre_Sink:
         variation = random.randint(0, 2)
         if variation > 0:
             variation = 1
+        if target == "NG_ULTRA":
+            variation = 0
         for t in range(10):
             if not self.dut.TX_POS.value.binstr == "Z" and self.dut.TX_NEG.value.binstr == "Z":
                 if not self.dut.TX_POS.value == (self.dut.TX_NEG.value^1):
@@ -111,44 +115,53 @@ class SpaceFibre_Sink:
         else:
             self.logger.info("sim_time %d ns: Creating file %s to receive binary format data from sink", get_sim_time(units = "ns"), file_path_10b)
             output_file_10b = open(file_path_10b, "a")
-
         for i in range(number_of_word):
-            word = ""
-            word_bin = ""
-            word_10b = ""
-            k_encoded_word = ""
-            j = 0
-            word_realigned = 0
-            buffer = previous_buffer
-            while j < 4:
-                (data, k_encoded), buffer, realigned = await self.read_from_Tx(previous_buffer = buffer)
-                
-                if realigned == 1 and j != 0:
-                    output_file_bin.write((word_bin + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-                    output_file_10b.write((word_10b + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-                    if len(k_encoded_word) == 3:
-                        output_file_hexa.write((f"{int(word, base = 2):0>6X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-                    if len(k_encoded_word) == 2:
-                        output_file_hexa.write((f"{int(word, base = 2):0>4X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-                    if len(k_encoded_word) == 1:
-                        output_file_hexa.write((f"{int(word, base = 2):0>2X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-                    word = data
-                    word_bin = data
-                    word_10b = buffer
-                    k_encoded_word = str(k_encoded)
-                    j = 0
-                else:
-                    word = data + word
-                    word_bin = data + "_" + word_bin
-                    word_10b = buffer + "_" + word_10b
-                    k_encoded_word = str(k_encoded) + k_encoded_word
-                if realigned == 1 :
-                    word_realigned = 1
-                j += 1
-            previous_buffer = buffer
-            output_file_bin.write((word_bin + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-            output_file_10b.write((word_10b + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
-            output_file_hexa.write((f"{int(word, base = 2):0>8X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+            try :
+                word = ""
+                word_bin = ""
+                word_10b = ""
+                k_encoded_word = ""
+                j = 0
+                word_realigned = 0
+                buffer = previous_buffer
+                while j < 4:
+                    (data, k_encoded), buffer, realigned = await self.read_from_Tx(previous_buffer = buffer)
+                    
+                    if realigned == 1 and j != 0:
+                        output_file_bin.write((word_bin + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                        output_file_10b.write((word_10b + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + ";" + str(get_sim_time(units = "ns")) + "\n"))
+                        if len(k_encoded_word) == 3:
+                            output_file_hexa.write((f"{int(word, base = 2):0>6X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                        if len(k_encoded_word) == 2:
+                            output_file_hexa.write((f"{int(word, base = 2):0>4X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                        if len(k_encoded_word) == 1:
+                            output_file_hexa.write((f"{int(word, base = 2):0>2X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                        word = data
+                        word_bin = data
+                        word_10b = buffer
+                        k_encoded_word = str(k_encoded)
+                        j = 0
+                    else:
+                        word = data + word
+                        word_bin = data + "_" + word_bin
+                        word_10b = buffer + "_" + word_10b
+                        k_encoded_word = str(k_encoded) + k_encoded_word
+                    if realigned == 1 :
+                        word_realigned = 1
+                    j += 1
+                previous_buffer = buffer
+                output_file_bin.write((word_bin + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                output_file_10b.write((word_10b + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + ";" + str(get_sim_time(units = "ns")) + "\n"))
+                output_file_hexa.write((f"{int(word, base = 2):0>8X}" + ";" + k_encoded_word + ";" + str(time_per_output) + ";" + str(word_realigned) + "\n"))
+                output_file_bin.flush()
+                output_file_10b.flush()
+                output_file_hexa.flush()
+            except asyncio.CancelledError:
+                output_file_hexa.close()
+                output_file_bin.close()
+                output_file_10b.close()
+                return buffer
+
 
         output_file_bin.close()
         output_file_10b.close()
@@ -368,9 +381,9 @@ class SpaceFibre_Sink:
         elif ms_encoded_data == "1010" :
             if k_encoded == 1 :
                 if self.dut_Tx_disparity[0] >= 0 :
-                    ms_decoded_data = "010"
-                else :
                     ms_decoded_data = "101"
+                else :
+                    ms_decoded_data = "010"
             else :
                 ms_decoded_data = "101"
         elif ms_encoded_data == "0110" :

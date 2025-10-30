@@ -32,6 +32,8 @@ library ieee;
 library phy_plus_lane_lib;
 
 package pkg_phy_plus_lane is
+  constant C_DATA_LENGTH         : integer              := 32;                                   --! Data width
+  constant C_BYTE_BY_WORD_LENGTH : integer              := 4;                                    --! Number of byte in a word
    -- SYMBOLS
    constant C_K28_5_SYMB          : std_logic_vector(07 downto 00) := x"BC";  --! K28.5
    constant C_K28_7_SYMB          : std_logic_vector(07 downto 00) := x"FC";  --! K28.7

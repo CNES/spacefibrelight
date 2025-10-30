@@ -228,6 +228,9 @@ architecture Behavioral of data_link is
   end component;
 
   component data_seq_check is
+    generic(
+      G_VC_NUM                 : integer := 8                                  --! Number of virtual channel
+    );
     port (
       CLK                       : in std_logic;                                           --! Global clock
 		  -- data_link_reset (DLRE) interface
@@ -274,7 +277,7 @@ architecture Behavioral of data_link is
 		  CRC_ERR_BC_DSCHECK        : out std_logic;                                          --! CRC error flag for the current broadcast frame
 		  RXERR_BC_DSCHECK          : out std_logic;                                          --! RXERR flag for the current broadcast frame
 		  -- data_out_buff (DOBUF) interface
-		  FCT_FAR_END_DSCHECK       : out std_logic_vector(C_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
+		  FCT_FAR_END_DSCHECK       : out std_logic_vector(G_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
 		  M_VAL_DSCHECK             : out std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
 		  -- MIB
 		  SEQ_NUM_DSCHECK           : out std_logic_vector(7 downto 0);                       --! last SEQ_NUM
@@ -513,11 +516,11 @@ architecture Behavioral of data_link is
       NEW_WORD_DMAC        : out std_logic;                                          --! New word Flag to data_encapsulation
       END_PACKET_DMAC      : out std_logic;                                          --! End frame/control word to data_encapsulation
       TYPE_FRAME_DMAC      : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DMAC
-      VIRTUAL_CHANNEL_DMAC : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Virtual channel of the frame associated with DATA_DMAC
-      BC_TYPE_DMAC         : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Type
-      BC_CHANNEL_DMAC      : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Channel (one channel in this implementation)
+      VIRTUAL_CHANNEL_DMAC : out std_logic_vector(7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
+      BC_TYPE_DMAC         : out std_logic_vector(7 downto 0);                       --! BROADCAST Type
+      BC_CHANNEL_DMAC      : out std_logic_vector(7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
       BC_STATUS_DMAC       : out std_logic_vector(2-1 downto 0);                     --! BOADCAST status
-      MULT_CHANNEL_DMAC    : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Multiplier and Channel field for FCT word
+      MULT_CHANNEL_DMAC    : out std_logic_vector(7 downto 0);                       --! Multiplier and Channel field for FCT word
       TRANS_POL_FLG_DMAC   : out std_logic;                                          --! Transmission polarity flag
       SEQ_NUM_ACK_DMAC     : out std_logic_vector(7 downto 0)                        --! SEQ_NUM ACK value
     );
@@ -539,11 +542,11 @@ architecture Behavioral of data_link is
       NEW_WORD_DMAC                     : in std_logic;                                           --! New word flag from data_mac
 	    END_PACKET_DMAC                   : in std_logic;                                           --! End frame/control word from data_mac
       TYPE_FRAME_DMAC                   : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DMAC
-      VIRTUAL_CHANNEL_DMAC              : in std_logic_vector (G_VC_NUM-1 downto 0);              --! Virtual channel of the frame associated with DATA_DMAC
-      BC_TYPE_DMAC                      : in std_logic_vector (G_VC_NUM-1 downto 0);              --! BROADCAST Type
-      BC_CHANNEL_DMAC                   : in std_logic_vector (G_VC_NUM-1 downto 0);              --! BROADCAST Channel (one channel in this implementation)
+      VIRTUAL_CHANNEL_DMAC              : in std_logic_vector (7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
+      BC_TYPE_DMAC                      : in std_logic_vector (7 downto 0);                       --! BROADCAST Type
+      BC_CHANNEL_DMAC                   : in std_logic_vector (7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
 	    BC_STATUS_DMAC                    : in std_logic_vector (2-1 downto 0);                     --! BOADCAST status
-      MULT_CHANNEL_DMAC                 : in std_logic_vector (G_VC_NUM-1 downto 0);              --! Multiplier and Channel field for FCT word
+      MULT_CHANNEL_DMAC                 : in std_logic_vector (7 downto 0);                       --! Multiplier and Channel field for FCT word
       SEQ_NUM_ACK_DMAC                  : in std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
       TRANS_POL_FLG_DMAC                : in std_logic;                                           --! Transmission polarity flag
       -- data_seq_compute (DSCC) interface
@@ -623,11 +626,11 @@ architecture Behavioral of data_link is
   signal new_word_dmac              : std_logic;
   signal end_packet_dmac            : std_logic;
   signal type_frame_dmac            : std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);
-  signal virtual_channel_dmac       : std_logic_vector(G_VC_NUM-1 downto 0);
-  signal bc_type_dmac               : std_logic_vector(G_VC_NUM-1 downto 0);
-  signal bc_channel_dmac            : std_logic_vector(G_VC_NUM-1 downto 0);
+  signal virtual_channel_dmac       : std_logic_vector(7 downto 0);
+  signal bc_type_dmac               : std_logic_vector(7 downto 0);
+  signal bc_channel_dmac            : std_logic_vector(7 downto 0);
   signal bc_status_dmac             : std_logic_vector(1 downto 0);
-  signal mult_channel_dmac          : std_logic_vector(G_VC_NUM-1 downto 0);
+  signal mult_channel_dmac          : std_logic_vector(7 downto 0);
   signal trans_pol_flg_dmac         : std_logic;
   signal  seq_num_ack_dmac          : std_logic_vector(7 downto 0);
   -- data_encapsulation
@@ -860,6 +863,9 @@ begin
     STATUS_LEVEL_RD       => open
   );
   inst_data_seq_check: data_seq_check
+  generic map (
+      G_VC_NUM => G_VC_NUM
+   )
   port map (
       CLK                       => CLK,
       LINK_RESET_DLRE           => link_reset_dlre,

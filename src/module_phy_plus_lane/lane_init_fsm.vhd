@@ -100,7 +100,7 @@ signal current_state_r              : lane_init_fsm_type;                       
 
 -- Lane Initialisation FSM action on state process -------------------------------------------------------------
    -- Constants
-constant C_2US_AT_150MHZ            : unsigned(08 downto 00) := "1" & x"2B";     --! 300 x 6.667ns = 2us
+constant C_2US_AT_78MHZ            : unsigned(08 downto 00) := "0" & x"95";     --! 300 x 6.667ns = 2us
    -- Signals
 signal clear_line_cnt               : unsigned(08 downto 00);                    --! 2us counter
 signal clear_line_done              : std_logic;                                 --! Flag indicates that clear_line_cnt reaches C_2US_AT_150MHZ
@@ -318,7 +318,7 @@ begin
             LOST_CAUSE                       <= "00"; -- Reset
 
             -- Start counter 2us
-            if clear_line_cnt >= C_2US_AT_150MHZ then
+            if clear_line_cnt >= C_2US_AT_78MHZ then
                clear_line_done   <= '1';              -- End condition of CLEAR_LINE_ST
             else
                clear_line_cnt    <= clear_line_cnt+1; -- Increment to 1 2us counter

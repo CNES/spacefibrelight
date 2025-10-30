@@ -38,11 +38,11 @@ entity rx_sync_fsm is
       LANE_RESET_DL                    : in  std_logic;                       --! Lane reset command from Data-Link Layer.
       -- TO lane_ctrl_word_detection
       DATA_RX_TO_LCWD                  : out std_logic_vector(31 downto 00);  --! 32-bit data to lane_ctrl_word_detect
-      VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  --! 4-bit valid K character flags to lane_ctrl_word_detect
+      VALID_K_CHARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  --! 4-bit valid K character flags to lane_ctrl_word_detect
       DATA_RDY_TO_LCWD                 : out std_logic;                       --! Data valid flag to lane_ctrl_word_detect
       -- FROM MANUFACTURER IP
       DATA_RX_FROM_IP                  : in  std_logic_vector(31 downto 00);  --! 32-bit data from GTY IP
-      VALID_K_CARAC_FROM_IP            : in  std_logic_vector(03 downto 00);  --! 4-bit valid K character flags from GTY IP
+      VALID_K_CHARAC_FROM_IP            : in  std_logic_vector(03 downto 00);  --! 4-bit valid K character flags from GTY IP
       DATA_RDY_FROM_IP                 : in  std_logic;                       --! Data valid flag from GTY IP
       INVALID_CHAR_FROM_IP             : in  std_logic_vector(03 downto 00);  --! Invalid character flags from GTY IP
       DISPARITY_ERR_FROM_IP            : in  std_logic_vector(03 downto 00);  --! Disparity error flags from GTY IP
@@ -161,7 +161,7 @@ begin
             if DATA_RDY_FROM_IP = '1' then                           -- when a data is receive from MANUFACTURER IP
 
                data_rx_to_lcwd_i          <= DATA_RX_FROM_IP;        -- Data from IP is send to lane_ctrl_word_detection
-               valid_k_charac_to_lcwd_i   <= VALID_K_CARAC_FROM_IP;  -- Valid K character from IP is send to lane_ctrl_word_detection
+               valid_k_charac_to_lcwd_i   <= VALID_K_CHARAC_FROM_IP;  -- Valid K character from IP is send to lane_ctrl_word_detection
                data_rdy_to_lcwd_i         <= '1';                    -- Asserts handshake
 
                if INVALID_CHAR_FROM_IP /= x"0" or DISPARITY_ERR_FROM_IP /= x"0" then   -- When only one Symbol of the 32-bit word is an invalid character or disparity error
@@ -192,7 +192,7 @@ begin
             if DATA_RDY_FROM_IP = '1' then                           -- when a data is receive from MANUFACTURER IP
 
                data_rx_to_lcwd_i          <= DATA_RX_FROM_IP;        -- Data from IP is send to lane_ctrl_word_detection
-               valid_k_charac_to_lcwd_i   <= VALID_K_CARAC_FROM_IP;  -- Valid K character from IP is send to lane_ctrl_word_detection
+               valid_k_charac_to_lcwd_i   <= VALID_K_CHARAC_FROM_IP;  -- Valid K character from IP is send to lane_ctrl_word_detection
                data_rdy_to_lcwd_i         <= '1';                    -- Asserts handshake
 
                if INVALID_CHAR_FROM_IP /= x"0" then                     -- When only one Symbol of the 32-bit word is an invalid character
@@ -218,7 +218,7 @@ begin
 
 -- Outputs
 DATA_RX_TO_LCWD         <= data_rx_to_lcwd_i;
-VALID_K_CARAC_TO_LCWD   <= valid_k_charac_to_lcwd_i;
+VALID_K_CHARAC_TO_LCWD   <= valid_k_charac_to_lcwd_i;
 DATA_RDY_TO_LCWD        <= data_rdy_to_lcwd_i;
 
 end architecture rtl;

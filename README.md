@@ -3,12 +3,12 @@
 [![Doc generation status](https://github.com/CNES/spacefibrelight/actions/workflows/doc.yml/badge.svg?branch=develop)](https://cnes.github.io/spacefibrelight/)
 
 ## Readme First
-This repository includes de Ip called Spacefibrelight. It was developped by Elsys Deign under a CNES R&D program. The main objective of this IP is :
+This repository includes de IP called Spacefibrelight. It was developped by Elsys Deign under a CNES R&D program. The main objective of this IP is :
 - To provide an optimized (in ressource) implementation of the spacefibre standard (ECSS-E-ST-50-11C – SpaceFibre – Very high-speed serial link )
 - To be comptabible with any spacefibre IP even if spacefibrelight IP is not fully compliant with the standard
-- To be operational on Xilinx edge versal (tested on VEK280 evalboard ) and also on Nanoxplore NG-Ultra NG-Ultra300 devices.
+- To be operational on Xilinx AI edge versal (tested on VEK280 evalboard ) and also on Nanoxplore NG-Ultra, NG-Ultra300 devices.
 - To be opensource
-- To be addaptable (that is to say, with additionnal development this IP could be fully compliant to ECSS standard) 
+- To be addaptable (that is to say, with additionnal development, this IP could be fully compliant to ECSS standard) 
 
 
 ## Introduction
@@ -16,13 +16,22 @@ This repository includes de Ip called Spacefibrelight. It was developped by Elsy
 ### 1.1 Overview
 
 The SpaceFibre Light IP is compatible with the ECSS-E-ST-50-11C SpaceFibre standard, but do not include all the features.
-This IP has been designed to be as technologically independent as possible. 
+This IP has been designed to be as technology-independent as possible. It has been implemented on two targets (Versal and NG-Ultra). The table below summarizes the differences between the two versions
 
-That's why it contains only two dependent technology IPs:
-- HSSL IP from Xilinx-AMD
-- BufGT for the clock outgoing from this HSSL IP
 
-This IP was developed on a Xilinx-AMD Versal VEK280 Evaluation Platform with FMC Connector (Versal AI Edge xcve2802-vsvh1760-2MP-e-S) with vivado 2024.1.
+|                            | AI Edge Versal                                                            | NG-Ultra                          |
+| -------------------------- | ------------------------------------------------------------------------- | --------------------------------- |
+| Dependent Technology       | GTY IP from Xilinx-AMD <br> BufGT for the clock outgoing from this GTY IP | HSSL IP from NanoXplore           |
+| User interface frequency   | 150 MHz                                                                   | 78.125 MHz                        |
+| Data rate (HSSL)           | 6 Gbit/s                                                                  | 6,25 Gbit/s                       |
+| DATA-LINK data bus witdh   | 32 bits                                                                   | 32 bits                           |
+| PHY+LANE data bus witdh    | 32 bits                                                                   | 64 bits                           |
+| Virtual verifiction        | Yes                                                                       | Yes                               |
+| Physical verification      | Yes                                                                       | No                                |
+| Test board                 | Xilinx-AMD Versal VEK280 Evaluation Platform                              | /                                 |
+| Design software tool       | Vivado 2024.1                                                             | /                                 |
+
+__Note__: The SpaceFibre Light IP implemented on NG-Ultra, running at 78.125 MHz with a 32-bit bus (on user interface), delivers lower performance compared to the Versal version operating at 150 MHz. In practice, its performance is nearly halved.
 
 The figure shows the block diagram of the SpaceFibre Light IP.
 
@@ -40,11 +49,11 @@ The figure shows the block diagram of the SpaceFibre Light IP.
 
 - Up to 8 AXI4-Stream 32b interface data inputs and outputs from Data Link layer
 - AXI4-Stream 32b interface broadcast inputs and outputs from Data Link layer
-- Custom 32b interface data input and output from Lane layer, activatable
+- Custom 32b interface data input and output from Lane layer
 - Discrete signals interface for configuration
 - Multiple discrete signals for external QoS computing
 - Multiple discrete signals for external error management
-- 6 Gbit/s data rate
+- 6 Gbit/s data rate on Versal and 6.25 Gbit/s on NG-Ultra
 - Encapsulation and decapsulation of data according to SpaceFibre protocol
 - Link management
 - Virtual channels physical media access management
@@ -61,35 +70,26 @@ The figure shows the block diagram of the SpaceFibre Light IP.
 
 ## 2 Specification
 ### 2.1 Clock domains
-### 2.1.1 Clock domain: CLK
-The first clock domain corresponds to the system clock (150 MHz). The Data-Link layer, Injector and Spy are
-synchronized on this clock.
-### 2.1.2 Clock domain: CLK_GTY
-The second clock domain is the GTY clock. It is the input clock of the Xilinx GTY IP (100
-MHz).
+The table below summarizes all the IP clock domains depending on the target device.
 
-### 2.1.3 Clock domain: CLK_TX
-The third clock domain is generated by the GTY transceiver IP. The Phy+Lane layer is
-synchronized on this clock domain. (150 MHz)
+| Clock Domain   | Description                                                                             | Frequency (Versal) | Frequency (NGUltra)  |
+|----------------|---------------------------------------------------------------------------------------  |--------------------|----------------------|
+| CLK            | System clock. Data-Link layer, Injector and Spy are synchronized on this clock.         | 150 MHz            | 78.125MHz            |
+| CLK_HSSL       | Reference clock for HSSL or GTY IP                                                      | 100 MHz            | 100 MHz              |
+| CLK_TX         | Generated by the GTY/HSSL transceiver IP. Phy+Lane layer is synchronized on this clock. | 150 MHz            | 78.125MHz            |
+| AXIS_CLK_TX    | AXI4-Stream clock on the TX flow.                                                       | 150 MHz            | 78.125MHz            |
+| AXIS_CLK_RX    | AXI4-Stream clock on the RX flow.                                                       | 150 MHz            | 78.125MHz            |
 
-### 2.1.4 Clock domain: AXIS_CLK_TX
-The fourth clock domain is the AXI4S clock on the TX flow. (150 MHz)
-
-### 2.1.5 Clock domain: AXIS_CLK_RX
-The fifth clock domain is the AXI4S clock on the RX flow. (150 MHz)
 
 ### 2.2 Design parameters
 
-Table below shows the IP VHDL generic configurable at IP integration stage.
-  
 Generics have been added to SpaceFibre Light to set default values on the configuration.
-The table below shows the generic: 
+Table below shows the IP VHDL generic configurable at IP integration stage.
 
-| Generic name | Type    | Value | Description               |
-| ------------ | ------- | ----- | ------------------------- |
-| G_VC_NUM     | integer | 8     | Number of virtual channel |
-
-
+| Generic name | Type    | Value     | Description                           |
+| ------------ | ------- | --------- | ------------------------------------- |
+| G_VC_NUM     | integer | 8         | Number of virtual channel  (1-8)      |
+| G_TARGET     | string  | NG_ULTRA  | Desired target: "VERSAL" or "NG_ULTRA"|
 
 
 
@@ -128,11 +128,12 @@ The SpaceFibre Light I/O signals for the data path at the Phy plus Lane layers a
 | CLK                    | in        | std_logic                             | Main clock                                                      | Clk         |
 | CLK_TX                 | out       | std_logic                             | Clock generated by manufacturer IP                              | Clk_tx      |
 | RST_TXCLK_N            | out       | std_logic                             | Reset clock generated by manufacturer IP                        | Clk_tx      |
-| CLK_GTY                | in        | std_logic                             | GTY dedicated clock                                             | Clk_gty     |
-| TX_POS                 | out       | std_logic                             | Positive LVDS serial data send                                  | /           |
-| TX_NEG                 | out       | std_logic                             | Negative LVDS serial data send                                  | /           |
-| RX_POS                 | in        | std_logic                             | Positive LVDS serial data received                              | /           |
-| RX_NEG                 | in        | std_logic                             | Negative LVDS serial data received                              | /           |
+| CLK_REF_N              | in        | std_logic;                            | Reference HSSL IP Clock (neg) / Not used for Versal             | Clk_hssl    |
+| CLK_REF_P              | in        | std_logic;                            | Reference HSSL IP Clock (pos) / Clk_GTY for Versal              | Clk_hssl    |
+| TX_POS                 | out       | std_logic                             | Positive HSSL serial data send                                  | /           |
+| TX_NEG                 | out       | std_logic                             | Negative HSSL serial data send                                  | /           |
+| RX_POS                 | in        | std_logic                             | Positive HSSL serial data received                              | /           |
+| RX_NEG                 | in        | std_logic                             | Negative HSSL serial data received                              | /           |
 | ENABLE_INJ             | in        | std_logic                             | Enable injector command                                         | Clk         |
 | DATA_TX_INJ            | in        | std_logic_vector(31 downto 00)        | Data parallel to be send from injector                          | Clk         |
 | CAPABILITY_TX_INJ      | in        | std_logic_vector(07 downto 00)        | Capability send on TX link in INIT3 control word from injector  | Clk         |
@@ -158,7 +159,7 @@ The SpaceFibre Light I/O signals for the control path at the Data Link level are
 | INTERFACE_RESET        | in        | std_logic                             | Reset the link and all configuration register of the Data Link layer                                                        | Clk         |
 | LINK_RESET             | in        | std_logic                             | Reset the link                                                                                                              | Clk         |
 | NACK_RST_EN            | in        | std_logic                             | Enable automatic Link Reset on NACK reception                                                                               | Clk         |
-| NACK_RST_MODE          | in        | std_logic                             | Up for instant Link Reset on NACK reception, down for Link Reset at the end of the current received frame on NACK reception | Clk         |
+| NACK_RST_MODE          | in        | std_logic                             | `1` for instant Link Reset on NACK reception, `0` for Link Reset at the end of the current received frame on NACK reception | Clk         |
 | PAUSE_VC               | in        | std_logic_vector(8 downto 0)          | Pause the corresponding virtual channel after the end of current transmission                                               | Clk         |
 | CONTINUOUS_VC          | in        | std_logic_vector(7 downto 0)          | Enable the corresponding virtual channel continuous mode                                                                    | Clk         |
 | SEQ_NUMBER_TX          | out       | std_logic_vector(7 downto 0)          | SEQ_NUMBER in transmission                                                                                                  | Clk         |
@@ -218,7 +219,7 @@ The SpaceFibre Light I/O signals for the control path at the Phy plus Lane level
 | RX_POLARITY            | out       | std_logic                             | Set when the receiver polarity is inverted                                     | Clk_tx      |
 
 ### 2.4 Timing 
-The figure shows the block diagram of the SpaceFibre Light IP.
+The figure shows the chronogram of the SpaceFibre Light IP at the datalink layer.
 
 ![](doc/assets/axi_stream.png){ width=600px align=center}
 
@@ -247,7 +248,7 @@ To use the spy it is necessary to assert "ENABLE_SPY" and realize a classic read
 
 ### 2.5 Performance and Resource Utilization
 
-The utilization and performance of the core are summarized below for a configuration with 8 virtual channels (report after synthesis):
+The utilization and performance of the core are summarized below for a configuration with 8 virtual channels (report after synthesis for the target Versal) :
 
 | DSP | FFs  | LUT   | BRAM |
 | --- | ---- | ----- | ---- |
@@ -362,10 +363,15 @@ When NACK_RST_EN is de-asserted, nothing is done on NACK reception, as it is sup
 
 There are 20 clocks to provide to the SpaceFibre Light IP. There are 2 clocks needed for the different layers of the IP, and 18 clocks to be provided for the 9 AXI4-Stream Master interfaces and 9 AXI4-Stream Slave interfaces:  
 
-- CLK: This clock is associated with the first clock domain and corresponds to the system clock. It must be at 150 MHz. The Data-Link layer discrete signals, the Lane layer Injector interface and the Lane layer Spy interface are synchronized with this clock.
-- CLK_GTY: This clock is the input clock of the Xilinx GTY IP and must be at 100 MHz.
-- AXIS_ACLK_TX_DL : This vector is composed of the 9 AXI4-Stream Master clocks. Each interface AXI4-Stream of the TX interface is synchronized with its corresponding clock, which must be provided with a frequency of 150 MHz.
-- AXIS_ACLK_RX_DL : This vector is composed of the 9 AXI4-Stream Slave clocks. Each interface AXI4-Stream of the RX interface is synchronized with its corresponding clock, which must be provided with a frequency of 150 MHz.
+| Clock signals       | Description                                                                                                                          | Frequency (Versal)  | Frequency (NG-Ultra) |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------------|----------------------|
+| CLK                 | System clock. Synchronizes the Data-Link layer discrete signals, the Lane layer Injector interface and the Lane layer Spy interface. | 150 MHz             | 78.128 MHz           |
+| CLK_GTY             | Reference clock of the __Xilinx GTY IP__.                                                                                            | 100 MHz             | __Not implemented__  |
+| CLK_REF_N/CLK_REF_P | Reference clock of the __NanoXplore HSSL IP__.                                                                                       | __Not implemented__ | 100 MHz              |
+| AXIS_ACLK_TX_DL     | Vector of 9 AXI4-Stream Master clocks. Each TX AXI4-Stream interface is synchronized with its corresponding clock.                   | 150 MHz             | 78.125 MHz           |
+| AXIS_ACLK_RX_DL     | Vector of 9 AXI4-Stream Slave clocks. Each RX AXI4-Stream interface is synchronized with its corresponding clock.                    | 150 MHz             | 78.125 MHz           |
+
+
 
 To generate the CLK_GTY clock, a reference clock must be used through the Gigabit Transceiver Buffer IBUFDS_GTE5 primitive.  
   
@@ -383,8 +389,8 @@ To generate the CLK_GTY clock, a reference clock must be used through the Gigabi
 **Ports of `IBUFDS_GTE5_I`**
 
 | Name | Connected to            | Note                                 |
-|------|--------------------------|--------------------------------------|
-| O    | CLK_GTY                  | Output                               |
+|------|-------------------------|--------------------------------------|
+| O    | CLK_GTY                 | Output                               |
 | I    | QUAD0_GTREFCLK0_in_p    | Differential input (positive)        |
 | IB   | QUAD0_GTREFCLK0_in_n    | Differential input (negative)        |
 | CEB  | '0'                     | Clock buffer enable (active low)     |
@@ -392,11 +398,11 @@ To generate the CLK_GTY clock, a reference clock must be used through the Gigabi
 
 One clock is provided by the SpaceFibre Light IP:
   
-- CLK_TX: This clock is generated by the GTY transceiver IP at 150 MHz. The Phy layer and Lane layer discrete signals are synchronized with this clock. 
+- CLK_TX: This clock is generated by the GTY transceiver IP at 150 MHz on Versal and HSSL transceiver IP at 78.125 MHz on NG-Ultra. The Phy layer and Lane layer discrete signals are synchronized with this clock. 
   
 Different reset signals are available on the SpaceFibre Light IP:  
   
-- RST_N: Main reset signal, active-low and asynchronous. A pulse is needed to activate the reset of the GTY IP.
+- RST_N: Main reset signal, active-low and asynchronous. A pulse is needed to activate the reset of the GTY/HSSL IP.
 - LANE_RESET: Reset signal of the Phy and Lane layers, synchronized with CLK_TX, active high. This signal activates the lane reset procedure.
 - LANE_RESET_INJ: Reset signal of the Phy and Lane layers, synchronized with CLK, active high. This signal activates the lane reset procedure. This signal is dependant of the ENABLE_INJ signal.
 - LINK_RESET: Reset signal of the Phy, Lane and Data Link layers, synchronized with CLK, active high. This signal activates the Link Reset procedure and the lane reset procedure.
@@ -408,7 +414,7 @@ Some output signals are provided by the SpaceFibre Light IP to control external 
 - RST_TXCLK_N: Reset synchronous with CLK_TX, active low. This signal is an output of the IP and is active when a reset of the Phy and Lane layers is required. It is maintained active until the Phy layer reset is completed.
 - RESET_PARAM: Reset synchronous with CLK, active high. This signal is an output of the IP and is active when a reset of the configuration signals of the SPACEFIBRE IP is required. 
 
-#### 3.2.2 Constraints
+#### 3.2.2 Constraints (VERSAL)
 
 This paragraph includes the constraints to be set by the end-user for the IP the be properly integrated in the final design.
 To implement the SpaceFibre Light IP, you have to select the right GTY ports. To do so, follow the procedure below:
@@ -455,8 +461,17 @@ To use the SpaceFibre Light IP, different procedures must be followed. Those  pr
 
 #### 3.2.4 VHDL
 
-Except for the Xilinx/AMD sources, all source files can be compiled using the VHDL-93 or VHDL-2008 language version.  
+Except for the Xilinx/AMD sources, and 'src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd' all source files can be compiled using the VHDL-93 or VHDL-2008 language version.  
   
+File `src/ip_spacefibre_light_top/spacefibre_light_top_nano.vhd` must be compiled with vhdl2008 due to `else generate` 
+```
+      );
+   
+   elsif G_TARGET = "NG_ULTRA" generate
+      inst_phy_plus_lane : phy_plus_lane_64b
+```
+This can be fixed easily but will have an impact on cocotb simulation which use generate name. This name will change between versal and nanxoplore.
+
 The Xilinx/AMD VHDL sources can be compiled using the VHDL-93 or VHDL-2008 language version, the Xilinx/AMD Verilog sources can be compiled using the Verilog 2005 language version and the Xilinx/AMD SystemVerilog sources can be compiled using the SystemVerilog language version.
 
 ## 4 Notes
@@ -466,10 +481,10 @@ The Xilinx/AMD VHDL sources can be compiled using the VHDL-93 or VHDL-2008 langu
 
 The main directories of the SpaceFibre Light IP project are :  
   
-- [`01_design`](27-9771ED_CNES_IP-SPACE-FIBRE/IP_SPACE_FIBRE/02_dev/01_design) - source files of the SpaceFibre Light IP
-- [`02_implementation`](27-9771ED_CNES_IP-SPACE-FIBRE/IP_SPACE_FIBRE/02_dev/02_implementation) - implementation files of the SpaceFibre Light IP
-- [`03_verification`](27-9771ED_CNES_IP-SPACE-FIBRE/IP_SPACE_FIBRE/02_dev/03_verification) - verification source files and virtual test scripts
-- [`04_validation`](27-9771ED_CNES_IP-SPACE-FIBRE/IP_SPACE_FIBRE/02_dev/04_validation) - physical test scripts  
+- [`src`](src) - source files of the SpaceFibre Light IP
+- [`board`](implementation/board) - implementation files of the SpaceFibre Light IP on board
+- [`sim`](sim) - verification source files and virtual test scripts
+- [`app`](implementation/app) - board applicaion examples.
 
 The overall SpaceFibre Light IP project architecture is as follows:
 
@@ -479,28 +494,28 @@ The overall SpaceFibre Light IP project architecture is as follows:
     ├── 01_doc
     └── 02_dev
         ├── 01_design
-        │   ├── 01_cores                        # Manufacturer IP sources
+        │   ├── 01_cores                        
         │   │   ├──BufG_GT_bd
         │   │   └──extended_phy_layer
-        │   ├── 02_external_ip                  # External IP sources
+        │   ├── 02_external_ip                  
         │   │   ├── fifo_dc
         │   │   ├── fifo_dc_axis_to_custom
         │   │   ├── fifo_dc_custom_to_axis
         │   │   └── fifo_dc_drop_bad_frame
-        │   ├── 03_sources                      # SpaceFibre Light IP sources
+        │   ├── 03_sources                      
         │   │   ├── ip_spacefibre_light_top
         │   │   ├── module_data_link
         │   │   └── module_phy_plus_lane
-        │   ├── 04_packages                     # SpaceFibre Light IP packages
-        │   └── 05_libraries                    # SpaceFibre Light IP libraries
+        │   ├── 04_packages                     
+        │   └── 05_libraries                    
         ├── 02_implementation
         ├── 03_verification
-        │   ├── 01_models                       # Verification models
-        │   │   ├── data_link                   # Data Link RTL models
+        │   ├── 01_models                       
+        │   │   ├── data_link                   
         │   │   │   ├── data_link_analyzer
         │   │   │   ├── data_link_configurator
         │   │   │   └── data_link_generator
-        │   │   ├── lane                        # Lane RTL models
+        │   │   ├── lane                        
         │   │   │   ├── lane_analyzer
         │   │   │   ├── lane_configurator
         │   │   │   └── lane_generator
@@ -532,6 +547,58 @@ The overall SpaceFibre Light IP project architecture is as follows:
         
 ```
 
+```
+├── .linty                    # linty project configuration 
+│   └── yosys                 # yosys project configuration file (used by linty for synthesis and rule checking)
+├── doc                       # various document and sources for documentation
+├── implementation            # hardware oriented sources 
+│   ├── app                   # example designs on board
+│   │   ├── traffic_generator
+│   │   └── validation_pf
+│   └── board                 # board confguration files 
+│       ├── NgUltra
+│       └── vek280
+├── sim
+│   ├── benches                   # Verification benches (cocotb main testbench)
+│   │   ├── common                # Python base bench
+│   │   ├── configuration_1_bench # Legacy configuration (phy + lane only)
+│   │   └── configuration_2_bench # Current functional (phy + lane + datalink) bench 
+│   ├── cocotb-framework          # submodule with cocotb framework (stimuli + logs) for AXI tests from https://github.com/Elsys-Design/DIGITAL-VERIFICATION-COCOTB.git
+|
+│   ├── libraries          # Xilinx specific simulation Questa libraries 
+│   │   ├── cores
+│   │   ├── secureip
+│   │   ├── unisim
+│   │   └── xpm 
+│   ├── models              # Verification models for simulation 
+│   │   ├── data_link       # Data Link RTL models
+│   │   ├── lane            # Lane RTL models
+│   │   └── python_model    # Cocotb Python model
+│   └── scenario            # Virtual verification test scenario
+│       ├── archive         # legacy configuration 1 scenarios
+│       ├── covhtmlreport   # questa coverage report
+│       ├── data_link_link_reset
+│       ├── data_link_reception
+│       ├── data_link_transmission
+│       ├── lane_loopback
+│       ├── lane_loopback_farend
+│       ├── lane_receiver
+│       ├── lane_status_and_parameters_access
+│       └── lane_transmitter
+├── src                         # SpaceFibre Light IP sources
+│   ├── ip                      # IP used in the design
+│   │   ├── cores               # Manufacturer IP sources
+│   │   ├── fifo_dc
+│   │   ├── fifo_dc_axis_to_custom
+│   │   ├── fifo_dc_custom_to_axis
+│   │   └── fifo_dc_drop_bad_frame
+│   ├── ip_spacefibre_light_top
+│   ├── module_data_link
+│   ├── module_phy_plus_lane
+│   └── module_phy_plus_lane_64b
+└── xilinx_ip                    # Xilinx Vivado IP definition
+    └── spacefibrelight_full_wrapper
+```
 ### 4.3 Improvments
 None 
 
@@ -577,18 +644,25 @@ This error can be caused by a number of factors:
 - Errors in RTL generator and analyzer models
 - Error coming from the IP itself
 
-#### 4.4.3 Unitary RTL tests
+#### 4.4.4 Unitary RTL tests
 Unit tests existed on the original code, but have not been updated.
 The unit tests must therefore be checked and corrected if necessary.
+ 
+
+#### 4.4.5 HSSL NG ULTRA out of table error detection issue
+When using the NG ULTRA version of the IP, two errors will be detected instead of one when an out of table char is received and the next valid char with an 8b/10b encoding depend on the running disparity is not received in the same 32b word.
+
+#### 4.4.6 HSSL NG ULTRA consecutive errors detection issue
+When using the NG ULTRA version of the IP, three errors will be detected instead of two when two consecutive errors are received.
 
 ### 4.5 License
 This IP is copyright CNES and is licensed under CERN open hardware license `CERN-OHL-W`.
 
 
 # Getting started
-The simulation environnement is based on cocotb python framework running on Questa simulator. See [cocotb installation](IP_SPACE_FIBRE/02_dev/03_verification/README.md#cocotb) for additionnal information.
+The simulation environnement is based on cocotb python framework running on Questa simulator. See [cocotb installation](sim/README.md#cocotb) for additionnal information.
 
-This repository use git-lfs (large file storage) to handle large model files for simulation. Please check the presence of every files listed in file `24-9771-ED_CNES_IP-SPACE-FIBRE/.gitattributes` in your repository prior to launch simulation. You will probably need to install [git-lfs](https://git-lfs.com/) prior to clone this repository. if file is not present use `git lfs fetch origin main' command to download them.
+This repository use git-lfs (large file storage) to handle large model files for simulation. Please check the presence of every files listed in file `.gitattributes` in your repository prior to launch simulation. You will probably need to install [git-lfs](https://git-lfs.com/) prior to clone this repository. If file is not present use `git lfs fetch origin main' command to download them.
 
 ## Simulation
-To run simulation read [simulation getting started](IP_SPACE_FIBRE/02_dev/03_verification/README.md#running-a-simulation)
+To run simulation read [simulation getting started](sim/README.md#running-a-simulation)

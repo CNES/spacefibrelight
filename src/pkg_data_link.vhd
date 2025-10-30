@@ -36,8 +36,6 @@ package data_link_lib is
   constant C_CAPA_DATA_SCRAM     : integer := 2;                  --! Data Scrambled bitfield in lane capability vector
   constant C_CAPA_MULTI_LANE     : integer := 3;                  --! Multi-Lane bitfield in lane capability vector
   constant C_CAPA_ROUTING_SW     : integer := 4;                  --! Routing Switch bitfield in lane capability vector
-  -- Number of Virtual Channel
-  constant C_VC_NUM              : integer              := 8;     --! Number of Virtual Channels
   -- Output Buffer
   constant C_OUT_BUF_SIZE        : integer              := 7;     --! fifo depth = 2**7= 128 words of 32 bits
   constant C_FCT_CC_SIZE         : integer              := 8;     --! FCT credit counter size: 4x64xM = 256

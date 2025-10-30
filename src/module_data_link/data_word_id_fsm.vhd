@@ -174,7 +174,7 @@ begin
 																									RXNOTHING_ACTIVE_DWI  <= '1';
 																									RXERR_DWI             <= '1';
 																									current_state         <= RX_NOTHING_ST;
-                                                elsif detected_sdf = '1' or detected_sbf = '1' or detected_sif = '1' or detected_edf = '1' or (detected_ebf = '1' and bc_word_cnt /= C_WORD_BC_FRAME) or bc_word_cnt >= C_WORD_BC_FRAME then
+                                                elsif detected_sdf = '1' or detected_sbf = '1' or detected_sif = '1' or detected_edf = '1' or (detected_ebf = '1' and bc_word_cnt /= C_WORD_BC_FRAME) or (bc_word_cnt >= C_WORD_BC_FRAME and FIFO_RX_DATA_VALID_PPL = '1') then
                                                   RXNOTHING_ACTIVE_DWI  <= '1';
 																									FRAME_ERR_DWI         <= '1';
                                                   current_state         <= RX_NOTHING_ST;
@@ -234,7 +234,7 @@ begin
 			  if (current_state_r = RX_IDLE_FRAME_ST) then
 			    data_word_cnt      <= to_unsigned(1,data_word_cnt'length);
 			  else
-					if (FIFO_RX_DATA_VALID_PPL ='1' and detected_fct ='0' and detected_ack ='0' and detected_nack ='0' and detected_full ='0') then
+					if (FIFO_RX_DATA_VALID_PPL ='1' and detected_fct ='0' and detected_ack ='0' and detected_nack ='0' and detected_full ='0' and detected_sbf = '0') then
 			    	data_word_cnt    <= data_word_cnt + 1;
 					end if;
 			  end if;

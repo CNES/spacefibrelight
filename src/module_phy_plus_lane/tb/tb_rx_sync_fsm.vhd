@@ -17,12 +17,12 @@ architecture tb of tb_rx_sync_fsm is
          LANE_RESET_DL                    : in  std_logic;                       -- Lane reset command from Data-Link Layer.
          -- TO lane_ctrl_word_detection
          DATA_RX_TO_LCWD                  : out std_logic_vector(31 downto 00);  -- 
-         VALID_K_CARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  --
+         VALID_K_CHARAC_TO_LCWD            : out std_logic_vector(03 downto 00);  --
          DATA_RDY_TO_LCWD                 : out std_logic;                       -- 
          
          -- FROM MANUFACTURER IP
          DATA_RX_FROM_IP                  : in  std_logic_vector(31 downto 00);  -- 
-         VALID_K_CARAC_FROM_IP            : in  std_logic_vector(03 downto 00);  -- 
+         VALID_K_CHARAC_FROM_IP            : in  std_logic_vector(03 downto 00);  -- 
          DATA_RDY_FROM_IP                 : in  std_logic;                       --
          INVALID_CHAR_FROM_IP             : in  std_logic_vector(03 downto 00);  --
          DISPARITY_ERR_FROM_IP            : in  std_logic_vector(03 downto 00);  --
@@ -45,11 +45,11 @@ signal CLK                              : std_logic := '0';
 signal LANE_RESET_DL                    : std_logic := '0';
 -- TO lane_ctrl_word_detection
 signal DATA_RX_TO_LCWD                  : std_logic_vector(31 downto 00) := (others => '0');
-signal VALID_K_CARAC_TO_LCWD            : std_logic_vector(03 downto 00) := (others => '0');
+signal VALID_K_CHARAC_TO_LCWD            : std_logic_vector(03 downto 00) := (others => '0');
 signal DATA_RDY_TO_LCWD                 : std_logic := '0';
 -- FROM MANUFACTURER IP
 signal DATA_RX_FROM_IP                  : std_logic_vector(31 downto 00) := (others => '0');
-signal VALID_K_CARAC_FROM_IP            : std_logic_vector(03 downto 00) := (others => '0');
+signal VALID_K_CHARAC_FROM_IP            : std_logic_vector(03 downto 00) := (others => '0');
 signal DATA_RDY_FROM_IP                 : std_logic := '0';                     
 signal INVALID_CHAR_FROM_IP             : std_logic_vector(03 downto 00) := (others => '0');
 signal DISPARITY_ERR_FROM_IP            : std_logic_vector(03 downto 00) := (others => '0');  --
@@ -69,11 +69,11 @@ DUT : rx_sync_fsm
       LANE_RESET_DL                    => LANE_RESET_DL,
       -- TO lane_ctrl_word_detection
       DATA_RX_TO_LCWD                  => DATA_RX_TO_LCWD,
-      VALID_K_CARAC_TO_LCWD            => VALID_K_CARAC_TO_LCWD,
+      VALID_K_CHARAC_TO_LCWD            => VALID_K_CHARAC_TO_LCWD,
       DATA_RDY_TO_LCWD                 => DATA_RDY_TO_LCWD,
       -- FROM MANUFACTURER IP
       DATA_RX_FROM_IP                  => DATA_RX_FROM_IP,
-      VALID_K_CARAC_FROM_IP            => VALID_K_CARAC_FROM_IP,
+      VALID_K_CHARAC_FROM_IP            => VALID_K_CHARAC_FROM_IP,
       DATA_RDY_FROM_IP                 => DATA_RDY_FROM_IP,
       INVALID_CHAR_FROM_IP             => INVALID_CHAR_FROM_IP,
       DISPARITY_ERR_FROM_IP            => DISPARITY_ERR_FROM_IP,
@@ -128,23 +128,23 @@ begin
    DATA_RDY_FROM_IP        <= '1';
    INVALID_CHAR_FROM_IP    <= x"1";
    DATA_RX_FROM_IP         <= x"11223344";
-   VALID_K_CARAC_FROM_IP   <= x"1";
+   VALID_K_CHARAC_FROM_IP   <= x"1";
    wait until rising_edge(CLK);     -- 2nd word with errors
    INVALID_CHAR_FROM_IP <= x"F";
    DATA_RX_FROM_IP         <= x"55667788";
-   VALID_K_CARAC_FROM_IP   <= x"2";
+   VALID_K_CHARAC_FROM_IP   <= x"2";
    wait until rising_edge(CLK);     -- 3rd word with errors
    DISPARITY_ERR_FROM_IP <= x"F";
    DATA_RX_FROM_IP         <= x"99AABBCC";
-   VALID_K_CARAC_FROM_IP   <= x"3";
+   VALID_K_CHARAC_FROM_IP   <= x"3";
    wait until rising_edge(CLK);     -- 4th word with errors
    DISPARITY_ERR_FROM_IP <= x"3";
    DATA_RX_FROM_IP         <= x"DDEEFF00";
-   VALID_K_CARAC_FROM_IP   <= x"4";
+   VALID_K_CHARAC_FROM_IP   <= x"4";
    wait until rising_edge(CLK);     -- 5th word with error
    INVALID_CHAR_FROM_IP <= x"1";
    DATA_RX_FROM_IP         <= x"11223344";
-   VALID_K_CARAC_FROM_IP   <= x"5";
+   VALID_K_CHARAC_FROM_IP   <= x"5";
    wait until rising_edge(CLK);
    INVALID_CHAR_FROM_IP  <= x"0";
    DISPARITY_ERR_FROM_IP <= x"0";

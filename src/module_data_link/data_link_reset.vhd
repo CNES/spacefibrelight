@@ -103,6 +103,7 @@ begin
     lane_reset_dlre_i    <= '0';
     RESET_PARAM_DLRE   <= '0';
     lane_active_ppl_r  <= LANE_ACTIVE_PPL;
+    NEAR_END_CAPA_DLRE(NEAR_END_CAPA_DLRE'left downto 1)<=(others=>'0'); -- to handle a bug in NX synthesis where unused resetted signal generate a potential latch
     case current_state is
       when CONF_RST_ST          =>
                                   current_state_vector <= "00";
