@@ -10,7 +10,7 @@ echo ""
 quietly set LIB_PATH_UNISIM_V    $rootpath/sim/libraries/unisim/verilog/src
 quietly set LIB_PATH_UNISIM_VHD  $rootpath/sim/libraries/unisim/vhdl/src/unisims
 quietly set LIB_PATH_BUF         $rootpath/sim/libraries/cores/BufG_GT_bd
-quietly set LIB_PATH_GTY         $rootpath/sim/libraries/cores/extended_phy_layer
+quietly set LIB_PATH_GTY         $rootpath/sim/libraries/cores/extended_phy_layer_gtwiz_versal_0_0
 quietly set LIB_PATH_XPM         $rootpath/sim/libraries/xpm
 quietly set LIB_PATH_SECUREIP    $rootpath/sim/libraries/secureip
 
@@ -28,9 +28,11 @@ vlib sim_build/xpm
 vlib sim_build/unisim
 vlib sim_build/commun
 vlib sim_build/phy_plus_lane_lib
+vlib sim_build/phy_plus_lane_64_lib
 vlib sim_build/secureip
 vlib sim_build/data_link_lib
 vlib sim_build/interlayer_lib
+vlib sim_build/nx
 echo "############# End create Libraries #############"
 
 echo "############# Map Libraries #############"
@@ -39,8 +41,10 @@ vmap xpm sim_build/xpm
 vmap unisim sim_build/unisim
 vmap commun sim_build/commun
 vmap phy_plus_lane_lib sim_build/phy_plus_lane_lib
+vmap phy_plus_lane_64_lib sim_build/phy_plus_lane_64_lib
 vmap data_link_lib sim_build/data_link_lib
 vmap interlayer_lib sim_build/interlayer_lib
+vmap nx sim_build/nx
 echo "############# End map Libraries #############"
 
 
@@ -85,9 +89,9 @@ vcom +acc -work commun  $rootpath/src/ip/fifo_dc/fifo_dc.vhd
 echo "############# End compile FIFO #############"
 
 
-echo "#############################################"
-echo "########## Start compile Phy+Lane ###########"
-echo "#############################################"
+echo "####################################################"
+echo "########## Start compile Phy+Lane VERSAL ###########"
+echo "####################################################"
 
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/pkg_phy_plus_lane.vhd
 
@@ -97,28 +101,24 @@ vlog  +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_BUF/ip/
 echo "############# End compile BUFG #############"
 
 echo "############# Start compile GTY #############"
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/extended_phy_layer_clk_wizard_0_0_clocking_MBUFGCE_CE_DLY.v
-vlog +cover=sb +acc -sv -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/extended_phy_layer_clk_wizard_0_0_clocking_Synchronizer3.sv
-vlog +cover=sb +acc -sv -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/extended_phy_layer_clk_wizard_0_0_clocking_cmt_dpll_fd_cal.sv
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/extended_phy_layer_clk_wizard_0_0_clocking_structure.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/extended_phy_layer_clk_wizard_0_0_clk_wiz_top.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_clk_wizard_0_0/sim/extended_phy_layer_clk_wizard_0_0.v
-vlog +cover=sb +acc -sv -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/ip_0/extended_phy_layer_gtwiz_versal_0_0_gt_quad_base_0_rules_output.vh
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/ip_0/extended_phy_layer_gtwiz_versal_0_0_gt_quad_base_0_tx_function.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/ip_0/extended_phy_layer_gtwiz_versal_0_0_gt_quad_base_0_rx_function.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/ip_0/extended_phy_layer_gtwiz_versal_0_0_gt_quad_base_0_inst.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/ip_0/sim/extended_phy_layer_gtwiz_versal_0_0_gt_quad_base_0.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/extended_phy_layer_gtwiz_versal_0_0_powergood_logic.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/extended_phy_layer_gtwiz_versal_0_0_reset_ip.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/extended_phy_layer_gtwiz_versal_0_0_quad_top.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/extended_phy_layer_gtwiz_versal_0_0_intf_quad_map.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/extended_phy_layer_gtwiz_versal_0_0_inst.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/ip/extended_phy_layer_gtwiz_versal_0_0/sim/extended_phy_layer_gtwiz_versal_0_0.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  $LIB_PATH_GTY/sim/extended_phy_layer.v
-vlog +cover=sb +acc -work phy_plus_lane_lib  $LIB_PATH_GTY/hdl/extended_phy_layer_wrapper.v
+vlog +cover=sb +acc -work phy_plus_lane_lib  -L xpm -L unisim $LIB_PATH_GTY/*.v
+
 echo "############# End compile GTY #############"
 
-echo "######## Start compile Lane_layer #########"
+echo "#####################################################"
+echo "########## Start compile Phy+Lane NGULTRA ###########"
+echo "#####################################################"
+
+vcom +cover=sb +acc -work phy_plus_lane_64_lib  $rootpath/src/pkg_phy_plus_lane_64b.vhd
+vcom +cover=sb +acc -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd
+vcom +cover=sb +acc -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd
+
+echo "############# Start compile NX HSSL #############"
+vlog +cover=sb +acc -incr -timescale=1ps/1ps -sv -work phy_plus_lane_64_lib  $rootpath/src/ip/cores/HSSL_Nanoxplore/merged_nx_hssl_u_full.svp
+vcom +cover=sb +acc -2008 -work nx -mixedsvvh pc  $rootpath/src/ip/cores/HSSL_Nanoxplore/nxLibrary-Ultra.vhdp
+vcom +cover=sb +acc -2008 -mixedsvvh pc -work  phy_plus_lane_64_lib  $rootpath/src/ip/cores/HSSL_Nanoxplore/hssl_SpaceFibre_64b.vhd
+
+echo "######## Start compile Lane_layer VERSAL #########"
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/lane_ctrl_word_detect.vhd
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/lane_ctrl_word_insert.vhd
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/lane_init_fsm.vhd
@@ -127,6 +127,23 @@ vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/skip_insertion.vhd
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/phy_plus_lane.vhd
 vcom +cover=sb +acc -work phy_plus_lane_lib  $rootpath/src/module_phy_plus_lane/mib_phy_plus_lane.vhd
+echo "######### End compile Lane_layer VERSAL ##########"
+
+echo "######## Start compile Lane_layer NGULTRA #########"
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_bus_concat_tx.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/ppl_64_bus_split_rx.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd
+vcom +cover=sb +acc -2008 -work phy_plus_lane_64_lib  $rootpath/src/module_phy_plus_lane/mib_phy_plus_lane.vhd
+echo "######### End compile Lane_layer NGULTRA ##########"
+
+
 echo "######### End compile Lane_layer ##########"
 
 echo "########## End compile Phy+Lane ###########"

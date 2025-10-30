@@ -77,9 +77,9 @@ architecture rtl of data_crc_check is
 type int_array      is array (0 to 3) of integer;
 type int_array_tier is array (0 to 2) of integer;
 type int_array_dem  is array (0 to 1) of integer;
-signal indices      : int_array      := (0, 8, 16, 24);
-signal indices_tier : int_array_tier := (0, 8, 16);
-signal indices_dem  : int_array_dem  := (0, 8);
+constant indices      : int_array      := (0, 8, 16, 24);
+constant indices_tier : int_array_tier := (0, 8, 16);
+constant indices_dem  : int_array_dem  := (0, 8);
 -- CRC 16 Bits compute
 signal crc_reg_16b_comp              : std_logic_vector(16-1 downto 0);
 signal crc_long_err                  : std_logic;

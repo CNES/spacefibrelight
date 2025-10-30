@@ -75,7 +75,7 @@ async def initialization_procedure(tb, monitor_path):
 
     #Wait end of phy reset
     tb.logger.info("sim_time %d ns: Wait PHY reset completion", get_sim_time(units = 'ns') )
-    await RisingEdge(tb.dut.spacefibre_instance.inst_phy_plus_lane.RST_TX_DONE)
+    await RisingEdge(tb.dut.spacefibre_instance.gen_inst_phy_plus_lane.inst_phy_plus_lane.RST_TX_DONE)
     tb.logger.info("sim_time %d ns: Reset PHY completed", get_sim_time(units = 'ns') )
 
     #Wait to go to Disabled
@@ -595,7 +595,8 @@ async def cocotb_run(dut):
     step_1_failed = 0
     #Sets DUT lane initialisation FSM to Active
 
-    
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(20000))
+
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_1")
 
     monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 20+66*8+23))
@@ -629,7 +630,7 @@ async def cocotb_run(dut):
 
     await (monitor)
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 20+66*8+93))
+    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 5000))
 
 
     #Send FCT to each virtual channel
@@ -649,35 +650,16 @@ async def cocotb_run(dut):
     await start_gen_vc_dl(tb)
 
     #Maintain RX link alive
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/3_IDLE.dat", file_format = 16)
+    await send_idle_ctrl_word(tb, 1000)
 
-    await (monitor)
-
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 20))
 
     #Send a broadcast frame on TX
     await configure_model_dl(tb, 19, [0x01,0x01,0x00,0x00], [0x00,0x00,0x00,0x42])
     await start_model_dl(tb, 19)
 
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
+    await send_idle_ctrl_word(tb, 100)
 
-    await (monitor)
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 123))
 
     #Send FCT to each virtual channel
     for x in range(8):
@@ -693,29 +675,19 @@ async def cocotb_run(dut):
     await start_model_dl(tb, 19)
     
     #Maintain RX link alive
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/50_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
+    await send_idle_ctrl_word(tb, 200)
 
-    await (monitor)
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 108))
 
     #Send FCT to each virtual channel
     for x in range(8):
         await send_FCT(tb, x, 0, "0"+ f"{(x+25):0>7b}")
 
     #wait for idle frame (100 words)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
+    await send_idle_ctrl_word(tb, 200)
 
-    await monitor
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 55))
+
 
     #Send a broadcast frame on TX
     await configure_model_dl(tb, 19, [0x01,0x01,0x00,0x00], [0x00,0x00,0x00,0x42])
@@ -723,18 +695,10 @@ async def cocotb_run(dut):
 
     #wait for idle frame (32 words)
     #Maintain RX link alive
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    
-    await monitor
+    await send_idle_ctrl_word(tb, 200)
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_1", number_of_word = 20+66*8+23))
+    
+
 
     #Send a data frame on TX
     await configure_gen_vc_dl(tb, [0xE1,0x1F,0x00,0x00], [0x00,0x00,0x00,0x00])
@@ -742,27 +706,15 @@ async def cocotb_run(dut):
     await start_gen_vc_dl(tb)
 
     #Maintain RX link alive
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/5_IDLE.dat", file_format = 16)
-    await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/3_IDLE.dat", file_format = 16)
+    await send_idle_ctrl_word(tb, 2000)
+
 
     await monitor
 
+    await fct_monitor 
+
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
+    
     if step_1_failed == 0:
         tb.logger.info("simulation time %d ns : step 1 result: Pass", get_sim_time(units = 'ns'))
     else:
@@ -779,10 +731,12 @@ async def cocotb_run(dut):
     ##########################################################################
     
     step_2_failed = 0
+
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(30000))
     
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_2")
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 143+66*8+20))
+    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 13000))
 
     #Send first FCT to each virtual channel
     for x in range(8):
@@ -804,11 +758,8 @@ async def cocotb_run(dut):
 
     await send_idle_ctrl_word(tb, 20)
 
-    await monitor
 
     # Check ACK Request
-
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_2", number_of_word = 143+1008+20))
 
     #Send FCT
     for x in range(8):
@@ -820,7 +771,7 @@ async def cocotb_run(dut):
 
     #Receive 3 packet of 30 word on each virtual buffer on RX
     for model in range(8):
-        await configure_model_dl(tb, 4+2*model, [0xE3,0x01,0x00,0x01], [0x2B,0x00,0x00,0x00])
+        await configure_model_dl(tb, 4+2*model, [0x03,0x0F,0x00,0x01], [0x2B,0x00,0x00,0x00])
         await start_model_dl(tb, 4+2*model)
 
     await start_gen_vc_dl(tb)
@@ -841,7 +792,7 @@ async def cocotb_run(dut):
 
     #Receive 3 packet of 30 word on each virtual buffer on RX
     for model in range(8):
-        await configure_model_dl(tb, 4+2*model, [0xE3,0x01,0x00,0x01], [0x2B,0x00,0x00,0x00])
+        await configure_model_dl(tb, 4+2*model, [0x03,0x0F,0x00,0x01], [0x2B,0x00,0x00,0x00])
         await start_model_dl(tb, 4+2*model)
 
 
@@ -874,7 +825,7 @@ async def cocotb_run(dut):
     #Check NACK request
 
     #Receive 1 packet of 30 words on virtual channel 0 on RX
-    await configure_model_dl(tb, 4, [0xE3,0x01,0x00,0x01], [0x2E,0x00,0x00,0x00])
+    await configure_model_dl(tb, 4, [0x01,0x0F,0x00,0x01], [0x2E,0x00,0x00,0x00])
     await start_model_dl(tb, 4)
 
     #Send 1 packet of 30 word in frames of 3 words on virtual channel 0 to RX
@@ -891,7 +842,7 @@ async def cocotb_run(dut):
 
     #Check NACK
 
-    await configure_model_dl(tb, 4, [0xE3,0x01,0x00,0x01], [0x2F,0x00,0x00,0x00])
+    await configure_model_dl(tb, 4, [0x01,0x0F,0x00,0x01], [0x2F,0x00,0x00,0x00])
     await start_model_dl(tb, 4)
 
     await tb.spacefibre_random_generator_data_link.write_random_inputs("reference/spacefibre_serial/step_2_6_" + str(0), 120, 1, 3, 0, 0, 351%128, delay = 0, invert_polarity = 0, seed = 47)
@@ -907,7 +858,7 @@ async def cocotb_run(dut):
 
     #Check NACK
 
-    await configure_model_dl(tb, 4, [0xE3,0x01,0x00,0x01], [0x2F,0x00,0x00,0x00])
+    await configure_model_dl(tb, 4, [0x01,0x0F,0x00,0x01], [0x2F,0x00,0x00,0x00])
     await start_model_dl(tb, 4)
 
     await tb.spacefibre_random_generator_data_link.write_random_inputs("reference/spacefibre_serial/step_2_7_" + str(0), 120, 1, 3, 0, 0, 369%128, sequence_polarity = 1, delay = 0, invert_polarity = 0, seed = 47)
@@ -926,7 +877,7 @@ async def cocotb_run(dut):
     await start_model_dl(tb, 20)
 
     #Send Broadcast Frame
-    await tb.spacefibre_random_generator_data_link.write_random_inputs("reference/spacefibre_serial/step_2_8_" + str(0), 0x000000300000002F, 1, 0, 1, 0, 379%128, sequence_polarity = 1, delay = 0, invert_polarity = 0, seed = 47)
+    await tb.spacefibre_random_generator_data_link.write_random_inputs("reference/spacefibre_serial/step_2_8_" + str(0), 0x000000300000002F, 1, 0, 1, 0, 379%128, sequence_polarity = 0, delay = 0, invert_polarity = 0, seed = 47)
 
     #Check ACK
 
@@ -937,8 +888,14 @@ async def cocotb_run(dut):
 
     await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
     await tb.spacefibre_driver.write_from_file("stimuli/spacefibre_serial/100_IDLE.dat", file_format = 16)
+    
+    await send_idle_ctrl_word(tb, 8000)
 
     await monitor
+    await fct_monitor 
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
+
+
 
     if step_2_failed == 0:
         tb.logger.info("simulation time %d ns : step 2 result: Pass", get_sim_time(units = 'ns'))
@@ -957,6 +914,7 @@ async def cocotb_run(dut):
     step_3_failed = 0
 
     # monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_3", number_of_word = 2500))
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(20000))
 
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_3_init")
     
@@ -1021,13 +979,17 @@ async def cocotb_run(dut):
 
     #Check broadcast frame SEQ NUM and CRC
 
-    await send_idle_ctrl_word(tb, 100)
+    await send_idle_ctrl_word(tb, 4000)
 
     
     await monitor
 
 
     result = check_CRC(tb, "reference/spacefibre_serial/monitor_step_3_hexa.dat")
+
+    await fct_monitor
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
+
 
     if result == 1:
         step_3_failed = 1
@@ -1048,9 +1010,12 @@ async def cocotb_run(dut):
 
     step_4_failed = 0
 
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_4", number_of_word = 500+64*80))
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(20000))
+
 
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_4")
+
+    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_4", number_of_word = 15000+64*80))
 
     #Check that FCT are sent for each virtual buffer
 
@@ -1081,7 +1046,7 @@ async def cocotb_run(dut):
     for x in range(4):
         await send_FCT(tb, 2*x, 0, "0"+ f"{(x+9):0>7b}")
 
-    await send_idle_ctrl_word(tb, 64*4+50)
+    await send_idle_ctrl_word(tb, 64*4+500)
     #Check transmission of 1 out of 2 data frame on half the channels
 
     for x in range(4):
@@ -1089,14 +1054,14 @@ async def cocotb_run(dut):
 
     #Check transmission of 1 out of 2 data frame on other half the channels
 
-    await send_idle_ctrl_word(tb, 64*4+50)
+    await send_idle_ctrl_word(tb, 64*4+500)
 
     for x in range(8):
         await send_FCT(tb, x, 0, "0"+ f"{(x+17):0>7b}")
 
     #Check transmission of remaining frames on all channels
 
-    await send_idle_ctrl_word(tb, 64*8+50)
+    await send_idle_ctrl_word(tb, 64*8+500)
 
 
     #Send a packets of 32 word to each buffer
@@ -1107,7 +1072,7 @@ async def cocotb_run(dut):
     for x in range(8):
         await send_FCT(tb, x, 0, "0"+ f"{(x+25):0>7b}")
     
-    await send_idle_ctrl_word(tb, 32*8+50)
+    await send_idle_ctrl_word(tb, 32*8+500)
     #Check reception of a frame of 32 word on each channel
     
     #Send 3 packets of 32 word to each buffer
@@ -1115,7 +1080,7 @@ async def cocotb_run(dut):
 
     await start_gen_vc_dl(tb)
 
-    await send_idle_ctrl_word(tb, 32*8+50)
+    await send_idle_ctrl_word(tb, 32*8+500)
 
     #Check reception of a frame of 32 word on each channel
 
@@ -1125,7 +1090,7 @@ async def cocotb_run(dut):
     for x in range(8):
         await send_FCT(tb, x, 0, "0"+ f"{(x+33):0>7b}")
 
-    await send_idle_ctrl_word(tb, 64*8+50)
+    await send_idle_ctrl_word(tb, 64*8+500)
 
     #Check reception of a frame of 64 word on each channel
 
@@ -1142,7 +1107,7 @@ async def cocotb_run(dut):
 
     await start_gen_vc_dl(tb)
 
-    await send_idle_ctrl_word(tb, 64*16 + 50)
+    await send_idle_ctrl_word(tb, 64*16 + 500)
     #Check reception of two frame of 64 word on each channel
 
 
@@ -1155,10 +1120,13 @@ async def cocotb_run(dut):
 
     await start_gen_vc_dl(tb)
 
-    await send_idle_ctrl_word(tb, 64*16 + 50)
+    await send_idle_ctrl_word(tb, 64*16 + 500)
     #Check reception of two frame of 64 word on each channel
 
-    await send_idle_ctrl_word(tb, 200)
+    await send_idle_ctrl_word(tb, 6200)
+
+    await fct_monitor 
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
 
     if step_4_failed == 0:
         tb.logger.info("simulation time %d ns : step 4 result: Pass", get_sim_time(units = 'ns'))
@@ -1176,6 +1144,8 @@ async def cocotb_run(dut):
 
 
     step_5_failed = 0
+
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(10000))
 
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_5")
     
@@ -1220,9 +1190,12 @@ async def cocotb_run(dut):
     await send_idle_ctrl_word(tb, 64*4+4+50)
     #Check transmission data, check order of virtual
     
-    await send_idle_ctrl_word(tb, 100)
+    await send_idle_ctrl_word(tb, 6000)
 
     await monitor
+
+    await fct_monitor
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
 
     if step_5_failed == 0:
         tb.logger.info("simulation time %d ns : step 5 result: Pass", get_sim_time(units = 'ns'))
@@ -1241,10 +1214,11 @@ async def cocotb_run(dut):
 
     step_6_failed = 0
 
+    fct_monitor = cocotb.start_soon(tb.spacefibre_random_generator_data_link.monitor_FCT(10000))
 
     await initialization_procedure(tb, "reference/spacefibre_serial/monitor_step_6")
     
-    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_6", number_of_word = 200+31*64+7*16*64+100+16*64+100))
+    monitor = cocotb.start_soon(tb.spacefibre_sink.read_to_file("reference/spacefibre_serial/monitor_step_6", number_of_word = 13000+200+31*64+7*16*64+100+16*64+100))
 
     #Enable Continuous mode on virtual channel 0
     Data_read_dl_config_parameters.data = bytearray([0x04, 0x40, 0x00, 0x00])
@@ -1260,7 +1234,7 @@ async def cocotb_run(dut):
         await send_FCT(tb,0,0,"0" + f"{(x+1):0>7b}")
         await send_idle_ctrl_word(tb, 64)
 
-    await send_idle_ctrl_word(tb, 500)
+    await send_idle_ctrl_word(tb, 2000)
 
 
     Data_read_dl_config_parameters.data = bytearray([0x24, 0x40, 0x00, 0x00])
@@ -1282,7 +1256,7 @@ async def cocotb_run(dut):
         await send_FCT(tb,0,0,"0" + f"{(x+17):0>7b}")
         await send_idle_ctrl_word(tb, 64)
 
-    await send_idle_ctrl_word(tb, 500)
+    await send_idle_ctrl_word(tb, 4000)
 
 
     Data_read_dl_config_parameters.data = bytearray([0x04, 0x40, 0x00, 0x00])
@@ -1313,7 +1287,10 @@ async def cocotb_run(dut):
     
     #Check EEP insertion
 
-    await send_idle_ctrl_word(tb, 200)
+    await send_idle_ctrl_word(tb, 8000)
+    tb.spacefibre_random_generator_data_link.fct_counter = [0]*8
+
+    await fct_monitor 
 
     if step_6_failed == 0:
         tb.logger.info("simulation time %d ns : step 6 result: Pass", get_sim_time(units = 'ns'))

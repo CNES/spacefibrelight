@@ -69,11 +69,11 @@ entity data_mac is
     NEW_WORD_DMAC        : out std_logic;                                          --! New word Flag to data_encapsulation
     END_PACKET_DMAC      : out std_logic;                                          --! End frame/control word to data_encapsulation
     TYPE_FRAME_DMAC      : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DMAC
-    VIRTUAL_CHANNEL_DMAC : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Virtual channel of the frame associated with DATA_DMAC
-    BC_TYPE_DMAC         : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Type
-    BC_CHANNEL_DMAC      : out std_logic_vector(G_VC_NUM-1 downto 0);              --! BROADCAST Channel (one channel in this implementation)
+    VIRTUAL_CHANNEL_DMAC : out std_logic_vector(7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
+    BC_TYPE_DMAC         : out std_logic_vector(7 downto 0);                       --! BROADCAST Type
+    BC_CHANNEL_DMAC      : out std_logic_vector(7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
     BC_STATUS_DMAC       : out std_logic_vector(2-1 downto 0);                     --! BOADCAST status
-    MULT_CHANNEL_DMAC    : out std_logic_vector(G_VC_NUM-1 downto 0);              --! Multiplier and Channel field for FCT word
+    MULT_CHANNEL_DMAC    : out std_logic_vector(7 downto 0);                       --! Multiplier and Channel field for FCT word
     TRANS_POL_FLG_DMAC   : out std_logic;                                          --! Transmission polarity flag
     SEQ_NUM_ACK_DMAC     : out std_logic_vector(7 downto 0)                        --! SEQ_NUM ACK value
   );
@@ -285,31 +285,13 @@ begin
               END_PACKET_DMAC <= '1';
               fct_counter     <= fct_counter +1;
               type_frame      <= C_FCT_FRM;
-              if REQ_FCT_DIBUF(0) ='1' then
-                REQ_FCT_DONE_DMAC(0) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(0,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(1) ='1' then
-                REQ_FCT_DONE_DMAC(1) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(1,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(2) ='1' then
-                REQ_FCT_DONE_DMAC(2) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(2,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(3) ='1' then
-                REQ_FCT_DONE_DMAC(3) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(3,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(4) ='1' then
-                REQ_FCT_DONE_DMAC(4) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(4,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(5) ='1' then
-                REQ_FCT_DONE_DMAC(5) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(5,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(6) ='1' then
-                REQ_FCT_DONE_DMAC(6) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(6,MULT_CHANNEL_DMAC'length));
-              elsif REQ_FCT_DIBUF(7) ='1' then
-                REQ_FCT_DONE_DMAC(7) <= '1';
-                MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(7,MULT_CHANNEL_DMAC'length));
-              end if;
+              for i in 0 to G_VC_NUM-1 loop
+                if REQ_FCT_DIBUF(i) ='1' then
+                  REQ_FCT_DONE_DMAC(i) <= '1';
+                  MULT_CHANNEL_DMAC    <= std_logic_vector(to_unsigned(i,MULT_CHANNEL_DMAC'length));
+                  exit;                 -- only one REQ per period
+                end if;
+              end loop;
             end if;
           end if;
       end case;

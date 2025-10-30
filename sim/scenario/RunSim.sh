@@ -121,7 +121,7 @@ else
     #change error message 
     # trap 'echo -e "\n###############\nError Running test : $MYSIM (see previous error message from cocotb)! \nExiting.\n###############\n"' ERR
     # clean sim build sometimes cocotb fail to refresh it
-    # rm -r sim_build
+    rm -r sim_build
 
     #run simulation with cocotb
     make -f ../Makefile
