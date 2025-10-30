@@ -615,6 +615,7 @@ architecture rtl of phy_plus_lane_64b is
   signal far_end_capa_plbsr                   : std_logic_vector (7 downto 0);
   -- ctrl internal signals
   signal lane_reset_dl_i                      : std_logic;
+  signal rst_lane_reset_dl_i                  : std_logic;
 
 begin
   ----------------------------------------------------------------------------------------------------------------------------------------
@@ -714,8 +715,28 @@ begin
   -- Instance of TX FIFO_1MB_wrapper module
   ------------------------------------------------------------------------------
   ctrl_in_plbct       <= lane_reset_plbct & capability_tx_plbct;
-  lane_reset_dl_i     <= '0'                       when lane_state_plif = "0000" else ctrl_in_plfic(8) when data_valid_plfic ='1';
-  capability_tx_plfic <= ctrl_in_plfic(7 downto 0) when data_valid_plfic ='1';
+  
+  rst_lane_reset_dl_i <= not (lane_state_plif(0)) and  not (lane_state_plif(1))  and not (lane_state_plif(2)) and not (lane_state_plif(3));
+  p_update_ctrl_tx : process(clk_tx, rst_lane_reset_dl_i)
+  begin
+    if rst_lane_reset_dl_i = '1' then
+      lane_reset_dl_i <= '0';
+    elsif rising_edge(clk_tx) then
+     if data_valid_plfic ='1' then
+        lane_reset_dl_i     <= ctrl_in_plfic(8);
+      end if;
+    end if;
+  end process p_update_ctrl_tx;
+
+  --capabity should not be resetted when lane is resetted
+  p_update_capability : process(clk_tx)
+  begin
+    if rising_edge(clk_tx) then
+     if data_valid_plfic ='1' then
+        capability_tx_plfic <= ctrl_in_plfic(7 downto 0);
+      end if;
+    end if;
+  end process p_update_capability;
 
   inst_fifo_in_ctrl : FIFO_DC
     generic map(
