@@ -50,7 +50,7 @@ jobs:
           rm -rf ./docs/
           mkdir docs
           touch docs/.nojekyll
-          cp -r .linty/report/build/html/* ./docs/
+          cp -r .linty/work/report/html/* ./docs/
           git add .
           git commit -m "Update html website"
           git push
