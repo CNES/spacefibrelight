@@ -46,8 +46,8 @@ entity mib_data_link is
     PAUSE_VC_DL             : out std_logic_vector(G_VC_NUM downto 0);   --! Pause the corresponding virtual channel after the end of current transmission to DL
     CONTINUOUS_VC_DL        : out std_logic_vector(G_VC_NUM-1 downto 0); --! Enable the corresponding virtual channel continuous mode to DL
     -- MIB status interface Data-link
-    SEQ_NUMBER_TX_DL        : in  std_logic_vector(G_VC_NUM-1 downto 0); --! SEQ_NUMBER in transmission from DL
-    SEQ_NUMBER_RX_DL        : in  std_logic_vector(G_VC_NUM-1 downto 0); --! SEQ_NUMBER in reception from DL
+    SEQ_NUMBER_TX_DL        : in  std_logic_vector(8-1 downto 0);        --! SEQ_NUMBER in transmission from DL
+    SEQ_NUMBER_RX_DL        : in  std_logic_vector(8-1 downto 0);        --! SEQ_NUMBER in reception from DL
     CREDIT_VC_DL            : in  std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates if each corresponding far-end input buffer has credit from DL
     INPUT_BUF_OVF_VC_DL     : in  std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates input buffer overflow from DL
     FCT_CREDIT_OVERFLOW_DL  : in  std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates overflow of each corresponding input buffer from DL
@@ -68,7 +68,7 @@ entity mib_data_link is
     FCT_COUNTER_RX_DL       : in  std_logic_vector(3 downto 0);          --! FCT counter RX from DL
     FULL_COUNTER_RX_DL      : in  std_logic_vector(1 downto 0);          --! FULL counter RX from DL
     RETRY_COUNTER_RX_DL     : in  std_logic_vector(1 downto 0);          --! RETRY counter RX from DL
-    CURRENT_TIME_SLOT_DL    : in  std_logic_vector(G_VC_NUM-1 downto 0); --! Current time slot from DL
+    CURRENT_TIME_SLOT_DL    : in  std_logic_vector(7 downto 0);          --! Current time slot from DL
     RESET_PARAM_DL          : in  std_logic;                             --! Reset configuration parameters control from DL
     LINK_RST_ASSERTED_DL    : in  std_logic;                             --! Link has been reseted from DL
     NACK_SEQ_NUM_DL         : in std_logic_vector(7 downto 0);           --! NACK Seq_num received from DL
@@ -80,8 +80,8 @@ entity mib_data_link is
     FULL_PULSE_RX_DL        : in std_logic;                              --! FULL received pulse signal from DL
     RETRY_PULSE_RX_DL       : in std_logic;                              --! RETRY received pulse signal from DL
     -- MIB status interface TOP
-    SEQ_NUMBER_TX           : out std_logic_vector(G_VC_NUM-1 downto 0); --! SEQ_NUMBER in transmission to the TOP
-    SEQ_NUMBER_RX           : out std_logic_vector(G_VC_NUM-1 downto 0); --! SEQ_NUMBER in reception to the TOP
+    SEQ_NUMBER_TX           : out std_logic_vector(8-1 downto 0);        --! SEQ_NUMBER in transmission to the TOP
+    SEQ_NUMBER_RX           : out std_logic_vector(8-1 downto 0);        --! SEQ_NUMBER in reception to the TOP
     CREDIT_VC               : out std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates if each corresponding far-end input buffer has credit to the TOP
     INPUT_BUF_OVF_VC        : out std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates input buffer overflow to the TOP
     FCT_CREDIT_OVERFLOW     : out std_logic_vector(G_VC_NUM-1 downto 0); --! Indicates overflow of each corresponding input buffer to the TOP
@@ -90,8 +90,8 @@ entity mib_data_link is
     FRAME_ERROR             : out std_logic;                             --! Frame error to the TOP
     SEQUENCE_ERROR          : out std_logic;                             --! Sequence error to the TOP
     FAR_END_LINK_RESET      : out std_logic;                             --! Far-end link reset status to the TOP
-    FRAME_FINISHED          : out std_logic_vector(8 downto 0);          --! Indicates that corresponding channel finished emitting a frame to the TOP
-    FRAME_TX                : out std_logic_vector(8 downto 0);          --! Indicates that corresponding channel is emitting a frame to the TOP
+    FRAME_FINISHED          : out std_logic_vector(G_VC_NUM downto 0);   --! Indicates that corresponding channel finished emitting a frame to the TOP
+    FRAME_TX                : out std_logic_vector(G_VC_NUM downto 0);   --! Indicates that corresponding channel is emitting a frame to the TOP
     DATA_COUNTER_TX         : out std_logic_vector(6 downto 0);          --! Indicate the number of data transmitted in last frame emitted to the TOP
     DATA_COUNTER_RX         : out std_logic_vector(6 downto 0);          --! Indicate the number of data received in last frame received to the TOP
     ACK_COUNTER_TX          : out std_logic_vector(2 downto 0);          --! ACK counter TX to the TOP
@@ -102,7 +102,7 @@ entity mib_data_link is
     FCT_COUNTER_RX          : out std_logic_vector(3 downto 0);          --! FCT counter RX to the TOP
     FULL_COUNTER_RX         : out std_logic_vector(1 downto 0);          --! FULL counter RX to the TOP
     RETRY_COUNTER_RX        : out std_logic_vector(1 downto 0);          --! RETRY counter RX to the TOP
-    CURRENT_TIME_SLOT       : out std_logic_vector(G_VC_NUM-1 downto 0); --! Current time slot to the TOP
+    CURRENT_TIME_SLOT       : out std_logic_vector(7 downto 0);          --! Current time slot to the TOP
     RESET_PARAM             : out std_logic;                             --! Reset configuration parameters control to the TOP
     LINK_RST_ASSERTED       : out std_logic;                             --! Link has been reseted to the TOP
     NACK_SEQ_NUM            : out std_logic_vector(7 downto 0);          --! NACK Seq_num received to the TOP

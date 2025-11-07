@@ -45,11 +45,11 @@ entity data_encapsulation is
     NEW_WORD_DMAC                     : in std_logic;                                           --! New word flag from data_mac
 	  END_PACKET_DMAC                   : in std_logic;                                           --! End frame/control word from data_mac
     TYPE_FRAME_DMAC                   : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DMAC
-    VIRTUAL_CHANNEL_DMAC              : in std_logic_vector (G_VC_NUM-1 downto 0);              --! Virtual channel of the frame associated with DATA_DMAC
-    BC_TYPE_DMAC                      : in std_logic_vector (G_VC_NUM-1 downto 0);              --! BROADCAST Type
-    BC_CHANNEL_DMAC                   : in std_logic_vector (G_VC_NUM-1 downto 0);              --! BROADCAST Channel (one channel in this implementation)
-	  BC_STATUS_DMAC                    : in std_logic_vector (2-1 downto 0);                     --! BOADCAST status
-    MULT_CHANNEL_DMAC                 : in std_logic_vector (G_VC_NUM-1 downto 0);              --! Multiplier and Channel field for FCT word
+    VIRTUAL_CHANNEL_DMAC              : in std_logic_vector(7 downto 0);                        --! Virtual channel of the frame associated with DATA_DMAC
+    BC_TYPE_DMAC                      : in std_logic_vector(7 downto 0);                        --! BROADCAST Type
+    BC_CHANNEL_DMAC                   : in std_logic_vector(7 downto 0);                        --! BROADCAST Channel (one channel in this implementation)
+	  BC_STATUS_DMAC                    : in std_logic_vector(2-1 downto 0);                      --! BOADCAST status
+    MULT_CHANNEL_DMAC                 : in std_logic_vector(7 downto 0);                        --! Multiplier and Channel field for FCT word
     SEQ_NUM_ACK_DMAC                  : in std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
     TRANS_POL_FLG_DMAC                : in std_logic;                                           --! Transmission polarity flag
     -- data_seq_compute (DSCC) interface

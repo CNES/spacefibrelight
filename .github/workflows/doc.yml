@@ -36,7 +36,7 @@ jobs:
             -e TABBY_CAD_LICENSE="$TABBY_CAD_LICENSE" \
             -v "$HOME/.sonar/cache:/opt/sonar-scanner/.sonar/cache" \
             -v "${PWD}:/usr/src" \
-            lintyservices/linty-scanner:latest \
+            lintyservices/linty-scanner:latest -Dproject.settings=".linty/linty.properties" \
             -D"sonar.hdl.report.urlPath"=spacefibrelight
         env:
           TABBY_CAD_LICENSE: ${{secrets.TABBY_CAD_LICENSE}}
@@ -50,7 +50,7 @@ jobs:
           rm -rf ./docs/
           mkdir docs
           touch docs/.nojekyll
-          cp -r .linty/report/build/html/* ./docs/
+          cp -r .linty/work/report/html/* ./docs/
           git add .
           git commit -m "Update html website"
           git push

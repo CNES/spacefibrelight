@@ -1822,7 +1822,7 @@ async def cocotb_run(dut):
 
     if link_rst_asserted != '1':
         step_2_failed = 1
-        tb.logger.error("simulation time %d ns : step 2.6 result: Failed\link_rst_asserted: %s\n\n\n", get_sim_time(units = "ns"), link_rst_asserted)
+        tb.logger.error("simulation time %d ns : step 2.6 result: Failed\nlink_rst_asserted: %s\n\n\n", get_sim_time(units = "ns"), link_rst_asserted)
     else:
         tb.logger.info("simulation time %d ns : step 2.6 result: Pass\n\n\n\n", get_sim_time(units = "ns"))
 

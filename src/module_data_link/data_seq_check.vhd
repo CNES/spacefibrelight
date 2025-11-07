@@ -30,6 +30,9 @@ library data_link_lib;
 use data_link_lib.data_link_lib.all;
 
 entity data_seq_check is
+	generic(
+    G_VC_NUM                  : integer := 8                                  --! Number of virtual channel
+  );
   port (
     CLK                       : in std_logic;                                           --! Global clock
 		-- data_link_reset (DLRE) interface
@@ -76,7 +79,7 @@ entity data_seq_check is
 		CRC_ERR_BC_DSCHECK        : out std_logic;                                          --! CRC error flag for the current broadcast frame
 		RXERR_BC_DSCHECK          : out std_logic;                                          --! RXERR flag for the current broadcast frame
 		-- data_out_buff (DOBUF) interface
-		FCT_FAR_END_DSCHECK       : out std_logic_vector(C_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
+		FCT_FAR_END_DSCHECK       : out std_logic_vector(G_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
 		M_VAL_DSCHECK             : out std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
 		-- MIB
 		SEQ_NUM_DSCHECK           : out std_logic_vector(7 downto 0);                       --! last SEQ_NUM
@@ -231,9 +234,9 @@ begin
 					END_FRAME_DSCHECK         <= END_FRAME_DCCHECK;
 				end if;
 			elsif TYPE_FRAME_DCCHECK = C_BC_FRM then -- BROADCAST frame
-				RXERR_BC_DSCHECK     <= RXERR_DCCHECK or RXERR_ALL_DCCHECK;
-				FRAME_ERR_BC_DSCHECK <= FRAME_ERR_DCCHECK;
-    	  CRC_ERR_BC_DSCHECK   <= CRC_ERR_DCCHECK;
+				RXERR_BC_DSCHECK              <= RXERR_DCCHECK or RXERR_ALL_DCCHECK;
+				FRAME_ERR_BC_DSCHECK          <= FRAME_ERR_DCCHECK;
+    	  CRC_ERR_BC_DSCHECK            <= CRC_ERR_DCCHECK;
 				if END_FRAME_DCCHECK = '1' and FRAME_ERR_DCCHECK = '0' then -- End of frame
 				  if SEQ_NUM_DCCHECK /= (NEAR_END_RPF_DERRM & std_logic_vector(seq_num_cnt+1)) then -- SEQ_NUM error
 				  	SEQ_NUM_ERR_DSCHECK       <= '1';
@@ -247,7 +250,7 @@ begin
 				  	END_FRAME_FIFO_BC_DSCHECK <= END_FRAME_DCCHECK;
 				  	END_FRAME_DSCHECK         <= END_FRAME_DCCHECK;
 						NEW_WORD_BC_DSCHECK       <= NEW_WORD_DCCHECK;
-				  else -- BROADCAST frame valid 
+				  else -- BROADCAST frame valid
 				  	seq_num_cnt               <= seq_num_cnt+1;
 				  	SEQ_NUM_ERR_DSCHECK       <= '0';
 				  	SEQ_NUM_ERR_BC_DSCHECK    <= '0';
@@ -271,9 +274,9 @@ begin
 				elsif CRC_ERR_DCCHECK ='1' then -- CRC error
 					SEQ_NUM_ERR_DSCHECK  <= '0';
 					END_FRAME_DSCHECK    <= END_FRAME_DCCHECK;
-				else -- FCT valid 
-					FCT_PULSE_RX_DSCHECK <= '1';
-					fct_counter          <= fct_counter + 1;
+				else -- FCT valid
+					FCT_PULSE_RX_DSCHECK                                  <= '1';
+					fct_counter                                           <= fct_counter + 1;
 					seq_num_cnt                                           <= seq_num_cnt+1;
 					SEQ_NUM_ERR_DSCHECK                                   <= '0';
 					END_FRAME_DSCHECK                                     <= END_FRAME_DCCHECK;
