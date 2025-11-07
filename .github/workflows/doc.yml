@@ -52,6 +52,7 @@ jobs:
           touch docs/.nojekyll
           cp -r .linty/work/report/build/html/* ./docs/
           rm -rf reports
+          mkdir reports
           cp -r .linty/work/report/reports/* ./reports/
           git add .
           git commit -m "Update html website"
