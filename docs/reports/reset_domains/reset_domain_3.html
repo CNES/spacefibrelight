@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Domain Details &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=252e56ff" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domain_crossings.html">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finite_state_machines.html">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../combinational_loops.html">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Reset Domain Details</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reports/reset_domains/reset_domain_3.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a href="/spacefibrelight/reports/reset_domains.html">Back to Reset Domains Report</a></p>
+<br>
+<section id="reset-domain-details">
+<h1>Reset Domain Details<a class="headerlink" href="#reset-domain-details" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name: Origin</p></th>
+<th class="head text-center"><p>Graph</p></th>
+<th class="head text-center"><p>Global</p></th>
+<th class="head text-center"><p>Local</p></th>
+<th class="head text-center"><p>Asynchronous</p></th>
+<th class="head text-center"><p>Synchronous</p></th>
+<th class="head text-center"><p>Active High</p></th>
+<th class="head text-center"><p>Active Low</p></th>
+<th class="head text-right"><p>Number of flip-flops<br>using this reset domain</p></th>
+<th class="head text-right"><p>Number of instances<br>using this reset domain</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n</linty-anchor></strong><br>  - <strong>inst_reset_sync_clk_from_GTY.reset_gen_rr_n</strong>: <linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#56"> reset_gen.vhd#56 (Flip-flop)</linty-anchor></p></td>
+<td class="text-center"><p><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a></p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-right"><p><strong>167</strong>/1320 (12.65%)</p></td>
+<td class="text-right"><p><strong>9</strong>/109</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instances-using-this-reset-domain">
+<h2>Instances using this reset domain<a class="headerlink" href="#instances-using-this-reset-domain" title="Link to this heading"></a></h2>
+<p><strong>Count: 9</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Instance</p></th>
+<th class="head text-center"><p>Asynchronous</p></th>
+<th class="head text-center"><p>Synchronous</p></th>
+<th class="head text-center"><p>Active High</p></th>
+<th class="head text-center"><p>Active Low</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1020">inst_ppl_64_rx_sync_fsm</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#30">ppl_64_rx_sync_fsm</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1080">inst_ppl_64_rx_wr_en_fifo</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#32">ppl_64_rx_wr_en_fifo</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#646">inst_lane_init_fsm</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#32">ppl_64_lane_init_fsm</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#741">inst_fifo_in_ctrl</linty-anchor> (<linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#36">FIFO_DC</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#775">inst_fifo_tx_data</linty-anchor> (<linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#36">FIFO_DC</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#808">inst_ppl_64_lane_ctrl_word_insert</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#32">ppl_64_lane_ctrl_word_insert</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#843">inst_ppl_64_skip_insertion</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#30">ppl_64_skip_insertion</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#994">inst_ppl_64_word_alignment</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#33">ppl_64_word_alignment</linty-anchor>)</p></td>
+<td class="text-center"><p>✔</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✗</p></td>
+<td class="text-center"><p>✔</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="flip-flops-using-this-reset-domain">
+<h2>Flip-flops using this reset domain<a class="headerlink" href="#flip-flops-using-this-reset-domain" title="Link to this heading"></a></h2>
+<p><strong>Count: 167</strong></p>
+<section id="asynchronous-usage">
+<h3>Asynchronous usage<a class="headerlink" href="#asynchronous-usage" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Count: 167</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#199">fifo_dc.vhd#199</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#222">fifo_dc.vhd#222</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#240">fifo_dc.vhd#240</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#256">fifo_dc.vhd#256</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#300">fifo_dc.vhd#300</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#321">fifo_dc.vhd#321</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#344">fifo_dc.vhd#344</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#362">fifo_dc.vhd#362</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#378">fifo_dc.vhd#378</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#440">fifo_dc.vhd#440</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#330">ppl_64_lane_ctrl_word_detect.vhd#330</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#347">ppl_64_lane_ctrl_word_detect.vhd#347</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#361">ppl_64_lane_ctrl_word_detect.vhd#361</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#238">ppl_64_lane_ctrl_word_insert.vhd#238</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#86">ppl_64_lane_ctrl_word_insert.vhd#86</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#1046">ppl_64_lane_init_fsm.vhd#1046</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#190">ppl_64_lane_init_fsm.vhd#190</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#295">ppl_64_lane_init_fsm.vhd#295</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#436">ppl_64_lane_init_fsm.vhd#436</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#455">ppl_64_lane_init_fsm.vhd#455</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#511">ppl_64_lane_init_fsm.vhd#511</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#534">ppl_64_lane_init_fsm.vhd#534</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#581">ppl_64_lane_init_fsm.vhd#581</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#628">ppl_64_lane_init_fsm.vhd#628</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#696">ppl_64_lane_init_fsm.vhd#696</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#731">ppl_64_lane_init_fsm.vhd#731</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#803">ppl_64_lane_init_fsm.vhd#803</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#883">ppl_64_lane_init_fsm.vhd#883</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#970">ppl_64_lane_init_fsm.vhd#970</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#127">ppl_64_rx_sync_fsm.vhd#127</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#229">ppl_64_rx_sync_fsm.vhd#229</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#92">ppl_64_rx_sync_fsm.vhd#92</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#63">ppl_64_rx_wr_en_fifo.vhd#63</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#83">ppl_64_skip_insertion.vhd#83</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#401">ppl_64_word_alignment.vhd#401</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#86">ppl_64_word_alignment.vhd#86</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="synchronous-usage">
+<h3>Synchronous usage<a class="headerlink" href="#synchronous-usage" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Count: 0</p></th>
+</tr>
+</thead>
+</table>
+</section>
+<section id="active-high-usage">
+<h3>Active-high usage<a class="headerlink" href="#active-high-usage" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Count: 0</p></th>
+</tr>
+</thead>
+</table>
+</section>
+<section id="active-low-usage">
+<h3>Active-low usage<a class="headerlink" href="#active-low-usage" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Count: 167</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#199">fifo_dc.vhd#199</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#222">fifo_dc.vhd#222</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#240">fifo_dc.vhd#240</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#256">fifo_dc.vhd#256</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#300">fifo_dc.vhd#300</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#321">fifo_dc.vhd#321</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#344">fifo_dc.vhd#344</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#362">fifo_dc.vhd#362</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#378">fifo_dc.vhd#378</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#440">fifo_dc.vhd#440</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#330">ppl_64_lane_ctrl_word_detect.vhd#330</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#347">ppl_64_lane_ctrl_word_detect.vhd#347</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#361">ppl_64_lane_ctrl_word_detect.vhd#361</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#238">ppl_64_lane_ctrl_word_insert.vhd#238</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#86">ppl_64_lane_ctrl_word_insert.vhd#86</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#1046">ppl_64_lane_init_fsm.vhd#1046</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#190">ppl_64_lane_init_fsm.vhd#190</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#295">ppl_64_lane_init_fsm.vhd#295</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#436">ppl_64_lane_init_fsm.vhd#436</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#455">ppl_64_lane_init_fsm.vhd#455</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#511">ppl_64_lane_init_fsm.vhd#511</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#534">ppl_64_lane_init_fsm.vhd#534</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#581">ppl_64_lane_init_fsm.vhd#581</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#628">ppl_64_lane_init_fsm.vhd#628</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#696">ppl_64_lane_init_fsm.vhd#696</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#731">ppl_64_lane_init_fsm.vhd#731</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#803">ppl_64_lane_init_fsm.vhd#803</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#883">ppl_64_lane_init_fsm.vhd#883</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#970">ppl_64_lane_init_fsm.vhd#970</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#127">ppl_64_rx_sync_fsm.vhd#127</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#229">ppl_64_rx_sync_fsm.vhd#229</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd#92">ppl_64_rx_sync_fsm.vhd#92</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#63">ppl_64_rx_wr_en_fifo.vhd#63</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#83">ppl_64_skip_insertion.vhd#83</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#401">ppl_64_word_alignment.vhd#401</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#86">ppl_64_word_alignment.vhd#86</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.<br>
+<br></p>
+<br>
+<p><a href="/spacefibrelight/reports/reset_domains.html">Back to Reset Domains Report</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated November 07, 2025 at 12:50:09 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

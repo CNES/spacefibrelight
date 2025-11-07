@@ -1,0 +1,26 @@
+<a href="/spacefibrelight/reports/design/package_1.html#functions">Back to Package Report</a>
+
+<br>
+
+# Function - sat
+
+## Summary
+
+| Name | Returned type | Description |
+| --- | --- | --- |
+|<linty-anchor href="//src/pkg_tools.vhd#110">sat</linty-anchor>|std_logic_vector||
+
+
+## Parameters
+
+Count: 2
+
+| Name | Mode | Type | Description |
+| --- | --- | --- | --- |
+|<linty-anchor href="//src/pkg_tools.vhd#111">DataIn</linty-anchor>||unsigned||
+|<linty-anchor href="//src/pkg_tools.vhd#112">SatCmd</linty-anchor>||positive||
+
+
+<br>
+
+<a href="/spacefibrelight/reports/design/package_1.html#functions">Back to Package Report</a>

@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSM #14: current_state &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=252e56ff" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domain_crossings.html">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finite_state_machines.html">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../combinational_loops.html">Combinational Loops</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FSM #14: current_state</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reports/fsms/fsm_14.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a></p>
+<br>
+<section id="fsm-14-current-state">
+<h1>FSM #14: current_state<a class="headerlink" href="#fsm-14-current-state" title="Link to this heading"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Location</p></th>
+<th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Reset State</p></th>
+<th class="head"><p>States</p></th>
+<th class="head text-right"><p>Input Signals</p></th>
+<th class="head text-right"><p>Output Signals</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>current_state</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#99">ppl_64_lane_init_fsm.vhd#99</linty-anchor></p></td>
+<td class="text-center"><p><a href="/spacefibrelight/graphs/fsm_states_14_graph.html"><img title="Open FSM Diagram" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open FSM Diagram"></a></p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>Count: 10<br>ACTIVE_ST<br>CLEAR_LINE_ST<br>CONNECTED_ST<br>CONNECTING_ST<br>DISABLED_ST<br>INVERT_RX_POLARITY_ST<br>LOSS_OF_SIGNAL_ST<br>PREPARE_STANDBY_ST<br>STARTED_ST<br>WAIT_ST</p></td>
+<td class="text-right"><p>22</p></td>
+<td class="text-right"><p>39</p></td>
+</tr>
+</tbody>
+</table>
+<br>
+</section>
+<section id="input-signals">
+<h2>Input Signals<a class="headerlink" href="#input-signals" title="Link to this heading"></a></h2>
+<p>Count: 22</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Declaration</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AUTOSTART_MIB</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>COMMA_K287_RXED_PLCWD</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>INIT3_X3_SENT_PLCWI</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#59">ppl_64_lane_init_fsm.vhd#59</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>LANE_RESET_DL</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>LANE_RESET_MIB</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>LANE_START_MIB</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>LOST_SIGNAL_X32_PLCWI</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#55">ppl_64_lane_init_fsm.vhd#55</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>NO_SIGNAL_PLCWD</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>RX_ERROR_OVF_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#74">ppl_64_lane_init_fsm.vhd#74</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>STANDBY_SIGNAL_X32_PLCWI</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#54">ppl_64_lane_init_fsm.vhd#54</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>clear_line_done</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#107">ppl_64_lane_init_fsm.vhd#107</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init1_rxed</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#144">ppl_64_lane_init_fsm.vhd#144</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>init2_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#152">ppl_64_lane_init_fsm.vhd#152</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init3_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>init3_rxed_x3_fw</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#162">ppl_64_lane_init_fsm.vhd#162</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init_timeout_reaches</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>inv_init1_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#146">ppl_64_lane_init_fsm.vhd#146</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>inv_init2_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#153">ppl_64_lane_init_fsm.vhd#153</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>lost_signal_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>rx_error_cnt_ovf_i</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#122">ppl_64_lane_init_fsm.vhd#122</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>rxed_1023_word</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>standby_signal_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-signals">
+<h2>Output Signals<a class="headerlink" href="#output-signals" title="Link to this heading"></a></h2>
+<p>Count: 39</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Declaration</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CDR_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#66">ppl_64_lane_init_fsm.vhd#66</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>ENABLE_TRANSM_DATA_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#60">ppl_64_lane_init_fsm.vhd#60</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>INVERT_RX_BITS_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#51">ppl_64_lane_init_fsm.vhd#51</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>LANE_STATE_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#72">ppl_64_lane_init_fsm.vhd#72</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>LOST_CAUSE_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#63">ppl_64_lane_init_fsm.vhd#63</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>NO_SIGNAL_DETECTION_ENABLED_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#52">ppl_64_lane_init_fsm.vhd#52</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>RECEIVER_DISABLED_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#65">ppl_64_lane_init_fsm.vhd#65</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>RX_ERROR_CNT_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#73">ppl_64_lane_init_fsm.vhd#73</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>RX_ERROR_OVF_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#74">ppl_64_lane_init_fsm.vhd#74</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>SEND_32_LOSS_SIGNAL_CTRL_WORDS_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#62">ppl_64_lane_init_fsm.vhd#62</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>SEND_32_STANDBY_CTRL_WORDS_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#61">ppl_64_lane_init_fsm.vhd#61</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>SEND_INIT1_CTRL_WORD_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#56">ppl_64_lane_init_fsm.vhd#56</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>SEND_INIT2_CTRL_WORD_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#57">ppl_64_lane_init_fsm.vhd#57</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>SEND_INIT3_CTRL_WORD_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#58">ppl_64_lane_init_fsm.vhd#58</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>SEND_RXERR_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#50">ppl_64_lane_init_fsm.vhd#50</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>TRANSMITTER_DISABLED_PLIF</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#67">ppl_64_lane_init_fsm.vhd#67</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>cdr_i</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#108">ppl_64_lane_init_fsm.vhd#108</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>clear_line_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#106">ppl_64_lane_init_fsm.vhd#106</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>clear_line_done</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#107">ppl_64_lane_init_fsm.vhd#107</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>current_state_r</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#100">ppl_64_lane_init_fsm.vhd#100</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>enable_init_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#109">ppl_64_lane_init_fsm.vhd#109</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init1_rxed</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#144">ppl_64_lane_init_fsm.vhd#144</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>init2_rxed</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#154">ppl_64_lane_init_fsm.vhd#154</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init2_rxed_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#150">ppl_64_lane_init_fsm.vhd#150</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>init2_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#152">ppl_64_lane_init_fsm.vhd#152</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>init3_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>init3_rxed_x3_fw</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#162">ppl_64_lane_init_fsm.vhd#162</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>inv_init1_rxed_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#143">ppl_64_lane_init_fsm.vhd#143</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>inv_init1_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#146">ppl_64_lane_init_fsm.vhd#146</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>inv_init2_rxed_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#151">ppl_64_lane_init_fsm.vhd#151</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>inv_init2_rxed_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#153">ppl_64_lane_init_fsm.vhd#153</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>loss_signal_x3_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#133">ppl_64_lane_init_fsm.vhd#133</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>lost_signal_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>rx_error_cnt_i</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#121">ppl_64_lane_init_fsm.vhd#121</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>rx_error_cnt_ovf_i</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#122">ppl_64_lane_init_fsm.vhd#122</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>rxed_1023_word</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>rxed_1023_word_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#170">ppl_64_lane_init_fsm.vhd#170</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>standby_signal_x3</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>standby_signal_x3_cnt</p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#138">ppl_64_lane_init_fsm.vhd#138</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="transition-table">
+<h2>Transition table<a class="headerlink" href="#transition-table" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>From</p></th>
+<th class="head"><p>To</p></th>
+<th class="head"><p>Input Control Signals</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CLEAR_LINE_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>clear_line_done: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#107">ppl_64_lane_init_fsm.vhd#107</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>CLEAR_LINE_ST</p></td>
+<td><p>DISABLED_ST</p></td>
+<td><p>clear_line_done: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#107">ppl_64_lane_init_fsm.vhd#107</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>DISABLED_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>DISABLED_ST</p></td>
+<td><p>DISABLED_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>DISABLED_ST</p></td>
+<td><p>WAIT_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>WAIT_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>WAIT_ST</p></td>
+<td><p>DISABLED_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>WAIT_ST</p></td>
+<td><p>WAIT_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>WAIT_ST</p></td>
+<td><p>STARTED_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>STARTED_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>STARTED_ST</p></td>
+<td><p>STARTED_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>inv_init1_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#146">ppl_64_lane_init_fsm.vhd#146</linty-anchor><br>inv_init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#153">ppl_64_lane_init_fsm.vhd#153</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rxed_1023_word: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>STARTED_ST</p></td>
+<td><p>INVERT_RX_POLARITY_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>inv_init1_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#146">ppl_64_lane_init_fsm.vhd#146</linty-anchor><br>inv_init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#153">ppl_64_lane_init_fsm.vhd#153</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>STARTED_ST</p></td>
+<td><p>CONNECTING_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>inv_init1_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#146">ppl_64_lane_init_fsm.vhd#146</linty-anchor><br>inv_init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#153">ppl_64_lane_init_fsm.vhd#153</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rxed_1023_word: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>INVERT_RX_POLARITY_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>INVERT_RX_POLARITY_ST</p></td>
+<td><p>INVERT_RX_POLARITY_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rxed_1023_word: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>INVERT_RX_POLARITY_ST</p></td>
+<td><p>CONNECTING_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rxed_1023_word: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#171">ppl_64_lane_init_fsm.vhd#171</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTING_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#152">ppl_64_lane_init_fsm.vhd#152</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>CONNECTING_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTING_ST</p></td>
+<td><p>CONNECTING_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#152">ppl_64_lane_init_fsm.vhd#152</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>CONNECTING_ST</p></td>
+<td><p>CONNECTED_ST</p></td>
+<td><p>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init2_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#152">ppl_64_lane_init_fsm.vhd#152</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTED_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>CONNECTED_ST</p></td>
+<td><p>CONNECTED_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>INIT3_X3_SENT_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#59">ppl_64_lane_init_fsm.vhd#59</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init3_rxed_x3_fw: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#162">ppl_64_lane_init_fsm.vhd#162</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTED_ST</p></td>
+<td><p>CONNECTED_ST</p></td>
+<td><p>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>CONNECTED_ST</p></td>
+<td><p>ACTIVE_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>INIT3_X3_SENT_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#59">ppl_64_lane_init_fsm.vhd#59</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init3_rxed_x3_fw: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#162">ppl_64_lane_init_fsm.vhd#162</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>CONNECTED_ST</p></td>
+<td><p>PREPARE_STANDBY_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>COMMA_K287_RXED_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#49">ppl_64_lane_init_fsm.vhd#49</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>init3_rxed_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#161">ppl_64_lane_init_fsm.vhd#161</linty-anchor><br>init3_rxed_x3_fw: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#162">ppl_64_lane_init_fsm.vhd#162</linty-anchor><br>init_timeout_reaches: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#129">ppl_64_lane_init_fsm.vhd#129</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>ACTIVE_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>ACTIVE_ST</p></td>
+<td><p>ACTIVE_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>RX_ERROR_OVF_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#74">ppl_64_lane_init_fsm.vhd#74</linty-anchor><br>init1_rxed: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#144">ppl_64_lane_init_fsm.vhd#144</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rx_error_cnt_ovf_i: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#122">ppl_64_lane_init_fsm.vhd#122</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>ACTIVE_ST</p></td>
+<td><p>LOSS_OF_SIGNAL_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>NO_SIGNAL_PLCWD: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#39">ppl_64_lane_init_fsm.vhd#39</linty-anchor><br>RX_ERROR_OVF_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#74">ppl_64_lane_init_fsm.vhd#74</linty-anchor><br>init1_rxed: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#144">ppl_64_lane_init_fsm.vhd#144</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>rx_error_cnt_ovf_i: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#122">ppl_64_lane_init_fsm.vhd#122</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>ACTIVE_ST</p></td>
+<td><p>PREPARE_STANDBY_ST</p></td>
+<td><p>AUTOSTART_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#70">ppl_64_lane_init_fsm.vhd#70</linty-anchor><br>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LANE_START_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#69">ppl_64_lane_init_fsm.vhd#69</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>LOSS_OF_SIGNAL_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LOST_SIGNAL_X32_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#55">ppl_64_lane_init_fsm.vhd#55</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>LOSS_OF_SIGNAL_ST</p></td>
+<td><p>LOSS_OF_SIGNAL_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>LOST_SIGNAL_X32_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#55">ppl_64_lane_init_fsm.vhd#55</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>PREPARE_STANDBY_ST</p></td>
+<td><p>CLEAR_LINE_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>STANDBY_SIGNAL_X32_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#54">ppl_64_lane_init_fsm.vhd#54</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>PREPARE_STANDBY_ST</p></td>
+<td><p>PREPARE_STANDBY_ST</p></td>
+<td><p>LANE_RESET_DL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#37">ppl_64_lane_init_fsm.vhd#37</linty-anchor><br>LANE_RESET_MIB: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#71">ppl_64_lane_init_fsm.vhd#71</linty-anchor><br>STANDBY_SIGNAL_X32_PLCWI: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#54">ppl_64_lane_init_fsm.vhd#54</linty-anchor><br>lost_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#134">ppl_64_lane_init_fsm.vhd#134</linty-anchor><br>standby_signal_x3: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#139">ppl_64_lane_init_fsm.vhd#139</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <p>spacefibrelight</p>
+  <p>Generated November 07, 2025 at 12:50:09 by <a href="https://linty-services.com">Linty Services</a></p>
+  <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
