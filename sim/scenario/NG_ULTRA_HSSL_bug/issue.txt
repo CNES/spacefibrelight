@@ -1,0 +1,21 @@
+Double error detection on out of table char reception
+ 
+When a char with an encoding out of the 8b/10b table of encoding is 
+received by the HSSL IP from NG-ULTRA, the following char received by the HSSL
+IP with an encoding depending of the running disparity (not a char with the same
+encoding when the running disparity is positive or negative), a disparity error 
+will be detected  no matters the context. 
+This can generate two error detections instead of one if the char detected with
+a disparity error is not in the same 32b word as the out of table char.
+This bug is illustrated in the branch NG_ULTRA_HSSL_bug in the simulation 
+scenario NG_ULTRA_HSSL_bug at 118650 ns and can be observed at 118701 ns on 
+the interface of SpaceFibre HSSL.
+
+Triple error detection on double error injection
+ 
+When using the NG ULTRA version of the IP, three errors will be detected instead 
+of two when two consecutive errors are received. 
+This bug is illustrated in the branch NG_ULTRA_HSSL_bug in the simulation 
+scenario NG_ULTRA_HSSL_bug at 550114 ns and can be observed at 550164 ns on 
+the interface of SpaceFibre HSSL.
+
