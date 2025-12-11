@@ -1,50 +1,76 @@
-#project files
+#xilinx library
 verific -work unisim  -vhdl sim/libraries/unisim/vhdl/src/unisims/unisim_VPKG.vhd
 verific -work unisim  -vhdl sim/libraries/unisim/vhdl/src/unisims/unisim_VCOMP.vhd
 
+# nxlibrary
+verific -work nx -vhdl src/ip/cores/HSSL_Nanoxplore/nxLibrary-Ultra.vhdp
 
-#lane layer
+
+#lane layer for versal
 verific  -work phy_plus_lane_lib -vhdl src/pkg_tools.vhd
 verific  -work phy_plus_lane_lib -vhdl src/pkg_phy_plus_lane.vhd
-verific  -vhdl src/module_phy_plus_lane/lane_ctrl_word_detect.vhd
-verific  -vhdl src/module_phy_plus_lane/lane_ctrl_word_insert.vhd
-verific  -vhdl src/module_phy_plus_lane/lane_init_fsm.vhd
-verific  -vhdl src/module_phy_plus_lane/parallel_loopback.vhd
-verific  -vhdl src/module_phy_plus_lane/rx_sync_fsm.vhd
-verific  -vhdl src/module_phy_plus_lane/skip_insertion.vhd
-verific  -vhdl src/module_phy_plus_lane/phy_plus_lane.vhd
-verific  -vhdl src/module_phy_plus_lane/mib_phy_plus_lane.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/lane_ctrl_word_detect.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/lane_ctrl_word_insert.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/lane_init_fsm.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/parallel_loopback.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/rx_sync_fsm.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/skip_insertion.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/phy_plus_lane.vhd
+verific  -work phy_plus_lane_lib -vhdl src/module_phy_plus_lane/mib_phy_plus_lane.vhd
+
+#lane layer for NGULTRA
+# phy+lane NGultra
+verific  -work  phy_plus_lane_64_lib -vhdl  src/pkg_phy_plus_lane_64b.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd
+
+# NX HSSL
+verific  -work  phy_plus_lane_64_lib -vhdl  src/ip/cores/HSSL_Nanoxplore/hssl_SpaceFibre_64b.vhd
+
+# Lane_layer NGULTRA
+verific  -work  phy_plus_lane_64_lib -vhdl  src/ip/fifo_dc/fifo_dc.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_rx_sync_fsm.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_bus_concat_tx.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/ppl_64_bus_split_rx.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd
+verific  -work  phy_plus_lane_64_lib -vhdl  src/module_phy_plus_lane/mib_phy_plus_lane.vhd
 
 #datalink layer
 verific  -work data_link_lib -vhdl src/pkg_tools.vhd
 verific  -work data_link_lib -vhdl src/pkg_data_link.vhd
-verific  -vhdl src/ip/fifo_dc_custom_to_axis/AXIS_MASTER.vhd
-verific  -vhdl src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd
-verific  -vhdl src/ip/fifo_dc_axis_to_custom/AXIS_SLAVE.vhd
-verific  -vhdl src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd
-verific  -vhdl src/module_data_link/data_crc_check.vhd
-verific  -vhdl src/module_data_link/data_crc_compute.vhd
-verific  -vhdl src/module_data_link/data_desencapsulation.vhd
-verific  -vhdl src/module_data_link/data_desencapsulation_bc.vhd
-verific  -vhdl src/module_data_link/data_encapsulation.vhd
-verific  -vhdl src/module_data_link/data_err_management.vhd
-verific  -vhdl src/module_data_link/data_in_bc_buf.vhd
-verific  -vhdl src/module_data_link/data_in_buf.vhd
-verific  -vhdl src/module_data_link/data_link_reset.vhd
-verific  -vhdl src/module_data_link/data_mac.vhd
-verific  -vhdl src/module_data_link/data_out_bc_buf.vhd
-verific  -vhdl src/module_data_link/data_out_buf.vhd
-verific  -vhdl src/module_data_link/data_seq_check.vhd
-verific  -vhdl src/module_data_link/data_seq_compute.vhd
-verific  -vhdl src/module_data_link/data_word_id_fsm.vhd
-verific  -vhdl src/ip/fifo_dc/fifo_dc.vhd
-verific  -vhdl src/ip/fifo_dc_drop_bad_frame/fifo_dc_drop_bad_frame.vhd
-verific  -vhdl src/module_data_link/data_link.vhd
-verific  -vhdl src/module_data_link/mib_data_link.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc_custom_to_axis/AXIS_MASTER.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc_axis_to_custom/AXIS_SLAVE.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_crc_check.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_crc_compute.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_desencapsulation.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_desencapsulation_bc.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_encapsulation.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_err_management.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_in_bc_buf.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_in_buf.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_link_reset.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_mac.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_out_bc_buf.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_out_buf.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_seq_check.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_seq_compute.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_word_id_fsm.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc/fifo_dc.vhd
+verific  -work data_link_lib -vhdl src/ip/fifo_dc_drop_bad_frame/fifo_dc_drop_bad_frame.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/data_link.vhd
+verific  -work data_link_lib -vhdl src/module_data_link/mib_data_link.vhd
 
 # Interlayer 
-verific  -vhdl src/ip_spacefibre_light_top/demux_rx.vhd
-verific  -vhdl src/ip_spacefibre_light_top/mux_tx.vhd
+verific  -work interlayer_lib -vhdl src/ip_spacefibre_light_top/demux_rx.vhd
+verific  -work interlayer_lib -vhdl src/ip_spacefibre_light_top/mux_tx.vhd
 
 #top
 verific  -vhdl src/ip_spacefibre_light_top/reset_gen.vhd
