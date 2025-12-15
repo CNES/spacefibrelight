@@ -103,27 +103,88 @@ begin
             if DATA_RX_FROM_RSF = C_INIT1_WORD and VALID_K_CARAC_FROM_RSF = "0001" then                        -- INIT1 control word detected
                DETECTED_INIT1          <= '1';                             -- Set INIT1 flag detected to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT2          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               COMMA_K287_RXED         <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';
             elsif DATA_RX_FROM_RSF = C_INIT2_WORD and VALID_K_CARAC_FROM_RSF = "0001" then                     -- INIT2 control word detected
                DETECTED_INIT2          <= '1';                             -- Set INIT2 flag detected to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               COMMA_K287_RXED         <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';               
             elsif DATA_RX_FROM_RSF(23 downto 00) = C_INIT3_WORD and VALID_K_CARAC_FROM_RSF = "0001" then       -- INIT3 control word detected
                DETECTED_INIT3          <= '1';                             -- Set INIT3 flag detected to '1'
                RX_NEW_WORD             <= '1';
                CAPABILITY              <= DATA_RX_FROM_RSF(31 downto 24);
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT2          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               COMMA_K287_RXED         <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';               
             elsif DATA_RX_FROM_RSF = C_I_INIT1_WORD and VALID_K_CARAC_FROM_RSF = "0001" then                   -- INIT1 inversed control word detected
                DETECTED_INV_INIT1      <= '1';                             -- Set INIT1 inversed flag detected to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT2          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               COMMA_K287_RXED         <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';               
             elsif DATA_RX_FROM_RSF = C_I_INIT2_WORD and VALID_K_CARAC_FROM_RSF = "0001" then                   -- INIT2 inversed control word detected
                DETECTED_INV_INIT2      <= '1';                             -- Set INIT2 inversed flag detected to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT2          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               COMMA_K287_RXED         <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';               
             elsif DATA_RX_FROM_RSF(23 downto 00) = C_LOST_SIG_WORD and VALID_K_CARAC_FROM_RSF = "0001" then    -- LOST_SIGNAL control word detected
                DETECTED_LOSS_SIGNAL    <= '1';                             -- Set LOSS_SIGNAL detected flag to '1'
                COMMA_K287_RXED         <= '1';                             -- Set Comma 28.7 detected flag to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT2          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               DETECTED_STANDBY        <= '0';
+               DETECTED_RXERR_WORD     <= '0';
             elsif DATA_RX_FROM_RSF(23 downto 00) = C_STANDBY_WORD and VALID_K_CARAC_FROM_RSF = "0001" then     -- STANDBY control word detected
                DETECTED_STANDBY        <= '1';                             -- Set STANDBY detected flag to '1'
                COMMA_K287_RXED         <= '1';                             -- Set Comma 28.7 detected flag to '1'
                RX_NEW_WORD             <= '1';
+               -- reset all flags
+               DETECTED_INIT1          <= '0';
+               DETECTED_INIT2          <= '0';
+               DETECTED_INIT3          <= '0';
+               DETECTED_INV_INIT1      <= '0';
+               DETECTED_INV_INIT2      <= '0';
+               DETECTED_LOSS_SIGNAL    <= '0';
+               DETECTED_RXERR_WORD     <= '0';
             elsif SEND_RXERR = '1' and VALID_K_CARAC_FROM_RSF = "0001" then                                    -- When lane_init_fsm get out from ACTIVE_ST
                data_rx_to_dl_i         <= C_RXERR_WORD;                    -- Send a RXERR control word to DATA-LINK layer
                valid_k_charac_to_dl_i  <= x"1";
@@ -159,7 +220,7 @@ begin
                else
                   DETECTED_RXERR_WORD  <= '0';
                end if;
-                                              -- reset all flags
+               -- reset all flags
                DETECTED_INIT1          <= '0';
                DETECTED_INIT2          <= '0';
                DETECTED_INIT3          <= '0';
@@ -178,7 +239,7 @@ begin
                else
                   DETECTED_RXERR_WORD  <= '0';
                end if;
-                                              -- reset all flags
+               -- reset all flags
                DETECTED_INIT1          <= '0';
                DETECTED_INIT2          <= '0';
                DETECTED_INIT3          <= '0';
@@ -209,14 +270,13 @@ begin
    end process p_ctrl_word_detection;
 
 
-
-
+   -- NO_SIGNAL is asserted only to zero
+   -- Versal does not have option to detect a loss_signal from the IP GTY
    p_no_signal_detection : process(CLK,RST_N)
    begin
       if RST_N = '0' then
          NO_SIGNAL   <= '0';
       elsif rising_edge(CLK) then
-
          if NO_SIGNAL_DETECTION_ENABLED = '1' then
             NO_SIGNAL   <= '0';
          else

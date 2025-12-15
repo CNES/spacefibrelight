@@ -95,30 +95,15 @@ begin
 
          if SEND_INIT1_CTRL_WORD = '1' or SEND_INIT2_CTRL_WORD = '1' or SEND_INIT3_CTRL_WORD = '1' then  -- When IP shall sent an INIT control word
 
-            if prbs_counter = x"00000000" and init_word_sent = '0' then
-               if SEND_INIT1_CTRL_WORD = '1' then                                                        -- When INIT1 control word shall be send
-                  DATA_TX_TO_SKIP      <= C_INIT1_WORD;
-               elsif SEND_INIT2_CTRL_WORD = '1' then                                                     -- When INIT2 control word shall be send
-                  DATA_TX_TO_SKIP      <= C_INIT2_WORD;
-               elsif SEND_INIT3_CTRL_WORD = '1' then                                                     -- When INIT3 control word shall be send
-                  DATA_TX_TO_SKIP      <= CAPABILITY_FROM_DL & C_INIT3_WORD;
-               end if;
-               NEW_DATA_TO_SKIP        <= '1';
-               VALID_K_CHARAC_TO_SKIP  <= x"1";                                                          -- Indicates that the Byte 1 is a K symbol
-               init_word_sent          <= '1';                                                           -- Indicates that the first word have been sent
-            elsif prbs_counter = C_PRBS_COUNTER_64 then
-               prbs_counter            <= (others => '0');                                               -- Reset prbs counter
-               NEW_DATA_TO_SKIP        <= '1';
-               DATA_TX_TO_SKIP         <= std_logic_vector(prbs_counter);                                -- Send the 64th PRBS value
-               VALID_K_CHARAC_TO_SKIP  <= x"0";                                                          -- Indicates no K symbol
-               init_word_sent          <= '0';                                                           -- Reset flag
-            elsif prbs_counter < C_PRBS_COUNTER_64 then
-               prbs_counter            <= prbs_counter+1;                                                -- increment prbs counter by 1
-               NEW_DATA_TO_SKIP        <= '1';
-               DATA_TX_TO_SKIP         <= std_logic_vector(prbs_counter);                                -- Send 0 to 63 PRBS values
-               VALID_K_CHARAC_TO_SKIP  <= x"0";                                                          -- Indicates no K symbol
+            if SEND_INIT1_CTRL_WORD = '1' then                                                        -- When INIT1 control word shall be send
+               DATA_TX_TO_SKIP      <= C_INIT1_WORD;
+            elsif SEND_INIT2_CTRL_WORD = '1' then                                                     -- When INIT2 control word shall be send
+               DATA_TX_TO_SKIP      <= C_INIT2_WORD;
+            elsif SEND_INIT3_CTRL_WORD = '1' then                                                     -- When INIT3 control word shall be send
+               DATA_TX_TO_SKIP      <= CAPABILITY_FROM_DL & C_INIT3_WORD;
             end if;
-
+            NEW_DATA_TO_SKIP        <= '1';
+            VALID_K_CHARAC_TO_SKIP  <= x"1";                                                          -- Indicates that the Byte 1 is a K symbol
 
          elsif ENABLE_TRANSM_DATA = '1' then                                                             -- When the lane_init_fsm is in ACTIVE_ST
             NEW_DATA_TO_SKIP        <= '1';
