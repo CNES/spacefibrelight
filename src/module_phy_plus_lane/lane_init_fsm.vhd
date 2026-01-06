@@ -503,8 +503,9 @@ begin
                      lost_signal_x3       <= '1';                      -- the transition condition is set to '1'
                      loss_signal_x3_cnt   <= "00";                     -- and the counter is set to 0
                   else
-                     lost_signal_x3       <= '0';                      -- else the transition condition is set to '0'
-                     loss_signal_x3_cnt   <= loss_signal_x3_cnt+1;     -- and the counter is incremented by 1
+                     if lost_signal_x3='0' then                        -- count only if needed
+                        loss_signal_x3_cnt   <= loss_signal_x3_cnt+1;     -- and the counter is incremented by 1
+                     end if;
                   end if;
                else
                   lost_signal_x3          <= '0';                      -- when LOSS_SIGNAL word not detected trasition condition set to '0'
@@ -536,8 +537,9 @@ begin
                      standby_signal_x3       <= '1';                        -- the transition condition is set to '1'
                      standby_signal_x3_cnt   <= "00";                       -- and the counter is set to 0
                   else
-                     standby_signal_x3       <= '0';                        -- else the transition condition is set to '0'
+                    if standby_signal_x3='0' then                           -- count only if needed
                      standby_signal_x3_cnt   <= standby_signal_x3_cnt+1;    -- and the counter is incremented by 1
+                    end if;
                   end if;
                else
                   standby_signal_x3          <= '0';                        -- when STANDBY word not detected trasition condition set to '0'
@@ -571,8 +573,9 @@ begin
                   inv_init1_rxed_cnt <= "00";                                 -- reset counter
                   inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
                else
-                  inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
-                  inv_init1_rxed_x3  <= '0';                                  -- Set to '0' the transition condition to INVERT_RX_POLARITY_ST
+                  if inv_init1_rxed_x3='0'  then                             -- count only if needed
+                     inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
+                  end if;
                end if;
             end if;
 
@@ -607,8 +610,9 @@ begin
                   inv_init2_rxed_cnt   <= "00";                               -- reset counter
                   inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
                else
-                  inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
-                  inv_init2_rxed_x3    <= '0';                                -- Set to '0' the transition condition to INVERT_RX_POLARITY_ST
+                  if  inv_init2_rxed_x3='0'  then                             -- count only if needed
+                   inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
+                  end if;
                end if;
             end if;
 
@@ -618,8 +622,9 @@ begin
                   init2_rxed_cnt <= "00";                                     -- reset counter
                   init2_rxed_x3  <= '1';                                      -- Set to '1' the transition condition to CONNECTING_ST
                else
-                  init2_rxed_cnt <= init2_rxed_cnt+1;                         -- else increment counter by 1
-                  init2_rxed_x3  <= '0';                                      -- Set to '0' the transition condition to CONNECTING_ST
+                  if init2_rxed_x3 ='0'  then                                 -- count only if needed
+                     init2_rxed_cnt <= init2_rxed_cnt+1;                         -- else increment counter by 1
+                  end if;
                end if;
             end if;
 
@@ -652,8 +657,9 @@ begin
                   init3_rxed_cnt   <= "00";                          -- reset counter
                   init3_rxed_x3    <= '1';                           -- Set to '1' transition condition to CONNECTING_ST or ACTIVE_ST
                else
-                  init3_rxed_cnt   <= init3_rxed_cnt+1;              -- else increment counter by 1
-                  init3_rxed_x3    <= '0';                           -- Set to '0' transition condition to CONNECTING_ST or ACTIVE_ST
+                  if init3_rxed_x3 ='0'  then                           -- count only if needed
+                     init3_rxed_cnt   <= init3_rxed_cnt+1;              -- else increment counter by 1
+                  end if;
                end if;
             end if;
          else
@@ -682,12 +688,9 @@ begin
                   if rxed_1023_word_cnt >= C_1023_WORDS-1 then             -- when 1023 words are receive without error
                      if init1_rxed = '1' or init2_rxed = '1'  then         -- when at least one INIT1 or INIT2 is received and no RXERR detected
                         rxed_1023_word    <= '1';                          -- set transition condition to '1'
-                     else
-                        rxed_1023_word    <= '0';                          -- set transition condition to '0'
                      end if;
                   else
                      rxed_1023_word_cnt   <= rxed_1023_word_cnt+1;         -- increment counter by 1
-                     rxed_1023_word       <= '0';                          -- set transition condition to '0'
                   end if;
                else
                   rxed_1023_word_cnt      <= (others => '0');              -- reset counter
