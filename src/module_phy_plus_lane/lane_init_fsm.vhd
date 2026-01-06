@@ -425,7 +425,7 @@ begin
       elsif rising_edge(CLK) then
          rx_new_word_r  <= RX_NEW_WORD;
 
-         if ((RX_NEW_WORD = '1' and rx_new_word_r = '0' ) or RX_NEW_WORD = '1' ) and rx_words_cnt < C_MAX_RX_WORDS then    -- when a new word is received and lower than 16384 words receive
+         if ( RX_NEW_WORD = '1'  and rx_words_cnt < C_MAX_RX_WORDS) then    -- when a new word is received and lower than 16384 words receive
             rx_words_cnt <= rx_words_cnt + 1;                                                   -- Increment RX words counter by 1
          else
             rx_words_cnt <= (others => '0');                                                    -- else reset RX words counter
@@ -455,13 +455,13 @@ begin
          elsif current_state = ACTIVE_ST then
 
             -- When 16384 words are received and a single RXERR control word is detected on 32-bit data
-            if rx_words_cnt = C_MAX_RX_WORDS and ((DETECTED_RXERR_WORD = '1' and detected_rxerr_word_r = '0') or DETECTED_RXERR_WORD = '1')then
+            if rx_words_cnt = C_MAX_RX_WORDS and  DETECTED_RXERR_WORD = '1'then
                rx_error_cnt_i <= rx_error_cnt_i;         -- do not increment RXERR word counter (counter = +1-1)
             -- When 16384 words are received and a single RXERR control word is detected on 32-bit data
             elsif rx_words_cnt = C_MAX_RX_WORDS and rx_error_cnt_i /= x"00" then
                rx_error_cnt_i <= rx_error_cnt_i - 1;         -- do not increment RXERR word counter (counter = +1-1)
             -- When a RXERR control word is detected on 32-bit data
-            elsif rx_words_cnt <= C_MAX_RX_WORDS and ((DETECTED_RXERR_WORD = '1' and detected_rxerr_word_r = '0') or DETECTED_RXERR_WORD = '1') then
+            elsif rx_words_cnt <= C_MAX_RX_WORDS and  DETECTED_RXERR_WORD = '1' then
                if rx_error_cnt_i = C_MAX_RXERR_CTRL_WORDS then    -- Overflow gestion
                   rx_error_cnt_ovf_i   <= '1';
                   rx_error_cnt_i       <= (others => '1');        -- Lock to the max value 0xFF
@@ -510,7 +510,7 @@ begin
          -- if the current_state signal is stable and the FSM is in ACTIVE_ST or LOSS_OF_SIGNAL_ST or PREPARE_STANDBY_ST state
          if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = LOSS_OF_SIGNAL_ST or current_state = PREPARE_STANDBY_ST) then
 
-            if (RX_NEW_WORD = '1' and rx_new_word_r = '0')  or RX_NEW_WORD = '1' then        -- when a new word is received
+            if RX_NEW_WORD = '1' then        -- when a new word is received
                if DETECTED_LOSS_SIGNAL = '1' then                      -- and a LOSS_SIGNAL word is detected
                   if loss_signal_x3_cnt = "01" then                    -- and the cnt value is equal to 2
                      lost_signal_x3       <= '1';                      -- the transition condition is set to '1'
@@ -543,7 +543,7 @@ begin
          -- if the current_state signal is stable and the FSM is in ACTIVE_ST or LOSS_OF_SIGNAL_ST or PREPARE_STANDBY_ST state
          if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = LOSS_OF_SIGNAL_ST or current_state = PREPARE_STANDBY_ST) then
 
-            if (RX_NEW_WORD = '1' and rx_new_word_r = '0')  or RX_NEW_WORD = '1' then             -- when a new word is received
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
                if DETECTED_STANDBY = '1' then                               -- and a STANDBY word is detected
                   if standby_signal_x3_cnt = "01" then                      -- and the cnt value is equal to 2
                      standby_signal_x3       <= '1';                        -- the transition condition is set to '1'
@@ -583,7 +583,7 @@ begin
          -- States for detection of at least one INIT1 is received and no rx error is detected
          if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST) and DETECTED_RXERR_WORD = '0' then
 
-            if (DETECTED_INV_INIT1 = '1' and detected_inv_init1_r = '0') or DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
+            if  DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
                if inv_init1_rxed_cnt >= "10" then                             -- and the counter reaches 3
                   inv_init1_rxed_cnt <= "00";                                 -- reset counter
                   inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
@@ -593,7 +593,7 @@ begin
                end if;
             end if;
 
-            if (DETECTED_INIT1 = '1' and detected_init1_r = '0' ) or DETECTED_INIT1 = '1' then           -- INIT1 detection condition
+            if DETECTED_INIT1 = '1' then           -- INIT1 detection condition
                init1_rxed  <= '1';                                            -- Set to '1' transition condition to CONNECTING_ST or LOSS_OF_SIGNAL_ST
             end if;
          else
@@ -633,7 +633,7 @@ begin
                end if;
             end if;
 
-            if (DETECTED_INIT2 = '1' and detected_init2_r = '0') or DETECTED_INIT2 = '1' then           -- INIT2 detection condition
+            if DETECTED_INIT2 = '1' then           -- INIT2 detection condition
                init2_rxed  <= '1';
                if init2_rxed_cnt >= "10" then                                 -- and the counter reaches 3
                   init2_rxed_cnt <= "00";                                     -- reset counter
@@ -670,7 +670,7 @@ begin
          -- States for detection of INIT3 is received and no rx error is detected
          if current_state = current_state_r and (current_state = CONNECTING_ST or current_state = CONNECTED_ST) and DETECTED_RXERR_WORD = '0' then
 
-            if (DETECTED_INIT3 = '1' and detected_init3_r = '0') or DETECTED_INIT3 = '1' then  -- INIT3 detection condition
+            if DETECTED_INIT3 = '1' then  -- INIT3 detection condition
                if init3_rxed_cnt = "10" then                         -- and counter reaches 3
                   init3_rxed_cnt   <= "00";                          -- reset counter
                   init3_rxed_x3    <= '1';                           -- Set to '1' transition condition to CONNECTING_ST or ACTIVE_ST
@@ -700,7 +700,7 @@ begin
          -- if the current_state signal is stable and the FSM is in STARTED_ST or INVERT_ST state
          if current_state = current_state_r and (current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST) then
 
-            if ((RX_NEW_WORD = '1' and rx_new_word_r = '0') or RX_NEW_WORD = '1') then            -- when new word is received
+            if  RX_NEW_WORD = '1' then            -- when new word is received
                if DETECTED_RXERR_WORD = '0' then                           -- and no error has occurred
                   if rxed_1023_word_cnt >= C_1023_WORDS-1 then             -- when 1023 words are receive without error
                      if init1_rxed = '1' or init2_rxed = '1'  then         -- when at least one INIT1 or INIT2 is received and no RXERR detected
