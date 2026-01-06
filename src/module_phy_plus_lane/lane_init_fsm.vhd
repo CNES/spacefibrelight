@@ -112,7 +112,6 @@ signal enable_init_cnt              : std_logic;                                
 constant C_MAX_RX_WORDS             : unsigned(13 downto 00) := "11" & x"FFF";   --! 16384 words received
    -- Signals
 signal rx_words_cnt                 : unsigned(13 downto 00);                    --! Number of words received counter
-signal rx_new_word_r                : std_logic;                                 --! RX_NEW_WORD registered signal
 
 -- RX error counter process ------------------------------------------------------------------------------------
    -- Constants
@@ -120,7 +119,6 @@ constant C_MAX_RXERR_CTRL_WORDS     : unsigned(07 downto 00) := x"FF";          
    -- Signals
 signal rx_error_cnt_i               : unsigned(07 downto 00);                    --! RXERR control words counter
 signal rx_error_cnt_ovf_i           : std_logic;                                 --! RXERR overflow flag
-signal detected_rxerr_word_r        : std_logic;                                 --! DETECTED_RXERR_WORD registered signal
 
 -- init_timeout_counter process --------------------------------------------------------------------------------
    -- Constants
@@ -145,8 +143,6 @@ signal inv_init1_rxed_cnt           : unsigned(01 downto 00);                   
 signal init1_rxed                   : std_logic;                                 --! Flag indicates that an INIT1 control word has been received
 signal init1_rxed_r                 : std_logic;                                 --! init1_rxed registered signal
 signal inv_init1_rxed_x3            : std_logic;                                 --! Flag indicates that inv_init1_rxed_cnt reaches 3
-signal detected_init1_r             : std_logic;                                 --! DETECTED_INIT1 registered signal
-signal detected_inv_init1_r         : std_logic;                                 --! DETECTED_INV_INIT1 registered signal
 
 -- INIT2 detection process ------------------------------------------------------------------------------------
    -- Signals
@@ -155,14 +151,11 @@ signal inv_init2_rxed_cnt           : unsigned(01 downto 00);                   
 signal init2_rxed_x3                : std_logic;                                 --! Flag indicates that x3 INIT2 control word has been received
 signal inv_init2_rxed_x3            : std_logic;                                 --! Flag indicates that inv_init2_rxed_cnt reaches 3
 signal init2_rxed                   : std_logic;                                 --! Flag indicates that INIT2 control word has been received
-signal detected_init2_r             : std_logic;                                 --! DETECTED_INIT2 registered signal
-signal detected_inv_init2_r         : std_logic;                                 --! DETECTED_INV_INIT2 registered signal
 
 -- INIT3 detection process ------------------------------------------------------------------------------------
    -- Signals
 signal init3_rxed_cnt               : unsigned(01 downto 00);                    --! Detection of the INIT3 counter
 signal init3_rxed_x3                : std_logic;                                 --! Flag indicates that x3 INIT3 control word has been received
-signal detected_init3_r             : std_logic;                                 --! DETECTED_INIT3 registered signal
 signal comma_k287_rxed_r            : std_logic;                                 --! COMMA_K287_RXED registered signal
 
 -- Process for detection the reception of 1023 words including the reception of at least on INIT1 or INIT2 without RXERR control words
@@ -421,10 +414,7 @@ begin
    begin
       if RST_N = '0' then
          rx_words_cnt   <= (others => '0');
-         rx_new_word_r  <= '0';
       elsif rising_edge(CLK) then
-         rx_new_word_r  <= RX_NEW_WORD;
-
          if ( RX_NEW_WORD = '1'  and rx_words_cnt < C_MAX_RX_WORDS) then    -- when a new word is received and lower than 16384 words receive
             rx_words_cnt <= rx_words_cnt + 1;                                                   -- Increment RX words counter by 1
          else
@@ -442,11 +432,8 @@ begin
       if RST_N = '0' then
          rx_error_cnt_i          <= (others => '0');
          rx_error_cnt_ovf_i      <= '0';
-         detected_rxerr_word_r   <= '0';
 
       elsif rising_edge(CLK) then
-
-         detected_rxerr_word_r   <= DETECTED_RXERR_WORD;
 
          if LANE_RESET = '1' or LANE_RESET_DL = '1' or current_state = CONNECTED_ST then -- Reset RXERR word counter to 0
             rx_error_cnt_i       <= (others => '0');
@@ -572,12 +559,8 @@ begin
          init1_rxed           <= '0';
          init1_rxed_r        <= '0';
          inv_init1_rxed_x3    <= '0';
-         detected_init1_r     <= '0';
-         detected_inv_init1_r <= '0';
          inv_init1_rxed_cnt   <= "00";
       elsif rising_edge(CLK) then
-         detected_init1_r     <= DETECTED_INIT1;
-         detected_inv_init1_r <= DETECTED_INV_INIT1;
          init1_rxed_r         <= init1_rxed;
 
          -- States for detection of at least one INIT1 is received and no rx error is detected
@@ -613,17 +596,13 @@ begin
          inv_init2_rxed_cnt   <= "00";
          init2_rxed_cnt       <= "00";
          init2_rxed_x3        <= '0';
-         detected_inv_init2_r <= '0';
-         detected_init2_r     <= '0';
          init2_rxed           <= '0';
       elsif rising_edge(CLK) then
-         detected_init2_r     <= DETECTED_INIT2;
-         detected_inv_init2_r <= DETECTED_INV_INIT2;
 
          -- States for detection of at least one INIT2 is received and no rx error is detected
          if current_state = current_state_r and (current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST or current_state = CONNECTING_ST) and DETECTED_RXERR_WORD = '0' then
 
-            if (DETECTED_INV_INIT2 = '1' and detected_inv_init2_r = '0') or DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
+            if  DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
                if inv_init2_rxed_cnt >= "10" then                             -- and the counter reaches 3
                   inv_init2_rxed_cnt   <= "00";                               -- reset counter
                   inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
@@ -661,10 +640,8 @@ begin
       if RST_N = '0' then
          init3_rxed_x3    <= '0';
          init3_rxed_cnt   <= "00";
-         detected_init3_r <= '0';
          comma_k287_rxed_r <= '0';
       elsif rising_edge(CLK) then
-         detected_init3_r  <= DETECTED_INIT3;
          comma_k287_rxed_r <= COMMA_K287_RXED;
 
          -- States for detection of INIT3 is received and no rx error is detected
