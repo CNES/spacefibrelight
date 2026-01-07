@@ -507,12 +507,11 @@ begin
                         loss_signal_x3_cnt   <= loss_signal_x3_cnt+1;     -- and the counter is incremented by 1
                      end if;
                   end if;
-               else
-                  lost_signal_x3          <= '0';                      -- when LOSS_SIGNAL word not detected trasition condition set to '0'
+               else --keep previous lost_signal value
                   loss_signal_x3_cnt      <= "00";                     -- and the counter is set to 0
                end if;
             end if;
-         else
+         else -- state change => reset lost signal
             lost_signal_x3       <= '0';                               -- When a transition state is detected or the FSM is not in the right state transition condition is set to '0'
             loss_signal_x3_cnt   <= "00";                              -- and the counter is set to 0
          end if;
@@ -541,12 +540,11 @@ begin
                      standby_signal_x3_cnt   <= standby_signal_x3_cnt+1;    -- and the counter is incremented by 1
                     end if;
                   end if;
-               else
-                  standby_signal_x3          <= '0';                        -- when STANDBY word not detected trasition condition set to '0'
+               else --keep previous value of standby_signal_x3 
                   standby_signal_x3_cnt      <= "00";                       -- and the counter is set to 0
                end if;
             end if;
-         else
+         else --state change reset standby_signal_x3 
             standby_signal_x3       <= '0';                                 -- When a transition state is detected or the FSM is not in the right state transition condition is set to '0'
             standby_signal_x3_cnt   <= "00";                                -- and the counter is set to 0
          end if;
@@ -567,14 +565,15 @@ begin
 
          -- States for detection of at least one INIT1 is received and no rx error is detected
          if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST) and DETECTED_RXERR_WORD = '0' then
-
-            if  DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
-               if inv_init1_rxed_cnt >= "10" then                             -- and the counter reaches 3
-                  inv_init1_rxed_cnt <= "00";                                 -- reset counter
-                  inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
-               else
-                  if inv_init1_rxed_x3='0'  then                             -- count only if needed
-                     inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
+               if  DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
+                  if inv_init1_rxed_cnt >= "10" then                             -- and the counter reaches 3
+                     inv_init1_rxed_cnt <= "00";                                 -- reset counter
+                     inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
+                  else
+                     if inv_init1_rxed_x3='0'  then                             -- count only if needed
+                        inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
+                     end if;
                   end if;
                end if;
             end if;
@@ -604,17 +603,18 @@ begin
 
          -- States for detection of at least one INIT2 is received and no rx error is detected
          if current_state = current_state_r and (current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST or current_state = CONNECTING_ST) and DETECTED_RXERR_WORD = '0' then
-
-            if  DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
-               if inv_init2_rxed_cnt >= "10" then                             -- and the counter reaches 3
-                  inv_init2_rxed_cnt   <= "00";                               -- reset counter
-                  inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
-               else
-                  if  inv_init2_rxed_x3='0'  then                             -- count only if needed
-                   inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
+            if  RX_NEW_WORD = '1' then             -- when a new word is received 
+               if  DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
+                  if inv_init2_rxed_cnt >= "10" then                             -- and the counter reaches 3
+                     inv_init2_rxed_cnt   <= "00";                               -- reset counter
+                     inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
+                  else
+                     if  inv_init2_rxed_x3='0'  then                             -- count only if needed
+                     inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
+                     end if;
                   end if;
                end if;
-            end if;
+            end if;   
 
             if DETECTED_INIT2 = '1' then           -- INIT2 detection condition
                init2_rxed  <= '1';
@@ -651,14 +651,15 @@ begin
 
          -- States for detection of INIT3 is received and no rx error is detected
          if current_state = current_state_r and (current_state = CONNECTING_ST or current_state = CONNECTED_ST) and DETECTED_RXERR_WORD = '0' then
-
-            if DETECTED_INIT3 = '1' then  -- INIT3 detection condition
-               if init3_rxed_cnt = "10" then                         -- and counter reaches 3
-                  init3_rxed_cnt   <= "00";                          -- reset counter
-                  init3_rxed_x3    <= '1';                           -- Set to '1' transition condition to CONNECTING_ST or ACTIVE_ST
-               else
-                  if init3_rxed_x3 ='0'  then                           -- count only if needed
-                     init3_rxed_cnt   <= init3_rxed_cnt+1;              -- else increment counter by 1
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
+               if DETECTED_INIT3 = '1' then  -- INIT3 detection condition
+                  if init3_rxed_cnt = "10" then                         -- and counter reaches 3
+                     init3_rxed_cnt   <= "00";                          -- reset counter
+                     init3_rxed_x3    <= '1';                           -- Set to '1' transition condition to CONNECTING_ST or ACTIVE_ST
+                  else
+                     if init3_rxed_x3 ='0'  then                           -- count only if needed
+                        init3_rxed_cnt   <= init3_rxed_cnt+1;              -- else increment counter by 1
+                     end if;
                   end if;
                end if;
             end if;
