@@ -72,7 +72,9 @@ architecture rtl of data_link_reset is
   signal link_reset_dlre_i      : std_logic;
   signal lane_reset_dlre_i      : std_logic;
   signal current_state_vector   : std_logic_vector(1 downto 0);
-
+------- xilinx debug features
+attribute MARK_DEBUG : string;
+attribute MARK_DEBUG of current_state : signal is "TRUE"; --debug state machine
 begin
 --------------------------------------------------------
 --                  Assignements                     ---
@@ -110,6 +112,7 @@ begin
                                   link_reset_dlre_i  <= '1';
                                   lane_reset_dlre_i  <= '1';
                                   RESET_PARAM_DLRE <= '1';
+                                  -- FIXME : determine wy there are a reset counter  which is not mentionned in 5.7.9
                                   if cnt_link_reset > 2 then
                                     cnt_link_reset     <= (others =>'0');
                                     current_state      <= NEAR_END_RST_ST;
@@ -148,7 +151,11 @@ begin
                                     current_state <= CONF_RST_ST;
                                   elsif LINK_RESET_MIB  ='1' then
                                     current_state <= NEAR_END_RST_ST;
-                                  elsif LANE_ACTIVE_PPL = '1' and lane_active_ppl_r = '0' and FAR_END_CAPA_PPL(C_CAPA_LINK_RST) = '1' then
+                                  elsif LANE_ACTIVE_PPL = '0'and FAR_END_CAPA_PPL(C_CAPA_LINK_RST) = '1' then --!REQ 5.7.9.5.c.4
+                                    -- "when all lanes are NOT active and lane capatibility receive got INNIT3LRflag"
+                                    -- in single lane mode this means: lane not active et and we received a new flag 
+                                    -- (i.e. lane is reactivated, this is the only way to get a new flag but if we are activated the condition lane not active is not met 
+                                    --so keep with lane not active and last received capability includes a reset flag
                                     current_state <= NEAR_END_RST_ST;
                                   elsif LINK_RESET_DIBUF /= std_logic_vector(to_unsigned(0,LINK_RESET_DIBUF'length))  or LINK_RESET_DERRM ='1' then
                                     current_state <= NEAR_END_RST_ST;
