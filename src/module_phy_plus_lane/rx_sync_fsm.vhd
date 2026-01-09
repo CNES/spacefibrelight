@@ -77,7 +77,9 @@ signal valid_symb                   : std_logic;                           --! F
 signal invalid_symb                 : std_logic;                           --! Flag indicates that an invalid symbol is received
 signal disparity_err                : std_logic;                           --! Flag indicates that a disparity error is detected
 signal test_state : std_logic_vector(1 downto 0);
-
+------- xilinx debug features
+attribute MARK_DEBUG : string;
+attribute MARK_DEBUG of current_state : signal is "TRUE"; --debug state machine
 begin
 
    -- Receiver word synchronisation FSM tansition process

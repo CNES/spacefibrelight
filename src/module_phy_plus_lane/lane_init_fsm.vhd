@@ -53,7 +53,8 @@ entity lane_init_fsm is
       SEND_RXERR                       : out std_logic;                       --! Flag send RXERR control word to Data-Link layer when FSM leave ACTIVE_ST
       INVERT_RX_BITS                   : out std_logic;                       --! Flag to Invert rx bit received
       NO_SIGNAL_DETECTION_ENABLED      : out std_logic;                       --! Flag to enable the no signal function
-
+      CAPABILITY                       : in  std_logic_vector(07 downto 00);  -- Capability from INIT3 control word (31 downto 24)
+      
       -- TX signals
       STANDBY_SIGNAL_X32               : in  std_logic;                       --! Flag STANDBY control word has been send x32
       LOST_SIGNAL_X32                  : in  std_logic;                       --! Flag LOST_SIGNAL control word has been send x32
@@ -65,6 +66,7 @@ entity lane_init_fsm is
       SEND_32_STANDBY_CTRL_WORDS       : out std_logic;                       --! Flag to send STANDBY control word x32
       SEND_32_LOSS_SIGNAL_CTRL_WORDS   : out std_logic;                       --! Flag to send LOSS_SIGNAL control word x32
       LOST_CAUSE                       : out std_logic_vector(01 downto 00);  --! Flag to indicate the reason of the LOST_SIGNAL
+      ALIGNED_CAPABILITY               : out std_logic_vector(07 downto 00);  -- Capability aligned with ENABLE_TRANSM_DATA
 
       -- PARAMETERS and STATUS
       LANE_START                       : in  std_logic;                       --! Asserts or de-asserts LaneStart for the lane
@@ -100,7 +102,7 @@ signal current_state_r              : lane_init_fsm_type;                       
 
 -- Lane Initialisation FSM action on state process -------------------------------------------------------------
    -- Constants
-constant C_2US_AT_78MHZ            : unsigned(08 downto 00) := "0" & x"95";     --! 300 x 6.667ns = 2us
+constant C_2US_AT_150MHZ            : unsigned(08 downto 00) := "1" & x"2C";     --! 300 x 6.667ns = 2us
    -- Signals
 signal clear_line_cnt               : unsigned(08 downto 00);                    --! 2us counter
 signal clear_line_done              : std_logic;                                 --! Flag indicates that clear_line_cnt reaches C_2US_AT_150MHZ
@@ -112,7 +114,6 @@ signal enable_init_cnt              : std_logic;                                
 constant C_MAX_RX_WORDS             : unsigned(13 downto 00) := "11" & x"FFF";   --! 16384 words received
    -- Signals
 signal rx_words_cnt                 : unsigned(13 downto 00);                    --! Number of words received counter
-signal rx_new_word_r                : std_logic;                                 --! RX_NEW_WORD registered signal
 
 -- RX error counter process ------------------------------------------------------------------------------------
    -- Constants
@@ -120,7 +121,6 @@ constant C_MAX_RXERR_CTRL_WORDS     : unsigned(07 downto 00) := x"FF";          
    -- Signals
 signal rx_error_cnt_i               : unsigned(07 downto 00);                    --! RXERR control words counter
 signal rx_error_cnt_ovf_i           : std_logic;                                 --! RXERR overflow flag
-signal detected_rxerr_word_r        : std_logic;                                 --! DETECTED_RXERR_WORD registered signal
 
 -- init_timeout_counter process --------------------------------------------------------------------------------
    -- Constants
@@ -145,8 +145,6 @@ signal inv_init1_rxed_cnt           : unsigned(01 downto 00);                   
 signal init1_rxed                   : std_logic;                                 --! Flag indicates that an INIT1 control word has been received
 signal init1_rxed_r                 : std_logic;                                 --! init1_rxed registered signal
 signal inv_init1_rxed_x3            : std_logic;                                 --! Flag indicates that inv_init1_rxed_cnt reaches 3
-signal detected_init1_r             : std_logic;                                 --! DETECTED_INIT1 registered signal
-signal detected_inv_init1_r         : std_logic;                                 --! DETECTED_INV_INIT1 registered signal
 
 -- INIT2 detection process ------------------------------------------------------------------------------------
    -- Signals
@@ -155,14 +153,10 @@ signal inv_init2_rxed_cnt           : unsigned(01 downto 00);                   
 signal init2_rxed_x3                : std_logic;                                 --! Flag indicates that x3 INIT2 control word has been received
 signal inv_init2_rxed_x3            : std_logic;                                 --! Flag indicates that inv_init2_rxed_cnt reaches 3
 signal init2_rxed                   : std_logic;                                 --! Flag indicates that INIT2 control word has been received
-signal detected_init2_r             : std_logic;                                 --! DETECTED_INIT2 registered signal
-signal detected_inv_init2_r         : std_logic;                                 --! DETECTED_INV_INIT2 registered signal
 
 -- INIT3 detection process ------------------------------------------------------------------------------------
    -- Signals
-signal init3_rxed_cnt               : unsigned(01 downto 00);                    --! Detection of the INIT3 counter
 signal init3_rxed_x3                : std_logic;                                 --! Flag indicates that x3 INIT3 control word has been received
-signal detected_init3_r             : std_logic;                                 --! DETECTED_INIT3 registered signal
 signal comma_k287_rxed_r            : std_logic;                                 --! COMMA_K287_RXED registered signal
 
 -- Process for detection the reception of 1023 words including the reception of at least on INIT1 or INIT2 without RXERR control words
@@ -172,7 +166,21 @@ constant C_1023_WORDS               : unsigned(09 downto 00) := "11" & x"FF";   
 signal rxed_1023_word_cnt           : unsigned(09 downto 00);                    --! Counter of received words
 signal rxed_1023_word               : std_logic;                                 --! Flag indicates that rxed_1023_word_cnt reaches C_1023_WORDS
 
+signal raz_counters : std_logic;-- value 1 to reset all counters for words
 
+--capability init3 comparison management
+-- in ECSS documentation capability is also referred as initialisation parameter (see 5.5.2.10.b.3)
+signal capability_r :   std_logic_vector(07 downto 00);  -- previous capability field received
+signal capability_same_rxed_x2  :   std_logic ;  -- value 1 when  2 capabiliy have been received identically
+
+signal txed_1_INIT3:   std_logic ; -- 1 init3 sent during this state machine phase
+signal txed_2_INIT3:   std_logic ; -- 2 init3 sent during this state machine phase
+signal txed_3_INIT3:   std_logic ; -- 3 init3 sent during this state machine phase
+signal send_init3_ctrl_word_i : std_logic; -- internal SEND_INIT3_CTRL_WORD signal
+
+------- xilinx debug features
+attribute MARK_DEBUG : string;
+attribute MARK_DEBUG of current_state : signal is "TRUE"; --debug state machine
 
 begin
 
@@ -183,94 +191,144 @@ begin
       if RST_N = '0' then
          current_state     <= CLEAR_LINE_ST;
          current_state_r   <= CLEAR_LINE_ST;
-
+         raz_counters <='1';
       elsif rising_edge(CLK) then
-
+        
+         raz_counters <='0'; --per default do not reset counters
          current_state_r   <= current_state;
 
          case current_state is
 
-            when CLEAR_LINE_ST         => if clear_line_done = '1' then          -- when 2u counter reaches
+            when CLEAR_LINE_ST         => 
+                                          if clear_line_done = '1' then          -- when 2u counter reaches --!Req: 5.5.2.4.d.1
                                              current_state  <= DISABLED_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= CLEAR_LINE_ST;
                                           end if;
 
-            when DISABLED_ST           => if LANE_RESET = '1' or LANE_RESET_DL = '1' then -- When a soft reset appears
+            when DISABLED_ST           => if LANE_RESET = '1' or LANE_RESET_DL = '1' then -- When a soft reset appears --!Req: 5.5.2.5.c.1
                                              current_state  <= CLEAR_LINE_ST;
-                                          elsif LANE_START = '1' or AUTOSTART = '1' then  -- When a start command is detected
+                                             raz_counters <='1';
+                                          elsif LANE_START = '1' or AUTOSTART = '1' then  -- When a start command is detected --!Req: 5.5.2.5.c.2
                                              current_state  <= WAIT_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= DISABLED_ST;
                                           end if;
 
-            when WAIT_ST               => if LANE_RESET = '1' or LANE_RESET_DL = '1' then -- When a soft reset appears
+            when WAIT_ST               => if LANE_RESET = '1' or LANE_RESET_DL = '1' then -- When a soft reset appears --!Req: 5.5.2.6.f.1
                                              current_state  <= CLEAR_LINE_ST;
-                                          elsif LANE_START = '0' and AUTOSTART = '0' then -- When a start command is not detected
+                                             raz_counters <='1';
+                                          elsif LANE_START = '0' and AUTOSTART = '0' then -- When a start command is not detected --!Req: 5.5.2.6.f.2
                                              current_state  <= DISABLED_ST;
-                                          elsif LANE_START = '1' or NO_SIGNAL = '0' then  -- When a start command is detected or signal is received
+                                             raz_counters <='1';
+                                          elsif LANE_START = '1' or NO_SIGNAL = '0' then  -- When a start command is detected or signal is received --!Req: 5.5.2.6.f.3
                                              current_state  <= STARTED_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= WAIT_ST;
                                           end if;
 
-            when STARTED_ST            => if (lost_signal_x3 = '1' or standby_signal_x3 = '1') or init_timeout_reaches = '1' or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state <= CLEAR_LINE_ST;
-                                          elsif inv_init1_rxed_x3 = '1' or inv_init2_rxed_x3 = '1' then
-                                             current_state  <= INVERT_RX_POLARITY_ST;
-                                          elsif rxed_1023_word = '1' then
+            when STARTED_ST            => --FIXME: mising --!Req: 5.5.2.7.f.2 farend active condition 
+                                          if (lost_signal_x3 = '1' or standby_signal_x3 = '1') or       --!Req: 5.5.2.7.f.6
+                                             init_timeout_reaches = '1' or                              --!Req: 5.5.2.7.f.5          
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then               --!Req: 5.5.2.7.f.1
+                                                current_state <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
+                                          elsif rxed_1023_word = '1' then                               --!Req: 5.5.2.7.f.3
                                              current_state  <= CONNECTING_ST;
+                                             raz_counters <='1';      
+                                          elsif inv_init1_rxed_x3 = '1' or inv_init2_rxed_x3 = '1' then --!Req: 5.5.2.7.f.4
+                                             current_state  <= INVERT_RX_POLARITY_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= STARTED_ST;
                                           end if;
-
-            when INVERT_RX_POLARITY_ST => if NO_SIGNAL = '1' or init_timeout_reaches = '1' or (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state  <= CLEAR_LINE_ST;
-                                          elsif rxed_1023_word = '1' then
+ 
+            when INVERT_RX_POLARITY_ST => --FIXME : !Req: 5.5.2.8.f.3 : Missing Farend Active condition
+                                          if NO_SIGNAL = '1' or                                   --!Req: 5.5.2.8.f.2  partially compliant as we do not support  Missing TXonly signal (multilane feature)
+                                             init_timeout_reaches = '1' or                        --!Req: 5.5.2.8.f.5
+                                             (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.8.f.6
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then         --!Req: 5.5.2.8.f.1
+                                                current_state  <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
+                                          elsif rxed_1023_word = '1' then                         --!Req: 5.5.2.8.f.4
                                              current_state  <= CONNECTING_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= INVERT_RX_POLARITY_ST;
                                           end if;
 
-            when CONNECTING_ST         => if NO_SIGNAL = '1' or init_timeout_reaches = '1' or (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state  <= CLEAR_LINE_ST;
-                                          elsif init2_rxed_x3 = '1' or init3_rxed_x3 = '1' then
+            when CONNECTING_ST         => -- not compliant to !Req: 5.5.2.9.f.3 Rxonly asserted as we do not support multilane features
+                                          -- not compliant to !Req: 5.5.2.9.f.4 far end active condition as we do not support multilane features
+                                          if NO_SIGNAL = '1' or                                   --!Req: 5.5.2.9.f.2 partially compliant as we do not support  Missing TXonly signal (multilane feature)   
+                                             init_timeout_reaches = '1' or                        --!Req: 5.5.2.9.f.7
+                                             (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.9.f.8 
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then         --!Req: 5.5.2.9.f.1   
+                                                current_state  <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
+                                          elsif init2_rxed_x3 = '1' or       --!Req: 5.5.2.9.f.5
+                                                init3_rxed_x3 = '1' then     --!Req: 5.5.2.9.f.6
                                              current_state  <= CONNECTED_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= CONNECTING_ST;
                                           end if;
 
-            when CONNECTED_ST          => if NO_SIGNAL = '1' or init_timeout_reaches = '1' or comma_k287_rxed_r = '1' or (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state  <= CLEAR_LINE_ST;
-                                          elsif init3_rxed_x3 = '1' then
+            when CONNECTED_ST          => --not compliant to !Req: 5.5.2.10.e.3 rx only as we do not support multilane features
+                                          --not compliant to !Req: 5.5.2.10.e.4 far end active as we do not support multilane features
+                                          if NO_SIGNAL = '1' or                                   --!Req: 5.5.2.10.e.2 partially compliant as we do not support multilane features
+                                             init_timeout_reaches = '1' or                        --!Req: 5.5.2.10.e.6
+                                             comma_k287_rxed_r = '1' or                           --!Req: 5.5.2.10.e.8  
+                                             (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.10.e.7
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then         --!Req: 5.5.2.10.e.1
+                                                current_state  <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
+                                          elsif init3_rxed_x3 = '1' and txed_3_INIT3='1' then                           --!Req: 5.5.2.10.e.5 
                                              current_state  <= ACTIVE_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= CONNECTED_ST;
                                           end if;
 
-            when ACTIVE_ST             => if (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state <= CLEAR_LINE_ST;
-                                          elsif LANE_START = '0' and AUTOSTART = '0' then
+            when ACTIVE_ST             => if (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.11.e.6
+                                              LANE_RESET = '1' or LANE_RESET_DL = '1' then        --!Req: 5.5.2.11.e.1  
+                                                current_state <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
+                                          elsif LANE_START = '0' and AUTOSTART = '0' then         --!Req: 5.5.2.11.e.5
                                              current_state  <= PREPARE_STANDBY_ST;
-                                          elsif init1_rxed = '1' or NO_SIGNAL = '1' or rx_error_cnt_ovf_i = '1' then
+                                             raz_counters <='1';
+                                          elsif init1_rxed = '1' or                               --!Req: 5.5.2.11.e.4 partiallay compliant as we do not support multilane features (missing Rxonly signal )
+                                                NO_SIGNAL = '1' or                                --!Req: 5.5.2.11.e.2 artiallay compliant as we do not support multilane features (missing Txonly signal )
+                                                rx_error_cnt_ovf_i = '1' then                     --!Req: 5.5.2.11.e.3
                                              current_state  <= LOSS_OF_SIGNAL_ST;
+                                             raz_counters <='1';
                                           else
                                              current_state  <= ACTIVE_ST;
                                           end if;
 
-            when LOSS_OF_SIGNAL_ST     => if LOST_SIGNAL_X32 = '1' or (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state <= CLEAR_LINE_ST;
+            when LOSS_OF_SIGNAL_ST     => if LOST_SIGNAL_X32 = '1' or                              --!Req: 5.5.2.12.e.2 
+                                             (lost_signal_x3 = '1' or standby_signal_x3 = '1') or  --!Req: 5.5.2.12.e.3
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then          --!Req: 5.5.2.12.e.1
+                                                current_state <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
                                           else
                                              current_state  <= LOSS_OF_SIGNAL_ST;
                                           end if;
 
-            when PREPARE_STANDBY_ST    => if STANDBY_SIGNAL_X32 = '1' or (lost_signal_x3 = '1' or standby_signal_x3 = '1') or LANE_RESET = '1' or LANE_RESET_DL = '1' then
-                                             current_state <= CLEAR_LINE_ST;
+            when PREPARE_STANDBY_ST    => if STANDBY_SIGNAL_X32 = '1' or                          --!Req: 5.5.2.13.e.2       
+                                             (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.13.e.3
+                                             LANE_RESET = '1' or LANE_RESET_DL = '1' then         --!Req: 5.5.2.13.e.1
+                                                current_state <= CLEAR_LINE_ST;
+                                                raz_counters <='1';
                                           else
                                              current_state  <= PREPARE_STANDBY_ST;
                                           end if;
 
-            when others                => current_state  <= CLEAR_LINE_ST;
+            when others                => 
+                                          current_state  <= CLEAR_LINE_ST;
+                                          raz_counters <='1';
 
          end case;
       end if;
@@ -288,7 +346,7 @@ begin
          cdr_i                               <= '0';              -- CDR Disabled
          SEND_INIT1_CTRL_WORD                <= '0';              -- stop send INIT1 control word following by 64 pseudo-random data words
          SEND_INIT2_CTRL_WORD                <= '0';              -- stop INIT2 control word following by 64 pseudo-random data words
-         SEND_INIT3_CTRL_WORD                <= '0';              -- stop INIT3 control word following by 64 pseudo-random data words
+         send_init3_ctrl_word_i              <= '0';              -- stop INIT3 control word following by 64 pseudo-random data words
          enable_init_cnt                     <= '0';              -- enable timeout initialisation counter
          INVERT_RX_BITS                      <= '0';              -- do not invert received bits
          ENABLE_TRANSM_DATA                  <= '0';              -- enable transimission data and control word from data-link layer
@@ -297,7 +355,7 @@ begin
          NO_SIGNAL_DETECTION_ENABLED         <= '0';              -- No_signal detection function disabled
          LANE_STATE                          <= (others => '0');  -- Status of the Lane Init FSM
          LOST_CAUSE                          <= (others => '0');  -- LOST_SIGNAL reason
-
+         ALIGNED_CAPABILITY                  <= (others => '0');  -- CAPABILITY to datalink layer
       elsif rising_edge(CLK) then
 
          if current_state = CLEAR_LINE_ST then
@@ -308,7 +366,7 @@ begin
             cdr_i                            <= '0';  -- CDR Disabled
             SEND_INIT1_CTRL_WORD             <= '0';  -- Send INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '0';  -- Send INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '0';  -- Send INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '0';  -- Send INIT3 control word following by 64 pseudo-random data words
             enable_init_cnt                  <= '0';  -- disable timeout initialisation counter
             INVERT_RX_BITS                   <= '0';  -- do not invert received bits
             ENABLE_TRANSM_DATA               <= '0';  -- disable transimission data and control word from data-link layer
@@ -318,7 +376,7 @@ begin
             LOST_CAUSE                       <= "00"; -- Reset
 
             -- Start counter 2us
-            if clear_line_cnt >= C_2US_AT_78MHZ then
+            if clear_line_cnt >= C_2US_AT_150MHZ then
                clear_line_done   <= '1';              -- End condition of CLEAR_LINE_ST
             else
                clear_line_cnt    <= clear_line_cnt+1; -- Increment to 1 2us counter
@@ -350,7 +408,7 @@ begin
             cdr_i                            <= '1';  -- CDR Enable
             SEND_INIT1_CTRL_WORD             <= '1';  -- send INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '0';  -- stop INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
 
          elsif current_state = INVERT_RX_POLARITY_ST then
 
@@ -360,28 +418,33 @@ begin
             INVERT_RX_BITS                   <= '1';  -- invert received bits
             SEND_INIT1_CTRL_WORD             <= '1';  -- send INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '0';  -- stop INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
 
          elsif current_state = CONNECTING_ST then
 
             LANE_STATE                       <= x"5";
             SEND_INIT1_CTRL_WORD             <= '0';  -- stop INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '1';  -- send INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '0';  -- stop INIT3 control word following by 64 pseudo-random data words
 
          elsif current_state = CONNECTED_ST then
 
             LANE_STATE                       <= x"6"; -- Status of the FSM
             SEND_INIT1_CTRL_WORD             <= '0';  -- stop INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '0';  -- stop INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '1';  -- send INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '1';  -- send INIT3 control word following by 64 pseudo-random data words
+
+            --REQ 5.5.2.10.6
+            if init3_rxed_x3='1' then -- 3 INIT3 with same capability (pass it to datalink)
+               ALIGNED_CAPABILITY<=capability_r; -- we are using delayed value as it is the one that triggered the condition on the previous clock cycle 
+            end if;
 
          elsif current_state = ACTIVE_ST then
 
             LANE_STATE                       <= x"7"; -- Status of the FSM
             SEND_INIT1_CTRL_WORD             <= '0';  -- stop INIT1 control word following by 64 pseudo-random data words
             SEND_INIT2_CTRL_WORD             <= '0';  -- send INIT2 control word following by 64 pseudo-random data words
-            SEND_INIT3_CTRL_WORD             <= '0';  -- send INIT3 control word following by 64 pseudo-random data words
+            send_init3_ctrl_word_i           <= '0';  -- send INIT3 control word following by 64 pseudo-random data words
             enable_init_cnt                  <= '0';  -- disable timeout initialisation counter
             ENABLE_TRANSM_DATA               <= '1';  -- enable transimission data and control word from data-link layer
 
@@ -410,7 +473,7 @@ begin
          end if;
       end if;
    end process p_comb_state;
-
+   SEND_INIT3_CTRL_WORD<= send_init3_ctrl_word_i;
 --#######################################################################################--
 --------------------------------------- RX processes --------------------------------------
 --#######################################################################################--
@@ -421,11 +484,8 @@ begin
    begin
       if RST_N = '0' then
          rx_words_cnt   <= (others => '0');
-         rx_new_word_r  <= '0';
       elsif rising_edge(CLK) then
-         rx_new_word_r  <= RX_NEW_WORD;
-
-         if ((RX_NEW_WORD = '1' and rx_new_word_r = '0' ) or RX_NEW_WORD = '1' ) and rx_words_cnt < C_MAX_RX_WORDS then    -- when a new word is received and lower than 16384 words receive
+         if ( RX_NEW_WORD = '1'  and rx_words_cnt < C_MAX_RX_WORDS) then    -- when a new word is received and lower than 16384 words receive
             rx_words_cnt <= rx_words_cnt + 1;                                                   -- Increment RX words counter by 1
          else
             rx_words_cnt <= (others => '0');                                                    -- else reset RX words counter
@@ -439,29 +499,21 @@ begin
    --! RX error counter process
    p_rxerr_counter : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          rx_error_cnt_i          <= (others => '0');
          rx_error_cnt_ovf_i      <= '0';
-         detected_rxerr_word_r   <= '0';
 
       elsif rising_edge(CLK) then
 
-         detected_rxerr_word_r   <= DETECTED_RXERR_WORD;
-
-         if LANE_RESET = '1' or LANE_RESET_DL = '1' or current_state = CONNECTED_ST then -- Reset RXERR word counter to 0
-            rx_error_cnt_i       <= (others => '0');
-            rx_error_cnt_ovf_i   <= '0';
-
-         elsif current_state = ACTIVE_ST then
-
+         if current_state = ACTIVE_ST then
             -- When 16384 words are received and a single RXERR control word is detected on 32-bit data
-            if rx_words_cnt = C_MAX_RX_WORDS and ((DETECTED_RXERR_WORD = '1' and detected_rxerr_word_r = '0') or DETECTED_RXERR_WORD = '1')then
+            if rx_words_cnt = C_MAX_RX_WORDS and  DETECTED_RXERR_WORD = '1'then
                rx_error_cnt_i <= rx_error_cnt_i;         -- do not increment RXERR word counter (counter = +1-1)
             -- When 16384 words are received and a single RXERR control word is detected on 32-bit data
             elsif rx_words_cnt = C_MAX_RX_WORDS and rx_error_cnt_i /= x"00" then
                rx_error_cnt_i <= rx_error_cnt_i - 1;         -- do not increment RXERR word counter (counter = +1-1)
             -- When a RXERR control word is detected on 32-bit data
-            elsif rx_words_cnt <= C_MAX_RX_WORDS and ((DETECTED_RXERR_WORD = '1' and detected_rxerr_word_r = '0') or DETECTED_RXERR_WORD = '1') then
+            elsif rx_words_cnt <= C_MAX_RX_WORDS and  DETECTED_RXERR_WORD = '1' then
                if rx_error_cnt_i = C_MAX_RXERR_CTRL_WORDS then    -- Overflow gestion
                   rx_error_cnt_ovf_i   <= '1';
                   rx_error_cnt_i       <= (others => '1');        -- Lock to the max value 0xFF
@@ -502,31 +554,23 @@ begin
    -- Detection 3 consecutive LOST_SIGNAL process
    p_loss_signal_detection : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          lost_signal_x3       <= '0';
          loss_signal_x3_cnt   <= "00";
-      elsif rising_edge(CLK) then
-
-         -- if the current_state signal is stable and the FSM is in ACTIVE_ST or LOSS_OF_SIGNAL_ST or PREPARE_STANDBY_ST state
-         if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = LOSS_OF_SIGNAL_ST or current_state = PREPARE_STANDBY_ST) then
-
-            if (RX_NEW_WORD = '1' and rx_new_word_r = '0')  or RX_NEW_WORD = '1' then        -- when a new word is received
+      elsif rising_edge(CLK) then 
+            if RX_NEW_WORD = '1' then        -- when a new word is received
                if DETECTED_LOSS_SIGNAL = '1' then                      -- and a LOSS_SIGNAL word is detected
                   if loss_signal_x3_cnt = "01" then                    -- and the cnt value is equal to 2
                      lost_signal_x3       <= '1';                      -- the transition condition is set to '1'
                      loss_signal_x3_cnt   <= "00";                     -- and the counter is set to 0
                   else
-                     lost_signal_x3       <= '0';                      -- else the transition condition is set to '0'
-                     loss_signal_x3_cnt   <= loss_signal_x3_cnt+1;     -- and the counter is incremented by 1
+                     if lost_signal_x3='0' then                        -- count only if needed
+                        loss_signal_x3_cnt   <= loss_signal_x3_cnt+1;     -- and the counter is incremented by 1
+                     end if;
                   end if;
-               else
-                  lost_signal_x3          <= '0';                      -- when LOSS_SIGNAL word not detected trasition condition set to '0'
+               else --keep previous lost_signal value
                   loss_signal_x3_cnt      <= "00";                     -- and the counter is set to 0
                end if;
-            end if;
-         else
-            lost_signal_x3       <= '0';                               -- When a transition state is detected or the FSM is not in the right state transition condition is set to '0'
-            loss_signal_x3_cnt   <= "00";                              -- and the counter is set to 0
          end if;
       end if;
    end process p_loss_signal_detection;
@@ -535,32 +579,24 @@ begin
    -- Detection 3 consecutive STANDBY process
    p_standby_detection : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          standby_signal_x3       <= '0';
          standby_signal_x3_cnt   <= "00";
       elsif rising_edge(CLK) then
-
-         -- if the current_state signal is stable and the FSM is in ACTIVE_ST or LOSS_OF_SIGNAL_ST or PREPARE_STANDBY_ST state
-         if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = LOSS_OF_SIGNAL_ST or current_state = PREPARE_STANDBY_ST) then
-
-            if (RX_NEW_WORD = '1' and rx_new_word_r = '0')  or RX_NEW_WORD = '1' then             -- when a new word is received
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
                if DETECTED_STANDBY = '1' then                               -- and a STANDBY word is detected
                   if standby_signal_x3_cnt = "01" then                      -- and the cnt value is equal to 2
                      standby_signal_x3       <= '1';                        -- the transition condition is set to '1'
                      standby_signal_x3_cnt   <= "00";                       -- and the counter is set to 0
                   else
-                     standby_signal_x3       <= '0';                        -- else the transition condition is set to '0'
+                    if standby_signal_x3='0' then                           -- count only if needed
                      standby_signal_x3_cnt   <= standby_signal_x3_cnt+1;    -- and the counter is incremented by 1
+                    end if;
                   end if;
-               else
-                  standby_signal_x3          <= '0';                        -- when STANDBY word not detected trasition condition set to '0'
+               else --keep previous value of standby_signal_x3 
                   standby_signal_x3_cnt      <= "00";                       -- and the counter is set to 0
                end if;
             end if;
-         else
-            standby_signal_x3       <= '0';                                 -- When a transition state is detected or the FSM is not in the right state transition condition is set to '0'
-            standby_signal_x3_cnt   <= "00";                                -- and the counter is set to 0
-         end if;
       end if;
    end process p_standby_detection;
 
@@ -568,33 +604,31 @@ begin
    -- INIT1 detection process
    p_init1_detection : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          init1_rxed           <= '0';
          init1_rxed_r        <= '0';
          inv_init1_rxed_x3    <= '0';
-         detected_init1_r     <= '0';
-         detected_inv_init1_r <= '0';
          inv_init1_rxed_cnt   <= "00";
       elsif rising_edge(CLK) then
-         detected_init1_r     <= DETECTED_INIT1;
-         detected_inv_init1_r <= DETECTED_INV_INIT1;
          init1_rxed_r         <= init1_rxed;
 
          -- States for detection of at least one INIT1 is received and no rx error is detected
-         if current_state = current_state_r and (current_state = ACTIVE_ST or current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST) and DETECTED_RXERR_WORD = '0' then
-
-            if (DETECTED_INV_INIT1 = '1' and detected_inv_init1_r = '0') or DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
-               if inv_init1_rxed_cnt >= "10" then                             -- and the counter reaches 3
-                  inv_init1_rxed_cnt <= "00";                                 -- reset counter
-                  inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
-               else
-                  inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
-                  inv_init1_rxed_x3  <= '0';                                  -- Set to '0' the transition condition to INVERT_RX_POLARITY_ST
+         if  DETECTED_RXERR_WORD = '0' then
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
+               if  DETECTED_INV_INIT1 = '1' then   -- INIT1 inversed detection condition
+                  if inv_init1_rxed_cnt >= "10" then                             -- and the counter reaches 3
+                     inv_init1_rxed_cnt <= "00";                                 -- reset counter
+                     inv_init1_rxed_x3  <= '1';                                  -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
+                  else
+                     if inv_init1_rxed_x3='0'  then                             -- count only if needed
+                        inv_init1_rxed_cnt <= inv_init1_rxed_cnt+1;                 -- else increment counter by 1
+                     end if;
+                  end if;
                end if;
-            end if;
 
-            if (DETECTED_INIT1 = '1' and detected_init1_r = '0' ) or DETECTED_INIT1 = '1' then           -- INIT1 detection condition
-               init1_rxed  <= '1';                                            -- Set to '1' transition condition to CONNECTING_ST or LOSS_OF_SIGNAL_ST
+               if DETECTED_INIT1 = '1' then           -- INIT1 detection condition
+                  init1_rxed  <= '1';                
+               end if;    
             end if;
          else
             init1_rxed           <= '0';                                      -- else reset flags and counter
@@ -608,42 +642,41 @@ begin
    -- INIT2 detection process
    p_init2_detection : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          inv_init2_rxed_x3    <= '0';
          inv_init2_rxed_cnt   <= "00";
          init2_rxed_cnt       <= "00";
          init2_rxed_x3        <= '0';
-         detected_inv_init2_r <= '0';
-         detected_init2_r     <= '0';
          init2_rxed           <= '0';
       elsif rising_edge(CLK) then
-         detected_init2_r     <= DETECTED_INIT2;
-         detected_inv_init2_r <= DETECTED_INV_INIT2;
 
          -- States for detection of at least one INIT2 is received and no rx error is detected
-         if current_state = current_state_r and (current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST or current_state = CONNECTING_ST) and DETECTED_RXERR_WORD = '0' then
-
-            if (DETECTED_INV_INIT2 = '1' and detected_inv_init2_r = '0') or DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
-               if inv_init2_rxed_cnt >= "10" then                             -- and the counter reaches 3
-                  inv_init2_rxed_cnt   <= "00";                               -- reset counter
-                  inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
-               else
-                  inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
-                  inv_init2_rxed_x3    <= '0';                                -- Set to '0' the transition condition to INVERT_RX_POLARITY_ST
+         if  DETECTED_RXERR_WORD = '0' then
+            if  RX_NEW_WORD = '1' then             -- when a new word is received 
+               if  DETECTED_INV_INIT2 = '1' then   -- INIT2 inversed detection condition
+                  if inv_init2_rxed_cnt >= "10" then                             -- and the counter reaches 3
+                     inv_init2_rxed_cnt   <= "00";                               -- reset counter
+                     inv_init2_rxed_x3    <= '1';                                -- Set to '1' the transition condition to INVERT_RX_POLARITY_ST
+                  else
+                     if  inv_init2_rxed_x3='0'  then                             -- count only if needed
+                     inv_init2_rxed_cnt   <= inv_init2_rxed_cnt+1;               -- else increment by 1
+                     end if;
+                  end if;
                end if;
-            end if;
+              
 
-            if (DETECTED_INIT2 = '1' and detected_init2_r = '0') or DETECTED_INIT2 = '1' then           -- INIT2 detection condition
-               init2_rxed  <= '1';
-               if init2_rxed_cnt >= "10" then                                 -- and the counter reaches 3
-                  init2_rxed_cnt <= "00";                                     -- reset counter
-                  init2_rxed_x3  <= '1';                                      -- Set to '1' the transition condition to CONNECTING_ST
-               else
-                  init2_rxed_cnt <= init2_rxed_cnt+1;                         -- else increment counter by 1
-                  init2_rxed_x3  <= '0';                                      -- Set to '0' the transition condition to CONNECTING_ST
+               if DETECTED_INIT2 = '1' then           -- INIT2 detection condition
+                  init2_rxed  <= '1';
+                  if init2_rxed_cnt >= "10" then                                 -- and the counter reaches 3
+                     init2_rxed_cnt <= "00";                                     -- reset counter
+                     init2_rxed_x3  <= '1';                                      -- Set to '1' the transition condition to CONNECTING_ST
+                  else
+                     if init2_rxed_x3 ='0'  then                                 -- count only if needed
+                        init2_rxed_cnt <= init2_rxed_cnt+1;                         -- else increment counter by 1
+                     end if;
+                  end if;
                end if;
-            end if;
-
+            end if;   
          else
             inv_init2_rxed_x3    <= '0';                                      -- else reset flags and counters
             inv_init2_rxed_cnt   <= "00";
@@ -658,74 +691,77 @@ begin
    -- INIT3 detection process
    p_init3_detection : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          init3_rxed_x3    <= '0';
-         init3_rxed_cnt   <= "00";
-         detected_init3_r <= '0';
-         comma_k287_rxed_r <= '0';
+         capability_r<=(others=>'0');
       elsif rising_edge(CLK) then
-         detected_init3_r  <= DETECTED_INIT3;
-         comma_k287_rxed_r <= COMMA_K287_RXED;
-
          -- States for detection of INIT3 is received and no rx error is detected
-         if current_state = current_state_r and (current_state = CONNECTING_ST or current_state = CONNECTED_ST) and DETECTED_RXERR_WORD = '0' then
+         if DETECTED_RXERR_WORD = '0' then
+            if  RX_NEW_WORD = '1' then             -- when a new word is received
+               if DETECTED_INIT3 = '1' then  -- INIT3 detection condition
+                  --save previous capability
+                  capability_r<=CAPABILITY;
 
-            if (DETECTED_INIT3 = '1' and detected_init3_r = '0') or DETECTED_INIT3 = '1' then  -- INIT3 detection condition
-               if init3_rxed_cnt = "10" then                         -- and counter reaches 3
-                  init3_rxed_cnt   <= "00";                          -- reset counter
-                  init3_rxed_x3    <= '1';                           -- Set to '1' transition condition to CONNECTING_ST or ACTIVE_ST
-               else
-                  init3_rxed_cnt   <= init3_rxed_cnt+1;              -- else increment counter by 1
-                  init3_rxed_x3    <= '0';                           -- Set to '0' transition condition to CONNECTING_ST or ACTIVE_ST
+                  if (CAPABILITY = capability_r) then -- two consecutive INIT3 with same capability
+                     capability_same_rxed_x2<='1'; 
+                     if capability_same_rxed_x2='1' then 
+                        init3_rxed_x3    <= '1'; -- if we already got two , this is the third to be received 
+                     end if;                        
+                  else
+                     capability_same_rxed_x2<='0';     -- capability are different
+                     init3_rxed_x3    <=init3_rxed_x3; --keep previous value (we want at least 3 consecutive once)
+                  end if;
                end if;
             end if;
          else
-            init3_rxed_cnt   <= "00";                                -- reset flag and counter
             init3_rxed_x3    <= '0';
+            capability_r<= (others=>'0');
          end if;
-
       end if;
    end process p_init3_detection;
+
+-------------------------------------------------------------------------------------------
+   -- K287 detection process
+   p_k287_detection : process(CLK,RST_N)
+   begin
+      if RST_N = '0' or raz_counters = '1' then -- reset the register when the state machine changes
+         comma_k287_rxed_r <= '0';
+      elsif rising_edge(CLK) then
+          if COMMA_K287_RXED='1'  then -- a comma has been received
+            comma_k287_rxed_r <= '1';
+          end if;
+      end if;
+   end process p_k287_detection;
 
 -------------------------------------------------------------------------------------------
    -- Process for detection the reception of 1023 words including the reception of at least on INIT1 or INIT2 without RXERR control words
    p_init1_or_init2_detection_without_rx_error : process(CLK,RST_N)
    begin
-      if RST_N = '0' then
+      if RST_N = '0' or raz_counters = '1' then
          rxed_1023_word       <= '0';
          rxed_1023_word_cnt   <= (others => '0');
 
       elsif rising_edge(CLK) then
-
-         -- if the current_state signal is stable and the FSM is in STARTED_ST or INVERT_ST state
-         if current_state = current_state_r and (current_state = STARTED_ST or current_state = INVERT_RX_POLARITY_ST) then
-
-            if ((RX_NEW_WORD = '1' and rx_new_word_r = '0') or RX_NEW_WORD = '1') then            -- when new word is received
+            if  RX_NEW_WORD = '1' then            -- when new word is received
                if DETECTED_RXERR_WORD = '0' then                           -- and no error has occurred
                   if rxed_1023_word_cnt >= C_1023_WORDS-1 then             -- when 1023 words are receive without error
                      if init1_rxed = '1' or init2_rxed = '1'  then         -- when at least one INIT1 or INIT2 is received and no RXERR detected
                         rxed_1023_word    <= '1';                          -- set transition condition to '1'
-                     else
-                        rxed_1023_word    <= '0';                          -- set transition condition to '0'
                      end if;
                   else
                      rxed_1023_word_cnt   <= rxed_1023_word_cnt+1;         -- increment counter by 1
-                     rxed_1023_word       <= '0';                          -- set transition condition to '0'
                   end if;
                else
                   rxed_1023_word_cnt      <= (others => '0');              -- reset counter
                   rxed_1023_word          <= '0';
                end if;
             end if;
-         else
-            rxed_1023_word_cnt   <= (others => '0');                       -- reset counter
-            rxed_1023_word       <= '0';                                   -- set transition condition to '0'
-         end if;
       end if;
    end process p_init1_or_init2_detection_without_rx_error;
 
 -------------------------------------------------------------------------------------------
    -- RXERR word send to data_link when FSM leave ACTIVE_ST process
+   --!Req: 5.5.2.11.e.7
    p_send_rx_error_word : process(CLK,RST_N)
    begin
       if RST_N = '0' then
@@ -739,6 +775,23 @@ begin
       end if;
    end process p_send_rx_error_word;
 
+--------------------------------------
+--degection of 3 INIT3 sent
+   -- Detection 3 consecutive STANDBY process
+   p_INIT3_SENT3 : process(CLK,RST_N)
+   begin
+      if RST_N = '0' or raz_counters = '1' then -- falg are setted on state machine transition
+         txed_1_INIT3<='0';
+         txed_2_INIT3<='0';
+         txed_3_INIT3<='0';
+      elsif rising_edge(CLK) then
+            if  send_init3_ctrl_word_i = '1' then  --send init3
+               txed_1_INIT3<='1';
+               txed_2_INIT3<=txed_1_INIT3;
+               txed_3_INIT3<=txed_2_INIT3;
+            end if;
+      end if;
+   end process p_INIT3_SENT3;
 
 -- Outputs
 CDR            <= cdr_i;
