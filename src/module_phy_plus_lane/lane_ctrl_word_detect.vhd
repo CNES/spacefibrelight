@@ -189,6 +189,9 @@ begin
                data_rx_to_dl_i         <= C_RXERR_WORD;                    -- Send a RXERR control word to DATA-LINK layer
                valid_k_charac_to_dl_i  <= x"1";
                data_rdy_to_dl_i        <= '1';
+               -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+               -- TODO FIXME? : do we need to add RX_NEW_WORD <= '1'; or not??????
+               -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             elsif enable_transm_data_rr = '1' and not((DATA_RX_FROM_RSF = C_IDLE_WORD or DATA_RX_FROM_RSF = C_SKIP_WORD) and VALID_K_CARAC_FROM_RSF = "0001") then
                data_rx_to_dl_i         <= DATA_RX_FROM_RSF;                -- Else transmit data received from IP to DATA_LINK layer
                valid_k_charac_to_dl_i  <= VALID_K_CARAC_FROM_RSF;
