@@ -654,7 +654,7 @@ signal clk_tx                                   : std_logic;                    
 -- ctrl internal signals
 signal ctrl_in_dl,ctrl_in_dl_r  : std_logic_vector(8 downto 0); -- data and reset command from link layer to be clock domain changeg
 signal ctrl_in_dl_sync          : std_logic_vector(8 downto 0);
-signal ctrl_out_dl              : std_logic_vector(8 downto 0);
+signal ctrl_out_dl,ctrl_out_dl_r : std_logic_vector(8 downto 0); -- 
 signal ctrl_out_dl_sync         : std_logic_vector(8 downto 0);
 signal lane_reset_dl_i          : std_logic;
 signal lane_reset_cmd_dl_i      : std_logic;  --! lane reset command signal from datalink layer. Actif at state 1.
@@ -913,9 +913,14 @@ begin
 
    );
 
-   ------------------------------------------------------------------------------
-   -- Instance of RX FIFO_1MB_wrapper module
-   ------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- Clock domain change between  lane layer to data link layer
+-- data link layer run at spacefibre clk frequency (CLK)
+-- data lane layer run at clk tx HSSL frequence (clk_tx)
+------------------------------------------------------------------------------    
+
+-- data change clock domain 
+-- we do not want to loose data so we use fifo
    data_plus_k_char_to_fifo_rx   <= valid_k_charac_from_lcwd & data_rx_from_lcwd;   -- regroup data and valid K char on 36-bit vector
 
    inst_fifo_rx_data : FIFO_DC
@@ -947,59 +952,27 @@ begin
            STATUS_LEVEL_WR         => open,
            STATUS_LEVEL_RD         => open
        );
-   ------------------------------------------------------------------------------
-   -- Instance of TX FIFO_1MB_wrapper module
-   ------------------------------------------------------------------------------
-   ctrl_out_dl     <= lane_active_dl_i & aligned_capability;
-   LANE_ACTIVE_DL  <= ctrl_out_dl_sync(8)          when fifo_out_ctrl_data_valid ='1';
-   FAR_END_CAPA_DL <= ctrl_out_dl_sync(7 downto 0) when fifo_out_ctrl_data_valid ='1';
-   inst_fifo_out_ctrl : FIFO_DC
-   generic map(
-        G_DWIDTH                => C_DWIDTH_CTRL_RX,
-        G_AWIDTH                => C_AWIDTH_CTRL_RX,
-        G_THRESHOLD_HIGH        => 2**C_AWIDTH_CTRL_RX,
-        G_THRESHOLD_LOW         => 0
-    )
-    port map(
-        RST_N                   => RST_N,
-        -- Writing port
-        WR_CLK                  => clk_tx,
-        WR_DATA                 => ctrl_out_dl,
-        WR_DATA_EN              => '1',
-        -- Reading port
-        RD_CLK                  => CLK,
-        RD_DATA                 => ctrl_out_dl_sync,
-        RD_DATA_EN              => '1',
-        RD_DATA_VLD             => fifo_out_ctrl_data_valid,
-        -- Command port
-        CMD_FLUSH               => '0',
-        STATUS_BUSY_FLUSH       => open,
-        -- Status port
-        STATUS_THRESHOLD_HIGH   => open,
-        STATUS_THRESHOLD_LOW    => open,
-        STATUS_FULL             => open,
-        STATUS_EMPTY            => open,
-        STATUS_LEVEL_WR         => open,
-        STATUS_LEVEL_RD         => open
-    );
-   ------------------------------------------------------------------------------
-   -- Instance of TX BufG_GT_wrapper module for TX clock
-   ------------------------------------------------------------------------------
+   DATA_RX                    <= data_plus_k_char_to_dl(31 downto 00);
+   VALID_K_CHARAC_RX          <= data_plus_k_char_to_dl(35 downto 32);
 
-      -- see https://docs.amd.com/r/en-US/am003-versal-clocking-resources/BUFG_GT-and-BUFG_GT_SYNC for buffer definition
-      BUFG_GT_inst : BUFG_GT
-      generic map (
-         SIM_DEVICE => "VERSAL_AI_EDGE"  
-      )
-      port map (
-         O => clk_tx,          -- user output clock 150MHz 
-         CE => '1',            -- 1-bit input: Buffer enable
-         CEMASK => '0',        -- 1-bit input: CE Mask
-         CLR => '0',           -- 1-bit input: Asynchronous clear
-         CLRMASK => '0',       -- 1-bit input: CLR Mask
-         DIV => "000",         -- 3-bit input: Dynamic divide Value
-         I => QUAD0_TX0_outclk -- input GTY clock 100 MHz
-      );
+   
+   --control signal domain change
+   -- we care about the value so we use double clock change domain strategy
+   ctrl_out_dl     <= lane_active_dl_i & aligned_capability;
+   p_cdc_command_from_lane: process(CLK)
+   begin
+      if rising_edge(CLK) then
+         ctrl_out_dl_r<=ctrl_out_dl;
+         ctrl_out_dl_sync<=ctrl_out_dl_r;
+      end if;
+   end process;
+
+   LANE_ACTIVE_DL  <= ctrl_out_dl_sync(8) ;
+   FAR_END_CAPA_DL <= ctrl_out_dl_sync(7 downto 0);
+
+   ------------------------------------------------------------------------------
+   -- Phy layer related features
+   ------------------------------------------------------------------------------
 
    --see PG313 this signal should be more than 1 cycle of GTY free running clk (in this case CLK signal)
    reset_gty_all_in <= not RST_N or LANE_RESET or lane_reset_cmd_dl_i;
@@ -1027,9 +1000,7 @@ begin
    INTF0_TX0_ch_txpd          <= "11"     when transmitter_dis_from_lif = '1' else "00";
    INTF0_RX0_ch_rxpd          <= "11"     when receiver_dis_from_lif = '1' else "00";
 
-   ------------------------------------------------------------------------------
-   -- Instance of extended_phy_layer module
-   ------------------------------------------------------------------------------
+
 -- some port depends on GTYP configuration for channel----
 gtwiz_versal_0: extended_phy_layer_gtwiz_versal_0_0
     port map (
@@ -1265,12 +1236,30 @@ gtwiz_versal_0: extended_phy_layer_gtwiz_versal_0_0
      gtpowergood => open,
      gtwiz_freerun_clk => CLK
    );
+   ------------------------------------------------------------------------------
+   -- TX BufG_GT_wrapper module for user TX clock
+   ------------------------------------------------------------------------------
+   -- see https://docs.amd.com/r/en-US/am003-versal-clocking-resources/BUFG_GT-and-BUFG_GT_SYNC for buffer definition
+   BUFG_GT_inst : BUFG_GT
+   generic map (
+      SIM_DEVICE => "VERSAL_AI_EDGE"  
+   )
+   port map (
+      I => QUAD0_TX0_outclk, -- TX user clock from GTY 150MHz @6Gps (6Gbps =40bits@150MHz => with 8b/10b => 32 user bits @150MHz)
+      O => clk_tx,          -- user output clock 150MHz 
+      CE => '1',            -- 1-bit input: Buffer enable
+      CEMASK => '0',        -- 1-bit input: CE Mask
+      CLR => '0',           -- 1-bit input: Asynchronous clear
+      CLRMASK => '0',       -- 1-bit input: CLR Mask
+      DIV => "000"         -- 3-bit input: Dynamic divide Value
+   );
 
-  -- Inputs/Outputs
-CLK_TX_OUT                 <= clk_tx;
+CLK_TX_OUT                 <= clk_tx; --HSSL TX user clock domain
+QUAD0_rxp(lane_number)     <= RX_POS;
+QUAD0_rxn(lane_number)     <= RX_NEG;
+TX_POS                     <= QUAD0_txp(lane_number);
+TX_NEG                     <= QUAD0_txn(lane_number);
 
-DATA_RX                    <= data_plus_k_char_to_dl(31 downto 00);
-VALID_K_CHARAC_RX          <= data_plus_k_char_to_dl(35 downto 32);
 
 LANE_STATE                 <= lane_state_from_lif;
 RX_ERROR_CNT               <= rx_error_cnt_from_lif;
@@ -1280,10 +1269,7 @@ RX_POLARITY                <= invert_rx_bits_from_lif;
 FAR_END_CAPA               <= aligned_capability;
 lane_active_dl_i           <= enable_transm_data_from_lif;
 
-QUAD0_rxp(lane_number)               <= RX_POS;
-QUAD0_rxn(lane_number)               <= RX_NEG;
-TX_POS                     <= QUAD0_txp(lane_number);
-TX_NEG                     <= QUAD0_txn(lane_number);
+
 
 RST_TX_DONE                <= INTF0_rst_tx_done_out_0;
 
