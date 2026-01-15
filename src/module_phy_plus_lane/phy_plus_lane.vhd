@@ -72,7 +72,7 @@ entity phy_plus_lane is
       RX_POS                           : in  std_logic;                       --! Positive LVDS serial data received
       RX_NEG                           : in  std_logic;                       --! Negative LVDS serial data received
 
-      -- PARAMETERS and STATUS
+      -- CMD and STATUS from MIB
       LANE_START                       : in  std_logic;                       --! Asserts or de-asserts LaneStart for the lane
       AUTOSTART                        : in  std_logic;                       --! Asserts or de-asserts AutoStart for the lane
       LANE_RESET                       : in  std_logic;                       --! Asserts or de-asserts LaneReset for the lane
@@ -665,6 +665,11 @@ signal fifo_out_ctrl_data_valid : std_logic;
 
 
 signal reset_gty_all_in_valid,reset_gty_all_in_valid_r : std_logic; --! compliant to PG313 (at least 1 clk) all in reset signal for GTY 
+
+-- MIB control signal synchronized
+signal mib_lane_start_r,mib_lane_start_r2 : std_logic;
+signal mib_autostart_r,mib_autostart_r2   : std_logic;
+signal mib_lane_reset_r,mib_lane_reset_r2 : std_logic;
 begin
 
 ------------------------------------------------------------------------------
@@ -767,9 +772,9 @@ begin
       ALIGNED_CAPABILITY               => aligned_capability,
 
       -- CMD and STATUS from MIB
-      LANE_START                       => LANE_START,
-      AUTOSTART                        => AUTOSTART,
-      LANE_RESET                       => LANE_RESET,
+      LANE_START                       => mib_lane_start_r2,
+      AUTOSTART                        => mib_autostart_r2,
+      LANE_RESET                       => mib_lane_reset_r2,
       LANE_STATE                       => lane_state_from_lif,
       RX_ERROR_CNT                     => rx_error_cnt_from_lif,
       RX_ERROR_OVF                     => rx_error_ovf_from_lif
@@ -876,7 +881,7 @@ begin
       RX_WORD_REALIGN_FROM_IP          => INTF0_RX0_ch_rxbyterealign(0),
       COMMA_DET_FROM_IP                => INTF0_RX0_ch_rxctrl2(0),
       -- PARAMETERS
-      LANE_RESET                       => LANE_RESET
+      LANE_RESET                       => mib_lane_reset_r2
    );
 
    ------------------------------------------------------------------------------
@@ -1269,8 +1274,25 @@ RX_POLARITY                <= invert_rx_bits_from_lif;
 FAR_END_CAPA               <= aligned_capability;
 lane_active_dl_i           <= enable_transm_data_from_lif;
 
-
-
 RST_TX_DONE                <= INTF0_rst_tx_done_out_0;
 
+
+
+--- MIB clock domain change 
+--these particular signals are not used statically as a configuration 
+-- but dynamically in a state machine
+-- therefore we clock domain change them with double clock process
+ p_cdc_MIB_ctrl: process(clk_tx)
+ begin
+    if rising_edge(clk_tx) then
+      mib_lane_start_r<=LANE_START;
+      mib_lane_start_r2<=mib_lane_start_r;
+
+      mib_autostart_r<=AUTOSTART;
+      mib_autostart_r2<=mib_autostart_r;
+
+      mib_lane_reset_r <=LANE_RESET;
+      mib_lane_reset_r2<=mib_lane_reset_r;
+    end if;
+ end process;
 end architecture rtl;
