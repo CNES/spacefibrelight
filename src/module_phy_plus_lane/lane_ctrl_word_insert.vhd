@@ -19,7 +19,7 @@
 --
 -- Creation date : 03/09/2024
 --
--- Description :
+-- Description : insert control word in the TX path of the spacefibrelight ip (to the outsde of the FPGA)
 ----------------------------------------------------------------------------
 
 library ieee;
