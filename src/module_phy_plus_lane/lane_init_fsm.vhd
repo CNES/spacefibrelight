@@ -261,7 +261,7 @@ begin
                                           end if;
 
             when CONNECTING_ST         => -- not compliant to !Req: 5.5.2.9.f.3 Rxonly asserted as we do not support multilane features
-                                          -- not compliant to !Req: 5.5.2.9.f.4 far end active condition as we do not support multilane features
+                                          -- FIXME missing !Req: 5.5.2.9.f.4 far end active condition 
                                           if NO_SIGNAL = '1' or                                   --!Req: 5.5.2.9.f.2 partially compliant as we do not support  Missing TXonly signal (multilane feature)   
                                              init_timeout_reaches = '1' or                        --!Req: 5.5.2.9.f.7
                                              (lost_signal_x3 = '1' or standby_signal_x3 = '1') or --!Req: 5.5.2.9.f.8 
@@ -277,7 +277,7 @@ begin
                                           end if;
 
             when CONNECTED_ST          => --not compliant to !Req: 5.5.2.10.e.3 rx only as we do not support multilane features
-                                          --not compliant to !Req: 5.5.2.10.e.4 far end active as we do not support multilane features
+                                          --FIXME missing !Req: 5.5.2.10.e.4 farend active 
                                           if NO_SIGNAL = '1' or                                   --!Req: 5.5.2.10.e.2 partially compliant as we do not support multilane features
                                              init_timeout_reaches = '1' or                        --!Req: 5.5.2.10.e.6
                                              comma_k287_rxed_r = '1' or                           --!Req: 5.5.2.10.e.8  

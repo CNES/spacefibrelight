@@ -60,6 +60,8 @@ sim/scenario/custom.do
 
 #linty folder
 .linty/work
+.linty/bugfinder
+.linty/report
 
 #vscode folder
 .vscode
