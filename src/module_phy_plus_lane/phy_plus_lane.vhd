@@ -664,7 +664,7 @@ signal fifo_in_ctrl_data_valid  : std_logic;
 signal fifo_out_ctrl_data_valid : std_logic;
 
 
-signal reset_gty_all_in_valid,reset_gty_all_in_valid_r : std_logic; --! compliant to PG313 (at least 1 clk) all in reset signal for GTY 
+signal reset_gty_all_in_valid,reset_gty_all_in_valid_r : std_logic; --! compliant to PG331 (at least 1 clk) all in reset signal for GTY 
 
 -- MIB control signal synchronized
 signal mib_lane_start_r,mib_lane_start_r2 : std_logic;
@@ -979,7 +979,7 @@ begin
    -- Phy layer related features
    ------------------------------------------------------------------------------
 
-   --see PG313 this signal should be more than 1 cycle of GTY free running clk (in this case CLK signal)
+   --see PG331 this signal should be more than 1 cycle of GTY free running clk (in this case CLK signal)
    reset_gty_all_in <= not RST_N or LANE_RESET or lane_reset_cmd_dl_i;
    process(CLK, reset_gty_all_in)
    begin
