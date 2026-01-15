@@ -1011,6 +1011,7 @@ begin
       elsif rising_edge( CLK) then  
          reset_gty_all_in_valid<='0';
          reset_gty_all_in_valid_r<=reset_gty_all_in_valid;
+      end if;
    end process;
 
    -- Near-End and Far-End loopback drivin function
