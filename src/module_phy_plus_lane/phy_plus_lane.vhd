@@ -1006,10 +1006,10 @@ begin
    process(CLK, reset_gty_all_in)
    begin
       if reset_gty_all_in ='1' then
-         reset_gty_all_in_valid<='0';
-         reset_gty_all_in_valid_r<='0';
-      elsif rising_edge( CLK);  
          reset_gty_all_in_valid<='1';
+         reset_gty_all_in_valid_r<='1';
+      elsif rising_edge( CLK) then  
+         reset_gty_all_in_valid<='0';
          reset_gty_all_in_valid_r<=reset_gty_all_in_valid;
    end process;
 
