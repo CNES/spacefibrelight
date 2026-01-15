@@ -677,7 +677,7 @@ signal rst_usr_gty_n             : std_logic; -- reset that will be used for eve
 begin
 
 -- PHY + lane reset management  
-   lane_reset_cmd<= LANE_RESET or LANE_RESET_DL; -- contanetation of lane reset from link and MIB in CLK domain
+   lane_reset_cmd<= LANE_RESET or LANE_RESET_DL; -- concatetation of lane reset from link and MIB in CLK domain
    
    --generate global reset sync to CLK TX domain
    process(clk_usr_gty,RST_N)
@@ -1003,7 +1003,7 @@ begin
    ------------------------------------------------------------------------------
 
    --see PG331 this signal should be more than 1 cycle of GTY free running clk (in this case CLK signal)
-   reset_gty_all_in <= not RST_N or lane_reset_cmd or lane_reset_cmd_dl_i;
+   reset_gty_all_in <= not RST_N or lane_reset_cmd ; --gty is reset for each global reset or lane reset command
    process(CLK, reset_gty_all_in)
    begin
       if reset_gty_all_in ='1' then
