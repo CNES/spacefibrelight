@@ -1004,7 +1004,7 @@ begin
    ------------------------------------------------------------------------------
 
    --see PG331 this signal should be more than 1 cycle of GTY free running clk (in this case CLK signal)
-   reset_gty_all_in <= (not RST_N or lane_reset_cmd) and  --gty is reset for each global reset or lane reset command
+   reset_gty_all_in <= (not RST_N ) and  --gty is reset for each global reset or lane reset command
                        rst_gty_done_i ;                   --do not reset pll if there is already a reset ongoing i.e. done is low
                                                           --see ("important" chapter from https://docs.amd.com/r/en-US/pg331-versal-transceivers/Reset-State-Machines
    process(CLK, reset_gty_all_in)
@@ -1028,8 +1028,8 @@ begin
    INTF0_RX0_ch_rxcdrovrden   <= "0"      when cdr_from_lif = '1' else "0";
 
    -- Disable transmitter and/or receiver drinvin function
-   INTF0_TX0_ch_txpd          <= "11"     when transmitter_dis_from_lif = '1' else "00";
-   INTF0_RX0_ch_rxpd          <= "11"     when receiver_dis_from_lif = '1' else "00";
+   INTF0_TX0_ch_txpd          <= "00";--"11"     when transmitter_dis_from_lif = '1' else "00";
+   INTF0_RX0_ch_rxpd          <= "00";--"11"     when receiver_dis_from_lif = '1' else "00";
 
 
 -- some port depends on GTYP configuration for channel----
