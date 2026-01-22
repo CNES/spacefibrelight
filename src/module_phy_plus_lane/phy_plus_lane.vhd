@@ -1025,7 +1025,7 @@ begin
 
    -- Clock Data recovery drivin function
    INTF0_RX0_ch_rxcdrhold     <= "0"      when cdr_from_lif = '1' else "1";
-   INTF0_RX0_ch_rxcdrovrden   <= "0"      when cdr_from_lif = '1' else "0";
+   INTF0_RX0_ch_rxcdrovrden   <= "0";
 
    -- Disable transmitter and/or receiver drinvin function
    INTF0_TX0_ch_txpd          <= "00";--"11"     when transmitter_dis_from_lif = '1' else "00";
