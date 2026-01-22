@@ -19,7 +19,7 @@
 --
 -- Creation date : 03/09/2024
 --
--- Description :
+-- Description : detect control word when receiving data (RX path of spacefibrelight (from the outside to the inside of the FPGA)
 ----------------------------------------------------------------------------
 
 library ieee;
