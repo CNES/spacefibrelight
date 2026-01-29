@@ -1281,16 +1281,15 @@ gtwiz_versal_0: extended_phy_layer_gtwiz_versal_0_0
    -- see Xilinx AM002 : this signal is asynchronous https://docs.amd.com/r/en-US/am002-versal-gty-transceivers/RX-Out-of-Band-Signaling 
    process(clk_usr_gty,rst_usr_gty_n) 
    begin
-        if rst_usr_gty_n='0' then -- after reset this no signal is not enabled . Enable comes from init state machine later in the sequence . so we init with 0
-            no_signal_a <= '0';
-            no_signal_a_r<= '0';
-            no_signal <= '0';
+        if rst_usr_gty_n='0' then 
+            no_signal_a <= '1';
+            no_signal_a_r<= '1';
         elsif rising_edge(clk_usr_gty) then
-            no_signal_a <= no_signal_detection_enabled_from_lif and INTF0_RX0_ch_rxelecidle(0);
-            no_signal_a_r<=no_signal_a;
-            no_signal <= no_signal_a_r;
+            no_signal_a <= INTF0_RX0_ch_rxelecidle(0);
+            no_signal_a_r<=no_signal_a;       
         end if;
    end process;
+   no_signal <= no_signal_detection_enabled_from_lif and no_signal_a_r;
    ------------------------------------------------------------------------------
    -- TX BufG_GT_wrapper module for user TX clock
    ------------------------------------------------------------------------------
