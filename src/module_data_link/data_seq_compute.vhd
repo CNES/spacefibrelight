@@ -103,6 +103,7 @@ begin
          elsif DATA_DENC(15 downto 0) = C_SIF_WORD and VALID_K_CHARAC_DENC(0)= '1' then -- SIF
             DATA_DSCOM      <= C_RESERVED_SYMB & TRANS_POL_FLG_DENC & std_logic_vector(trans_seq_cnt) & DATA_DENC(15 downto 0);
             SEQ_NUM_DSCOM   <= TRANS_POL_FLG_DENC & std_logic_vector(trans_seq_cnt);
+            trans_seq_cnt   <= trans_seq_cnt +1;
          else
          DATA_DSCOM      <= DATA_DENC;
          end if;
