@@ -79,7 +79,7 @@ package data_link_lib is
   constant C_SDF_SYMB            : std_logic_vector(07 downto 00) := x"50";  --! D16.2
   constant C_FULL_SYMB           : std_logic_vector(07 downto 00) := x"6F";  --! D15.3
   constant C_RETRY_SYMB          : std_logic_vector(07 downto 00) := x"87";  --! D7.4
-  constant C_SIF_SYMB            : std_logic_vector(07 downto 00) := x"84";  --! D4.2 SIF
+  constant C_SIF_SYMB            : std_logic_vector(07 downto 00) := x"44";  --! D4.2 SIF
   constant C_ACK_SYMB            : std_logic_vector(07 downto 00) := x"A2";  --! D2.5
   constant C_RESERVED_SYMB       : std_logic_vector(07 downto 00) := x"00";  --! D0.0
   -- DATA-LINK CONTROL WORDS
