@@ -355,7 +355,7 @@ begin
          LOST_CAUSE                          <= (others => '0');  -- LOST_SIGNAL reason
          ALIGNED_CAPABILITY                  <= (others => '0');  -- CAPABILITY to datalink layer
       elsif rising_edge(CLK) then
-
+         ENABLE_TRANSM_DATA                 <= '0';  -- by default no transmission of data allowed to link layer except if in active state
          if current_state = CLEAR_LINE_ST then
 
             LANE_STATE                       <= x"0"; -- Status of the FSM
@@ -367,7 +367,7 @@ begin
             send_init3_ctrl_word_i           <= '0';  -- Send INIT3 control word following by 64 pseudo-random data words
             enable_init_cnt                  <= '0';  -- disable timeout initialisation counter
             INVERT_RX_BITS                   <= '0';  -- do not invert received bits
-            ENABLE_TRANSM_DATA               <= '0';  -- disable transimission data and control word from data-link layer
+            
             SEND_32_STANDBY_CTRL_WORDS       <= '0';  -- Send 32 STANDBY control words
             SEND_32_LOSS_SIGNAL_CTRL_WORDS   <= '0';  -- Send 32 LOSS_SIGNAL control words
             NO_SIGNAL_DETECTION_ENABLED      <= '0';  -- No_signal detection function disabled
@@ -449,13 +449,11 @@ begin
          elsif current_state = PREPARE_STANDBY_ST then
 
             LANE_STATE                       <= x"8"; -- Status of the FSM
-            ENABLE_TRANSM_DATA               <= '0';  -- Disable transimission data and control word from data-link layer
             SEND_32_STANDBY_CTRL_WORDS       <= '1';  -- send 32 STANDBY control words
 
          elsif current_state = LOSS_OF_SIGNAL_ST then
 
             LANE_STATE                       <= x"9"; -- Status of the FSM
-            ENABLE_TRANSM_DATA               <= '0';  -- Disable transimission data and control word from data-link layer
             SEND_32_STANDBY_CTRL_WORDS       <= '0';  -- stop 32 STANDBY control words
             SEND_32_LOSS_SIGNAL_CTRL_WORDS   <= '1';  -- send 32 LOSS_SIGNAL control words
 
