@@ -78,6 +78,8 @@ signal current_state     : data_encapsulation_fsm_type;
 signal current_state_r   : data_encapsulation_fsm_type;
 signal sif_done          : std_logic;
 signal type_frame_denc_i : std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);
+
+  
 begin
 ---------------------------------------------------------
 -----                  Process                      -----
@@ -111,7 +113,6 @@ begin
             TYPE_FRAME_DENC <= TYPE_FRAME_DMAC;
             END_FRAME_DENC      <= '0';
             NEW_WORD_DENC       <= '0';
-            sif_done            <= '0';
             if TYPE_FRAME_DMAC = C_IDLE_FRM and sif_done ='1' then
                 DATA_DENC           <= DATA_DMAC;
                 VALID_K_CHARAC_DENC <= VALID_K_CHAR_DMAC;
@@ -120,6 +121,7 @@ begin
                     sif_done            <= '0';
                 end if;
             elsif NEW_WORD_DMAC = '1' then
+                sif_done            <= '0';    
                 if TYPE_FRAME_DMAC = C_DATA_FRM then
                         DATA_DENC          <= C_RESERVED_SYMB & VIRTUAL_CHANNEL_DMAC & C_SDF_WORD;
                         VALID_K_CHARAC_DENC <= "0001";
