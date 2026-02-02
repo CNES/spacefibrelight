@@ -109,6 +109,8 @@ type data_dmac_fsm is (
   signal cnt_wait        : std_logic;
 
   signal current_channel : integer range 0 to G_VC_NUM; -- Index of the current channel
+
+
 begin
 ---------------------------------------------------------
 -----                     Assignements              -----
@@ -174,29 +176,34 @@ begin
           VC_RUN_EMISSION_DMAC <= (others => '0');
           DATA_DMAC            <= std_logic_vector(idle_data);
           VALID_K_CHAR_DMAC    <= (others => '0');
-          -- Idle
+          NEW_WORD_DMAC   <= '1'; -- in this stage we always send data (IDLE frame)
+          -- counter of data sent in an idle frame
+          -- idle frame can also includes ACK, NACK or FCT...
+          idle_data       <= idle_data -1;
           if idle_cnt= 63 then -- Last Idle data of the frames
             END_PACKET_DMAC <= '1';
-            idle_data       <= idle_data -1;
             idle_cnt        <= (others => '0');
           else
-            idle_data <= idle_data -1;
             idle_cnt  <= idle_cnt +1;
           end if;
+
           -- Req or Channel ready
-          if (((REQ_ACK_DERRM = '1' or REQ_NACK_DERRM = '1' ) and cnt_wait_ack = 15) or REQ_FCT_DIBUF /= std_logic_vector(to_unsigned(0,G_VC_NUM))) and type_frame /= C_BC_FRM and cnt_wait = '1' then -- Pending request
+          if (  ( (REQ_ACK_DERRM = '1' or REQ_NACK_DERRM = '1' ) and cnt_wait_ack = 15 )
+                 or 
+                 REQ_FCT_DIBUF /= std_logic_vector(to_unsigned(0,G_VC_NUM))
+             ) 
+             and type_frame /= C_BC_FRM 
+             and cnt_wait = '1' then -- Pending request
             current_state_vc <= REQ_ST;
           elsif VC_READY_DOBUF(current_channel) = '1' and VC_PAUSE_MIB(current_channel) = '0' then -- Channel ready
             current_state_vc               <= START_ENCAPS_ST;
             VC_RD_EN_DMAC(current_channel) <= '1';
           elsif (VC_READY_DOBUF and not(VC_PAUSE_MIB)) /= std_logic_vector(to_unsigned(0, G_VC_NUM+1)) then
             current_channel <= (current_channel + 1) mod (G_VC_NUM+1);
-            NEW_WORD_DMAC   <= '1';
-          else
-            NEW_WORD_DMAC <= '1';
           end if;
 
         when START_ENCAPS_ST => -- Start data transfer
+            idle_cnt        <= (others => '0');
             VC_RD_EN_DMAC(current_channel)        <= '1';
             VIRTUAL_CHANNEL_DMAC                  <= std_logic_vector(to_unsigned(current_channel,VIRTUAL_CHANNEL_DMAC'length));
             NEW_WORD_DMAC                         <= '1';
@@ -240,6 +247,7 @@ begin
           elsif (((REQ_ACK_DERRM = '1' or REQ_NACK_DERRM = '1' ) and cnt_wait_ack = 15) or REQ_FCT_DIBUF /= std_logic_vector(to_unsigned(0,G_VC_NUM))) and type_frame /= C_BC_FRM and cnt_wait = '1' then -- Pending request
             current_state_vc <= REQ_ST;
           end if;
+
         when END_ST => -- End of data transfer
           if current_channel = G_VC_NUM then
             type_frame <= C_BC_FRM;
