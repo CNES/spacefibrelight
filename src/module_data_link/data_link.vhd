@@ -122,12 +122,12 @@ architecture Behavioral of data_link is
     -- data_link_reset (DLRE) interface
     LINK_RESET_DLRE        : in  std_logic;                                          --! Link Reset command
     -- AXI-Stream interface
-    M_AXIS_ARSTN_NW	       : in  std_logic;                                          --! Active-low asynchronous reset for the AXI-Stream interface
-    M_AXIS_ACLK_NW	       : in  std_logic;                                          --! Clock signal for the AXI-Stream interface
-    M_AXIS_TVALID_DIBUF	   : out std_logic;                                          --! Indicates that TDATA, TUSER, and TLAST are valid
-    M_AXIS_TDATA_DIBUF	   : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! AXI-Stream data bus
-    M_AXIS_TLAST_DIBUF	   : out std_logic;                                          --! Indicates the end of a data packet
-    M_AXIS_TREADY_NW	     : in  std_logic;                                          --! Receiver ready signal (slave is ready to accept data)
+    M_AXIS_ARSTN_NW           : in  std_logic;                                          --! Active-low asynchronous reset for the AXI-Stream interface
+    M_AXIS_ACLK_NW           : in  std_logic;                                          --! Clock signal for the AXI-Stream interface
+    M_AXIS_TVALID_DIBUF       : out std_logic;                                          --! Indicates that TDATA, TUSER, and TLAST are valid
+    M_AXIS_TDATA_DIBUF       : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! AXI-Stream data bus
+    M_AXIS_TLAST_DIBUF       : out std_logic;                                          --! Indicates the end of a data packet
+    M_AXIS_TREADY_NW         : in  std_logic;                                          --! Receiver ready signal (slave is ready to accept data)
     M_AXIS_TUSER_DIBUF     : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! AXI-Stream user-defined sideband signal
     -- data_desencapsulation_bc (DDESBC) interface
     DATA_DDESBC            : in  std_logic_vector(C_DATA_K_WIDTH-1 downto 0);        --! Data parallel (K character + DATA) from data_desencapsulation_bc
@@ -232,140 +232,140 @@ architecture Behavioral of data_link is
       G_VC_NUM                 : integer := 8                                  --! Number of virtual channel
     );
     port (
-      CLK                       : in std_logic;                                           --! Global clock
-		  -- data_link_reset (DLRE) interface
-		  LINK_RESET_DLRE           : in std_logic;                                           --! Link Reset command
-      -- data_crc_check (DCCHECK) interface
-      DATA_DCCHECK              : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_crc_check
-		  VALID_K_CHARAC_DCCHECK    : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DCCHECK vector
-		  NEW_WORD_DCCHECK          : in std_logic;                                           --! New word Flag associated with DATA_DCCHECK vector
-      END_FRAME_DCCHECK         : in std_logic;                                           --! End frame/control word from data_crc_check
-      TYPE_FRAME_DCCHECK        : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type from data_crc_check
-      SEQ_NUM_DCCHECK           : in std_logic_vector(7 downto 0);                        --! SEQ_NUM from data_crc_check
-		  CRC_ERR_DCCHECK           : in std_logic;                                           --! CRC error flag from data_crc_check
-		  FRAME_ERR_DCCHECK         : in std_logic;																					  --! Frame error flag from data_crc_check
-		  MULTIPLIER_DCCHECK        : in std_logic_vector(C_MULT_SIZE-1 downto 0);            --! Multiplier value of the current FCT word
-		  VC_DCCHECK                : in std_logic_vector(C_CHANNEL_SIZE-1 downto 0);         --! Virtual Channel of the current FCT word
-		  RXERR_DCCHECK             : in std_logic;                                           --! RXERR flag detection
-      RXERR_ALL_DCCHECK         : in std_logic;                                           --! RXERR flag detection during broadcast and data frame status
-		  -- data_err_management (DERRM) interface
-		  NEAR_END_RPF_DERRM        : in  std_logic;                                          --! Near-End received polarity flag
-		  SEQ_NUM_ACK_DSCHECK       : out std_logic_vector(6 downto 0);                       --! SEQ_NUM ACK value
-		  END_FRAME_DSCHECK         : out std_logic;                                          --! End flag of the current frame/control word
-		  TYPE_FRAME_DSCHECK        : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Current frame/control word type
-		  TRANS_POL_FLG_DERRM       : in  std_logic;                                          --! Transmission polarity flag
-		  CRC_ERR_DSCHECK           : out std_logic;                                          --! CRC error flag for the current frame/control word
-		  FRAME_ERR_DSCHECK         : out std_logic;                                          --! Frame error flag for the current frame/control word
-		  SEQ_NUM_ERR_DSCHECK       : out std_logic;                                          --! SEQ_NUM error for the current frame/control word
-		  RXERR_DSCHECK             : out std_logic;                                          --! RXERR flag for the current frame/control word
-      -- data_mid_buffer (DMBUF) interface
-      DATA_DSCHECK              : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mid_buffer (data frame)
-		  VALID_K_CHARAC_DSCHECK    : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DSCHECK vector
-      NEW_WORD_DSCHECK          : out std_logic;                                          --! New word flag associated with DATA_DSCHECK vector
-      END_FRAME_FIFO_DSCHECK    : out std_logic;                                          --! End data frame flag
-		  FRAME_ERR_DATA_DSCHECK    : out std_logic;                                          --! Frame error flag for the current data frame
-      SEQ_NUM_ERR_DATA_DSCHECK  : out std_logic;                                          --! SEQ_NUM error for the current data frame
-      CRC_ERR_DATA_DSCHECK      : out std_logic;                                          --! CRC error flag for the current data frame
-		  RXERR_DATA_DSCHECK        : out std_logic;                                          --! RXERR flag for the current data frame
-		  -- data_mid_buffer_bc (DMBUFBC) interface
-		  DATA_BC_DSCHECK           : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mid_buffer_bc (broadcast frame)
-		  VALID_K_CHARAC_BC_DSCHECK : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_BC_DSCHECK vector
-      NEW_WORD_BC_DSCHECK       : out std_logic;                                          --! New word flag associated with DATA_BC_DSCHECK vector
-      END_FRAME_FIFO_BC_DSCHECK : out std_logic;                                          --! End broadcast frame flag
-		  FRAME_ERR_BC_DSCHECK      : out std_logic;                                          --! Frame error flag for the current broadcast frame
-		  SEQ_NUM_ERR_BC_DSCHECK    : out std_logic;                                          --! SEQ_NUM error for the current broadcast frame
-		  CRC_ERR_BC_DSCHECK        : out std_logic;                                          --! CRC error flag for the current broadcast frame
-		  RXERR_BC_DSCHECK          : out std_logic;                                          --! RXERR flag for the current broadcast frame
-		  -- data_out_buff (DOBUF) interface
-		  FCT_FAR_END_DSCHECK       : out std_logic_vector(G_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
-		  M_VAL_DSCHECK             : out std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
-		  -- MIB
-		  SEQ_NUM_DSCHECK           : out std_logic_vector(7 downto 0);                       --! last SEQ_NUM
-		  NACK_SEQ_NUM_DSCHECK      : out std_logic_vector(7 downto 0);                       --! last NACK SEQ_NUM
-      ACK_SEQ_NUM_DSCHECK       : out std_logic_vector(7 downto 0);                       --! last ACK SEQ_NUM
-		  ACK_COUNTER_RX_DSCHECK    : out std_logic_vector(2 downto 0);                       --! ACK counter RX
-      NACK_COUNTER_RX_DSCHECK   : out std_logic_vector(2 downto 0);                       --! NACK counter RX
-      FCT_COUNTER_RX_DSCHECK    : out std_logic_vector(3 downto 0);                       --! FCT counter RX
-      FULL_COUNTER_RX_DSCHECK   : out std_logic_vector(1 downto 0);                       --! FULL counter RX
-		  ACK_PULSE_RX_DSCHECK      : out std_logic;                                          --! New ACK received flag
-		  NACK_PULSE_RX_DSCHECK     : out std_logic;                                          --! New NACK received flag
-		  FCT_PULSE_RX_DSCHECK      : out std_logic;                                          --! New FCT received flag
-		  FULL_PULSE_RX_DSCHECK     : out std_logic                                           --! New FULL received flag
+        CLK                       : in std_logic;                                           --! Global clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE           : in std_logic;                                           --! Link Reset command
+        -- data_crc_check (DCCHECK) interface
+        DATA_DCCHECK              : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_crc_check
+        VALID_K_CHARAC_DCCHECK    : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DCCHECK vector
+        NEW_WORD_DCCHECK          : in std_logic;                                           --! New word Flag associated with DATA_DCCHECK vector
+        END_FRAME_DCCHECK         : in std_logic;                                           --! End frame/control word from data_crc_check
+        TYPE_FRAME_DCCHECK        : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type from data_crc_check
+        SEQ_NUM_DCCHECK           : in std_logic_vector(7 downto 0);                        --! SEQ_NUM from data_crc_check
+        CRC_ERR_DCCHECK           : in std_logic;                                           --! CRC error flag from data_crc_check
+        FRAME_ERR_DCCHECK         : in std_logic;                                                                                      --! Frame error flag from data_crc_check
+        MULTIPLIER_DCCHECK        : in std_logic_vector(C_MULT_SIZE-1 downto 0);            --! Multiplier value of the current FCT word
+        VC_DCCHECK                : in std_logic_vector(C_CHANNEL_SIZE-1 downto 0);         --! Virtual Channel of the current FCT word
+        RXERR_DCCHECK             : in std_logic;                                           --! RXERR flag detection
+        RXERR_ALL_DCCHECK         : in std_logic;                                           --! RXERR flag detection during broadcast and data frame status
+        -- data_err_management (DERRM) interface
+        NEAR_END_RPF_DERRM        : in  std_logic;                                          --! Near-End received polarity flag
+        SEQ_NUM_ACK_DSCHECK       : out std_logic_vector(6 downto 0);                       --! SEQ_NUM ACK value
+        END_FRAME_DSCHECK         : out std_logic;                                          --! End flag of the current frame/control word
+        TYPE_FRAME_DSCHECK        : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Current frame/control word type
+        TRANS_POL_FLG_DERRM       : in  std_logic;                                          --! Transmission polarity flag
+        CRC_ERR_DSCHECK           : out std_logic;                                          --! CRC error flag for the current frame/control word
+        FRAME_ERR_DSCHECK         : out std_logic;                                          --! Frame error flag for the current frame/control word
+        SEQ_NUM_ERR_DSCHECK       : out std_logic;                                          --! SEQ_NUM error for the current frame/control word
+        RXERR_DSCHECK             : out std_logic;                                          --! RXERR flag for the current frame/control word
+        -- data_mid_buffer (DMBUF) interface
+        DATA_DSCHECK              : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mid_buffer (data frame)
+        VALID_K_CHARAC_DSCHECK    : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DSCHECK vector
+        NEW_WORD_DSCHECK          : out std_logic;                                          --! New word flag associated with DATA_DSCHECK vector
+        END_FRAME_FIFO_DSCHECK    : out std_logic;                                          --! End data frame flag
+        FRAME_ERR_DATA_DSCHECK    : out std_logic;                                          --! Frame error flag for the current data frame
+        SEQ_NUM_ERR_DATA_DSCHECK  : out std_logic;                                          --! SEQ_NUM error for the current data frame
+        CRC_ERR_DATA_DSCHECK      : out std_logic;                                          --! CRC error flag for the current data frame
+        RXERR_DATA_DSCHECK        : out std_logic;                                          --! RXERR flag for the current data frame
+        -- data_mid_buffer_bc (DMBUFBC) interface
+        DATA_BC_DSCHECK           : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mid_buffer_bc (broadcast frame)
+        VALID_K_CHARAC_BC_DSCHECK : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_BC_DSCHECK vector
+        NEW_WORD_BC_DSCHECK       : out std_logic;                                          --! New word flag associated with DATA_BC_DSCHECK vector
+        END_FRAME_FIFO_BC_DSCHECK : out std_logic;                                          --! End broadcast frame flag
+        FRAME_ERR_BC_DSCHECK      : out std_logic;                                          --! Frame error flag for the current broadcast frame
+        SEQ_NUM_ERR_BC_DSCHECK    : out std_logic;                                          --! SEQ_NUM error for the current broadcast frame
+        CRC_ERR_BC_DSCHECK        : out std_logic;                                          --! CRC error flag for the current broadcast frame
+        RXERR_BC_DSCHECK          : out std_logic;                                          --! RXERR flag for the current broadcast frame
+        -- data_out_buff (DOBUF) interface
+        FCT_FAR_END_DSCHECK       : out std_logic_vector(G_VC_NUM-1 downto 0);              --! FCT received flag for each virtual channel
+        M_VAL_DSCHECK             : out std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
+        -- MIB
+        SEQ_NUM_DSCHECK           : out std_logic_vector(7 downto 0);                       --! last SEQ_NUM
+        NACK_SEQ_NUM_DSCHECK      : out std_logic_vector(7 downto 0);                       --! last NACK SEQ_NUM
+        ACK_SEQ_NUM_DSCHECK       : out std_logic_vector(7 downto 0);                       --! last ACK SEQ_NUM
+        ACK_COUNTER_RX_DSCHECK    : out std_logic_vector(2 downto 0);                       --! ACK counter RX
+        NACK_COUNTER_RX_DSCHECK   : out std_logic_vector(2 downto 0);                       --! NACK counter RX
+        FCT_COUNTER_RX_DSCHECK    : out std_logic_vector(3 downto 0);                       --! FCT counter RX
+        FULL_COUNTER_RX_DSCHECK   : out std_logic_vector(1 downto 0);                       --! FULL counter RX
+        ACK_PULSE_RX_DSCHECK      : out std_logic;                                          --! New ACK received flag
+        NACK_PULSE_RX_DSCHECK     : out std_logic;                                          --! New NACK received flag
+        FCT_PULSE_RX_DSCHECK      : out std_logic;                                          --! New FCT received flag
+        FULL_PULSE_RX_DSCHECK     : out std_logic                                           --! New FULL received flag
   );
   end component;
 
   component data_crc_check is
     port (
-      CLK                    : in  std_logic;                                           --! Global clock
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE        : in std_logic;                                            --! Link Reset command
-      -- data_word_identification (DWI) interface
-      DATA_DWI               : in std_logic_vector(C_DATA_LENGTH-1 downto 0);           --! Data parallel from data_word_id_fsm
-      VALID_K_CHARAC_DWI     : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);   --! K character valid in the 32-bit DATA_DWI vector
-      NEW_WORD_DWI           : in std_logic;                                            --! New word Flag from data_word_id_fsm
-      END_FRAME_DWI          : in std_logic;                                            --! End frame/control word from data_word_id_fsm
-      SEQ_NUM_DWI            : in std_logic_vector(7 downto 0);                         --! SEQ_NUM from data_word_id_fsm
-      CRC_16B_DWI            : in std_logic_vector(15 downto 0);                        --! 16-bit CRC (data frame)  from data_word_id_fsm
-      CRC_8B_DWI             : in std_logic_vector(7 downto 0);                         --! 8-bit CRC from data_word_id_fsm
-      TYPE_FRAME_DWI         : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);     --! Current frame/control word type from data_word_id_fsm
-      FRAME_ERR_DWI          : in std_logic;                                            --! Frame error flag from data_word_id_fsm
-      MULTIPLIER_DWI         : in std_logic_vector(C_MULT_SIZE-1 downto 0);             --! Multiplier value of the current FCT word
-		  VC_DWI                 : in std_logic_vector(C_CHANNEL_SIZE-1 downto 0);          --! Virtual Channel of the current FCT word
-      RXERR_DWI              : in std_logic;                                            --! RXERR flag detection
-		  RXERR_ALL_DWI          : in std_logic;                                            --! RXERR flag detection during broadcast and data frame status
-      RXNOTHING_ACTIVE_DWI   : in std_logic;                                            --! RXNOTHING state of the data_word_id_fsm flag
-      -- data_seq_check (DSCHECK) interface
-      NEW_WORD_DCCHECK       : out std_logic;                                           --! New word flag associated with DATA_DCCHECK
-      DATA_DCCHECK           : out std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel to data_seq_check
-      VALID_K_CHARAC_DCCHECK : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DCCHECK vector
-      END_FRAME_DCCHECK      : out std_logic;                                           --! End frame/control word flag
-      TYPE_FRAME_DCCHECK     : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type
-      SEQ_NUM_DCCHECK        : out std_logic_vector(7 downto 0);                        --! SEQ_NUM value
-      CRC_ERR_DCCHECK        : out std_logic;                                           --! CRC error flag
-      FRAME_ERR_DCCHECK      : out std_logic;                                           --! Frame error flag for the current frame
-      MULTIPLIER_DCCHECK     : out std_logic_vector(C_MULT_SIZE-1 downto 0);            --! Multiplier value of the current FCT word
-		  VC_DCCHECK             : out std_logic_vector(C_CHANNEL_SIZE-1 downto 0);         --! Virtual Channel of the current FCT word
-      RXERR_DCCHECK          : out std_logic;                                           --! RXERR flag for the current frame
-      RXERR_ALL_DCCHECK      : out std_logic;                                           --! RXERR flag during broadcast and data frame status
-      -- MIB
-      CRC_LONG_ERR_DCCHECK   : out std_logic;                                           --! CRC 16-bit error flag
-      CRC_SHORT_ERR_DCCHECK  : out std_logic                                            --! CRC 8-bit error flag
+        CLK                    : in  std_logic;                                           --! Global clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE        : in std_logic;                                            --! Link Reset command
+        -- data_word_identification (DWI) interface
+        DATA_DWI               : in std_logic_vector(C_DATA_LENGTH-1 downto 0);           --! Data parallel from data_word_id_fsm
+        VALID_K_CHARAC_DWI     : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);   --! K character valid in the 32-bit DATA_DWI vector
+        NEW_WORD_DWI           : in std_logic;                                            --! New word Flag from data_word_id_fsm
+        END_FRAME_DWI          : in std_logic;                                            --! End frame/control word from data_word_id_fsm
+        SEQ_NUM_DWI            : in std_logic_vector(7 downto 0);                         --! SEQ_NUM from data_word_id_fsm
+        CRC_16B_DWI            : in std_logic_vector(15 downto 0);                        --! 16-bit CRC (data frame)  from data_word_id_fsm
+        CRC_8B_DWI             : in std_logic_vector(7 downto 0);                         --! 8-bit CRC from data_word_id_fsm
+        TYPE_FRAME_DWI         : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);     --! Current frame/control word type from data_word_id_fsm
+        FRAME_ERR_DWI          : in std_logic;                                            --! Frame error flag from data_word_id_fsm
+        MULTIPLIER_DWI         : in std_logic_vector(C_MULT_SIZE-1 downto 0);             --! Multiplier value of the current FCT word
+        VC_DWI                 : in std_logic_vector(C_CHANNEL_SIZE-1 downto 0);          --! Virtual Channel of the current FCT word
+        RXERR_DWI              : in std_logic;                                            --! RXERR flag detection
+        RXERR_ALL_DWI          : in std_logic;                                            --! RXERR flag detection during broadcast and data frame status
+        RXNOTHING_ACTIVE_DWI   : in std_logic;                                            --! RXNOTHING state of the data_word_id_fsm flag
+        -- data_seq_check (DSCHECK) interface
+        NEW_WORD_DCCHECK       : out std_logic;                                           --! New word flag associated with DATA_DCCHECK
+        DATA_DCCHECK           : out std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel to data_seq_check
+        VALID_K_CHARAC_DCCHECK : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DCCHECK vector
+        END_FRAME_DCCHECK      : out std_logic;                                           --! End frame/control word flag
+        TYPE_FRAME_DCCHECK     : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Current frame/control word type
+        SEQ_NUM_DCCHECK        : out std_logic_vector(7 downto 0);                        --! SEQ_NUM value
+        CRC_ERR_DCCHECK        : out std_logic;                                           --! CRC error flag
+        FRAME_ERR_DCCHECK      : out std_logic;                                           --! Frame error flag for the current frame
+        MULTIPLIER_DCCHECK     : out std_logic_vector(C_MULT_SIZE-1 downto 0);            --! Multiplier value of the current FCT word
+        VC_DCCHECK             : out std_logic_vector(C_CHANNEL_SIZE-1 downto 0);         --! Virtual Channel of the current FCT word
+        RXERR_DCCHECK          : out std_logic;                                           --! RXERR flag for the current frame
+        RXERR_ALL_DCCHECK      : out std_logic;                                           --! RXERR flag during broadcast and data frame status
+        -- MIB
+        CRC_LONG_ERR_DCCHECK   : out std_logic;                                           --! CRC 16-bit error flag
+        CRC_SHORT_ERR_DCCHECK  : out std_logic                                            --! CRC 8-bit error flag
   );
   end component;
 
   component data_word_id_fsm is
     port (
-      CLK                     : in  std_logic;                                           --! Global clock
-		  -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE         : in  std_logic;                                           --! Link Reset command
-      -- PHY PLUS LANE layer interface
-      FIFO_RX_DATA_VALID_PPL  : in  std_logic;                                           --! Flag DATA_VALID of the FIFO RX from Lane layer
-      FIFO_RX_RD_EN_DL       : out std_logic;                                            --! Flag to read data in FIFO RX
-      DATA_RX_PPL             : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from Lane Layer
-      VALID_K_CHARAC_PPL      : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_RX_PPL vector
-      -- data_crc_check (DCCHECK) interface
-      TYPE_FRAME_DWI          : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);     --! Current frame/control word type
-      NEW_WORD_DWI            : out std_logic;                                            --! New word flag associated to DATA_DWI
-      END_FRAME_DWI           : out std_logic;                                            --! End frame/control word flag
-      DATA_DWI                : out std_logic_vector(C_DATA_LENGTH-1 downto 0);           --! Data parallel to data_crc_check
-		  VALID_K_CHARAC_DWI      : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DWI vector
-      SEQ_NUM_DWI             : out std_logic_vector(7 downto 0);                 				--! SEQ_NUM of the current control word
-      CRC_16B_DWI             : out std_logic_vector(15 downto 0);                				--! 16-bit CRC (data frame)  of the current control word
-      CRC_8B_DWI              : out std_logic_vector(7 downto 0);                 				--! 8-bit CRC of the current control word
-		  MULTIPLIER_DWI          : out std_logic_vector(C_MULT_SIZE-1 downto 0);     				--! Multiplier value of the current FCT word
-		  VC_DWI                  : out std_logic_vector(C_CHANNEL_SIZE-1 downto 0);  				--! Virtual Channel of the current FCT word
-		  RXNOTHING_ACTIVE_DWI    : out std_logic;                                  					--! RXNOTHING state of the data_word_id_fsm flag
-		  RXERR_DWI               : out std_logic; 																						--! RXERR flag detection
-		  RXERR_ALL_DWI           : out std_logic; 																						--! RXERR flag detection during broadcast and data frame status
-      -- Error interface
-      CRC_ERR_DCCHECK         : in  std_logic;                                            --! CRC error flag from data_crc_check
-      SEQ_ERR_DSCHECK         : in  std_logic;                                            --! SEQ_NUM error flag from data_seq_check
-      FRAME_ERR_DWI           : out std_logic;                                            --! Frame error flag
-		  -- MIB
-		  DATA_COUNTER_RX_DWI     : out  std_logic_vector(6 downto 0);                        --! Data counter RX
-      RETRY_COUNTER_RX_DWI    : out  std_logic_vector(1 downto 0);                        --! RETRY counter RX
-		  DATA_PULSE_RX_DWI       : out std_logic;                                            --! New data received flag
-		  RETRY_PULSE_RX_DWI      : out std_logic                                             --! New RETRY received flag
+        CLK                     : in  std_logic;                                           --! Global clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE         : in  std_logic;                                           --! Link Reset command
+        -- PHY PLUS LANE layer interface
+        FIFO_RX_DATA_VALID_PPL  : in  std_logic;                                           --! Flag DATA_VALID of the FIFO RX from Lane layer
+        FIFO_RX_RD_EN_DL       : out std_logic;                                            --! Flag to read data in FIFO RX
+        DATA_RX_PPL             : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from Lane Layer
+        VALID_K_CHARAC_PPL      : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_RX_PPL vector
+        -- data_crc_check (DCCHECK) interface
+        TYPE_FRAME_DWI          : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);     --! Current frame/control word type
+        NEW_WORD_DWI            : out std_logic;                                            --! New word flag associated to DATA_DWI
+        END_FRAME_DWI           : out std_logic;                                            --! End frame/control word flag
+        DATA_DWI                : out std_logic_vector(C_DATA_LENGTH-1 downto 0);           --! Data parallel to data_crc_check
+        VALID_K_CHARAC_DWI      : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K character valid in the 32-bit DATA_DWI vector
+        SEQ_NUM_DWI             : out std_logic_vector(7 downto 0);                                 --! SEQ_NUM of the current control word
+        CRC_16B_DWI             : out std_logic_vector(15 downto 0);                                --! 16-bit CRC (data frame)  of the current control word
+        CRC_8B_DWI              : out std_logic_vector(7 downto 0);                                 --! 8-bit CRC of the current control word
+        MULTIPLIER_DWI          : out std_logic_vector(C_MULT_SIZE-1 downto 0);                     --! Multiplier value of the current FCT word
+        VC_DWI                  : out std_logic_vector(C_CHANNEL_SIZE-1 downto 0);                  --! Virtual Channel of the current FCT word
+        RXNOTHING_ACTIVE_DWI    : out std_logic;                                                      --! RXNOTHING state of the data_word_id_fsm flag
+        RXERR_DWI               : out std_logic;                                                                                         --! RXERR flag detection
+        RXERR_ALL_DWI           : out std_logic;                                                                                         --! RXERR flag detection during broadcast and data frame status
+        -- Error interface
+        CRC_ERR_DCCHECK         : in  std_logic;                                            --! CRC error flag from data_crc_check
+        SEQ_ERR_DSCHECK         : in  std_logic;                                            --! SEQ_NUM error flag from data_seq_check
+        FRAME_ERR_DWI           : out std_logic;                                            --! Frame error flag
+        -- MIB
+        DATA_COUNTER_RX_DWI     : out  std_logic_vector(6 downto 0);                        --! Data counter RX
+        RETRY_COUNTER_RX_DWI    : out  std_logic_vector(1 downto 0);                        --! RETRY counter RX
+        DATA_PULSE_RX_DWI       : out std_logic;                                            --! New data received flag
+        RETRY_PULSE_RX_DWI      : out std_logic                                             --! New RETRY received flag
     );
   end component;
 
@@ -422,57 +422,57 @@ architecture Behavioral of data_link is
     end component;
   component data_out_bc_buf is
     port (
-      RST_N                 : in  std_logic;                                          --! Global reset (Active-low)
-      CLK                   : in  std_logic;                                          --! Global Clock
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE        :in  std_logic;                                          --! Link Reset command
-      -- AXI-Stream interface
-      S_AXIS_ARSTN_NW	      : in std_logic;                                           --! Active-low asynchronous reset for the AXI-Stream interface
-		  S_AXIS_ACLK_NW	      : in std_logic;                                           --! Clock signal for the AXI-Stream interface
-		  S_AXIS_TREADY_DL      : out std_logic;                                          --! Indicates that TDATA, TUSER, and TLAST are valid
-		  S_AXIS_TDATA_NW       : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! AXI-Stream data bus
-		  S_AXIS_TUSER_NW       : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! Indicates the end of a data packet
-		  S_AXIS_TLAST_NW       : in std_logic;                                           --! Receiver ready signal (slave is ready to accept data)
-		  S_AXIS_TVALID_NW      : in std_logic;                                           --! AXI-Stream user-defined sideband signal
-      -- data_mac (DMAC) interface
-      VC_READY_DOBUF        : out  std_logic;                                          --! Virtual Channel ready flag
-      DATA_DOBUF            : out  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mac
-      VALID_K_CHARAC_DOBUF  : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DOBUF vector
-      DATA_VALID_DOBUF      : out  std_logic;                                          --! Data valid flag associated with DATA_DOBUF
-      END_PACKET_DOBUF      : out  std_logic;                                          --! End packet flag
-      VC_RD_EN_DMAC         : in   std_logic                                           --! Read command from data_mac
+        RST_N                 : in  std_logic;                                          --! Global reset (Active-low)
+        CLK                   : in  std_logic;                                          --! Global Clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE        :in  std_logic;                                          --! Link Reset command
+        -- AXI-Stream interface
+        S_AXIS_ARSTN_NW          : in std_logic;                                           --! Active-low asynchronous reset for the AXI-Stream interface
+        S_AXIS_ACLK_NW          : in std_logic;                                           --! Clock signal for the AXI-Stream interface
+        S_AXIS_TREADY_DL      : out std_logic;                                          --! Indicates that TDATA, TUSER, and TLAST are valid
+        S_AXIS_TDATA_NW       : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! AXI-Stream data bus
+        S_AXIS_TUSER_NW       : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! Indicates the end of a data packet
+        S_AXIS_TLAST_NW       : in std_logic;                                           --! Receiver ready signal (slave is ready to accept data)
+        S_AXIS_TVALID_NW      : in std_logic;                                           --! AXI-Stream user-defined sideband signal
+        -- data_mac (DMAC) interface
+        VC_READY_DOBUF        : out  std_logic;                                          --! Virtual Channel ready flag
+        DATA_DOBUF            : out  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mac
+        VALID_K_CHARAC_DOBUF  : out  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DOBUF vector
+        DATA_VALID_DOBUF      : out  std_logic;                                          --! Data valid flag associated with DATA_DOBUF
+        END_PACKET_DOBUF      : out  std_logic;                                          --! End packet flag
+        VC_RD_EN_DMAC         : in   std_logic                                           --! Read command from data_mac
     );
   end component;
   component data_out_buff is
     port (
-      RST_N                 : in  std_logic;                                          --! Global reset (Active-low)
-      CLK                   : in  std_logic;                                          --! Global Clock
-      -- phy_plus_lane (PPL) interface
-      LANE_ACTIVE_ST_PPL    : in  std_logic;                                          --! Lane Active state flag
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE        :in  std_logic;                                          --! Link Reset command
-      -- AXI-Stream interface
-      S_AXIS_ARSTN_NW	      : in  std_logic;                                          --! Active-low asynchronous reset signal for the AXI-Stream i
-		  S_AXIS_ACLK_NW	      : in  std_logic;                                          --! Clock signal for the AXI-Stream interface
-		  S_AXIS_TREADY_DL      : out std_logic;                                          --! Ready signal from the slave indicating it can accept data
-		  S_AXIS_TDATA_NW       : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data bus carrying the actual payload
-		  S_AXIS_TUSER_NW       : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! User-defined sideband information (optional)
-		  S_AXIS_TLAST_NW       : in  std_logic;                                          --! Signal indicating the last transfer in a packet
-		  S_AXIS_TVALID_NW      : in  std_logic;                                          --! Valid signal indicating that the data on TDATA is valid
-      -- data_mac (DMAC) interface
-      VC_READY_DOBUF        : out std_logic;                                          --! Virtual Channel ready flag
-      DATA_DOBUF            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mac
-      VALID_K_CHARAC_DOBUF  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DOBUF vector
-      DATA_VALID_DOBUF      : out std_logic;                                          --! Data valid flag associated with DATA_DOBUF
-      END_PACKET_DOBUF      : out std_logic;                                          --! End packet flag
-      VC_RD_EN_DMAC         : in  std_logic;                                          --! Read command from data_mac
-      --DSCHECK interface
-      M_VAL_DSCHECK         : in  std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
-      FCT_FAR_END_DSCHECK   : in  std_logic;                                          --! FCT Fare-end received flag
-      --MIB Interface
-      FCT_CC_OVF_DOBUF      : out std_logic;                                          --! FCT credit counter overflow flag
-      CREDIT_VC_DOBUF       : out std_logic;                                          --! Has credit flag (crdit counter > 0)
-      VC_CONT_MODE_MIB      : in  std_logic                                           --! Continuous mode command
+        RST_N                 : in  std_logic;                                          --! Global reset (Active-low)
+        CLK                   : in  std_logic;                                          --! Global Clock
+        -- phy_plus_lane (PPL) interface
+        LANE_ACTIVE_ST_PPL    : in  std_logic;                                          --! Lane Active state flag
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE        :in  std_logic;                                          --! Link Reset command
+        -- AXI-Stream interface
+        S_AXIS_ARSTN_NW          : in  std_logic;                                          --! Active-low asynchronous reset signal for the AXI-Stream i
+        S_AXIS_ACLK_NW          : in  std_logic;                                          --! Clock signal for the AXI-Stream interface
+        S_AXIS_TREADY_DL      : out std_logic;                                          --! Ready signal from the slave indicating it can accept data
+        S_AXIS_TDATA_NW       : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data bus carrying the actual payload
+        S_AXIS_TUSER_NW       : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! User-defined sideband information (optional)
+        S_AXIS_TLAST_NW       : in  std_logic;                                          --! Signal indicating the last transfer in a packet
+        S_AXIS_TVALID_NW      : in  std_logic;                                          --! Valid signal indicating that the data on TDATA is valid
+        -- data_mac (DMAC) interface
+        VC_READY_DOBUF        : out std_logic;                                          --! Virtual Channel ready flag
+        DATA_DOBUF            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_mac
+        VALID_K_CHARAC_DOBUF  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K character valid in the 32-bit DATA_DOBUF vector
+        DATA_VALID_DOBUF      : out std_logic;                                          --! Data valid flag associated with DATA_DOBUF
+        END_PACKET_DOBUF      : out std_logic;                                          --! End packet flag
+        VC_RD_EN_DMAC         : in  std_logic;                                          --! Read command from data_mac
+        --DSCHECK interface
+        M_VAL_DSCHECK         : in  std_logic_vector(C_M_SIZE-1 downto 0);              --! M value associated with FCT_FAR_END_DSCHECK
+        FCT_FAR_END_DSCHECK   : in  std_logic;                                          --! FCT Fare-end received flag
+        --MIB Interface
+        FCT_CC_OVF_DOBUF      : out std_logic;                                          --! FCT credit counter overflow flag
+        CREDIT_VC_DOBUF       : out std_logic;                                          --! Has credit flag (crdit counter > 0)
+        VC_CONT_MODE_MIB      : in  std_logic                                           --! Continuous mode command
     );
   end component;
 
@@ -531,80 +531,80 @@ architecture Behavioral of data_link is
       G_VC_NUM : integer := 8                                                                     --! Number of virtual channel
     );
     port (
-      CLK                               : in std_logic;                                           --! Global Clock
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE                   : in std_logic;                                           --! Link Reset command
-      -- phy_plus_lane (PPL) interface
-      LANE_ACTIVE_PPL                   : in std_logic;                                           --! Lane Active flag for the DATA Link Layer
-      -- data_mac (DMAC) interface
-      DATA_DMAC                         : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_mac
-      VALID_K_CHAR_DMAC                 : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DMAC vector
-      NEW_WORD_DMAC                     : in std_logic;                                           --! New word flag from data_mac
-	    END_PACKET_DMAC                   : in std_logic;                                           --! End frame/control word from data_mac
-      TYPE_FRAME_DMAC                   : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DMAC
-      VIRTUAL_CHANNEL_DMAC              : in std_logic_vector (7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
-      BC_TYPE_DMAC                      : in std_logic_vector (7 downto 0);                       --! BROADCAST Type
-      BC_CHANNEL_DMAC                   : in std_logic_vector (7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
-	    BC_STATUS_DMAC                    : in std_logic_vector (2-1 downto 0);                     --! BOADCAST status
-      MULT_CHANNEL_DMAC                 : in std_logic_vector (7 downto 0);                       --! Multiplier and Channel field for FCT word
-      SEQ_NUM_ACK_DMAC                  : in std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
-      TRANS_POL_FLG_DMAC                : in std_logic;                                           --! Transmission polarity flag
-      -- data_seq_compute (DSCC) interface
-      NEW_WORD_DENC                     : out std_logic;                                          --! New word flag to data_seq_compute
-      DATA_DENC                         : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_seq_compute
-      VALID_K_CHARAC_DENC               : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K charachter valid in the 32-bit DATA_DENC vector
-      TYPE_FRAME_DENC                   : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DENC
-      END_FRAME_DENC                    : out std_logic;                                          --! End frame/control word associated with DATA_DENC
-      SEQ_NUM_ACK_DENC                  : out std_logic_vector(7 downto 0);                       --! SEQ_NUM ACK value
-      TRANS_POL_FLG_DENC                : out std_logic                                           --! Transmission polarity flag
+        CLK                               : in std_logic;                                           --! Global Clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE                   : in std_logic;                                           --! Link Reset command
+        -- phy_plus_lane (PPL) interface
+        LANE_ACTIVE_PPL                   : in std_logic;                                           --! Lane Active flag for the DATA Link Layer
+        -- data_mac (DMAC) interface
+        DATA_DMAC                         : in std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_mac
+        VALID_K_CHAR_DMAC                 : in std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DMAC vector
+        NEW_WORD_DMAC                     : in std_logic;                                           --! New word flag from data_mac
+        END_PACKET_DMAC                   : in std_logic;                                           --! End frame/control word from data_mac
+        TYPE_FRAME_DMAC                   : in std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DMAC
+        VIRTUAL_CHANNEL_DMAC              : in std_logic_vector (7 downto 0);                       --! Virtual channel of the frame associated with DATA_DMAC
+        BC_TYPE_DMAC                      : in std_logic_vector (7 downto 0);                       --! BROADCAST Type
+        BC_CHANNEL_DMAC                   : in std_logic_vector (7 downto 0);                       --! BROADCAST Channel (one channel in this implementation)
+        BC_STATUS_DMAC                    : in std_logic_vector (2-1 downto 0);                     --! BOADCAST status
+        MULT_CHANNEL_DMAC                 : in std_logic_vector (7 downto 0);                       --! Multiplier and Channel field for FCT word
+        SEQ_NUM_ACK_DMAC                  : in std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
+        TRANS_POL_FLG_DMAC                : in std_logic;                                           --! Transmission polarity flag
+        -- data_seq_compute (DSCC) interface
+        NEW_WORD_DENC                     : out std_logic;                                          --! New word flag to data_seq_compute
+        DATA_DENC                         : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel to data_seq_compute
+        VALID_K_CHARAC_DENC               : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K charachter valid in the 32-bit DATA_DENC vector
+        TYPE_FRAME_DENC                   : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DENC
+        END_FRAME_DENC                    : out std_logic;                                          --! End frame/control word associated with DATA_DENC
+        SEQ_NUM_ACK_DENC                  : out std_logic_vector(7 downto 0);                       --! SEQ_NUM ACK value
+        TRANS_POL_FLG_DENC                : out std_logic                                           --! Transmission polarity flag
     );
   end component;
 
   component data_seq_compute is
     port (
-	    CLK                   : in  std_logic;                                           --! Clock generated by GTY IP
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE       : in  std_logic;                                           --! Link Reset command
-      -- phy_plus_lane (PPL) interface
-      LANE_ACTIVE_PPL       : in  std_logic;                                           --! Lane Active flag for the DATA Link Layer
-	    -- data_encapsulation (DENC) interface
-	    NEW_WORD_DENC         : in  std_logic;                                           --! New word flag associated with DATA_DENC
-	    DATA_DENC             : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_encapsulation
-	    VALID_K_CHARAC_DENC   : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DENC vector
-	    TYPE_FRAME_DENC       : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DENC
-	    END_FRAME_DENC        : in  std_logic;                                           --! End frame/control word associated with DATA_DENC
-	    SEQ_NUM_ACK_DENC      : in  std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
-	    TRANS_POL_FLG_DENC    : in  std_logic;                                           --! Transmission polarity flag
-	    -- data_crc_compute (DCCHECK) interface
-	    NEW_WORD_DSCOM        : out std_logic;                                           --! New word flag associated with DATA_DSCOM
-	    DATA_DSCOM            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel to data_encapsulation
-	    VALID_K_CHARAC_DSCOM  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DSCOM vector
-	    TYPE_FRAME_DSCOM      : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DSCOM
-	    END_FRAME_DSCOM       : out std_logic;                                           --! End frame/control word associated with DATA_DSCOM
-	    -- MIB interface
-	    SEQ_NUM_DSCOM         : out std_logic_vector(7 downto 0)                         --! Current SEQ_NUM value
+        CLK                   : in  std_logic;                                           --! Clock generated by GTY IP
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE       : in  std_logic;                                           --! Link Reset command
+        -- phy_plus_lane (PPL) interface
+        LANE_ACTIVE_PPL       : in  std_logic;                                           --! Lane Active flag for the DATA Link Layer
+        -- data_encapsulation (DENC) interface
+        NEW_WORD_DENC         : in  std_logic;                                           --! New word flag associated with DATA_DENC
+        DATA_DENC             : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel from data_encapsulation
+        VALID_K_CHARAC_DENC   : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DENC vector
+        TYPE_FRAME_DENC       : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DENC
+        END_FRAME_DENC        : in  std_logic;                                           --! End frame/control word associated with DATA_DENC
+        SEQ_NUM_ACK_DENC      : in  std_logic_vector(7 downto 0);                        --! SEQ_NUM ACK value
+        TRANS_POL_FLG_DENC    : in  std_logic;                                           --! Transmission polarity flag
+        -- data_crc_compute (DCCHECK) interface
+        NEW_WORD_DSCOM        : out std_logic;                                           --! New word flag associated with DATA_DSCOM
+        DATA_DSCOM            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);          --! Data parallel to data_encapsulation
+        VALID_K_CHARAC_DSCOM  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0);  --! K charachter valid in the 32-bit DATA_DSCOM vector
+        TYPE_FRAME_DSCOM      : out std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);    --! Type of the frame associated with DATA_DSCOM
+        END_FRAME_DSCOM       : out std_logic;                                           --! End frame/control word associated with DATA_DSCOM
+        -- MIB interface
+        SEQ_NUM_DSCOM         : out std_logic_vector(7 downto 0)                         --! Current SEQ_NUM value
     );
   end component;
 
   component data_crc_compute is
     port (
-      CLK                   : in  std_logic;                                          --! Global Clock
-      -- data_link_reset (DLRE) interface
-      LINK_RESET_DLRE       : in  std_logic;                                          --! Link Reset command
-      -- phy_plus_lane (PPL) interface
-      LANE_ACTIVE_PPL       : in  std_logic;                                          --! Lane Active flag for the DATA Link Layer
-   	  -- data_seq_compute (DSCOM) interface
-		  NEW_WORD_DSCOM        : in  std_logic;                                          --! New word flag associated with DATA_DSCOM
-		  DATA_DSCOM            : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel from data_seq_compute
-		  VALID_K_CHARAC_DSCOM  : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K charachter valid in the 32-bit DATA_DSCOM vector
-		  TYPE_FRAME_DSCOM      : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DSCOM
-		  END_FRAME_DSCOM       : in  std_logic;                                          --! End frame/control word associated with DATA_DSCOM
-		  -- FIFO_TX_LANE interface
-		  FIFO_FULL_TX_LANE     : in  std_logic;                                          --! Fifo TX full flag from the lane layer
-		  VALID_K_CHARAC_DCCOM  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! Data parallel to lane layer
-		  DATA_DCCOM            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! K charachter valid in the 32-bit DATA_DCCOM vector
-		  NEW_WORD_DCCOM        : out std_logic                                           --! New word Flag associated with DATA_DCCOM
- 	);
+        CLK                   : in  std_logic;                                          --! Global Clock
+        -- data_link_reset (DLRE) interface
+        LINK_RESET_DLRE       : in  std_logic;                                          --! Link Reset command
+        -- phy_plus_lane (PPL) interface
+        LANE_ACTIVE_PPL       : in  std_logic;                                          --! Lane Active flag for the DATA Link Layer
+        -- data_seq_compute (DSCOM) interface
+        NEW_WORD_DSCOM        : in  std_logic;                                          --! New word flag associated with DATA_DSCOM
+        DATA_DSCOM            : in  std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! Data parallel from data_seq_compute
+        VALID_K_CHARAC_DSCOM  : in  std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! K charachter valid in the 32-bit DATA_DSCOM vector
+        TYPE_FRAME_DSCOM      : in  std_logic_vector(C_TYPE_FRAME_LENGTH-1 downto 0);   --! Type of the frame associated with DATA_DSCOM
+        END_FRAME_DSCOM       : in  std_logic;                                          --! End frame/control word associated with DATA_DSCOM
+        -- FIFO_TX_LANE interface
+        FIFO_FULL_TX_LANE     : in  std_logic;                                          --! Fifo TX full flag from the lane layer
+        VALID_K_CHARAC_DCCOM  : out std_logic_vector(C_BYTE_BY_WORD_LENGTH-1 downto 0); --! Data parallel to lane layer
+        DATA_DCCOM            : out std_logic_vector(C_DATA_LENGTH-1 downto 0);         --! K charachter valid in the 32-bit DATA_DCCOM vector
+        NEW_WORD_DCCOM        : out std_logic                                           --! New word Flag associated with DATA_DCCOM
+     );
   end component;
 ---------------------------------------------------------
 -----                  Signal declaration           -----
@@ -739,7 +739,8 @@ begin
 -----                     Assignements              -----
 ---------------------------------------------------------
   LINK_RST_ASSERTED_DL  <= link_reset_dlre;
-  SEQUENCE_ERROR_DL     <= seq_num_err_dscheck when (type_frame_dscheck /= C_ACK_FRM and type_frame_dscheck /= C_NACK_FRM) else '0';-- No sequence error for ack or nack control word
+  SEQUENCE_ERROR_DL     <=  seq_num_err_dscheck when (type_frame_dscheck /= C_ACK_FRM and type_frame_dscheck /= C_NACK_FRM) else
+                            '0';-- No sequence error for ack or nack control word
   CURRENT_TIME_SLOT_DL  <= CURRENT_TIME_SLOT_NW;
   FAR_END_LINK_RESET_DL <= FAR_END_CAPA_PPL(C_CAPA_LINK_RST);
   FRAME_ERROR_DL        <= frame_err_dwi;
@@ -756,7 +757,7 @@ begin
     CLK                    => CLK,
     LINK_RESET_DLRE        => link_reset_dlre,
     M_AXIS_ARSTN_NW        => AXIS_ARSTN_RX_NW(G_VC_NUM),
-    M_AXIS_ACLK_NW	       => AXIS_ACLK_RX_NW(G_VC_NUM),
+    M_AXIS_ACLK_NW         => AXIS_ACLK_RX_NW(G_VC_NUM),
     M_AXIS_TVALID_DIBUF    => AXIS_TVALID_RX_DL(G_VC_NUM),
     M_AXIS_TDATA_DIBUF     => AXIS_TDATA_RX_DL(G_VC_NUM),
     M_AXIS_TLAST_DIBUF     => AXIS_TLAST_RX_DL(G_VC_NUM),
@@ -810,7 +811,7 @@ begin
         LINK_RESET_DLRE        => link_reset_dlre,
         LINK_RESET_DIBUF       => link_reset_dibuf(i),
         M_AXIS_ARSTN_NW        => AXIS_ARSTN_RX_NW(i),
-        M_AXIS_ACLK_NW	       => AXIS_ACLK_RX_NW(i),
+        M_AXIS_ACLK_NW         => AXIS_ACLK_RX_NW(i),
         M_AXIS_TVALID_DIBUF    => AXIS_TVALID_RX_DL(i),
         M_AXIS_TDATA_DIBUF     => AXIS_TDATA_RX_DL(i),
         M_AXIS_TLAST_DIBUF     => AXIS_TLAST_RX_DL(i),
@@ -937,7 +938,7 @@ begin
       TYPE_FRAME_DWI         => type_frame_dwi,
       FRAME_ERR_DWI          => frame_err_dwi,
       RXERR_DWI              => rxerr_dwi,
-      RXERR_ALL_DWI           => rxerr_all_dwi,
+      RXERR_ALL_DWI          => rxerr_all_dwi,
       RXNOTHING_ACTIVE_DWI   => rxnothing_active_dwi,
       NEW_WORD_DCCHECK       => new_word_dccheck,
       DATA_DCCHECK           => data_dccheck,
@@ -1029,7 +1030,7 @@ begin
       CLK                   => CLK,
       LINK_RESET_DLRE       => link_reset_dlre,
       S_AXIS_ARSTN_NW       => AXIS_ARSTN_TX_NW(G_VC_NUM),
-      S_AXIS_ACLK_NW	    => AXIS_ACLK_TX_NW(G_VC_NUM),
+      S_AXIS_ACLK_NW        => AXIS_ACLK_TX_NW(G_VC_NUM),
       S_AXIS_TREADY_DL      => AXIS_TREADY_TX_DL(G_VC_NUM),
       S_AXIS_TDATA_NW       => AXIS_TDATA_TX_NW(G_VC_NUM),
       S_AXIS_TUSER_NW       => AXIS_TUSER_TX_NW(G_VC_NUM),
@@ -1050,7 +1051,7 @@ begin
         CLK                   => CLK,
         LINK_RESET_DLRE       => link_reset_dlre,
         S_AXIS_ARSTN_NW       => AXIS_ARSTN_TX_NW(i),
-        S_AXIS_ACLK_NW	      => AXIS_ACLK_TX_NW(i),
+        S_AXIS_ACLK_NW        => AXIS_ACLK_TX_NW(i),
         S_AXIS_TREADY_DL      => AXIS_TREADY_TX_DL(i),
         S_AXIS_TDATA_NW       => AXIS_TDATA_TX_NW(i),
         S_AXIS_TUSER_NW       => AXIS_TUSER_TX_NW(i),
