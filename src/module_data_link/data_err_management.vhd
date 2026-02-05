@@ -20,7 +20,7 @@
 -- Creation date : 14/03/2025
 --
 -- Description : This module describes the management of the ACK, NACK request
---							 and the polarity flags
+--                             and the polarity flags
 ----------------------------------------------------------------------------
 
 library IEEE;
@@ -62,11 +62,11 @@ architecture Behavioral of data_err_management is
 -----                  Signal declaration           -----
 ---------------------------------------------------------
   type state_type is (
-		VALID_POSITIVE_ST,  --! Valid Positive State
-		VALID_NEGATIVE_ST,  --! Valid Negative State
-		ERROR_POSITIVE_ST,  --! Error Positive State
-		ERROR_NEGATIVE_ST   --! Error Negative State
-	);
+        VALID_POSITIVE_ST,  --! Valid Positive State
+        VALID_NEGATIVE_ST,  --! Valid Negative State
+        ERROR_POSITIVE_ST,  --! Error Positive State
+        ERROR_NEGATIVE_ST   --! Error Negative State
+    );
 
   signal state               : state_type;
 
@@ -86,9 +86,9 @@ architecture Behavioral of data_err_management is
   signal trans_pol_flg       : std_logic;
   signal ack_pol_flg         : std_logic;
 begin
-	--------------------------------------------------------
-	--                  Assignements                     ---
-	--------------------------------------------------------
+    --------------------------------------------------------
+    --                  Assignements                     ---
+    --------------------------------------------------------
   REQ_NACK_DERRM      <= nack_request_out;
   REQ_ACK_DERRM       <= ack_request_out;
   SEQ_NUM_ACK_DERRM   <= ack_pol_flg & s_seq_num_fsm;
@@ -100,7 +100,7 @@ begin
 ---------------------------------------------------------
 -- Process: p_fsm
 -- Description: FSM to determine the polarity flags
---							(TPF and RPF)
+--                            (TPF and RPF)
 ---------------------------------------------------------
   p_fsm : process (CLK)
   begin
@@ -123,36 +123,36 @@ begin
         s_seq_num_fsm    <= s_seq_num_request;
         case state is
           when VALID_POSITIVE_ST =>
-              									near_end_rpf        <= '0';  -- positive
-                                ack_pol_flg         <= '0';  -- positive
-              									if s_nack_request = '1' then -- NACK Request
-              									    state <= ERROR_NEGATIVE_ST;
-              									end if;
+            near_end_rpf        <= '0';  -- positive
+            ack_pol_flg         <= '0';  -- positive
+            if s_nack_request = '1' then -- NACK Request
+                state <= ERROR_NEGATIVE_ST;
+            end if;
 
           when VALID_NEGATIVE_ST =>
-              									near_end_rpf        <= '1';  -- negative
-                                ack_pol_flg         <= '1';  -- negative
-              									if s_nack_request = '1' then -- NACK Request
-              									    state <= ERROR_POSITIVE_ST;
-              									end if;
+            near_end_rpf        <= '1';  -- negative
+            ack_pol_flg         <= '1';  -- negative
+            if s_nack_request = '1' then -- NACK Request
+                state <= ERROR_POSITIVE_ST;
+            end if;
 
           when ERROR_POSITIVE_ST =>
-              									near_end_rpf        <= '0'; -- positive
-                                ack_pol_flg         <= '1'; -- negative
-              									if s_ack_request = '1' then -- ACK Request
-              									    state <= VALID_POSITIVE_ST;
-              									elsif s_far_end_rpf = '0' and s_seq_err = '1' then --Invalid Sequence Number received with positive polarity
-              									    state <= ERROR_NEGATIVE_ST;
-              									end if;
+            near_end_rpf        <= '0'; -- positive
+            ack_pol_flg         <= '1'; -- negative
+            if s_ack_request = '1' then -- ACK Request
+                state <= VALID_POSITIVE_ST;
+            elsif s_far_end_rpf = '0' and s_seq_err = '1' then --Invalid Sequence Number received with positive polarity
+                state <= ERROR_NEGATIVE_ST;
+            end if;
 
           when ERROR_NEGATIVE_ST  =>
-              									near_end_rpf         <= '1'; -- negative
-                                ack_pol_flg          <= '0'; -- positive
-              									if s_ack_request = '1' then -- ACK Request
-              									    state <= VALID_NEGATIVE_ST;
-              									elsif s_far_end_rpf = '1' and s_seq_err = '1' then --Invalid Sequence Number received with negative polarity
-              									    state <= ERROR_POSITIVE_ST;
-              									end if;
+            near_end_rpf         <= '1'; -- negative
+            ack_pol_flg          <= '0'; -- positive
+            if s_ack_request = '1' then -- ACK Request
+                state <= VALID_NEGATIVE_ST;
+            elsif s_far_end_rpf = '1' and s_seq_err = '1' then --Invalid Sequence Number received with negative polarity
+                state <= ERROR_POSITIVE_ST;
+            end if;
         end case;
       end if;
     end if;
@@ -199,7 +199,7 @@ begin
 ---------------------------------------------------------
 -- Process: p_sync
 -- Description: Output request management: priority to
---							the latest, done handling, synchronization
+--                            the latest, done handling, synchronization
 ---------------------------------------------------------
   p_sync : process (CLK)
   begin
@@ -294,15 +294,6 @@ begin
           else
             LINK_RESET_DERRM <= '0';
           end if;
-        -- else
-          -- if FRAME_ERR_DSCHECK = '0' and (TYPE_FRAME_DSCHECK = C_NACK_FRM) and END_FRAME_DSCHECK = '1' then
-          --   flg_nack_rst_flg <= '1';
-          --   LINK_RESET_DERRM <= '0';
-          -- elsif (TYPE_FRAME_DSCHECK = C_DATA_FRM or TYPE_FRAME_DSCHECK = C_BC_FRM) and END_FRAME_DSCHECK = '1' and FRAME_ERR_DSCHECK = '0' and flg_nack_rst_flg = '1' then
-          --   LINK_RESET_DERRM <= '1';
-          -- else
-          --   LINK_RESET_DERRM <= '0';
-          -- end if;
         end if;
       else
         LINK_RESET_DERRM <= '0';
