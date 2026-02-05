@@ -678,9 +678,6 @@ signal rst_usr_gty_n             : std_logic; -- reset that will be used for eve
 -- HSSL debug signals
 signal INTF0_RX0_ch_rxcdrlock :  STD_LOGIC_VECTOR ( 0 to 0 );
 
-attribute MARK_DEBUG : string;
-attribute MARK_DEBUG of INTF0_RX0_ch_rxelecidle : signal is "TRUE"; --debug 
-
 begin
 
 -- PHY + lane reset management
