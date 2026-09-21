@@ -4,11 +4,11 @@
 
 ## Readme First
 This repository includes de IP called Spacefibrelight. It was developped by Elsys Deign under a CNES R&D program. The main objective of this IP is :
-- To provide an optimized (in ressource) implementation of the spacefibre standard (ECSS-E-ST-50-11C – SpaceFibre – Very high-speed serial link )
-- To be comptabible with any spacefibre IP even if spacefibrelight IP is not fully compliant with the standard
+- To provide an optimized (in ressource) implementation of the spacefibre standard (ECSS-E-ST-50-11C – SpaceFibre – Very high-speed serial link ).
+- To be comptabible with any spacefibre IP even if spacefibrelight IP is not fully compliant with the standard.
 - To be operational on Xilinx AI edge versal (tested on VEK280 evalboard ) and also on Nanoxplore NG-Ultra, NG-Ultra300 devices.
-- To be opensource
-- To be addaptable (that is to say, with additionnal development, this IP could be fully compliant to ECSS standard) 
+- To be opensource.
+- To be addaptable (that is to say, with additionnal development, this IP could be fully compliant to ECSS standard).
 
 
 ## Introduction
