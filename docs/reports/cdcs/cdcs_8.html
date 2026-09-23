@@ -1,0 +1,1393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising) =&gt; gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising) &mdash; spacefibrelight</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=f3078fdf" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/js/linty-report.js?v=339a689a"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+ 
+<meta name="theme-color" content="#1d404c" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #1b242c" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            spacefibrelight<br><br>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#dependencies">Dependencies <span class="linty-help" title="Note that instantiations from blackboxes or third-party IPs are not listed in this report." aria-label="Note that instantiations from blackboxes or third-party IPs are not listed in this report.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-entities">VHDL Entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-packages">VHDL Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#id1">Clock Domains<span class="linty-help" title="A clock domain used for both rising and falling edges is counted as two separate clock domains." aria-label="A clock domain used for both rising and falling edges is counted as two separate clock domains.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#clock-management-module-cmm">Clock Management Module (CMM)<span class="linty-help" title="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#global-reset-domains">Global Reset Domains <span class="linty-help" title="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design." aria-label="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#local-reset-domains">Local Reset Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#reset-management-module-rmm">Reset Management Module (RMM) <span class="linty-help" title="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domain_crossings.html">Reset Domain Crossings (RDC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finite_state_machines.html">Finite State Machines (FSM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../combinational_loops.html">Combinational Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../latches.html">Latches</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #1b242c" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">spacefibrelight<br><br></a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising) =&gt; gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reports/cdcs/cdcs_8.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inst-reset-sync-clk-from-gty-reset-gen-rr-n-rising-gen-inst-phy-plus-lane-inst-phy-plus-lane-clk-tx-rising">
+<h1>inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising) =&gt; gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)<a class="headerlink" href="#inst-reset-sync-clk-from-gty-reset-gen-rr-n-rising-gen-inst-phy-plus-lane-inst-phy-plus-lane-clk-tx-rising" title="Link to this heading"></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Origin Clock Domain</p></th>
+<th class="head text-right"><p>Target Clock Domain</p></th>
+<th class="head"><p>Number of CDCs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/cdcs/cdcs_8_graph.html?preview=1" title="Open CDC Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/cdcs/cdcs_8_graph.html" title="Open CDC Graph" aria-label="Open CDC Graph"></a></div></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td class="text-right"><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>26</p></td>
+</tr>
+</tbody>
+</table>
+<section id="cdcs">
+<h2>CDCs<a class="headerlink" href="#cdcs" title="Link to this heading"></a></h2>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>ID</p></th>
+<th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Origin Signal</p></th>
+<th class="head"><p>Target Signal</p></th>
+<th class="head text-center"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p>243</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_243_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init3_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-243" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>248</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_248_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.capability_valid_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-248" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>249</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_249_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_rxerr_word_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-249" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>250</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_250_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rdy_dl_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-250" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>251</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_251_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_loss_signal_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-251" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>252</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_252_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.comma_k287_rxed_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-252" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>253</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_253_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init2_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-253" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>254</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_254_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init1_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-254" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>255</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_255_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init2_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-255" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>256</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_256_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init1_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-256" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>257</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_257_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.rx_new_word_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-257" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>263</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_263_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_standby_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-263" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>274</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_274_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_standby_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-274" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>275</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_275_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_loss_signal_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-275" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>281</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_281_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.valid_k_charac_dl_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-281" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>295</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_295_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.comma_k287_rxed_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-295" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>297</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_297_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init2_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-297" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>298</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_298_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init1_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-298" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>299</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_299_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init2_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-299" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>307</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_307_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init1_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-307" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>308</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_308_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.rx_new_word_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-308" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>344</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_344_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.valid_k_charac_dl_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-344" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>345</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_345_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rx_dl_sw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-345" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>351</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_351_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rdy_dl_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-351" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>352</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_352_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rx_dl_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-352" title="View CDC Details">Details</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>358</p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_358_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_rxerr_word_fw</span></code></p></td>
+<td class="text-center"><p><a class="linty-action-btn" href="#cdc-358" title="View CDC Details">Details</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cdc-243">
+<h3>CDC #243<a class="headerlink" href="#cdc-243" title="Link to this heading"></a></h3>
+<section id="origin-flip-flop">
+<h4>Origin Flip-flop<a class="headerlink" href="#origin-flip-flop" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_243_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="target-flip-flop">
+<h4>Target Flip-flop<a class="headerlink" href="#target-flip-flop" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_243_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init3_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#136">ppl_64_lane_ctrl_word_detect.vhd#136</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#153">ppl_64_lane_ctrl_word_detect.vhd#153</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#176">ppl_64_lane_ctrl_word_detect.vhd#176</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-248">
+<h3>CDC #248<a class="headerlink" href="#cdc-248" title="Link to this heading"></a></h3>
+<section id="id1">
+<h4>Origin Flip-flop<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_248_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h4>Target Flip-flop<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_248_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.capability_valid_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#246">ppl_64_lane_ctrl_word_detect.vhd#246</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#258">ppl_64_lane_ctrl_word_detect.vhd#258</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#277">ppl_64_lane_ctrl_word_detect.vhd#277</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-249">
+<h3>CDC #249<a class="headerlink" href="#cdc-249" title="Link to this heading"></a></h3>
+<section id="id3">
+<h4>Origin Flip-flop<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_249_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h4>Target Flip-flop<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_249_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_rxerr_word_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#244">ppl_64_lane_ctrl_word_detect.vhd#244</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#262">ppl_64_lane_ctrl_word_detect.vhd#262</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#309">ppl_64_lane_ctrl_word_detect.vhd#309</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#318">ppl_64_lane_ctrl_word_detect.vhd#318</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-250">
+<h3>CDC #250<a class="headerlink" href="#cdc-250" title="Link to this heading"></a></h3>
+<section id="id5">
+<h4>Origin Flip-flop<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_250_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h4>Target Flip-flop<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_250_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rdy_dl_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#243">ppl_64_lane_ctrl_word_detect.vhd#243</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#259">ppl_64_lane_ctrl_word_detect.vhd#259</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#301">ppl_64_lane_ctrl_word_detect.vhd#301</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#306">ppl_64_lane_ctrl_word_detect.vhd#306</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-251">
+<h3>CDC #251<a class="headerlink" href="#cdc-251" title="Link to this heading"></a></h3>
+<section id="id7">
+<h4>Origin Flip-flop<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_251_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id8">
+<h4>Target Flip-flop<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_251_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_loss_signal_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#239">ppl_64_lane_ctrl_word_detect.vhd#239</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#256">ppl_64_lane_ctrl_word_detect.vhd#256</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#289">ppl_64_lane_ctrl_word_detect.vhd#289</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-252">
+<h3>CDC #252<a class="headerlink" href="#cdc-252" title="Link to this heading"></a></h3>
+<section id="id9">
+<h4>Origin Flip-flop<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_252_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id10">
+<h4>Target Flip-flop<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_252_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.comma_k287_rxed_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#238">ppl_64_lane_ctrl_word_detect.vhd#238</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#255">ppl_64_lane_ctrl_word_detect.vhd#255</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#290">ppl_64_lane_ctrl_word_detect.vhd#290</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#295">ppl_64_lane_ctrl_word_detect.vhd#295</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#313">ppl_64_lane_ctrl_word_detect.vhd#313</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-253">
+<h3>CDC #253<a class="headerlink" href="#cdc-253" title="Link to this heading"></a></h3>
+<section id="id11">
+<h4>Origin Flip-flop<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_253_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id12">
+<h4>Target Flip-flop<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_253_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init2_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#237">ppl_64_lane_ctrl_word_detect.vhd#237</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#254">ppl_64_lane_ctrl_word_detect.vhd#254</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#285">ppl_64_lane_ctrl_word_detect.vhd#285</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-254">
+<h3>CDC #254<a class="headerlink" href="#cdc-254" title="Link to this heading"></a></h3>
+<section id="id13">
+<h4>Origin Flip-flop<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_254_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id14">
+<h4>Target Flip-flop<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_254_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init1_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#236">ppl_64_lane_ctrl_word_detect.vhd#236</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#253">ppl_64_lane_ctrl_word_detect.vhd#253</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#281">ppl_64_lane_ctrl_word_detect.vhd#281</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-255">
+<h3>CDC #255<a class="headerlink" href="#cdc-255" title="Link to this heading"></a></h3>
+<section id="id15">
+<h4>Origin Flip-flop<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_255_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id16">
+<h4>Target Flip-flop<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_255_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init2_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#234">ppl_64_lane_ctrl_word_detect.vhd#234</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#251">ppl_64_lane_ctrl_word_detect.vhd#251</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#271">ppl_64_lane_ctrl_word_detect.vhd#271</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-256">
+<h3>CDC #256<a class="headerlink" href="#cdc-256" title="Link to this heading"></a></h3>
+<section id="id17">
+<h4>Origin Flip-flop<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_256_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id18">
+<h4>Target Flip-flop<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_256_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init1_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#233">ppl_64_lane_ctrl_word_detect.vhd#233</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#250">ppl_64_lane_ctrl_word_detect.vhd#250</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#267">ppl_64_lane_ctrl_word_detect.vhd#267</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-257">
+<h3>CDC #257<a class="headerlink" href="#cdc-257" title="Link to this heading"></a></h3>
+<section id="id19">
+<h4>Origin Flip-flop<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_257_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id20">
+<h4>Target Flip-flop<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_257_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.rx_new_word_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#232">ppl_64_lane_ctrl_word_detect.vhd#232</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#249">ppl_64_lane_ctrl_word_detect.vhd#249</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#268">ppl_64_lane_ctrl_word_detect.vhd#268</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#272">ppl_64_lane_ctrl_word_detect.vhd#272</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#276">ppl_64_lane_ctrl_word_detect.vhd#276</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#282">ppl_64_lane_ctrl_word_detect.vhd#282</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#286">ppl_64_lane_ctrl_word_detect.vhd#286</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#291">ppl_64_lane_ctrl_word_detect.vhd#291</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#296">ppl_64_lane_ctrl_word_detect.vhd#296</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#307">ppl_64_lane_ctrl_word_detect.vhd#307</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#314">ppl_64_lane_ctrl_word_detect.vhd#314</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#316">ppl_64_lane_ctrl_word_detect.vhd#316</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-263">
+<h3>CDC #263<a class="headerlink" href="#cdc-263" title="Link to this heading"></a></h3>
+<section id="id21">
+<h4>Origin Flip-flop<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_263_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id22">
+<h4>Target Flip-flop<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_263_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_standby_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#240">ppl_64_lane_ctrl_word_detect.vhd#240</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#257">ppl_64_lane_ctrl_word_detect.vhd#257</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#294">ppl_64_lane_ctrl_word_detect.vhd#294</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-274">
+<h3>CDC #274<a class="headerlink" href="#cdc-274" title="Link to this heading"></a></h3>
+<section id="id23">
+<h4>Origin Flip-flop<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_274_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id24">
+<h4>Target Flip-flop<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_274_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_standby_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#141">ppl_64_lane_ctrl_word_detect.vhd#141</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#158">ppl_64_lane_ctrl_word_detect.vhd#158</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#195">ppl_64_lane_ctrl_word_detect.vhd#195</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-275">
+<h3>CDC #275<a class="headerlink" href="#cdc-275" title="Link to this heading"></a></h3>
+<section id="id25">
+<h4>Origin Flip-flop<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_275_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id26">
+<h4>Target Flip-flop<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_275_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_loss_signal_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#140">ppl_64_lane_ctrl_word_detect.vhd#140</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#157">ppl_64_lane_ctrl_word_detect.vhd#157</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#190">ppl_64_lane_ctrl_word_detect.vhd#190</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-281">
+<h3>CDC #281<a class="headerlink" href="#cdc-281" title="Link to this heading"></a></h3>
+<section id="id27">
+<h4>Origin Flip-flop<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_281_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id28">
+<h4>Target Flip-flop<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_281_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.valid_k_charac_dl_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#143">ppl_64_lane_ctrl_word_detect.vhd#143</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#162">ppl_64_lane_ctrl_word_detect.vhd#162</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#201">ppl_64_lane_ctrl_word_detect.vhd#201</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#206">ppl_64_lane_ctrl_word_detect.vhd#206</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-295">
+<h3>CDC #295<a class="headerlink" href="#cdc-295" title="Link to this heading"></a></h3>
+<section id="id29">
+<h4>Origin Flip-flop<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_295_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id30">
+<h4>Target Flip-flop<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_295_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.comma_k287_rxed_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#139">ppl_64_lane_ctrl_word_detect.vhd#139</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#156">ppl_64_lane_ctrl_word_detect.vhd#156</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#191">ppl_64_lane_ctrl_word_detect.vhd#191</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#196">ppl_64_lane_ctrl_word_detect.vhd#196</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#214">ppl_64_lane_ctrl_word_detect.vhd#214</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-297">
+<h3>CDC #297<a class="headerlink" href="#cdc-297" title="Link to this heading"></a></h3>
+<section id="id31">
+<h4>Origin Flip-flop<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_297_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id32">
+<h4>Target Flip-flop<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_297_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init2_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#138">ppl_64_lane_ctrl_word_detect.vhd#138</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#155">ppl_64_lane_ctrl_word_detect.vhd#155</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#186">ppl_64_lane_ctrl_word_detect.vhd#186</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-298">
+<h3>CDC #298<a class="headerlink" href="#cdc-298" title="Link to this heading"></a></h3>
+<section id="id33">
+<h4>Origin Flip-flop<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_298_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id34">
+<h4>Target Flip-flop<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_298_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_inv_init1_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#137">ppl_64_lane_ctrl_word_detect.vhd#137</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#154">ppl_64_lane_ctrl_word_detect.vhd#154</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#182">ppl_64_lane_ctrl_word_detect.vhd#182</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-299">
+<h3>CDC #299<a class="headerlink" href="#cdc-299" title="Link to this heading"></a></h3>
+<section id="id35">
+<h4>Origin Flip-flop<a class="headerlink" href="#id35" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_299_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id36">
+<h4>Target Flip-flop<a class="headerlink" href="#id36" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_299_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init2_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#135">ppl_64_lane_ctrl_word_detect.vhd#135</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#152">ppl_64_lane_ctrl_word_detect.vhd#152</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#172">ppl_64_lane_ctrl_word_detect.vhd#172</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-307">
+<h3>CDC #307<a class="headerlink" href="#cdc-307" title="Link to this heading"></a></h3>
+<section id="id37">
+<h4>Origin Flip-flop<a class="headerlink" href="#id37" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_307_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id38">
+<h4>Target Flip-flop<a class="headerlink" href="#id38" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_307_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_init1_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#134">ppl_64_lane_ctrl_word_detect.vhd#134</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#151">ppl_64_lane_ctrl_word_detect.vhd#151</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#168">ppl_64_lane_ctrl_word_detect.vhd#168</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-308">
+<h3>CDC #308<a class="headerlink" href="#cdc-308" title="Link to this heading"></a></h3>
+<section id="id39">
+<h4>Origin Flip-flop<a class="headerlink" href="#id39" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_308_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id40">
+<h4>Target Flip-flop<a class="headerlink" href="#id40" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_308_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.rx_new_word_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#133">ppl_64_lane_ctrl_word_detect.vhd#133</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#150">ppl_64_lane_ctrl_word_detect.vhd#150</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#169">ppl_64_lane_ctrl_word_detect.vhd#169</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#173">ppl_64_lane_ctrl_word_detect.vhd#173</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#177">ppl_64_lane_ctrl_word_detect.vhd#177</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#183">ppl_64_lane_ctrl_word_detect.vhd#183</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#187">ppl_64_lane_ctrl_word_detect.vhd#187</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#192">ppl_64_lane_ctrl_word_detect.vhd#192</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#197">ppl_64_lane_ctrl_word_detect.vhd#197</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#208">ppl_64_lane_ctrl_word_detect.vhd#208</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#215">ppl_64_lane_ctrl_word_detect.vhd#215</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#217">ppl_64_lane_ctrl_word_detect.vhd#217</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-344">
+<h3>CDC #344<a class="headerlink" href="#cdc-344" title="Link to this heading"></a></h3>
+<section id="id41">
+<h4>Origin Flip-flop<a class="headerlink" href="#id41" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_344_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id42">
+<h4>Target Flip-flop<a class="headerlink" href="#id42" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_344_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.valid_k_charac_dl_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#242">ppl_64_lane_ctrl_word_detect.vhd#242</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#261">ppl_64_lane_ctrl_word_detect.vhd#261</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#300">ppl_64_lane_ctrl_word_detect.vhd#300</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#305">ppl_64_lane_ctrl_word_detect.vhd#305</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-345">
+<h3>CDC #345<a class="headerlink" href="#cdc-345" title="Link to this heading"></a></h3>
+<section id="id43">
+<h4>Origin Flip-flop<a class="headerlink" href="#id43" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_345_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id44">
+<h4>Target Flip-flop<a class="headerlink" href="#id44" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_345_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rx_dl_sw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#241">ppl_64_lane_ctrl_word_detect.vhd#241</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#260">ppl_64_lane_ctrl_word_detect.vhd#260</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#299">ppl_64_lane_ctrl_word_detect.vhd#299</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#304">ppl_64_lane_ctrl_word_detect.vhd#304</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#231">ppl_64_lane_ctrl_word_detect.vhd#231</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-351">
+<h3>CDC #351<a class="headerlink" href="#cdc-351" title="Link to this heading"></a></h3>
+<section id="id45">
+<h4>Origin Flip-flop<a class="headerlink" href="#id45" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_351_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id46">
+<h4>Target Flip-flop<a class="headerlink" href="#id46" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_351_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rdy_dl_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#144">ppl_64_lane_ctrl_word_detect.vhd#144</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#160">ppl_64_lane_ctrl_word_detect.vhd#160</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#202">ppl_64_lane_ctrl_word_detect.vhd#202</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#207">ppl_64_lane_ctrl_word_detect.vhd#207</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-352">
+<h3>CDC #352<a class="headerlink" href="#cdc-352" title="Link to this heading"></a></h3>
+<section id="id47">
+<h4>Origin Flip-flop<a class="headerlink" href="#id47" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_352_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id48">
+<h4>Target Flip-flop<a class="headerlink" href="#id48" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_352_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.data_rx_dl_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#142">ppl_64_lane_ctrl_word_detect.vhd#142</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#161">ppl_64_lane_ctrl_word_detect.vhd#161</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#200">ppl_64_lane_ctrl_word_detect.vhd#200</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#205">ppl_64_lane_ctrl_word_detect.vhd#205</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cdc-358">
+<h3>CDC #358<a class="headerlink" href="#cdc-358" title="Link to this heading"></a></h3>
+<section id="id49">
+<h4>Origin Flip-flop<a class="headerlink" href="#id49" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_358_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_rrr</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id50">
+<h4>Target Flip-flop<a class="headerlink" href="#id50" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Clock Domain</p></th>
+<th class="head"><p>Flip-flop</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_358_graph.html" title="Open CDC Graph">Graph</a></p></td>
+<td><p>Signal: <code class="docutils literal notranslate"><span class="pre">gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_ctrl_word_detect.detected_rxerr_word_fw</span></code><br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#145">ppl_64_lane_ctrl_word_detect.vhd#145</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#163">ppl_64_lane_ctrl_word_detect.vhd#163</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#210">ppl_64_lane_ctrl_word_detect.vhd#210</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#219">ppl_64_lane_ctrl_word_detect.vhd#219</linty-anchor></p></td>
+<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor></p></td>
+<td><p>TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) &gt; <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1046">inst_lane_ctrl_word_detect</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#32">ppl_64_lane_ctrl_word_detect</linty-anchor>) &gt; <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_detect.vhd#132">ppl_64_lane_ctrl_word_detect.vhd#132</linty-anchor></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+  <div class="linty-footer">
+    <span class="linty-led" aria-hidden="true"></span>
+    <p>spacefibrelight</p>
+    <p class="linty-footer-generated">Generated September 23, 2026 at 09:00:06 by <a href="https://linty-services.com">Linty</a></p>
+  </div>
+  <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
+
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

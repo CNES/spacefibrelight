@@ -1,53 +1,61 @@
-<a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a>
-
-<br>
-
-# FSM #11: current_state_rx_pll_pma
+# FSM #11: current_state
 
 ## Summary
 
-|Name|Location|Graph|Reset State|States|Input Signals|Output Signals|
-|---|---|:---:|---|---|---:|---:|
-current_state_rx_pll_pma|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#86">ppl_64_init_hssl.vhd#86</linty-anchor>|<a href="/spacefibrelight/graphs/fsm_states_11_graph.html"><img title="Open FSM Diagram" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open FSM Diagram"></a>|IDLE_ST| Count: 6<br>IDLE_ST<br>RX_PMA_LOCK_ST<br>RX_PMA_PLL_PULSE_ST<br>RX_PMA_POWER_UP_ST<br>RX_RST_PULSE_ST<br>RX_STARTED_ST|4|3||
+|Graph|Name|Location|Reset State|States|Unreachable States|Deadlock States|Livelock States|Input Signals|Output Signals|
+|:---:|---|---|---|---|---|---|---|---:|---:|
+|<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/fsms/fsm_states_11_graph.html?preview=1" title="Open FSM Diagram" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/fsms/fsm_states_11_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div>|current_state|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#121">data_out_buf.vhd#121</linty-anchor>|INIT_ST| Count:&nbsp;5<br>ADD_EEP_ST<br>IDLE_ST<br>INIT_ST<br>WAIT_EIP_ST<br>WAIT_END_FLUSH_ST| Count:&nbsp;0<br>| Count:&nbsp;0<br>| Count:&nbsp;0<br>|9|5||
 
 <br>
 
 ## Input Signals
 
-Count: 4
+Count: 9
 
 |Name|Declaration|
 |---|---|
-|CDR_PLIF|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#38">ppl_64_init_hssl.vhd#38</linty-anchor>|
-|RECEIVER_DISABLED_PLIF|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#37">ppl_64_init_hssl.vhd#37</linty-anchor>|
-|RX_PMA_LL_SLOW_LOCKED_HSSL|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#49">ppl_64_init_hssl.vhd#49</linty-anchor>|
-|pma_pll_seq_end|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#88">ppl_64_init_hssl.vhd#88</linty-anchor>||
+|LINK_RESET_DLRE|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#40">data_out_buf.vhd#40</linty-anchor>|
+|S_AXIS_TDATA_NW|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor>|
+|S_AXIS_TUSER_NW|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor>|
+|S_AXIS_TVALID_NW|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|cont_mode_flg|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#138">data_out_buf.vhd#138</linty-anchor>|
+|last_k_char|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#139">data_out_buf.vhd#139</linty-anchor>|
+|link_reset_dlre_sync|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|s_axis_tready_i|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor>|
+|s_axis_tready_r|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#136">data_out_buf.vhd#136</linty-anchor>||
 
 ## Output Signals
 
-Count: 3
+Count: 5
 
 |Name|Declaration|
 |---|---|
-|RX_PMA_PWR_UP_PLIH|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#47">ppl_64_init_hssl.vhd#47</linty-anchor>|
-|RX_PMA_RST_N_PLIH|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#48">ppl_64_init_hssl.vhd#48</linty-anchor>|
-|RX_RST_N_PLIH|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#50">ppl_64_init_hssl.vhd#50</linty-anchor>|
+|cmd_flush|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#140">data_out_buf.vhd#140</linty-anchor>|
+|s_axis_tdata_i|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#131">data_out_buf.vhd#131</linty-anchor>|
+|s_axis_tlast_i|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#133">data_out_buf.vhd#133</linty-anchor>|
+|s_axis_tuser_i|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#132">data_out_buf.vhd#132</linty-anchor>|
+|s_axis_tvalid_i|<linty-anchor href="/src/module_data_link/data_out_buf.vhd#134">data_out_buf.vhd#134</linty-anchor>|
 
-## Transition table
+## Transitions
+
+**Count: 17**
 
 |From|To|Input Control Signals|
 |---|---|---|
-|IDLE_ST|IDLE_ST|RECEIVER_DISABLED_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#37">ppl_64_init_hssl.vhd#37</linty-anchor><br>pma_pll_seq_end: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#88">ppl_64_init_hssl.vhd#88</linty-anchor>|
-|IDLE_ST|RX_PMA_POWER_UP_ST|RECEIVER_DISABLED_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#37">ppl_64_init_hssl.vhd#37</linty-anchor><br>pma_pll_seq_end: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#88">ppl_64_init_hssl.vhd#88</linty-anchor>|
-|RX_PMA_POWER_UP_ST|RX_PMA_POWER_UP_ST|CDR_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#38">ppl_64_init_hssl.vhd#38</linty-anchor>|
-|RX_PMA_POWER_UP_ST|RX_PMA_PLL_PULSE_ST|CDR_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#38">ppl_64_init_hssl.vhd#38</linty-anchor>|
-|RX_PMA_PLL_PULSE_ST|RX_PMA_LOCK_ST||
-|RX_PMA_LOCK_ST|RX_PMA_LOCK_ST|RX_PMA_LL_SLOW_LOCKED_HSSL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#49">ppl_64_init_hssl.vhd#49</linty-anchor>|
-|RX_PMA_LOCK_ST|RX_RST_PULSE_ST|RX_PMA_LL_SLOW_LOCKED_HSSL: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#49">ppl_64_init_hssl.vhd#49</linty-anchor>|
-|RX_RST_PULSE_ST|RX_STARTED_ST||
-|RX_STARTED_ST|RX_STARTED_ST||
-
-
-<br>
-
-<a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a>
+|ADD_EEP_ST|ADD_EEP_ST|s_axis_tready_i: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor><br>s_axis_tready_r: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#136">data_out_buf.vhd#136</linty-anchor>|
+|ADD_EEP_ST|IDLE_ST|S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor><br>s_axis_tready_i: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor><br>s_axis_tready_r: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#136">data_out_buf.vhd#136</linty-anchor>|
+|ADD_EEP_ST|WAIT_EIP_ST|S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor><br>s_axis_tready_i: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor><br>s_axis_tready_r: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#136">data_out_buf.vhd#136</linty-anchor>|
+|IDLE_ST|ADD_EEP_ST|cont_mode_flg: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#138">data_out_buf.vhd#138</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|IDLE_ST|IDLE_ST|cont_mode_flg: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#138">data_out_buf.vhd#138</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|IDLE_ST|WAIT_EIP_ST|last_k_char: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#139">data_out_buf.vhd#139</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|IDLE_ST|WAIT_END_FLUSH_ST|last_k_char: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#139">data_out_buf.vhd#139</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|INIT_ST|IDLE_ST|LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#40">data_out_buf.vhd#40</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|INIT_ST|INIT_ST|LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#40">data_out_buf.vhd#40</linty-anchor><br>link_reset_dlre_sync: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#162">data_out_buf.vhd#162</linty-anchor>|
+|WAIT_EIP_ST|IDLE_ST|S_AXIS_TDATA_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor><br>S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_EIP_ST|IDLE_ST|S_AXIS_TDATA_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor><br>S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_EIP_ST|IDLE_ST|S_AXIS_TDATA_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor><br>S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_EIP_ST|IDLE_ST|S_AXIS_TDATA_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor><br>S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_EIP_ST|WAIT_EIP_ST|S_AXIS_TDATA_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#45">data_out_buf.vhd#45</linty-anchor><br>S_AXIS_TUSER_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#46">data_out_buf.vhd#46</linty-anchor><br>S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_EIP_ST|WAIT_EIP_ST|S_AXIS_TVALID_NW: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#48">data_out_buf.vhd#48</linty-anchor>|
+|WAIT_END_FLUSH_ST|IDLE_ST|s_axis_tready_i: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor>|
+|WAIT_END_FLUSH_ST|WAIT_END_FLUSH_ST|s_axis_tready_i: <linty-anchor href="/src/module_data_link/data_out_buf.vhd#135">data_out_buf.vhd#135</linty-anchor>|

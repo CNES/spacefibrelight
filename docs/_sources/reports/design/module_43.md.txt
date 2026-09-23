@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - ppl_64_rx_wr_en_fifo
 
 ## Summary
@@ -15,7 +11,7 @@ Count: 1
 
 | Name | Location | Description | Details |
 | --- | --- | --- | :---: |
-| inst_ppl_64_rx_wr_en_fifo | <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1080">phy_plus_lane_64b.vhd#1080</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_43/instantiation_1.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
+| inst_ppl_64_rx_wr_en_fifo | <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#1080">phy_plus_lane_64b.vhd#1080</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_43/instantiation_1.html" title="View Instantiation Details">Details</a> |
 
 
 ## Generics
@@ -37,8 +33,3 @@ Count: 9
 |<linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#42">VALID_K_CHARAC_PLRWEF</linty-anchor>|out|std_logic_vector ( C_K_CHAR_WIDTH - 1 downto 0 )|8-bit valid K character flags to fifo_rx_data|
 |<linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#43">DATA_RDY_PLRWEF</linty-anchor>|out|std_logic_vector ( 1 downto 0 )|Data valid flag to fifo_rx_data|
 |<linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_rx_wr_en_fifo.vhd#44">DATA_WR_EN_PLRWEF</linty-anchor>|out|std_logic|Write enable flag to fifo_rx_data|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

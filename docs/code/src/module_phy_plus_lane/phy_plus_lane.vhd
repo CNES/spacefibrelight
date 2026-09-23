@@ -102,7 +102,7 @@ architecture rtl of phy_plus_lane is
 --         not wanted for now as the IP is still in validation.
 --         It is worth noted that VHDL cannot dynamlically create port (or assign them)
 
-constant lane_number : integer :=3;
+constant lane_number : integer :=3; -- from 0 to 3
 
 component extended_phy_layer_gtwiz_versal_0_0 is
   port (
@@ -659,6 +659,12 @@ signal capability_tx_i          : std_logic_vector(7 downto 0);
 signal lane_active_dl_i         : std_logic;
 signal fifo_in_ctrl_data_valid  : std_logic;
 signal fifo_out_ctrl_data_valid : std_logic;
+
+-- for low level debugging GTY with versal
+attribute MARK_DEBUG : string;
+attribute MARK_DEBUG of QUAD0_hsclk0_lcplllock : signal is "TRUE";--GTY PLL LOCK
+attribute MARK_DEBUG of INTF0_RX0_ch_rxdata: signal is "TRUE"; -- RX data
+attribute MARK_DEBUG of data_tx_from_si: signal is "TRUE"; -- TX data
 begin
 
    LANE_RESET_PPL_OUT <= lane_reset_dl_i or LANE_RESET;
@@ -1271,8 +1277,8 @@ RX_POLARITY                <= invert_rx_bits_from_lif;
 FAR_END_CAPA               <= far_end_capa_i;
 lane_active_dl_i           <= enable_transm_data_from_lif;
 
-QUAD0_rxp(lane_number)               <= RX_POS;
-QUAD0_rxn(lane_number)               <= RX_NEG;
+QUAD0_rxp(lane_number)     <= RX_POS;
+QUAD0_rxn(lane_number)     <= RX_NEG;
 TX_POS                     <= QUAD0_txp(lane_number);
 TX_NEG                     <= QUAD0_txn(lane_number);
 

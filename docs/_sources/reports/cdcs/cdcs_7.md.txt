@@ -1,0 +1,30 @@
+# gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising) => inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)
+
+|Graph|Origin Clock Domain|Target Clock Domain|Number of CDCs|
+|:---:|---|---:|---|
+|<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/cdcs/cdcs_7_graph.html?preview=1" title="Open CDC Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/cdcs/cdcs_7_graph.html" title="Open CDC Graph" aria-label="Open CDC Graph"></a></div>|<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor>|<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor>|1|<a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdcs_7_graph.html" title="Open CDCs Graph">Graph</a>|
+
+
+## CDCs
+
+
+
+### Summary
+
+|ID|Graph|Origin Signal|Target Signal|Details|
+|---:|:---:|---|---|:---:|
+|9|<a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_9_graph.html" title="Open CDC Graph">Graph</a>|`gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_skip_insertion.WAIT_SEND_DATA_PLSI`|`gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_r`|<a class="linty-action-btn" href="#cdc-9" title="View CDC Details">Details</a>|
+### CDC #9
+
+#### Origin Flip-flop
+
+|Graph|Signal|Clock Domain|Flip-flop|
+|:---:|---|---|---|
+|<a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_9_graph.html" title="Open CDC Graph">Graph</a>|Signal: `gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_skip_insertion.WAIT_SEND_DATA_PLSI`<br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#152">ppl_64_skip_insertion.vhd#152</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#94">ppl_64_skip_insertion.vhd#94</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#96">ppl_64_skip_insertion.vhd#96</linty-anchor>|<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx (rising)</linty-anchor>|TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) > <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#843">inst_ppl_64_skip_insertion</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#30">ppl_64_skip_insertion</linty-anchor>) > <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#83">ppl_64_skip_insertion.vhd#83</linty-anchor>|
+
+
+#### Target Flip-flop
+
+|Graph|Signal|Clock Domain|Flip-flop|
+|:---:|---|---|---|
+|<a class="linty-action-btn" href="/spacefibrelight/graphs/cdcs/cdc_9_graph.html" title="Open CDC Graph">Graph</a>|Signal: `gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_ppl_64_parallel_loopback.wait_send_data_r`<br>Usage:<br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#76">ppl_64_parallel_loopback.vhd#76</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#77">ppl_64_parallel_loopback.vhd#77</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#78">ppl_64_parallel_loopback.vhd#78</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#80">ppl_64_parallel_loopback.vhd#80</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#81">ppl_64_parallel_loopback.vhd#81</linty-anchor><br>- <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#82">ppl_64_parallel_loopback.vhd#82</linty-anchor>|<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n (rising)</linty-anchor>|TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) > <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#862">inst_ppl_64_parallel_loopback</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#32">ppl_64_parallel_loopback</linty-anchor>) > <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_parallel_loopback.vhd#75">ppl_64_parallel_loopback.vhd#75</linty-anchor>|

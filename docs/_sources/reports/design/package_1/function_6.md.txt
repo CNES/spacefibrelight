@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/package_1.html#functions">Back to Package Report</a>
-
-<br>
-
 # Function - sat
 
 ## Summary
@@ -19,8 +15,3 @@ Count: 2
 | --- | --- | --- | --- |
 |<linty-anchor href="//src/pkg_tools.vhd#111">DataIn</linty-anchor>||unsigned||
 |<linty-anchor href="//src/pkg_tools.vhd#112">SatCmd</linty-anchor>||positive||
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/package_1.html#functions">Back to Package Report</a>

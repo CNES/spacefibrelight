@@ -8,25 +8,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FSM #16: state &mdash; spacefibrelight</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=252e56ff" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=f3078fdf" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/js/linty-report.js?v=339a689a"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+ 
+<meta name="theme-color" content="#1d404c" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+
 </head>
 
 <body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: #1b242c" >
 
           
           
@@ -43,20 +50,36 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#dependencies">Dependencies <span class="linty-help" title="Note that instantiations from blackboxes or third-party IPs are not listed in this report." aria-label="Note that instantiations from blackboxes or third-party IPs are not listed in this report.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-entities">VHDL Entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-packages">VHDL Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#id1">Clock Domains<span class="linty-help" title="A clock domain used for both rising and falling edges is counted as two separate clock domains." aria-label="A clock domain used for both rising and falling edges is counted as two separate clock domains.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#clock-management-module-cmm">Clock Management Module (CMM)<span class="linty-help" title="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#global-reset-domains">Global Reset Domains <span class="linty-help" title="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design." aria-label="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#local-reset-domains">Local Reset Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#reset-management-module-rmm">Reset Management Module (RMM) <span class="linty-help" title="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reset_domain_crossings.html">Reset Domain Crossings (RDC)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finite_state_machines.html">Finite State Machines (FSM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../combinational_loops.html">Combinational Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../latches.html">Latches</a></li>
 </ul>
 
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #1b242c" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">spacefibrelight<br><br></a>
       </nav>
@@ -76,31 +99,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p><a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a></p>
-<br>
-<section id="fsm-16-state">
+  <section id="fsm-16-state">
 <h1>FSM #16: state<a class="headerlink" href="#fsm-16-state" title="Link to this heading"></a></h1>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
+<tr class="row-odd"><th class="head text-center"><p>Graph</p></th>
+<th class="head"><p>Name</p></th>
 <th class="head"><p>Location</p></th>
-<th class="head text-center"><p>Graph</p></th>
 <th class="head"><p>Reset State</p></th>
 <th class="head"><p>States</p></th>
+<th class="head"><p>Unreachable States</p></th>
+<th class="head"><p>Deadlock States</p></th>
+<th class="head"><p>Livelock States</p></th>
 <th class="head text-right"><p>Input Signals</p></th>
 <th class="head text-right"><p>Output Signals</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>state</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#67">ppl_64_skip_insertion.vhd#67</linty-anchor></p></td>
-<td class="text-center"><p><a href="/spacefibrelight/graphs/fsm_states_16_graph.html"><img title="Open FSM Diagram" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open FSM Diagram"></a></p></td>
-<td><p>TX_INIT_ST</p></td>
-<td><p>Count: 5<br>TX_DATA_1_ST<br>TX_DATA_2_ST<br>TX_INIT_ST<br>TX_SKIP_1_ST<br>TX_SKIP_2_ST</p></td>
-<td class="text-right"><p>2</p></td>
-<td class="text-right"><p>8</p></td>
+<tr class="row-even"><td class="text-center"><p><div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/fsms/fsm_states_16_graph.html?preview=1" title="Open FSM Diagram" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/fsms/fsm_states_16_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div></p></td>
+<td><p>state</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#71">data_err_management.vhd#71</linty-anchor></p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>Count: 4<br>ERROR_NEGATIVE_ST<br>ERROR_POSITIVE_ST<br>VALID_NEGATIVE_ST<br>VALID_POSITIVE_ST</p></td>
+<td><p>Count: 0<br></p></td>
+<td><p>Count: 0<br></p></td>
+<td><p>Count: 0<br></p></td>
+<td class="text-right"><p>5</p></td>
+<td class="text-right"><p>4</p></td>
 </tr>
 </tbody>
 </table>
@@ -108,7 +135,7 @@
 </section>
 <section id="input-signals">
 <h2>Input Signals<a class="headerlink" href="#input-signals" title="Link to this heading"></a></h2>
-<p>Count: 2</p>
+<p>Count: 5</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -116,18 +143,27 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>ENABLE_TRANSM_DATA_PLIF</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor></p></td>
+<tr class="row-even"><td><p>LINK_RESET_DLRE</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>state_cnt</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-odd"><td><p>s_ack_request</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>s_far_end_rpf</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#79">data_err_management.vhd#79</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>s_nack_request</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#73">data_err_management.vhd#73</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>s_seq_err</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#80">data_err_management.vhd#80</linty-anchor></p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="output-signals">
 <h2>Output Signals<a class="headerlink" href="#output-signals" title="Link to this heading"></a></h2>
-<p>Count: 8</p>
+<p>Count: 4</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -135,35 +171,24 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>DATA_TX_PLSI</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#40">ppl_64_skip_insertion.vhd#40</linty-anchor></p></td>
+<tr class="row-even"><td><p>NEAR_END_RPF_DERRM</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#44">data_err_management.vhd#44</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>VALID_K_CHARAC_PLSI</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#41">ppl_64_skip_insertion.vhd#41</linty-anchor></p></td>
+<tr class="row-odd"><td><p>SEQ_NUM_ACK_DERRM</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#52">data_err_management.vhd#52</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>WAIT_SEND_DATA_PLSI</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#38">ppl_64_skip_insertion.vhd#38</linty-anchor></p></td>
+<tr class="row-even"><td><p>ack_pol_flg</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#87">data_err_management.vhd#87</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>data_1</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#62">ppl_64_skip_insertion.vhd#62</linty-anchor></p></td>
-</tr>
-<tr class="row-even"><td><p>data_2</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#61">ppl_64_skip_insertion.vhd#61</linty-anchor></p></td>
-</tr>
-<tr class="row-odd"><td><p>k_char_1</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#65">ppl_64_skip_insertion.vhd#65</linty-anchor></p></td>
-</tr>
-<tr class="row-even"><td><p>k_char_2</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#64">ppl_64_skip_insertion.vhd#64</linty-anchor></p></td>
-</tr>
-<tr class="row-odd"><td><p>state_cnt</p></td>
-<td><p><linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-odd"><td><p>near_end_rpf</p></td>
+<td><p><linty-anchor href="/src/module_data_link/data_err_management.vhd#85">data_err_management.vhd#85</linty-anchor></p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="transition-table">
-<h2>Transition table<a class="headerlink" href="#transition-table" title="Link to this heading"></a></h2>
+<section id="transitions">
+<h2>Transitions<a class="headerlink" href="#transitions" title="Link to this heading"></a></h2>
+<p><strong>Count: 14</strong></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>From</p></th>
@@ -172,50 +197,64 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>TX_INIT_ST</p></td>
-<td><p>TX_INIT_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor></p></td>
+<tr class="row-even"><td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor><br>s_far_end_rpf: <linty-anchor href="/src/module_data_link/data_err_management.vhd#79">data_err_management.vhd#79</linty-anchor><br>s_seq_err: <linty-anchor href="/src/module_data_link/data_err_management.vhd#80">data_err_management.vhd#80</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>TX_INIT_ST</p></td>
-<td><p>TX_DATA_1_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor></p></td>
+<tr class="row-odd"><td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor><br>s_far_end_rpf: <linty-anchor href="/src/module_data_link/data_err_management.vhd#79">data_err_management.vhd#79</linty-anchor><br>s_seq_err: <linty-anchor href="/src/module_data_link/data_err_management.vhd#80">data_err_management.vhd#80</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>TX_DATA_1_ST</p></td>
-<td><p>TX_INIT_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor></p></td>
+<tr class="row-even"><td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>VALID_NEGATIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>TX_DATA_1_ST</p></td>
-<td><p>TX_DATA_1_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor><br>state_cnt: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-odd"><td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>TX_DATA_1_ST</p></td>
-<td><p>TX_SKIP_1_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor><br>state_cnt: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-even"><td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor><br>s_far_end_rpf: <linty-anchor href="/src/module_data_link/data_err_management.vhd#79">data_err_management.vhd#79</linty-anchor><br>s_seq_err: <linty-anchor href="/src/module_data_link/data_err_management.vhd#80">data_err_management.vhd#80</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>TX_DATA_2_ST</p></td>
-<td><p>TX_INIT_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor></p></td>
+<tr class="row-odd"><td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor><br>s_far_end_rpf: <linty-anchor href="/src/module_data_link/data_err_management.vhd#79">data_err_management.vhd#79</linty-anchor><br>s_seq_err: <linty-anchor href="/src/module_data_link/data_err_management.vhd#80">data_err_management.vhd#80</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>TX_DATA_2_ST</p></td>
-<td><p>TX_DATA_2_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor><br>state_cnt: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-even"><td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>TX_DATA_2_ST</p></td>
-<td><p>TX_SKIP_2_ST</p></td>
-<td><p>ENABLE_TRANSM_DATA_PLIF: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#43">ppl_64_skip_insertion.vhd#43</linty-anchor><br>state_cnt: <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_skip_insertion.vhd#68">ppl_64_skip_insertion.vhd#68</linty-anchor></p></td>
+<tr class="row-odd"><td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_ack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#74">data_err_management.vhd#74</linty-anchor></p></td>
 </tr>
-<tr class="row-even"><td><p>TX_SKIP_1_ST</p></td>
-<td><p>TX_DATA_2_ST</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p>VALID_NEGATIVE_ST</p></td>
+<td><p>ERROR_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_nack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#73">data_err_management.vhd#73</linty-anchor></p></td>
 </tr>
-<tr class="row-odd"><td><p>TX_SKIP_2_ST</p></td>
-<td><p>TX_DATA_1_ST</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p>VALID_NEGATIVE_ST</p></td>
+<td><p>VALID_NEGATIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_nack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#73">data_err_management.vhd#73</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>VALID_NEGATIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>VALID_POSITIVE_ST</p></td>
+<td><p>ERROR_NEGATIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_nack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#73">data_err_management.vhd#73</linty-anchor></p></td>
+</tr>
+<tr class="row-even"><td><p>VALID_POSITIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor></p></td>
+</tr>
+<tr class="row-odd"><td><p>VALID_POSITIVE_ST</p></td>
+<td><p>VALID_POSITIVE_ST</p></td>
+<td><p>LINK_RESET_DLRE: <linty-anchor href="/src/module_data_link/data_err_management.vhd#36">data_err_management.vhd#36</linty-anchor><br>s_nack_request: <linty-anchor href="/src/module_data_link/data_err_management.vhd#73">data_err_management.vhd#73</linty-anchor></p></td>
 </tr>
 </tbody>
 </table>
-<br>
-<p><a href="/spacefibrelight/reports/finite_state_machines.html">Back to FSM Report</a></p>
 </section>
 </section>
 
@@ -227,8 +266,11 @@
   <hr/>
 
   <div role="contentinfo">
-  <p>spacefibrelight</p>
-  <p>Generated November 07, 2025 at 12:50:09 by <a href="https://linty-services.com">Linty Services</a></p>
+  <div class="linty-footer">
+    <span class="linty-led" aria-hidden="true"></span>
+    <p>spacefibrelight</p>
+    <p class="linty-footer-generated">Generated September 23, 2026 at 09:00:06 by <a href="https://linty-services.com">Linty</a></p>
+  </div>
   <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
 
   </div>

@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_6.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - inst_mid_buf
 
 ## Summary
@@ -21,8 +17,3 @@ Count: 4
 |<linty-anchor href="//src/module_data_link/data_link.vhd#842">G_DWIDTH</linty-anchor>|36|&#10007;|&#10004;|Data bus fifo length|
 |<linty-anchor href="//src/module_data_link/data_link.vhd#199">G_THRESHOLD_HIGH</linty-anchor>|256|&#10004;|&#10007;|high threshold|
 |<linty-anchor href="//src/module_data_link/data_link.vhd#200">G_THRESHOLD_LOW</linty-anchor>|0|&#10004;|&#10007;|low threshold|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_6.html#instantiations">Back to Module Report</a>

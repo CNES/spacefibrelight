@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_5.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - ints_fifo_dc_axis_s
 
 ## Summary
@@ -23,8 +19,3 @@ Count: 6
 |<linty-anchor href="//src/module_data_link/data_out_buf.vhd#191">G_THRESHOLD_LOW</linty-anchor>|1|&#10007;|&#10004;|Low threshold|
 |<linty-anchor href="//src/module_data_link/data_out_buf.vhd#192">S_AXIS_TDATA_WIDTH</linty-anchor>|32|&#10004;|&#10004;|Data AXIS length|
 |<linty-anchor href="//src/module_data_link/data_out_buf.vhd#193">S_AXIS_TUSER_WIDTH</linty-anchor>|4|&#10004;|&#10004;|User AXIS length|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_5.html#instantiations">Back to Module Report</a>

@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - lane_ctrl_word_insert
 
 ## Summary
@@ -45,8 +41,3 @@ Count: 22
 |<linty-anchor href="//src/module_phy_plus_lane/lane_ctrl_word_insert.vhd#60">LOST_CAUSE</linty-anchor>|in|std_logic_vector ( 01 downto 00 )|Flag to indicate the reason of the LOST_SIGNAL|
 |<linty-anchor href="//src/module_phy_plus_lane/lane_ctrl_word_insert.vhd#61">STANDBY_SIGNAL_X32</linty-anchor>|out|std_logic|Flag STANDBY control word has been send x32|
 |<linty-anchor href="//src/module_phy_plus_lane/lane_ctrl_word_insert.vhd#62">LOST_SIGNAL_X32</linty-anchor>|out|std_logic|Flag LOST_SIGNAL control word has been send x32|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

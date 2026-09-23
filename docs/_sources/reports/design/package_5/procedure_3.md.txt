@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/package_5.html#procedures">Back to Package Report</a>
-
-<br>
-
 # Procedure - check_equal
 
 ## Summary
@@ -21,8 +17,3 @@ Count: 4
 |<linty-anchor href="//src/pkg_simu.vhd#43">expected</linty-anchor>||std_logic_vector||
 |<linty-anchor href="//src/pkg_simu.vhd#43">actual</linty-anchor>||std_logic_vector||
 |<linty-anchor href="//src/pkg_simu.vhd#44">test_failed</linty-anchor>|inout|boolean||
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/package_5.html#procedures">Back to Package Report</a>

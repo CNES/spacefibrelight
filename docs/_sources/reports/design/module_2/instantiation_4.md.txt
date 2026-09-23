@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_2.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - AXIS_SLAVE_inst
 
 ## Summary
@@ -20,8 +16,3 @@ Count: 3
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#164">G_DWIDTH</linty-anchor>|36|&#10004;|&#10004;|Total data width|
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#165">S_AXIS_TDATA_WIDTH</linty-anchor>|32|&#10004;|&#10004;|TData Width|
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#166">S_AXIS_TUSER_WIDTH</linty-anchor>|4|&#10004;|&#10004;|TUser Width|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_2.html#instantiations">Back to Module Report</a>

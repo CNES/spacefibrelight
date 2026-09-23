@@ -1,14 +1,10 @@
-<a href="/spacefibrelight/reports/reset_domains.html">Back to Reset Domains Report</a>
-
-<br>
-
 # Reset Domain Details
 
 ## Summary
 
-| Name: Origin | Graph | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | ---: | ---: |
-|**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50">RST_N</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**RST_N**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50"> spacefibre_light_top.vhd#50 (Port)</linty-anchor>|<a href="/spacefibrelight/graphs/reset_hierarchy_graph.html"><img title="Open Reset Hierarchy Graph" src="/spacefibrelight/_static/images/icon_graph.png" style="max-height: 25px; width: auto;" alt="Open Reset Hierarchy Graph"></a>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;|**325**/1320 (24.62%)|**28**/109|
+| Graph | Name: Origin | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Clock&nbsp;Domain(s) |Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
+| :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | ---: | ---: |
+|<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/reset_hierarchy_graph.html?preview=1" title="Open Reset Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html" title="Open Reset Hierarchy Graph" aria-label="Open Reset Hierarchy Graph"></a></div>|**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50">RST_N</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**RST_N**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50"> spacefibre_light_top.vhd#50 (Port)</linty-anchor>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;||**325**/1320 (24.62%)|**28**/109|
 
 
 ## Instances using this reset domain
@@ -47,13 +43,15 @@
 |TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>) > <linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#696">inst_ppl_64_bus_concat_tx</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_bus_concat_tx.vhd#32">ppl_64_bus_concat_tx</linty-anchor>)|&#10004;|&#10007;|&#10007;|&#10004;|
 
 
-## Flip-flops using this reset domain
+## Flip-flops using this reset domain<span class="linty-help" title="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code." aria-label="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.">?</span>
 
 **Count: 325**
 
 ### Asynchronous usage
 
-| Count: 325 |
+**Count: 325**
+
+| Location |
 | --- |
 | <linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#199">fifo_dc.vhd#199</linty-anchor> |
 | <linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#222">fifo_dc.vhd#222</linty-anchor> |
@@ -104,19 +102,21 @@
 
 ### Synchronous usage
 
-| Count: 0 |
-| --- |
+**Count: 0**
+
 
 
 ### Active-high usage
 
-| Count: 0 |
-| --- |
+**Count: 0**
+
 
 
 ### Active-low usage
 
-| Count: 325 |
+**Count: 325**
+
+| Location |
 | --- |
 | <linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#199">fifo_dc.vhd#199</linty-anchor> |
 | <linty-anchor href="/src/ip/fifo_dc/fifo_dc.vhd#222">fifo_dc.vhd#222</linty-anchor> |
@@ -164,16 +164,3 @@
 | <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_bus_concat_tx.vhd#70">ppl_64_bus_concat_tx.vhd#70</linty-anchor> |
 | <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_bus_split_rx.vhd#276">ppl_64_bus_split_rx.vhd#276</linty-anchor> |
 | <linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_bus_split_rx.vhd#88">ppl_64_bus_split_rx.vhd#88</linty-anchor> |
-
-
-
-<br>
-
-Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.<br>
-<br>
-
-
-
-<br>
-
-<a href="/spacefibrelight/reports/reset_domains.html">Back to Reset Domains Report</a>

@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - tb_receive_error
 
 ## Summary
@@ -21,8 +17,3 @@ Count: 0
 
 Count: 0
 
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

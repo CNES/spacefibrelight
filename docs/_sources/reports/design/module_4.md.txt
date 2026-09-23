@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - FIFO_DC_AXIS_M
 
 ## Summary
@@ -15,15 +11,15 @@ Count: 9
 
 | Name | Location | Description | Details |
 | --- | --- | --- | :---: |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_bc_buf.vhd#121">data_in_bc_buf.vhd#121</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_1.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_2.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_3.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_4.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_5.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_6.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_7.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_8.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
-| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_4/instantiation_9.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_bc_buf.vhd#121">data_in_bc_buf.vhd#121</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_1.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_2.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_3.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_4.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_5.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_6.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_7.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_8.html" title="View Instantiation Details">Details</a> |
+| ints_fifo_dc_axis_m | <linty-anchor href="/src/module_data_link/data_in_buf.vhd#157">data_in_buf.vhd#157</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_4/instantiation_9.html" title="View Instantiation Details">Details</a> |
 
 
 ## Generics
@@ -62,8 +58,3 @@ Count: 18
 |<linty-anchor href="//src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd#69">M_AXIS_TLAST</linty-anchor>|out|std_logic|Indicates the last transfer in a packet|
 |<linty-anchor href="//src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd#70">M_AXIS_TREADY</linty-anchor>|in|std_logic|Indicates that the receiver is ready to accept data|
 |<linty-anchor href="//src/ip/fifo_dc_custom_to_axis/FIFO_DC_AXIS_M.vhd#71">M_AXIS_TUSER</linty-anchor>|out|std_logic_vector ( M_AXIS_TUSER_WIDTH - 1 downto 0 )|User-defined data output bus for the AXI Stream Master interface|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

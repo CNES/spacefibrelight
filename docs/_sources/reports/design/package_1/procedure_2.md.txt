@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/package_1.html#procedures">Back to Package Report</a>
-
-<br>
-
 # Procedure - sat
 
 ## Summary
@@ -21,8 +17,3 @@ Count: 4
 |<linty-anchor href="//src/pkg_tools.vhd#141">SatCmd</linty-anchor>|in|positive||
 |<linty-anchor href="//src/pkg_tools.vhd#142">DataOut</linty-anchor>|out|std_logic_vector||
 |<linty-anchor href="//src/pkg_tools.vhd#143">DataSat</linty-anchor>|out|std_logic||
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/package_1.html#procedures">Back to Package Report</a>

@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-packages">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Package - pkg_phy_plus_lane_64b
 
 ## Summary
@@ -97,8 +93,3 @@ Count: 0
 
 Count: 0
 
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-packages">Back to Design Hierarchy Report</a>

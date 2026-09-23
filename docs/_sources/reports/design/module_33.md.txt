@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - phy_plus_lane
 
 ## Summary
@@ -60,8 +56,3 @@ Count: 37
 |<linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#87">LOSS_SIGNAL</linty-anchor>|out|std_logic|Set when no signal is received on RX link|
 |<linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#88">FAR_END_CAPA</linty-anchor>|out|std_logic_vector ( 07 downto 00 )|Capabilities field (INT3 flags)|
 |<linty-anchor href="//src/module_phy_plus_lane/phy_plus_lane.vhd#89">RX_POLARITY</linty-anchor>|out|std_logic|Set when the receiver polarity is inverted|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

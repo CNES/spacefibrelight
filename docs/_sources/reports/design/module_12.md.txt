@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>
-
-<br>
-
 # Entity - data_desencapsulation_bc
 
 ## Summary
@@ -15,7 +11,7 @@ Count: 1
 
 | Name | Location | Description | Details |
 | --- | --- | --- | :---: |
-| inst_data_desencapsulation_bc | <linty-anchor href="/src/module_data_link/data_link.vhd#768">data_link.vhd#768</linty-anchor> |  | <a href="/spacefibrelight/reports/design/module_12/instantiation_1.html"><img title="View Instantiation Details" src="/spacefibrelight/_static/images/icon_details.png" style="max-height: 25px; width: auto;" alt="View Instantiation Details"></a> |
+| inst_data_desencapsulation_bc | <linty-anchor href="/src/module_data_link/data_link.vhd#768">data_link.vhd#768</linty-anchor> |  | <a class="linty-action-btn" href="/spacefibrelight/reports/design/module_12/instantiation_1.html" title="View Instantiation Details">Details</a> |
 
 
 ## Generics
@@ -35,8 +31,3 @@ Count: 7
 |<linty-anchor href="//src/module_data_link/data_desencapsulation_bc.vhd#40">DATA_VALID_DMBUFBC</linty-anchor>|in|std_logic|Data valid flag associated with DATA_DMBUFBC|
 |<linty-anchor href="//src/module_data_link/data_desencapsulation_bc.vhd#42">DATA_DDESBC</linty-anchor>|out|std_logic_vector ( C_DATA_K_WIDTH - 1 downto 0 )|Data parallel (K character + DATA) to data_in_bc_buf (BRODACST channel)|
 |<linty-anchor href="//src/module_data_link/data_desencapsulation_bc.vhd#43">DATA_EN_DDESBC</linty-anchor>|out|std_logic|Data valid flag associated with DATA_DDESBC|
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design_hierarchy.html#vhdl-entities">Back to Design Hierarchy Report</a>

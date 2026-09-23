@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_36.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - inst_ppl_64_bus_split_rx
 
 ## Summary
@@ -15,8 +11,3 @@
 
 Count: 0
 
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_36.html#instantiations">Back to Module Report</a>

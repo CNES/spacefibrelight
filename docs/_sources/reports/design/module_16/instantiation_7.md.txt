@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_16.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - gen_data_in_buff(6)\.inst_data_in_buf
 
 ## Summary
@@ -15,8 +11,3 @@
 
 Count: 0
 
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_16.html#instantiations">Back to Module Report</a>

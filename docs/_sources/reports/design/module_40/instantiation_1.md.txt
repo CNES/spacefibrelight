@@ -1,7 +1,3 @@
-<a href="/spacefibrelight/reports/design/module_40.html#instantiations">Back to Module Report</a>
-
-<br>
-
 # Instantiation - inst_lane_init_fsm
 
 ## Summary
@@ -15,8 +11,3 @@
 
 Count: 0
 
-
-
-<br>
-
-<a href="/spacefibrelight/reports/design/module_40.html#instantiations">Back to Module Report</a>
