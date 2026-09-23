@@ -40,6 +40,23 @@ jobs:
         env:
           TABBY_CAD_LICENSE: ${{secrets.TABBY_CAD_LICENSE}}
 
+      - name: update html website
+        run: |
+          git config --global user.email "githubaction@cnes.fr"
+          git config --global user.name "Automatic github CNES CI/CD"
+          git checkout gh-pages
+          git merge "$BRANCH_NAME"
+          rm -rf ./docs/
+          mkdir docs
+          touch docs/.nojekyll
+          cp -r .linty/work/report/build/html/* ./docs/
+          rm -rf reports
+          git add .
+          git commit -m "Update html website"
+          git push
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+
       - name: Debug
         if: always()
         uses: actions/upload-artifact@v4
