@@ -10,6 +10,8 @@ This repository includes de IP called Spacefibrelight. It was developped by Elsy
 - To be opensource.
 - To be addaptable (that is to say, with additionnal development, this IP could be fully compliant to ECSS standard).
 
+This IP is still work in progress physical layer is operational but upper layers are not yet fully validated. It is not recommanded to use this IP in production yet.
+
 
 ## Introduction
 
