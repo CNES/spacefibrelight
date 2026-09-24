@@ -95,8 +95,17 @@ body.wy-body-for-nav,
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  position: relative;
+  z-index: 3;
   padding: 16px 18px 22px;
   border-top: 1px solid color-mix(in srgb, var(--linty-cyan) 22%, transparent);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.linty-sidebar-logo .linty-wordmark,
+.linty-sidebar-logo img {
+  pointer-events: none;
 }
 
 .linty-sidebar-logo:hover {
@@ -591,6 +600,11 @@ body.wy-body-for-nav,
   line-height: 1;
   cursor: help;
   vertical-align: middle;
+}
+
+.wy-nav-side .linty-help,
+.wy-nav-top .linty-help {
+  display: none !important;
 }
 
 linty-anchor {

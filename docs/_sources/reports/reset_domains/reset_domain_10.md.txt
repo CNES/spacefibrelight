@@ -4,7 +4,7 @@
 
 | Graph | Name: Origin | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Clock&nbsp;Domain(s) |Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | ---: | ---: |
-|<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/reset_hierarchy_graph.html?preview=1" title="Open Reset Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html" title="Open Reset Hierarchy Graph" aria-label="Open Reset Hierarchy Graph"></a></div>|**<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#618">gen_inst_phy_plus_lane.inst_phy_plus_lane.rst_lane_reset_dl_i</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_init_fsm.LANE_STATE_PLIF**: <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#295"> ppl_64_lane_init_fsm.vhd#295 (Flip-flop)</linty-anchor>|&#10007;|&#10004;|&#10004;|&#10007;|&#10004;|&#10007;|-&nbsp;<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx</linty-anchor> (rising)<br>|**1**/1320 (0.08%)|**1**/109|
+|<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/reset_hierarchy_graph.html?preview=1&highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.rst_lane_reset_dl_i" title="Open Reset Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html?highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.rst_lane_reset_dl_i" title="Open Reset Hierarchy Graph" aria-label="Open Reset Hierarchy Graph"></a></div>|**<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#618">gen_inst_phy_plus_lane.inst_phy_plus_lane.rst_lane_reset_dl_i</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**gen_inst_phy_plus_lane.inst_phy_plus_lane.inst_lane_init_fsm.LANE_STATE_PLIF**: <linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_init_fsm.vhd#295"> ppl_64_lane_init_fsm.vhd#295 (Flip-flop)</linty-anchor>|&#10007;|&#10004;|&#10004;|&#10007;|&#10004;|&#10007;|-&nbsp;<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx</linty-anchor> (rising)<br>|**1**/1320 (0.08%)|**1**/109|
 
 
 ## Instances using this reset domain
@@ -16,7 +16,9 @@
 |TOP (<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#153">spacefibre_light_top</linty-anchor>) > <linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#910">gen_inst_phy_plus_lane.inst_phy_plus_lane</linty-anchor> (<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#35">phy_plus_lane_64b</linty-anchor>)|&#10004;|&#10007;|&#10004;|&#10007;|
 
 
-## Flip-flops using this reset domain<span class="linty-help" title="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code." aria-label="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.">?</span>
+## Flip-flops using this reset domain
+
+<span class="linty-help" title="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code." aria-label="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.">?</span>
 
 **Count: 1**
 

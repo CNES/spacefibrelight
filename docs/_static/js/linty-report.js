@@ -35,6 +35,44 @@
     return '/_static/images/' + file;
   }
 
+  function attachHelpToHeadings() {
+    document.querySelectorAll('.rst-content .linty-help').forEach(function (help) {
+      if (help.closest('h1, h2, h3, h4, h5, h6')) {
+        return;
+      }
+      var container = help.parentElement;
+      var heading = container && container.previousElementSibling;
+      if (!heading || !/^H[1-6]$/.test(heading.tagName)) {
+        heading = help.previousElementSibling;
+      }
+      if (!heading || !/^H[1-6]$/.test(heading.tagName)) {
+        return;
+      }
+      var headerlink = heading.querySelector('a.headerlink');
+      if (headerlink) {
+        heading.insertBefore(help, headerlink);
+      } else {
+        heading.appendChild(help);
+      }
+      if (container && container !== heading && !container.textContent.trim() && !container.querySelector('*')) {
+        container.remove();
+      }
+    });
+  }
+
+  function stripHelpFromMenu() {
+    document.querySelectorAll('.wy-nav-side .linty-help, .wy-nav-top .linty-help').forEach(function (el) {
+      el.remove();
+    });
+    document.querySelectorAll('.wy-menu a').forEach(function (anchor) {
+      anchor.childNodes.forEach(function (node) {
+        if (node.nodeType === 3) {
+          node.textContent = node.textContent.replace(/\s*\?\s*$/, '');
+        }
+      });
+    });
+  }
+
   function decorateSidebar() {
     var side = document.querySelector('.wy-nav-side');
     vias(side);
@@ -64,7 +102,9 @@
     if (side && !side.querySelector('.linty-sidebar-logo')) {
       var logoLink = document.createElement('a');
       logoLink.className = 'linty-sidebar-logo';
-      logoLink.href = 'https://linty-services.com';
+      logoLink.href = 'https://linty-services.com/';
+      logoLink.target = '_blank';
+      logoLink.rel = 'noopener noreferrer';
       logoLink.title = 'Linty Services';
       var mark = document.createElement('span');
       mark.className = 'linty-wordmark';
@@ -75,6 +115,15 @@
       mark.appendChild(logo);
       logoLink.appendChild(mark);
       side.appendChild(logoLink);
+    }
+    var logoLink = side && side.querySelector('.linty-sidebar-logo');
+    // Same path as the footer link: Live Preview intercepts <a> clicks via handleLinkClick.
+    if (logoLink && typeof handleLinkClick === 'function' && !logoLink.dataset.lintyLiveBound) {
+      logoLink.dataset.lintyLiveBound = '1';
+      logoLink.addEventListener('click', function (event) {
+        event.stopPropagation();
+        handleLinkClick(logoLink.href);
+      });
     }
 
     var search = document.querySelector('#rtd-search-form input[name="q"]');
@@ -204,6 +253,8 @@
 
   function init() {
     document.documentElement.classList.add('linty-report');
+    attachHelpToHeadings();
+    stripHelpFromMenu();
     decorateSidebar();
     decorateHeader();
     decorateHomeCards();

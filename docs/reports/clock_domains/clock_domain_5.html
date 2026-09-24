@@ -9,7 +9,7 @@
   <title>Clock Domain Details &mdash; spacefibrelight</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=f3078fdf" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style/linty.css?v=21af5433" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -17,7 +17,7 @@
       <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../_static/js/linty-report.js?v=339a689a"></script>
+      <script src="../../_static/js/linty-report.js?v=6517e3d5"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -52,20 +52,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Summary Report</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design_hierarchy.html">Design Hierarchy</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#summary">Summary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#dependencies">Dependencies <span class="linty-help" title="Note that instantiations from blackboxes or third-party IPs are not listed in this report." aria-label="Note that instantiations from blackboxes or third-party IPs are not listed in this report.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#dependencies">Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-entities">VHDL Entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../design_hierarchy.html#vhdl-packages">VHDL Packages</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../clock_domains.html">Clock Domains</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#id1">Clock Domains<span class="linty-help" title="A clock domain used for both rising and falling edges is counted as two separate clock domains." aria-label="A clock domain used for both rising and falling edges is counted as two separate clock domains.">?</span></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#clock-management-module-cmm">Clock Management Module (CMM)<span class="linty-help" title="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All clocks should be generated within a unique clock management module (CMM). A dedicated CMM brings a lot in terms of reuse and portability. Because all vendor-specific clock elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#id1">Clock Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clock_domains.html#clock-management-module-cmm">Clock Management Module (CMM)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reset_domains.html">Reset Domains</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#global-reset-domains">Global Reset Domains <span class="linty-help" title="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design." aria-label="A reset domain is considered as global if it is used in several modules, or in a single module by at least 20% of the flip-flops in the design.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#global-reset-domains">Global Reset Domains</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#local-reset-domains">Local Reset Domains</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#reset-management-module-rmm">Reset Management Module (RMM) <span class="linty-help" title="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs." aria-label="All global resets should be generated within a unique reset management module (RMM). A dedicated RMM brings a lot in terms of reuse and portability. Because all vendor-specific reset elements are generated within the same module, it is easier to replace this module to target other FPGAs.">?</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reset_domains.html#reset-management-module-rmm">Reset Management Module (RMM)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../clock_domain_crossings.html">Clock Domain Crossings (CDC)</a></li>
@@ -114,7 +114,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-center"><p><div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1" title="Open Clock Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div></p></td>
+<tr class="row-even"><td class="text-center"><p><div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=inst_reset_sync_clk_from_GTY.reset_gen_rr_n" title="Open Clock Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=inst_reset_sync_clk_from_GTY.reset_gen_rr_n" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div></p></td>
 <td><p><strong><linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n</linty-anchor></strong><br>  - <strong>inst_reset_sync_clk_from_GTY.reset_gen_rr_n</strong>: <linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#56"> reset_gen.vhd#56 (Flip-flop)</linty-anchor></p></td>
 <td class="text-center"><p>✔</p></td>
 <td class="text-center"><p>✗</p></td>
@@ -143,7 +143,8 @@
 </table>
 </section>
 <section id="flip-flops-using-this-clock-domain">
-<h2>Flip-flops using this clock domain<span class="linty-help" title="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code." aria-label="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.">?</span><a class="headerlink" href="#flip-flops-using-this-clock-domain" title="Link to this heading"></a></h2>
+<h2>Flip-flops using this clock domain<a class="headerlink" href="#flip-flops-using-this-clock-domain" title="Link to this heading"></a></h2>
+<p><span class="linty-help" title="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code." aria-label="Note that there could be fewer source code locations than the number of flip-flops because several flip-flops can be inferred from the same piece of code.">?</span></p>
 <p><strong>Count: 3</strong></p>
 <section id="rising-edge-usage">
 <h3>Rising-edge usage<a class="headerlink" href="#rising-edge-usage" title="Link to this heading"></a></h3>
@@ -177,7 +178,7 @@
   <div class="linty-footer">
     <span class="linty-led" aria-hidden="true"></span>
     <p>spacefibrelight</p>
-    <p class="linty-footer-generated">Generated September 23, 2026 at 09:00:06 by <a href="https://linty-services.com">Linty</a></p>
+    <p class="linty-footer-generated">Generated September 24, 2026 at 11:16:52 by <a href="https://linty-services.com/" target="_blank" rel="noopener noreferrer">Linty</a></p>
   </div>
   <script src="/spacefibrelight/_static/js/linty-viewer.js"></script>
 
