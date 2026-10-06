@@ -6,7 +6,7 @@
 
 Count: **5**
 
-<div class="graph-preview" style="width: 280px; height: 160px;"><iframe src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=all" title="Open Clock Hierarchy Graph" loading="eager" tabindex="-1"></iframe><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=all" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div>
+<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=all" data-iframe-title="Open Clock Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/clock_hierarchy.svg" alt="Open Clock Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=all" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div>
 
 | Name: Origin | Rising | Falling | Graph | Details |
 | --- | :---: | :---: | :---: | :---: |

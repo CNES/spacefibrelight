@@ -653,13 +653,18 @@ linty-anchor:hover {
     transform 0.15s ease;
 }
 
-.graph-preview iframe {
+.graph-preview iframe,
+.graph-preview .graph-preview-image {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
   pointer-events: none;
   background: #1e1e1e;
+}
+
+.graph-preview .graph-preview-image {
+  object-fit: contain;
 }
 
 .graph-preview a {
@@ -673,6 +678,15 @@ linty-anchor:hover {
 .graph-preview .linty-via-tr { top: 8px; right: 8px; }
 .graph-preview .linty-via-bl { bottom: 8px; left: 8px; }
 .graph-preview .linty-via-br { bottom: 8px; right: 8px; }
+
+.graph-preview-or-button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.graph-preview-or-button .graph-preview {
+  margin: 0;
+}
 
 .graph-preview:hover {
   outline: none;
@@ -854,12 +868,17 @@ footer hr,
   background-color: #1e1e1e;
 }
 
-.graph-preview iframe {
+.graph-preview iframe,
+.graph-preview .graph-preview-image {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
   pointer-events: none;
+}
+
+.graph-preview .graph-preview-image {
+  object-fit: contain;
 }
 
 .graph-preview a {

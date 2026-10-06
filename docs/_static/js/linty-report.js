@@ -203,7 +203,79 @@
   }
 
   function decorateGraphs() {
-    document.querySelectorAll('.graph-preview').forEach(vias);
+    document.querySelectorAll('.graph-preview').forEach(function (preview) {
+      fallbackGraphPreview(preview);
+    });
+  }
+
+  function fallbackGraphPreview(preview) {
+    var img = preview.querySelector('.graph-preview-image');
+    if (preview.getAttribute('data-fallback') === 'button') {
+      wireSvgOrButton(preview, img);
+      return;
+    }
+    vias(preview);
+    var iframeSrc = preview.getAttribute('data-iframe-src');
+    if (!iframeSrc) {
+      return;
+    }
+    if (!img) {
+      showPreviewIframe(preview, iframeSrc);
+      return;
+    }
+    function useIframe() {
+      if (img.parentNode) {
+        img.remove();
+      }
+      showPreviewIframe(preview, iframeSrc);
+    }
+    img.addEventListener('error', useIframe);
+    if (img.complete && img.naturalWidth === 0) {
+      useIframe();
+    }
+  }
+
+  function wireSvgOrButton(preview, img) {
+    var host = preview.parentElement;
+    var button = host && host.querySelector(':scope > a.linty-action-btn');
+    function showPreview() {
+      preview.style.display = '';
+      vias(preview);
+      if (button && button.parentNode) {
+        button.remove();
+      }
+    }
+    function showButton() {
+      if (preview.parentNode) {
+        preview.remove();
+      }
+    }
+    if (!img) {
+      showButton();
+      return;
+    }
+    img.addEventListener('load', showPreview);
+    img.addEventListener('error', showButton);
+    if (img.complete) {
+      if (img.naturalWidth > 0) {
+        showPreview();
+      } else {
+        showButton();
+      }
+    }
+  }
+
+  function showPreviewIframe(preview, src) {
+    if (preview.querySelector('iframe')) {
+      return;
+    }
+    var iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.title = preview.getAttribute('data-iframe-title') || '';
+    iframe.loading = 'eager';
+    iframe.tabIndex = -1;
+    var link = preview.querySelector(':scope > a');
+    preview.insertBefore(iframe, link || preview.firstChild);
   }
 
   function decorateFooter() {
