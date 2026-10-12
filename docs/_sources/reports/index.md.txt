@@ -10,3 +10,4 @@
 |**Finite State Machines (FSM)**|FSMs: 17|<a class="linty-action-btn" href="/spacefibrelight/reports/finite_state_machines.html" title="View Details">Details</a>|
 |**Combinational Loops**|Loops: 0|<a class="linty-action-btn" href="/spacefibrelight/reports/combinational_loops.html" title="View Details">Details</a>|
 |**Latches**|Latches: 0|<a class="linty-action-btn" href="/spacefibrelight/reports/latches.html" title="View Details">Details</a>|
+|**Custom Graphs**|Custom graphs: 0|<a class="linty-action-btn" href="/spacefibrelight/reports/custom_graphs.html" title="View Details">Details</a>|

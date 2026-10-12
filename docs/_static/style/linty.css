@@ -824,6 +824,7 @@ footer hr,
   border-radius: 8px;
   background: var(--linty-board);
   color: #c8d5dc;
+  padding: 16px;
 }
 
 .wy-body-for-nav .rst-content .highlighted {

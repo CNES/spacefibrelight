@@ -13,3 +13,4 @@ Linty Report
    reports/finite_state_machines
    reports/combinational_loops
    reports/latches
+   reports/custom_graphs

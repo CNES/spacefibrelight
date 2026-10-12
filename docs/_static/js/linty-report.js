@@ -8,7 +8,9 @@
     'Reset Domain Crossings (RDC)': 'Review RDCs through logic-circiut graphs',
     'Finite State Machines (FSM)': 'States, reachability, deadlocks, livelocks',
     'Combinational Loops': 'Review loops through logic-circuit graphs',
-    'Latches': 'Inferred and explicit latches'
+    'Latches': 'Inferred and explicit latches',
+    'Custom Graphs': 'User-defined logic-circuit graphs',
+    'Coding Quality': 'Coding rules and issues'
   };
 
   function vias(el) {
