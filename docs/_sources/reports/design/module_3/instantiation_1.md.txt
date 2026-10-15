@@ -11,9 +11,11 @@
 
 Count: 4
 
+<div class="linty-static-table" data-no-filter-columns="Is equal to default value?,Is set?"></div>
+
 | Name | Value | Is equal to default value? | Is set? | Description |
 | --- | --- | :---: | :---: | --- |
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#186">G_AWIDTH</linty-anchor>|7|&#10007;|&#10004;||
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#185">G_DWIDTH</linty-anchor>|36|&#10007;|&#10004;||
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#187">G_THRESHOLD_HIGH</linty-anchor>|125|&#10007;|&#10004;||
-|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#188">G_THRESHOLD_LOW</linty-anchor>|2|&#10007;|&#10004;||
+|<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#188">G_THRESHOLD_LOW</linty-anchor>|1|&#10007;|&#10004;||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |mib_data_link|<linty-anchor href="//src/module_data_link/mib_data_link.vhd#29">mib_data_link.vhd#29</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |data_word_id_fsm|<linty-anchor href="//src/module_data_link/data_word_id_fsm.vhd#32">data_word_id_fsm.vhd#32</linty-anchor>||

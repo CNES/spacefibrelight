@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table" data-no-sort-columns="Asynchronous,Synchronous,Active High,Active Low" data-no-filter-columns="Asynchronous,Synchronous,Active High,Active Low"></div>
+
 | Graph | Name: Origin | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Clock&nbsp;Domain(s) |Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | ---: | ---: |
 |<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/reset_hierarchy_graph.html?preview=1&highlight=RST_N" data-iframe-title="Open Reset Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/reset_hierarchy.svg" alt="Open Reset Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html?highlight=RST_N" title="Open Reset Hierarchy Graph" aria-label="Open Reset Hierarchy Graph"></a></div>|**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50">RST_N</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**RST_N**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#50"> spacefibre_light_top.vhd#50 (Port)</linty-anchor>|&#10004;|&#10007;|&#10004;|&#10007;|&#10007;|&#10004;||**325**/1320 (24.62%)|**28**/109|
@@ -10,6 +12,8 @@
 ## Instances using this reset domain
 
 **Count: 28**
+
+<div class="linty-static-table" data-no-sort-columns="Asynchronous,Synchronous,Active High,Active Low" data-no-filter-columns="Asynchronous,Synchronous,Active High,Active Low"></div>
 
 | Instance | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low
 | --- | :---: | :---: | :---: | :---: |

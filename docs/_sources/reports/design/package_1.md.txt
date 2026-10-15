@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |PKG_TOOLS|<linty-anchor href="//src/pkg_tools.vhd#47">pkg_tools.vhd#47</linty-anchor>||

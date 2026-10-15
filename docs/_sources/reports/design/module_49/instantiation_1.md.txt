@@ -11,6 +11,8 @@
 
 Count: 2
 
+<div class="linty-static-table" data-no-filter-columns="Is equal to default value?,Is set?"></div>
+
 | Name | Value | Is equal to default value? | Is set? | Description |
 | --- | --- | :---: | :---: | --- |
 |<linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#47">G_TARGET</linty-anchor>|"NG_ULTRA"|Unknown|&#10004;||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |mib_phy_plus_lane|<linty-anchor href="//src/module_phy_plus_lane/mib_phy_plus_lane.vhd#32">mib_phy_plus_lane.vhd#32</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |data_encapsulation|<linty-anchor href="//src/module_data_link/data_encapsulation.vhd#32">data_encapsulation.vhd#32</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |pkg_phy_plus_lane|<linty-anchor href="//src/pkg_phy_plus_lane.vhd#34">pkg_phy_plus_lane.vhd#34</linty-anchor>||

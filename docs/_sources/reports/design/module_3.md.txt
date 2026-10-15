@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |FIFO_DC|<linty-anchor href="//src/ip/fifo_dc/fifo_dc.vhd#36">fifo_dc.vhd#36</linty-anchor>||

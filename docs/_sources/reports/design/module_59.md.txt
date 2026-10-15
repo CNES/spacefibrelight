@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |tb_fifo_dc_drop_bad_frame|<linty-anchor href="//src/ip/fifo_dc_drop_bad_frame/tb/tb_fifo_dc_drop_bad_frame.vhd#7">tb_fifo_dc_drop_bad_frame.vhd#7</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |reset_gen|<linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#30">reset_gen.vhd#30</linty-anchor>||

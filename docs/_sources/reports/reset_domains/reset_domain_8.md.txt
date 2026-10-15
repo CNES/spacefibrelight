@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table" data-no-sort-columns="Asynchronous,Synchronous,Active High,Active Low" data-no-filter-columns="Asynchronous,Synchronous,Active High,Active Low"></div>
+
 | Graph | Name: Origin | Global | Local | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low | Clock&nbsp;Domain(s) |Number of flip-flops<br>using this reset domain | Number of instances<br>using this reset domain |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | ---: | ---: |
 |<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/reset_hierarchy_graph.html?preview=1&highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx" data-iframe-title="Open Reset Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/reset_hierarchy.svg" alt="Open Reset Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/reset_hierarchy_graph.html?highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx" title="Open Reset Hierarchy Graph" aria-label="Open Reset Hierarchy Graph"></a></div>|**<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**hssl_clock_o**: <linty-anchor href="//src/ip/cores/HSSL_Nanoxplore/hssl_SpaceFibre_64b.vhd#156"> hssl_SpaceFibre_64b.vhd#156 (Blackbox port: hssl_clock_o)</linty-anchor>|&#10007;|&#10004;|&#10004;|&#10007;|&#10007;|&#10004;||**3**/1320 (0.23%)|**1**/109|
@@ -10,6 +12,8 @@
 ## Instances using this reset domain
 
 **Count: 1**
+
+<div class="linty-static-table" data-no-sort-columns="Asynchronous,Synchronous,Active High,Active Low" data-no-filter-columns="Asynchronous,Synchronous,Active High,Active Low"></div>
 
 | Instance | Asynchronous | Synchronous | Active&nbsp;High | Active&nbsp;Low
 | --- | :---: | :---: | :---: | :---: |

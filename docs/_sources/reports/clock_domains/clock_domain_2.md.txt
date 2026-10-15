@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table" data-no-sort-columns="Rising,Falling" data-no-filter-columns="Rising,Falling"></div>
+
 | Graph | Name: Origin | Rising | Falling | Number of flip-flops<br>using this clock domain | Number of instances<br>using this clock domain |
 | :---: | --- | :---: | :---: | ---: | ---: |
 |<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx" data-iframe-title="Open Clock Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/clock_hierarchy.svg" alt="Open Clock Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div>|**<linty-anchor href="/src/module_phy_plus_lane_64b/phy_plus_lane_64b.vhd#540">gen_inst_phy_plus_lane.inst_phy_plus_lane.clk_tx</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**hssl_clock_o**: <linty-anchor href="//src/ip/cores/HSSL_Nanoxplore/hssl_SpaceFibre_64b.vhd#156"> hssl_SpaceFibre_64b.vhd#156 (Blackbox port: hssl_clock_o)</linty-anchor>|&#10004;|&#10007;|**171**/1320 (12.95%)|**13**/109|
@@ -10,6 +12,8 @@
 ## Instances using this clock domain
 
 **Count: 13**
+
+<div class="linty-static-table" data-no-sort-columns="Rising,Falling" data-no-filter-columns="Rising,Falling"></div>
 
 | Instance | Rising | Falling |
 | --- | :---: | :---: |

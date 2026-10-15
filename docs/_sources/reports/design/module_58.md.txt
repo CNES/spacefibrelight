@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |tb_fifo_dc_custom_to_axis|<linty-anchor href="//src/ip/fifo_dc_custom_to_axis/tb/tb_fifo_dc_custom_to_axis.vhd#16">tb_fifo_dc_custom_to_axis.vhd#16</linty-anchor>||

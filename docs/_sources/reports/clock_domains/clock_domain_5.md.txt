@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table" data-no-sort-columns="Rising,Falling" data-no-filter-columns="Rising,Falling"></div>
+
 | Graph | Name: Origin | Rising | Falling | Number of flip-flops<br>using this clock domain | Number of instances<br>using this clock domain |
 | :---: | --- | :---: | :---: | ---: | ---: |
 |<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=inst_reset_sync_clk_from_GTY.reset_gen_rr_n" data-iframe-title="Open Clock Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/clock_hierarchy.svg" alt="Open Clock Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=inst_reset_sync_clk_from_GTY.reset_gen_rr_n" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div>|**<linty-anchor href="/src/ip_spacefibre_light_top/reset_gen.vhd#46">inst_reset_sync_clk_from_GTY.reset_gen_rr_n</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**inst_reset_sync_clk_from_GTY.reset_gen_rr_n**: <linty-anchor href="//src/ip_spacefibre_light_top/reset_gen.vhd#56"> reset_gen.vhd#56 (Flip-flop)</linty-anchor>|&#10004;|&#10007;|**3**/1320 (0.23%)|**1**/109|
@@ -10,6 +12,8 @@
 ## Instances using this clock domain
 
 **Count: 1**
+
+<div class="linty-static-table" data-no-sort-columns="Rising,Falling" data-no-filter-columns="Rising,Falling"></div>
 
 | Instance | Rising | Falling |
 | --- | :---: | :---: |

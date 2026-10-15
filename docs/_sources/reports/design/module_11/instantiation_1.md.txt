@@ -11,6 +11,8 @@
 
 Count: 1
 
+<div class="linty-static-table" data-no-filter-columns="Is equal to default value?,Is set?"></div>
+
 | Name | Value | Is equal to default value? | Is set? | Description |
 | --- | --- | :---: | :---: | --- |
 |<linty-anchor href="//src/module_data_link/data_link.vhd#829">G_VC_NUM</linty-anchor>|8|&#10004;|&#10004;|Number of virtual channels|

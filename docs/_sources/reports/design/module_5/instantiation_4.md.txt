@@ -11,6 +11,8 @@
 
 Count: 6
 
+<div class="linty-static-table" data-no-filter-columns="Is equal to default value?,Is set?"></div>
+
 | Name | Value | Is equal to default value? | Is set? | Description |
 | --- | --- | :---: | :---: | --- |
 |<linty-anchor href="//src/module_data_link/data_out_buf.vhd#189">G_AWIDTH</linty-anchor>|7|&#10007;|&#10004;|Address bus FIFO length|

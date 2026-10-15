@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |AXIS_MASTER|<linty-anchor href="//src/ip/fifo_dc_custom_to_axis/AXIS_MASTER.vhd#19">AXIS_MASTER.vhd#19</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |data_in_buf|<linty-anchor href="//src/module_data_link/data_in_buf.vhd#33">data_in_buf.vhd#33</linty-anchor>||

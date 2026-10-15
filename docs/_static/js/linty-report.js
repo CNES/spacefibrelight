@@ -6,11 +6,14 @@
     'Reset Domains': 'Reset domains and hierarchy graph usage',
     'Clock Domain Crossings (CDC)': 'Review CDCs through logic-circuit graphs',
     'Reset Domain Crossings (RDC)': 'Review RDCs through logic-circiut graphs',
+    'Unsynchronized Async Reset Release':
+      'Asynchronous resets released without a reset-release synchronizer',
     'Finite State Machines (FSM)': 'States, reachability, deadlocks, livelocks',
     'Combinational Loops': 'Review loops through logic-circuit graphs',
     'Latches': 'Inferred and explicit latches',
     'Custom Graphs': 'User-defined logic-circuit graphs',
-    'Coding Quality': 'Coding rules and issues'
+    'Quality Profiles': 'Set of coding rules applying to this project',
+    'Coding Quality': 'Measures and issues'
   };
 
   function vias(el) {
@@ -301,6 +304,221 @@
     host.insertBefore(wrap, host.firstChild);
   }
 
+  function consumeStaticMarker(table) {
+    var host = table.closest('.wy-table-responsive') || table;
+    var node = host.previousElementSibling;
+    while (node && node.tagName === 'P' && !textOf(node) && !node.querySelector('.linty-static-table')) {
+      node = node.previousElementSibling;
+    }
+    var marker = node && node.classList.contains('linty-static-table')
+      ? node
+      : node && node.querySelector && node.querySelector('.linty-static-table');
+    if (!marker) {
+      return null;
+    }
+    var noSortColumns = marker.getAttribute('data-no-sort-columns');
+    var noFilterColumns = marker.getAttribute('data-no-filter-columns');
+    if (noSortColumns) {
+      table.setAttribute('data-no-sort-columns', noSortColumns);
+    }
+    if (noFilterColumns) {
+      table.setAttribute('data-no-filter-columns', noFilterColumns);
+    }
+    var parent = marker.parentElement;
+    marker.remove();
+    if (parent && parent.tagName === 'P' && !textOf(parent)) {
+      parent.remove();
+    }
+    return noSortColumns || noFilterColumns ? 'columns' : 'all';
+  }
+
+  function enhanceReportTables() {
+    document.querySelectorAll('.rst-content table.docutils').forEach(function (table) {
+      if (table.dataset.lintyTable || table.classList.contains('field-list') || !table.tHead || !table.tBodies.length) {
+        return;
+      }
+      var headerRow = table.tHead.rows[0];
+      if (!headerRow) {
+        return;
+      }
+      table.dataset.lintyTable = '1';
+      if (consumeStaticMarker(table) === 'all') {
+        table.setAttribute('data-no-sort', '');
+        table.setAttribute('data-no-filter', '');
+      }
+      var headers = headerRow.cells;
+      var allowed = (table.getAttribute('data-filter') || '').split(',').map(function (name) {
+        return name.trim();
+      }).filter(Boolean);
+      var restrict = table.hasAttribute('data-filter');
+
+      function columnName(header) {
+        return textOf(header).replace(/[\u21C5\u25B2\u25BC]/g, '').trim();
+      }
+
+      function isAction(header) {
+        var name = columnName(header);
+        return name === 'Details' || name === 'Graph';
+      }
+
+      function sortAnchor(header) {
+        var paragraphs = Array.prototype.filter.call(header.children, function (child) {
+          return child.tagName === 'P';
+        });
+        if (paragraphs.length && paragraphs.length === header.children.length) {
+          return paragraphs[paragraphs.length - 1];
+        }
+        return header;
+      }
+
+      function columnListed(attribute, header) {
+        var raw = table.getAttribute(attribute);
+        if (!raw) {
+          return false;
+        }
+        var name = columnName(header).toLowerCase();
+        return raw.split(',').some(function (part) {
+          return part.trim().toLowerCase() === name;
+        });
+      }
+
+      function canFilter(header) {
+        if (table.hasAttribute('data-no-filter') || isAction(header) || columnListed('data-no-filter-columns', header)) {
+          return false;
+        }
+        if (!restrict) {
+          return true;
+        }
+        return allowed.indexOf(columnName(header)) !== -1;
+      }
+
+      var filterRow = document.createElement('tr');
+      filterRow.className = 'linty-filters';
+      var inputs = [];
+      Array.prototype.forEach.call(headers, function (header, index) {
+        var cell = document.createElement('th');
+        if (canFilter(header)) {
+          var input = document.createElement('input');
+          input.type = 'search';
+          input.placeholder = 'Filter';
+          input.setAttribute('aria-label', 'Filter ' + columnName(header));
+          input.dataset.column = String(index);
+          cell.appendChild(input);
+          inputs.push(input);
+        }
+        filterRow.appendChild(cell);
+      });
+      if (inputs.length) {
+        headerRow.parentNode.appendChild(filterRow);
+      }
+
+      var tbody = table.tBodies[0];
+
+      function bodyRows() {
+        return Array.prototype.slice.call(tbody.rows);
+      }
+
+      function applyFilters() {
+        bodyRows().forEach(function (row) {
+          var match = true;
+          inputs.forEach(function (input) {
+            var query = input.value.trim().toLowerCase();
+            if (!match || !query) {
+              return;
+            }
+            var text = textOf(row.cells[Number(input.dataset.column)] || row).toLowerCase();
+            if (text.indexOf(query) === -1) {
+              match = false;
+            }
+          });
+          row.hidden = !match;
+        });
+      }
+
+      var directions = {};
+
+      function sortBy(index) {
+        var direction = directions[index] === 'asc' ? 'desc' : 'asc';
+        directions = {};
+        directions[index] = direction;
+        Array.prototype.forEach.call(headers, function (header, headerIndex) {
+          if (isAction(header) || columnListed('data-no-sort-columns', header)) {
+            return;
+          }
+          var active = headerIndex === index;
+          header.setAttribute('aria-sort', active ? (direction === 'asc' ? 'ascending' : 'descending') : 'none');
+          var mark = header.querySelector('.linty-sort-mark');
+          if (mark) {
+            mark.textContent = active ? (direction === 'asc' ? ' \u25B2' : ' \u25BC') : ' \u21C5';
+          }
+        });
+        bodyRows().sort(function (left, right) {
+          var result = textOf(left.cells[index] || left).localeCompare(
+            textOf(right.cells[index] || right),
+            undefined,
+            { numeric: true, sensitivity: 'base' }
+          );
+          return direction === 'asc' ? result : -result;
+        }).forEach(function (row) {
+          tbody.appendChild(row);
+        });
+      }
+
+      function markGraphCells(header, index) {
+        if (columnName(header) !== 'Graph') {
+          return;
+        }
+        header.classList.add('linty-graph-header');
+        Array.prototype.forEach.call(tbody.rows, function (row) {
+          if (row.cells[index]) {
+            row.cells[index].classList.add('linty-graph-cell');
+          }
+        });
+      }
+
+      var sortable = !table.hasAttribute('data-no-sort');
+      Array.prototype.forEach.call(headers, function (header, index) {
+        markGraphCells(header, index);
+        if (!sortable || isAction(header) || columnListed('data-no-sort-columns', header)) {
+          header.classList.add('linty-nosort');
+          return;
+        }
+        header.classList.add('linty-sortable');
+        header.setAttribute('aria-sort', 'none');
+        header.title = 'Sort';
+        var mark = document.createElement('span');
+        mark.className = 'linty-sort-mark';
+        mark.setAttribute('aria-hidden', 'true');
+        mark.textContent = '\u21C5';
+        sortAnchor(header).appendChild(mark);
+        header.addEventListener('click', function () {
+          sortBy(index);
+        });
+      });
+      inputs.forEach(function (input) {
+        input.addEventListener('input', applyFilters);
+      });
+
+      if (inputs.length) {
+        var toolbar = document.createElement('div');
+        toolbar.className = 'linty-table-toolbar';
+        var clear = document.createElement('button');
+        clear.type = 'button';
+        clear.className = 'linty-clear-filters';
+        clear.textContent = 'Clear filters';
+        clear.addEventListener('click', function () {
+          inputs.forEach(function (input) {
+            input.value = '';
+          });
+          applyFilters();
+        });
+        toolbar.appendChild(clear);
+        var host = table.closest('.wy-table-responsive') || table;
+        host.parentNode.insertBefore(toolbar, host);
+      }
+    });
+  }
+
   function decorateActionButtons() {
     document.querySelectorAll('a').forEach(function (anchor) {
       var img = anchor.querySelector('img');
@@ -335,6 +553,7 @@
     decorateCounts();
     decorateSummaryMetrics();
     decorateGraphs();
+    enhanceReportTables();
     decorateActionButtons();
     decorateFooter();
   }

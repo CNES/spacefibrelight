@@ -8,6 +8,8 @@ Count: **5**
 
 <div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/clock_hierarchy_graph.html?preview=1&highlight=all" data-iframe-title="Open Clock Hierarchy Graph"><img class="graph-preview-image" src="/spacefibrelight/graphs/clock_hierarchy.svg" alt="Open Clock Hierarchy Graph" decoding="async"><a href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=all" title="Open Clock Hierarchy Graph" aria-label="Open Clock Hierarchy Graph"></a></div>
 
+<div class="linty-static-table" data-no-sort-columns="Rising,Falling" data-no-filter-columns="Rising,Falling"></div>
+
 | Name: Origin | Rising | Falling | Graph | Details |
 | --- | :---: | :---: | :---: | :---: |
 |**<linty-anchor href="/src/ip_spacefibre_light_top/spacefibre_light_top.vhd#51">CLK</linty-anchor>**<br>&nbsp;&nbsp;-&nbsp;**CLK**: <linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top.vhd#51"> spacefibre_light_top.vhd#51 (Port)</linty-anchor>|&#10004;|&#10007;|<a class="linty-action-btn" href="/spacefibrelight/graphs/clock_hierarchy_graph.html?highlight=CLK" title="Open Clock Hierarchy Graph">Graph</a>|<a class="linty-action-btn" href="/spacefibrelight/reports/clock_domains/clock_domain_1.html" title="View Clock Domain Details">Details</a>|

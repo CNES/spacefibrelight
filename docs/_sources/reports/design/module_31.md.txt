@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |mux_tx|<linty-anchor href="//src/ip_spacefibre_light_top/mux_tx.vhd#32">mux_tx.vhd#32</linty-anchor>||

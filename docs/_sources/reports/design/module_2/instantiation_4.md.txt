@@ -11,6 +11,8 @@
 
 Count: 3
 
+<div class="linty-static-table" data-no-filter-columns="Is equal to default value?,Is set?"></div>
+
 | Name | Value | Is equal to default value? | Is set? | Description |
 | --- | --- | :---: | :---: | --- |
 |<linty-anchor href="//src/ip/fifo_dc_axis_to_custom/FIFO_DC_AXIS_S.vhd#164">G_DWIDTH</linty-anchor>|36|&#10004;|&#10004;|Total data width|

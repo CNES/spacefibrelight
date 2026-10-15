@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |spacefibre_light_top_ip|<linty-anchor href="//src/ip_spacefibre_light_top/spacefibre_light_top_ip.vhd#36">spacefibre_light_top_ip.vhd#36</linty-anchor>||

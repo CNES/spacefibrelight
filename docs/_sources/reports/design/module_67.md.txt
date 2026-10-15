@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |tb_ppl_64_rx_sync_fsm|<linty-anchor href="//src/module_phy_plus_lane_64b/tb/tb_ppl_64_rx_sync_fsm.vhd#34">tb_ppl_64_rx_sync_fsm.vhd#34</linty-anchor>||

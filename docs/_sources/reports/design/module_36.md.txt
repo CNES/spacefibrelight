@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |ppl_64_bus_split_rx|<linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_bus_split_rx.vhd#33">ppl_64_bus_split_rx.vhd#33</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |pkg_simu|<linty-anchor href="//src/pkg_simu.vhd#38">pkg_simu.vhd#38</linty-anchor>||

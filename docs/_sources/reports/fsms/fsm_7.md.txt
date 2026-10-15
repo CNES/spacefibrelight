@@ -4,7 +4,7 @@
 
 |Graph|Name|Location|Reset State|States|Unreachable States|Deadlock States|Livelock States|Input Signals|Output Signals|
 |:---:|---|---|---|---|---|---|---|---:|---:|
-|<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/fsms/fsm_states_7_graph.html?preview=1" data-iframe-title="Open FSM Diagram"><img class="graph-preview-image" src="/spacefibrelight/graphs/fsms/fsm_states_7.svg" alt="Open FSM Diagram" decoding="async"><a href="/spacefibrelight/graphs/fsms/fsm_states_7_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div>|current_state_rx_pll_pma|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#86">ppl_64_init_hssl.vhd#86</linty-anchor>|IDLE_ST| Count:&nbsp;6<br>IDLE_ST<br>RX_PMA_LOCK_ST<br>RX_PMA_PLL_PULSE_ST<br>RX_PMA_POWER_UP_ST<br>RX_RST_PULSE_ST<br>RX_STARTED_ST| Count:&nbsp;0<br>| Count:&nbsp;1<br>RX_STARTED_ST| Count:&nbsp;0<br>|4|3||
+|<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/fsms/fsm_states_7_graph.html?preview=1" data-iframe-title="Open FSM Diagram"><img class="graph-preview-image" src="/spacefibrelight/graphs/fsms/fsm_states_7.svg" alt="Open FSM Diagram" decoding="async"><a href="/spacefibrelight/graphs/fsms/fsm_states_7_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div>|current_state_rx_pll_pma|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_init_hssl.vhd#86">ppl_64_init_hssl.vhd#86</linty-anchor>|IDLE_ST| Count:&nbsp;6<br>IDLE_ST<br>RX_PMA_LOCK_ST<br>RX_PMA_PLL_PULSE_ST<br>RX_PMA_POWER_UP_ST<br>RX_RST_PULSE_ST<br>RX_STARTED_ST|0<br>|1<br>RX_STARTED_ST|0<br>|4|3||
 
 <br>
 

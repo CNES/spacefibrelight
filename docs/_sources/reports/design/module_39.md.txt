@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |ppl_64_lane_ctrl_word_insert|<linty-anchor href="//src/module_phy_plus_lane_64b/ppl_64_lane_ctrl_word_insert.vhd#32">ppl_64_lane_ctrl_word_insert.vhd#32</linty-anchor>||

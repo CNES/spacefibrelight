@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |demux_rx|<linty-anchor href="//src/ip_spacefibre_light_top/demux_rx.vhd#32">demux_rx.vhd#32</linty-anchor>||

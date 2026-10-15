@@ -4,7 +4,7 @@
 
 |Graph|Name|Location|Reset State|States|Unreachable States|Deadlock States|Livelock States|Input Signals|Output Signals|
 |:---:|---|---|---|---|---|---|---|---:|---:|
-|<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/fsms/fsm_states_1_graph.html?preview=1" data-iframe-title="Open FSM Diagram"><img class="graph-preview-image" src="/spacefibrelight/graphs/fsms/fsm_states_1.svg" alt="Open FSM Diagram" decoding="async"><a href="/spacefibrelight/graphs/fsms/fsm_states_1_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div>|current_state|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#70">ppl_64_word_alignment.vhd#70</linty-anchor>|INIT_ST| Count:&nbsp;3<br>ALIGNED_ST<br>INIT_ST<br>WAITING_COMMA_ST| Count:&nbsp;0<br>| Count:&nbsp;0<br>| Count:&nbsp;0<br>|4|10||
+|<div class="graph-preview" style="width: 280px; height: 160px;" data-iframe-src="/spacefibrelight/graphs/fsms/fsm_states_1_graph.html?preview=1" data-iframe-title="Open FSM Diagram"><img class="graph-preview-image" src="/spacefibrelight/graphs/fsms/fsm_states_1.svg" alt="Open FSM Diagram" decoding="async"><a href="/spacefibrelight/graphs/fsms/fsm_states_1_graph.html" title="Open FSM Diagram" aria-label="Open FSM Diagram"></a></div>|current_state|<linty-anchor href="/src/module_phy_plus_lane_64b/ppl_64_word_alignment.vhd#70">ppl_64_word_alignment.vhd#70</linty-anchor>|INIT_ST| Count:&nbsp;3<br>ALIGNED_ST<br>INIT_ST<br>WAITING_COMMA_ST|0<br>|0<br>|0<br>|4|10||
 
 <br>
 

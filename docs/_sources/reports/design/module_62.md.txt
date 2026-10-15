@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |tb_phy_hssl|<linty-anchor href="//src/module_phy_plus_lane_64b/tb/tb_phy_hssl.vhd#36">tb_phy_hssl.vhd#36</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |lane_init_fsm|<linty-anchor href="//src/module_phy_plus_lane/lane_init_fsm.vhd#32">lane_init_fsm.vhd#32</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |parallel_loopback|<linty-anchor href="//src/module_phy_plus_lane/parallel_loopback.vhd#32">parallel_loopback.vhd#32</linty-anchor>||

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<div class="linty-static-table"></div>
+
 | Name | Location | Description |
 | --- | --- | --- |
 |skip_insertion|<linty-anchor href="//src/module_phy_plus_lane/skip_insertion.vhd#33">skip_insertion.vhd#33</linty-anchor>||

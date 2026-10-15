@@ -510,7 +510,7 @@ body.wy-body-for-nav,
   border: none !important;
   border-bottom: 1px solid var(--linty-line) !important;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 1rem !important;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -547,6 +547,99 @@ body.wy-body-for-nav,
 
 .rst-content table.docutils tbody tr:hover td {
   background: #eaf7fa !important;
+}
+
+.rst-content table.docutils thead th.linty-sortable,
+.rst-content table.docutils thead th.linty-sortable > p {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.rst-content table.docutils thead th.linty-nosort {
+  cursor: default;
+}
+
+.rst-content table.docutils tr.linty-filters th {
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  cursor: default;
+}
+
+.rst-content table.docutils tr.linty-filters input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.linty-sort-mark {
+  display: inline;
+  margin-left: 0.35em;
+  opacity: 0.55;
+  font-size: 0.85em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.rst-content table.docutils th[aria-sort="ascending"] .linty-sort-mark,
+.rst-content table.docutils th[aria-sort="descending"] .linty-sort-mark {
+  opacity: 1;
+}
+
+.linty-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+
+.linty-table-toolbar .linty-clear-filters {
+  margin-left: auto;
+}
+
+.linty-rule-key {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.rst-content table.docutils a.linty-rule-link,
+.rst-content a.linty-rule-link,
+.rst-content a.linty-rule-link:visited {
+  color: var(--linty-cyan-strong);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in srgb, var(--linty-cyan-strong) 35%, transparent);
+}
+
+.rst-content a.linty-rule-link:hover {
+  color: #0a5d6d;
+  border-bottom-color: var(--linty-cyan);
+}
+
+.rst-content .linty-comment-meta {
+  margin: 0;
+}
+
+.rst-content .linty-comment-body {
+  margin: 0.15rem 0 0;
+}
+
+.rst-content .linty-comment-body > :first-child {
+  margin-top: 0;
+}
+
+.rst-content .linty-comment-body > :last-child {
+  margin-bottom: 0;
+}
+
+.rst-content .linty-comment + .linty-comment {
+  margin-top: 1.5rem;
 }
 
 .rst-content .wy-table-responsive {
@@ -688,6 +781,11 @@ linty-anchor:hover {
   margin: 0;
 }
 
+.rst-content table.docutils td.linty-graph-cell .graph-preview-or-button,
+.rst-content table.docutils td.linty-graph-cell .linty-action-btn {
+  vertical-align: top;
+}
+
 .graph-preview:hover {
   outline: none;
   transform: translateY(-1px);
@@ -731,7 +829,8 @@ linty-anchor:hover {
 }
 
 .rst-content a.linty-action-btn,
-a.linty-action-btn {
+a.linty-action-btn,
+button.linty-clear-filters {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -747,19 +846,23 @@ a.linty-action-btn {
   line-height: 1.2;
   text-decoration: none !important;
   white-space: nowrap;
+  border: 0;
+  cursor: pointer;
   transition:
     filter 0.15s ease,
     transform 0.1s ease;
 }
 
 .rst-content a.linty-action-btn:hover,
-a.linty-action-btn:hover {
+a.linty-action-btn:hover,
+button.linty-clear-filters:hover {
   filter: brightness(1.08);
   color: #fff !important;
 }
 
 .rst-content a.linty-action-btn:active,
-a.linty-action-btn:active {
+a.linty-action-btn:active,
+button.linty-clear-filters:active {
   transform: translateY(1px) scale(0.98);
 }
 
